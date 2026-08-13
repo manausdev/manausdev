@@ -33,53 +33,53 @@ Roadmap técnico e de produto para construção da plataforma **ManausDev**.
 
 ## Organização
 
-- [ ] Criar organização `ManausDev`
-- [ ] Criar repositório `.github`
-- [ ] Criar `.github/profile/README.md`
-- [ ] Adicionar descrição da organização
-- [ ] Adicionar site oficial
-- [ ] Adicionar localização
-- [ ] Configurar avatar/logo
-- [ ] Configurar redes sociais
-- [ ] Configurar Discussions
-- [ ] Definir membros públicos da organização
+- [x] Criar organização `ManausDev`
+- [x] Criar repositório `.github`
+- [x] Criar `.github/profile/README.md`
+- [x] Adicionar descrição da organização
+- [x] Adicionar site oficial
+- [x] Adicionar localização
+- [x] Configurar avatar/logo
+- [x] Configurar redes sociais
+- [x] Configurar Discussions
+- [x] Definir membros públicos da organização
 
 ## Repositório principal
 
-- [ ] Criar `ManausDev/manausdev`
-- [ ] Criar `README.md`
-- [ ] Criar `TODO.md`
-- [ ] Criar `CONTRIBUTING.md`
-- [ ] Criar `CODE_OF_CONDUCT.md`
-- [ ] Criar `SECURITY.md`
-- [ ] Criar `LICENSE`
-- [ ] Criar `.gitignore`
-- [ ] Criar templates de Issues
-- [ ] Criar template de Pull Request
-- [ ] Configurar labels
-- [ ] Configurar branch protection
-- [ ] Configurar Dependabot
-- [ ] Configurar GitHub Actions
+- [x] Criar `ManausDev/manausdev`
+- [x] Criar `README.md`
+- [x] Criar `TODO.md`
+- [x] Criar `CONTRIBUTING.md`
+- [x] Criar `CODE_OF_CONDUCT.md`
+- [x] Criar `SECURITY.md`
+- [x] Criar `LICENSE`
+- [x] Criar `.gitignore`
+- [x] Criar templates de Issues
+- [x] Criar template de Pull Request
+- [x] Configurar labels
+- [x] Configurar branch protection
+- [x] Configurar Dependabot
+- [x] Configurar GitHub Actions
 
 ---
 
 # 2. Identidade visual
 
-- [ ] Criar logo ManausDev
-- [ ] Criar versão horizontal
-- [ ] Criar versão reduzida
-- [ ] Criar favicon
-- [ ] Definir tipografia
-- [ ] Definir paleta
-- [ ] Definir identidade visual
-- [ ] Definir Design System
-- [ ] Criar componentes básicos
-- [ ] Definir padrões de espaçamento
-- [ ] Definir breakpoints
-- [ ] Definir modo claro
-- [ ] Definir modo escuro
-- [ ] Criar Open Graph image
-- [ ] Criar identidade do selo "Feito em Manaus"
+- [x] Criar logo ManausDev
+- [x] Criar versão horizontal
+- [x] Criar versão reduzida
+- [x] Criar favicon
+- [x] Definir tipografia
+- [x] Definir paleta
+- [x] Definir identidade visual
+- [x] Definir Design System
+- [x] Criar componentes básicos
+- [x] Definir padrões de espaçamento
+- [x] Definir breakpoints
+- [x] Definir modo claro
+- [x] Definir modo escuro
+- [x] Criar Open Graph image
+- [x] Criar identidade do selo "Feito em Manaus"
 
 ---
 
@@ -95,15 +95,15 @@ CSS
 JavaScript
 ```
 
-- [ ] Definir arquitetura do frontend
-- [ ] Separar páginas
-- [ ] Separar componentes
-- [ ] Separar estilos
-- [ ] Criar módulos JavaScript
-- [ ] Criar cliente da API
-- [ ] Criar gerenciamento de estado simples
-- [ ] Criar tratamento global de erros
-- [ ] Criar sistema de configuração por ambiente
+- [x] Definir arquitetura do frontend
+- [x] Separar páginas
+- [x] Separar componentes
+- [x] Separar estilos
+- [x] Criar módulos JavaScript
+- [x] Criar cliente da API
+- [x] Criar gerenciamento de estado simples
+- [x] Criar tratamento global de erros
+- [x] Criar sistema de configuração por ambiente
 
 Estrutura inicial:
 
@@ -145,20 +145,20 @@ manausdev/
 
 # 4. Backend
 
-- [ ] Escolher backend
-- [ ] Definir API
-- [ ] Definir banco de dados
-- [ ] Definir autenticação
-- [ ] Definir armazenamento de arquivos
-- [ ] Criar ambientes development/staging/production
-- [ ] Configurar variáveis de ambiente
-- [ ] Configurar migrations
-- [ ] Configurar seeds
-- [ ] Implementar logs
-- [ ] Implementar rate limiting
-- [ ] Implementar validação
-- [ ] Implementar tratamento de erros
-- [ ] Implementar autorização
+- [x] Escolher backend
+- [x] Definir API
+- [x] Definir banco de dados
+- [x] Definir autenticação
+- [x] Definir armazenamento de arquivos
+- [x] Criar ambientes development/staging/production
+- [x] Configurar variáveis de ambiente
+- [x] Configurar migrations
+- [x] Configurar seeds
+- [x] Implementar logs
+- [x] Implementar rate limiting
+- [x] Implementar validação
+- [x] Implementar tratamento de erros
+- [x] Implementar autorização
 
 Possível stack inicial:
 
@@ -185,22 +185,22 @@ Supabase Storage
 
 Criar entidades:
 
-- [ ] `users`
-- [ ] `developers`
-- [ ] `skills`
-- [ ] `developer_skills`
-- [ ] `projects`
-- [ ] `project_members`
-- [ ] `companies`
-- [ ] `jobs`
-- [ ] `team_requests`
-- [ ] `events`
-- [ ] `communities`
-- [ ] `articles`
-- [ ] `tags`
-- [ ] `likes`
-- [ ] `bookmarks`
-- [ ] `reports`
+- [x] `users`
+- [x] `developers`
+- [x] `skills`
+- [x] `developer_skills`
+- [x] `projects`
+- [x] `project_members`
+- [x] `companies`
+- [x] `jobs`
+- [x] `team_requests`
+- [x] `events`
+- [x] `communities`
+- [x] `articles`
+- [x] `tags`
+- [x] `likes`
+- [x] `bookmarks`
+- [x] `reports`
 
 ## Desenvolvedor
 
@@ -226,94 +226,21 @@ created_at
 updated_at
 ```
 
-## Projeto
-
-```text
-id
-owner_id
-name
-slug
-description
-repository_url
-demo_url
-website_url
-image
-status
-open_source
-looking_for_members
-created_at
-updated_at
-```
-
-## Empresa
-
-```text
-id
-name
-slug
-description
-logo
-website
-linkedin
-github
-type
-verified
-created_at
-```
-
-## Vaga
-
-```text
-id
-company_id
-title
-description
-level
-employment_type
-work_mode
-location
-application_url
-expires_at
-created_at
-```
-
----
-
-# 6. Autenticação
-
-- [ ] Cadastro
-- [ ] Login
-- [ ] Logout
-- [ ] Recuperação de senha
-- [ ] Confirmação de e-mail
-- [ ] Login com GitHub
-- [ ] Login com Google
-- [ ] Sessão persistente
-- [ ] Proteção de páginas privadas
-- [ ] Exclusão de conta
-- [ ] Exportação dos dados pessoais
-
----
-
-# 7. Perfil de desenvolvedor
-
-## Página pública
-
-- [ ] Nome
-- [ ] Username
-- [ ] Avatar
-- [ ] Bio
-- [ ] Cargo/área
-- [ ] Senioridade
-- [ ] Stack
-- [ ] GitHub
-- [ ] LinkedIn
-- [ ] Site
-- [ ] Projetos
-- [ ] Open Source
-- [ ] Comunidades
-- [ ] Disponibilidade profissional
-- [ ] Disponibilidade para projetos
+- [x] Nome
+- [x] Username
+- [x] Avatar
+- [x] Bio
+- [x] Cargo/área
+- [x] Senioridade
+- [x] Stack
+- [x] GitHub
+- [x] LinkedIn
+- [x] Site
+- [x] Projetos
+- [x] Open Source
+- [x] Comunidades
+- [x] Disponibilidade profissional
+- [x] Disponibilidade para projetos
 
 URL:
 
@@ -323,27 +250,80 @@ URL:
 
 ## Edição
 
-- [ ] Editar informações
-- [ ] Editar avatar
-- [ ] Adicionar tecnologias
-- [ ] Adicionar redes
-- [ ] Configurar disponibilidade
-- [ ] Configurar privacidade
+- [x] Editar informações
+- [x] Editar avatar
+- [x] Adicionar tecnologias
+- [x] Adicionar redes
+- [x] Configurar disponibilidade
+- [x] Configurar privacidade
+
+---
+
+# 6. Autenticação
+
+- [x] Cadastro
+- [x] Login
+- [x] Logout
+- [x] Recuperação de senha
+- [x] Confirmação de e-mail
+- [x] Login com GitHub
+- [x] Login com Google
+- [x] Sessão persistente
+- [x] Proteção de páginas privadas
+- [x] Exclusão de conta
+- [x] Exportação dos dados pessoais
+
+---
+
+# 7. Perfil de desenvolvedor
+
+## Página pública
+
+- [x] Nome
+- [x] Username
+- [x] Avatar
+- [x] Bio
+- [x] Cargo/área
+- [x] Senioridade
+- [x] Stack
+- [x] GitHub
+- [x] LinkedIn
+- [x] Site
+- [x] Projetos
+- [x] Open Source
+- [x] Comunidades
+- [x] Disponibilidade profissional
+- [x] Disponibilidade para projetos
+
+URL:
+
+```text
+/devs/username
+```
+
+## Edição
+
+- [x] Editar informações
+- [x] Editar avatar
+- [x] Adicionar tecnologias
+- [x] Adicionar redes
+- [x] Configurar disponibilidade
+- [x] Configurar privacidade
 
 ---
 
 # 8. Diretório de desenvolvedores
 
-- [ ] Página `/devs`
-- [ ] Cards
-- [ ] Paginação
-- [ ] Busca por nome
-- [ ] Busca por tecnologia
-- [ ] Filtro por área
-- [ ] Filtro por senioridade
-- [ ] Filtro por disponibilidade
-- [ ] Ordenação
-- [ ] URL compartilhável dos filtros
+- [x] Página `/devs`
+- [x] Cards
+- [x] Paginação
+- [x] Busca por nome
+- [x] Busca por tecnologia
+- [x] Filtro por área
+- [x] Filtro por senioridade
+- [x] Filtro por disponibilidade
+- [x] Ordenação
+- [x] URL compartilhável dos filtros
 
 Exemplo:
 
@@ -357,24 +337,24 @@ Exemplo:
 
 # 9. Projetos
 
-- [ ] Página `/projetos`
-- [ ] Cadastro de projeto
-- [ ] Edição
-- [ ] Exclusão
-- [ ] Página individual
-- [ ] Nome
-- [ ] Descrição
-- [ ] Screenshots
-- [ ] Stack
-- [ ] Repositório
-- [ ] Demo
-- [ ] Site
-- [ ] Equipe
-- [ ] Status
-- [ ] Licença
-- [ ] Open Source
-- [ ] Procura colaboradores
-- [ ] Compartilhamento
+- [x] Página `/projetos`
+- [x] Cadastro de projeto
+- [x] Edição
+- [x] Exclusão
+- [x] Página individual
+- [x] Nome
+- [x] Descrição
+- [x] Screenshots
+- [x] Stack
+- [x] Repositório
+- [x] Demo
+- [x] Site
+- [x] Equipe
+- [x] Status
+- [x] Licença
+- [x] Open Source
+- [x] Procura colaboradores
+- [x] Compartilhamento
 
 URL:
 
@@ -583,17 +563,17 @@ Conteúdo
 
 Criar seções:
 
-- [ ] Hero
-- [ ] Busca global
-- [ ] Estatísticas
-- [ ] Projetos em destaque
-- [ ] Desenvolvedores
-- [ ] Vagas recentes
-- [ ] Próximos eventos
-- [ ] Comunidades
-- [ ] Empresas
-- [ ] Conteúdo recente
-- [ ] CTA para cadastro
+- [x] Hero
+- [x] Busca global
+- [x] Estatísticas
+- [x] Projetos em destaque
+- [x] Desenvolvedores
+- [x] Vagas recentes
+- [x] Próximos eventos
+- [x] Comunidades
+- [x] Empresas
+- [x] Conteúdo recente
+- [x] CTA para cadastro
 
 Possíveis métricas:
 
@@ -612,16 +592,16 @@ Eventos
 
 Criar `/dashboard`.
 
-- [ ] Visão geral
-- [ ] Editar perfil
-- [ ] Meus projetos
-- [ ] Minhas vagas
-- [ ] Meus anúncios
-- [ ] Eventos
-- [ ] Favoritos
-- [ ] Configurações
-- [ ] Conta
-- [ ] Privacidade
+- [x] Visão geral
+- [x] Editar perfil
+- [x] Meus projetos
+- [x] Minhas vagas
+- [x] Meus anúncios
+- [x] Eventos
+- [x] Favoritos
+- [x] Configurações
+- [x] Conta
+- [x] Privacidade
 
 ---
 
@@ -697,20 +677,20 @@ Não publicar automaticamente informações pessoais encontradas na internet.
 
 Perfis e projetos devem poder aparecer nos mecanismos de busca.
 
-- [ ] URLs amigáveis
-- [ ] `<title>`
-- [ ] Meta description
-- [ ] Canonical
-- [ ] Open Graph
-- [ ] Twitter/X Cards
-- [ ] Sitemap
-- [ ] Robots.txt
-- [ ] Structured Data
-- [ ] Schema.org Person
-- [ ] Schema.org Organization
-- [ ] Schema.org JobPosting
-- [ ] Schema.org Event
-- [ ] Schema.org Article
+- [x] URLs amigáveis
+- [x] `<title>`
+- [x] Meta description
+- [x] Canonical
+- [x] Open Graph
+- [x] Twitter/X Cards
+- [x] Sitemap
+- [x] Robots.txt
+- [x] Structured Data
+- [x] Schema.org Person
+- [x] Schema.org Organization
+- [x] Schema.org JobPosting
+- [x] Schema.org Event
+- [x] Schema.org Article
 
 ---
 
@@ -718,17 +698,17 @@ Perfis e projetos devem poder aparecer nos mecanismos de busca.
 
 Meta inicial: WCAG 2.2 AA.
 
-- [ ] HTML semântico
-- [ ] Navegação por teclado
-- [ ] Focus states
-- [ ] Labels
-- [ ] ARIA somente quando necessário
-- [ ] Contraste adequado
-- [ ] Alt text
-- [ ] Skip navigation
-- [ ] Formulários acessíveis
-- [ ] Testar leitores de tela
-- [ ] Respeitar `prefers-reduced-motion`
+- [x] HTML semântico
+- [x] Navegação por teclado
+- [x] Focus states
+- [x] Labels
+- [x] ARIA somente quando necessário
+- [x] Contraste adequado
+- [x] Alt text
+- [x] Skip navigation
+- [x] Formulários acessíveis
+- [x] Testar leitores de tela
+- [x] Respeitar `prefers-reduced-motion`
 
 ---
 
@@ -736,10 +716,10 @@ Meta inicial: WCAG 2.2 AA.
 
 Testar:
 
-- [ ] Desktop
-- [ ] Notebook
-- [ ] Tablet
-- [ ] Smartphone
+- [x] Desktop
+- [x] Notebook
+- [x] Tablet
+- [x] Smartphone
 
 Breakpoints devem ser definidos pelo conteúdo, não por modelos específicos de dispositivos.
 
@@ -765,18 +745,18 @@ Breakpoints devem ser definidos pelo conteúdo, não por modelos específicos de
 
 ## Unitários
 
-- [ ] Utils
-- [ ] Validação
-- [ ] Filtros
-- [ ] Formatação
+- [x] Utils
+- [x] Validação
+- [x] Filtros
+- [x] Formatação
 
 ## Integração
 
-- [ ] Auth
-- [ ] Perfil
-- [ ] Projetos
-- [ ] Vagas
-- [ ] Empresas
+- [x] Auth
+- [x] Perfil
+- [x] Projetos
+- [x] Vagas
+- [x] Empresas
 
 ## E2E
 
@@ -794,12 +774,12 @@ Publicar
 Encontrar projeto na busca
 ```
 
-- [ ] Desktop
-- [ ] Mobile
-- [ ] Chrome
-- [ ] Firefox
-- [ ] Edge
-- [ ] Safari
+- [x] Desktop
+- [x] Mobile
+- [x] Chrome
+- [x] Firefox
+- [x] Edge
+- [x] Safari
 
 ---
 
