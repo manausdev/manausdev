@@ -107,7 +107,14 @@ Efeito de vidro com backdrop blur. Usado em cards principais.
 }
 ```
 
-### 6.2 Botões
+### 6.2 Inputs e selects
+- **Classe utilitária**: `.filter-input`
+- **Estilo**: `background: rgba(30, 30, 47, 0.8); border: 1px solid rgba(132, 148, 149, 0.3); color: #e3e0f8;`
+- **Focus**: `border-color: #00f5ff; box-shadow: 0 0 0 3px rgba(0, 245, 255, 0.2);`
+- **Placeholder**: `color: #849495`
+- **Options**: `background: #1a1a2b; color: #e3e0f8;`
+
+### 6.3 Botões
 - **Primário**: `bg-primary-container text-on-primary-container`
 - **Secundário**: `bg-surface-container text-on-surface border border-outline-variant/30`
 - **Hover**: `hover:border-primary-container hover:text-primary-container`
