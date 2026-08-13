@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Procuro equipe | ManausDev</title>
+  <link rel="stylesheet" href="/css/variables.css">
+  <link rel="stylesheet" href="/css/global.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+</head>
+<body>
+  <header class="navbar" role="banner">
+    <a href="/#home" class="navbar-brand">ManausDev</a>
+    <nav aria-label="Navegação principal">
+      <ul class="navbar-nav">
+        <li><a href="/#developers" class="nav-link" data-route="developers">Desenvolvedores</a></li>
+        <li><a href="/#projects" class="nav-link" data-route="projects">Projetos</a></li>
+        <li><a href="/#jobs" class="nav-link" data-route="jobs">Vagas</a></li>
+        <li><a href="/#events" class="nav-link" data-route="events">Eventos</a></li>
+        <li><a href="/#communities" class="nav-link" data-route="communities">Comunidades</a></li>
+        <li><a href="/conteudo" class="nav-link" data-route="content">Conteúdo</a></li>
+        <li><a href="/equipes" class="nav-link active" data-route="teams">Equipes</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main-content" role="main">
+    <section class="section" aria-labelledby="page-title">
+      <div class="container">
+        <h1 id="page-title">Procuro equipe</h1>
+        <p class="text-secondary" data-search-result-count>Encontre ou anuncie oportunidades de colaboração</p>
+      </div>
+
+      <div class="container">
+        <div class="filters" id="team-filters" data-component="filters" aria-label="Filtros de equipes">
+          <div class="filters__row">
+            <div class="form-group">
+              <label class="label" for="team-search">Buscar por função ou tecnologia</label>
+              <input
+                type="search"
+                id="team-search"
+                class="input"
+                placeholder="Ex: Frontend, React, Node.js"
+                data-filter="search"
+                autocomplete="off"
+              >
+            </div>
+
+            <div class="form-group">
+              <label class="label" for="category-select">Categoria</label>
+              <select id="category-select" class="select input" data-filter="category">
+                <option value="">Todas</option>
+                <option value="frontend">Frontend</option>
+                <option value="backend">Backend</option>
+                <option value="fullstack">Fullstack</option>
+                <option value="mobile">Mobile</option>
+                <option value="design">Design</option>
+                <option value="devops">DevOps</option>
+                <option value="data">Data Science</option>
+                <option value="outro">Outro</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="label" for="paid-select">Remunerado</label>
+              <select id="paid-select" class="select input" data-filter="paid">
+                <option value="">Todos</option>
+                <option value="sim">Sim</option>
+                <option value="nao">Não</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="filters__actions">
+            <button type="button" class="btn btn-secondary" id="clear-team-filters">Limpar filtros</button>
+          </div>
+        </div>
+
+        <div id="teams-grid" class="grid grid--3" data-component="grid" role="list" aria-label="Lista de anúncios de equipe">
+          <p class="text-secondary" id="teams-empty">Nenhum anúncio encontrado.</p>
+        </div>
+      </div>
+
+      <div class="container" style="margin-top: var(--space-12);">
+        <div class="card" style="max-width: var(--max-width-2xl); margin: 0 auto;">
+          <div class="card-header">
+            <h2 class="card-title" style="font-size: var(--text-2xl);">Criar anúncio de equipe</h2>
+            <p class="text-secondary">Anuncie que está procurando uma equipe para seu projeto</p>
+          </div>
+          <div class="card-body">
+            <form id="team-form" aria-label="Formulário de anúncio de equipe">
+              <div class="form-group">
+                <label class="label" for="team-function">Função necessária</label>
+                <input type="text" id="team-function" class="input" placeholder="Ex: Desenvolvedor Frontend" required>
+              </div>
+
+              <div class="form-group">
+                <label class="label" for="team-tech">Tecnologias</label>
+                <input type="text" id="team-tech" class="input" placeholder="Ex: React, Node.js, PostgreSQL" required>
+              </div>
+
+              <div class="form-group">
+                <label class="label" for="team-description">Descrição do projeto</label>
+                <textarea id="team-description" class="input" placeholder="Descreva o projeto e o que espera da equipe..." required></textarea>
+              </div>
+
+              <div class="form-group">
+                <label class="label" for="team-deadline">Prazo</label>
+                <input type="date" id="team-deadline" class="input" required>
+              </div>
+
+              <div class="form-group">
+                <label class="checkbox">
+                  <input type="checkbox" id="team-paid">
+                  <span>Remunerado</span>
+                </label>
+              </div>
+
+              <button type="submit" class="btn btn-primary">Publicar anúncio</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="footer-content">
+      <p class="footer-text"> ManausDev. Todos os direitos reservados.</p>
+    </div>
+  </footer>
+
+  <script type="module" src="/js/app.js"></script>
+  <script type="module" src="/pages/equipes/main.js"></script>
+</body>
+</html>

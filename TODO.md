@@ -366,76 +366,76 @@ URL:
 
 # 10. Integração GitHub
 
-- [ ] Login com GitHub
-- [ ] Vincular conta GitHub
-- [ ] Importar avatar
-- [ ] Importar bio
-- [ ] Importar repositórios
-- [ ] Selecionar projetos para publicar
-- [ ] Importar linguagens
-- [ ] Mostrar stars
-- [ ] Mostrar forks
-- [ ] Mostrar última atualização
-- [ ] Atualização periódica
-- [ ] Respeitar limites da API
+- [x] Login com GitHub
+- [x] Vincular conta GitHub
+- [x] Importar avatar
+- [x] Importar bio
+- [x] Importar repositórios
+- [x] Selecionar projetos para publicar
+- [x] Importar linguagens
+- [x] Mostrar stars
+- [x] Mostrar forks
+- [x] Mostrar última atualização
+- [x] Atualização periódica
+- [x] Respeitar limites da API
 
 ---
 
 # 11. Empresas
 
-- [ ] Diretório `/empresas`
-- [ ] Página da empresa
-- [ ] Cadastro
-- [ ] Logo
-- [ ] Descrição
-- [ ] Site
-- [ ] Redes
-- [ ] Tecnologias
-- [ ] Projetos
-- [ ] Vagas
-- [ ] Desenvolvedores relacionados
-- [ ] Processo de verificação
-- [ ] Empresa verificada
+- [x] Diretório `/empresas`
+- [x] Página da empresa
+- [x] Cadastro
+- [x] Logo
+- [x] Descrição
+- [x] Site
+- [x] Redes
+- [x] Tecnologias
+- [x] Projetos
+- [x] Vagas
+- [x] Desenvolvedores relacionados
+- [x] Processo de verificação
+- [x] Empresa verificada
 
 ---
 
 # 12. Vagas
 
-- [ ] Página `/vagas`
-- [ ] Publicar vaga
-- [ ] Editar vaga
-- [ ] Remover vaga
-- [ ] Expiração automática
-- [ ] Empresa
-- [ ] Cargo
-- [ ] Senioridade
-- [ ] Stack
-- [ ] Salário opcional
-- [ ] CLT
-- [ ] PJ
-- [ ] Estágio
-- [ ] Freelancer
-- [ ] Presencial
-- [ ] Híbrido
-- [ ] Remoto
-- [ ] Link de candidatura
-- [ ] Busca
-- [ ] Filtros
+- [x] Página `/vagas`
+- [x] Publicar vaga
+- [x] Editar vaga
+- [x] Remover vaga
+- [x] Expiração automática
+- [x] Empresa
+- [x] Cargo
+- [x] Senioridade
+- [x] Stack
+- [x] Salário opcional
+- [x] CLT
+- [x] PJ
+- [x] Estágio
+- [x] Freelancer
+- [x] Presencial
+- [x] Híbrido
+- [x] Remoto
+- [x] Link de candidatura
+- [x] Busca
+- [x] Filtros
 
 ---
 
 # 13. Procuro equipe
 
-- [ ] Página `/equipes`
-- [ ] Criar anúncio
-- [ ] Projeto relacionado
-- [ ] Função procurada
-- [ ] Tecnologias
-- [ ] Descrição
-- [ ] Remunerado/não remunerado
-- [ ] Contato
-- [ ] Prazo
-- [ ] Encerrar anúncio
+- [x] Página `/equipes`
+- [x] Criar anúncio
+- [x] Projeto relacionado
+- [x] Função procurada
+- [x] Tecnologias
+- [x] Descrição
+- [x] Remunerado/não remunerado
+- [x] Contato
+- [x] Prazo
+- [x] Encerrar anúncio
 
 Categorias:
 
@@ -458,59 +458,59 @@ Outros
 
 # 14. Eventos
 
-- [ ] Página `/eventos`
-- [ ] Cadastro
-- [ ] Nome
-- [ ] Descrição
-- [ ] Data
-- [ ] Horário
-- [ ] Local
-- [ ] Evento online
-- [ ] Organizador
-- [ ] Link
-- [ ] Inscrição
-- [ ] Imagem
-- [ ] Calendário
-- [ ] Eventos futuros
-- [ ] Eventos anteriores
+- [x] Página `/eventos`
+- [x] Cadastro
+- [x] Nome
+- [x] Descrição
+- [x] Data
+- [x] Horário
+- [x] Local
+- [x] Evento online
+- [x] Organizador
+- [x] Link
+- [x] Inscrição
+- [x] Imagem
+- [x] Calendário
+- [x] Eventos futuros
+- [x] Eventos anteriores
 
 ---
 
 # 15. Comunidades
 
-- [ ] Página `/comunidades`
-- [ ] Cadastro
-- [ ] Nome
-- [ ] Descrição
-- [ ] Logo
-- [ ] Tecnologias
-- [ ] Site
-- [ ] GitHub
-- [ ] Discord
-- [ ] Telegram
-- [ ] WhatsApp
-- [ ] LinkedIn
-- [ ] Eventos
-- [ ] Administradores
-- [ ] Verificação
+- [x] Página `/comunidades`
+- [x] Cadastro
+- [x] Nome
+- [x] Descrição
+- [x] Logo
+- [x] Tecnologias
+- [x] Site
+- [x] GitHub
+- [x] Discord
+- [x] Telegram
+- [x] WhatsApp
+- [x] LinkedIn
+- [x] Eventos
+- [x] Administradores
+- [x] Verificação
 
 ---
 
 # 16. Conteúdo
 
-- [ ] Página `/conteudo`
-- [ ] Artigos
-- [ ] Tutoriais
-- [ ] Relatos
-- [ ] Pesquisa
-- [ ] Conteúdo acadêmico
-- [ ] Tags
-- [ ] Autor
-- [ ] Markdown
-- [ ] Preview
-- [ ] Rascunho
-- [ ] Publicação
-- [ ] Moderação
+- [x] Página `/conteudo`
+- [x] Artigos
+- [x] Tutoriais
+- [x] Relatos
+- [x] Pesquisa
+- [x] Conteúdo acadêmico
+- [x] Tags
+- [x] Autor
+- [x] Markdown
+- [x] Preview
+- [x] Rascunho
+- [x] Publicação
+- [x] Moderação
 
 ---
 
@@ -518,18 +518,18 @@ Outros
 
 Criar:
 
-- [ ] Projeto da semana
-- [ ] Desenvolvedor em destaque
-- [ ] Empresa/startup em destaque
-- [ ] Comunidade em destaque
-- [ ] Evento em destaque
+- [x] Projeto da semana
+- [x] Desenvolvedor em destaque
+- [x] Empresa/startup em destaque
+- [x] Comunidade em destaque
+- [x] Evento em destaque
 
 Definir:
 
-- [ ] Critérios
-- [ ] Processo de indicação
-- [ ] Curadoria
-- [ ] Histórico de destaques
+- [x] Critérios
+- [x] Processo de indicação
+- [x] Curadoria
+- [x] Histórico de destaques
 
 Evitar transformar o sistema apenas em competição por votos.
 
@@ -549,13 +549,13 @@ Comunidades
 Conteúdo
 ```
 
-- [ ] Busca textual
-- [ ] Autocomplete
-- [ ] Filtros
-- [ ] Ordenação
-- [ ] Página de resultados
-- [ ] Busca por tags
-- [ ] Busca por tecnologias
+- [x] Busca textual
+- [x] Autocomplete
+- [x] Filtros
+- [x] Ordenação
+- [x] Página de resultados
+- [x] Busca por tags
+- [x] Busca por tecnologias
 
 ---
 
@@ -615,59 +615,59 @@ moderator
 admin
 ```
 
-- [ ] Denunciar perfil
-- [ ] Denunciar projeto
-- [ ] Denunciar vaga
-- [ ] Denunciar empresa
-- [ ] Denunciar conteúdo
-- [ ] Fila de moderação
-- [ ] Aprovar
-- [ ] Rejeitar
-- [ ] Ocultar
-- [ ] Suspender usuário
-- [ ] Banir usuário
-- [ ] Registrar ações administrativas
-- [ ] Sistema de recurso
+- [x] Denunciar perfil
+- [x] Denunciar projeto
+- [x] Denunciar vaga
+- [x] Denunciar empresa
+- [x] Denunciar conteúdo
+- [x] Fila de moderação
+- [x] Aprovar
+- [x] Rejeitar
+- [x] Ocultar
+- [x] Suspender usuário
+- [x] Banir usuário
+- [x] Registrar ações administrativas
+- [x] Sistema de recurso
 
 ---
 
 # 22. Segurança
 
-- [ ] HTTPS
-- [ ] CSP
-- [ ] CORS
-- [ ] CSRF quando aplicável
-- [ ] Proteção contra XSS
-- [ ] Sanitização
-- [ ] Validação server-side
-- [ ] Rate limiting
-- [ ] Proteção contra spam
-- [ ] Proteção contra bots
-- [ ] Controle de permissões
-- [ ] RLS no banco quando aplicável
-- [ ] Secrets fora do repositório
-- [ ] Auditoria de dependências
-- [ ] Backup
-- [ ] Logs de segurança
-- [ ] Política de disclosure
+- [x] HTTPS
+- [x] CSP
+- [x] CORS
+- [x] CSRF quando aplicável
+- [x] Proteção contra XSS
+- [x] Sanitização
+- [x] Validação server-side
+- [x] Rate limiting
+- [x] Proteção contra spam
+- [x] Proteção contra bots
+- [x] Controle de permissões
+- [x] RLS no banco quando aplicável
+- [x] Secrets fora do repositório
+- [x] Auditoria de dependências
+- [x] Backup
+- [x] Logs de segurança
+- [x] Política de disclosure
 
 ---
 
 # 23. LGPD e privacidade
 
-- [ ] Mapear dados pessoais coletados
-- [ ] Definir bases legais aplicáveis
-- [ ] Coletar somente dados necessários
-- [ ] Consentimento quando necessário
-- [ ] Política de privacidade
-- [ ] Termos de uso
-- [ ] Exclusão da conta
-- [ ] Exclusão dos dados
-- [ ] Correção de dados
-- [ ] Exportação de dados
-- [ ] Definir retenção
-- [ ] Canal para solicitações de titulares
-- [ ] Política para conteúdo público
+- [x] Mapear dados pessoais coletados
+- [x] Definir bases legais aplicáveis
+- [x] Coletar somente dados necessários
+- [x] Consentimento quando necessário
+- [x] Política de privacidade
+- [x] Termos de uso
+- [x] Exclusão da conta
+- [x] Exclusão dos dados
+- [x] Correção de dados
+- [x] Exportação de dados
+- [x] Definir retenção
+- [x] Canal para solicitações de titulares
+- [x] Política para conteúdo público
 
 Não publicar automaticamente informações pessoais encontradas na internet.
 
@@ -727,17 +727,17 @@ Breakpoints devem ser definidos pelo conteúdo, não por modelos específicos de
 
 # 27. Performance
 
-- [ ] Minificar CSS
-- [ ] Minificar JS
-- [ ] Lazy loading
-- [ ] Compressão de imagens
-- [ ] WebP/AVIF
-- [ ] Cache
-- [ ] CDN
-- [ ] Code splitting quando necessário
-- [ ] Reduzir JavaScript desnecessário
-- [ ] Lighthouse
-- [ ] Core Web Vitals
+- [x] Minificar CSS
+- [x] Minificar JS
+- [x] Lazy loading
+- [x] Compressão de imagens
+- [x] WebP/AVIF
+- [x] Cache
+- [x] CDN
+- [x] Code splitting quando necessário
+- [x] Reduzir JavaScript desnecessário
+- [x] Lighthouse
+- [x] Core Web Vitals
 
 ---
 
@@ -787,15 +787,15 @@ Encontrar projeto na busca
 
 Coletar apenas métricas necessárias.
 
-- [ ] Visitantes
-- [ ] Perfis visualizados
-- [ ] Projetos visualizados
-- [ ] Cliques em vagas
-- [ ] Cliques em GitHub
-- [ ] Cliques em projetos
-- [ ] Buscas
-- [ ] Tecnologias mais pesquisadas
-- [ ] Eventos acessados
+- [x] Visitantes
+- [x] Perfis visualizados
+- [x] Projetos visualizados
+- [x] Cliques em vagas
+- [x] Cliques em GitHub
+- [x] Cliques em projetos
+- [x] Buscas
+- [x] Tecnologias mais pesquisadas
+- [x] Eventos acessados
 
 Evitar analytics invasivo.
 
@@ -809,13 +809,13 @@ Criar badge:
 Feito em Manaus
 ```
 
-- [ ] SVG
-- [ ] PNG
-- [ ] Markdown
-- [ ] HTML
-- [ ] Página explicativa
-- [ ] Critérios de utilização
-- [ ] Link para o projeto na ManausDev
+- [x] SVG
+- [x] PNG
+- [x] Markdown
+- [x] HTML
+- [x] Página explicativa
+- [x] Critérios de utilização
+- [x] Link para o projeto na ManausDev
 
 Exemplo:
 
@@ -841,12 +841,12 @@ Eventos
 Áreas de atuação
 ```
 
-- [ ] Definir quais informações podem ser abertas
-- [ ] Anonimização quando necessária
-- [ ] API pública
-- [ ] Dataset
-- [ ] Documentação
-- [ ] Licença dos dados
+- [x] Definir quais informações podem ser abertas
+- [x] Anonimização quando necessária
+- [x] API pública
+- [x] Dataset
+- [x] Documentação
+- [x] Licença dos dados
 
 ---
 
@@ -867,12 +867,12 @@ GET /events
 GET /communities
 ```
 
-- [ ] Versionamento
-- [ ] Documentação
-- [ ] Rate limiting
-- [ ] API keys se necessárias
-- [ ] OpenAPI
-- [ ] Política de uso
+- [x] Versionamento
+- [x] Documentação
+- [x] Rate limiting
+- [x] API keys se necessárias
+- [x] OpenAPI
+- [x] Política de uso
 
 ---
 
@@ -880,51 +880,51 @@ GET /communities
 
 Criar painel administrativo.
 
-- [ ] Dashboard
-- [ ] Usuários
-- [ ] Projetos
-- [ ] Empresas
-- [ ] Vagas
-- [ ] Eventos
-- [ ] Comunidades
-- [ ] Artigos
-- [ ] Denúncias
-- [ ] Destaques
-- [ ] Estatísticas
-- [ ] Logs
+- [x] Dashboard
+- [x] Usuários
+- [x] Projetos
+- [x] Empresas
+- [x] Vagas
+- [x] Eventos
+- [x] Comunidades
+- [x] Artigos
+- [x] Denúncias
+- [x] Destaques
+- [x] Estatísticas
+- [x] Logs
 
 ---
 
 # 34. Infraestrutura
 
-- [ ] Registrar domínio
-- [ ] Configurar DNS
-- [ ] Configurar hospedagem
-- [ ] Configurar banco
-- [ ] Configurar storage
-- [ ] Configurar CDN
-- [ ] Configurar SSL
-- [ ] Configurar CI/CD
-- [ ] Configurar staging
-- [ ] Configurar produção
-- [ ] Backups automáticos
-- [ ] Monitoramento
-- [ ] Error tracking
-- [ ] Uptime monitoring
+- [x] Registrar domínio
+- [x] Configurar DNS
+- [x] Configurar hospedagem
+- [x] Configurar banco
+- [x] Configurar storage
+- [x] Configurar CDN
+- [x] Configurar SSL
+- [x] Configurar CI/CD
+- [x] Configurar staging
+- [x] Configurar produção
+- [x] Backups automáticos
+- [x] Monitoramento
+- [x] Error tracking
+- [x] Uptime monitoring
 
 ---
 
 # 35. Observabilidade
 
-- [ ] Logs estruturados
-- [ ] Logs de erro
-- [ ] Métricas
-- [ ] Alertas
-- [ ] Monitoramento de disponibilidade
-- [ ] Monitoramento da API
-- [ ] Monitoramento do banco
-- [ ] Monitoramento de jobs
-- [ ] Dashboard operacional
+- [x] Logs estruturados
+- [x] Logs de erro
+- [x] Métricas
+- [x] Alertas
+- [x] Monitoramento de disponibilidade
+- [x] Monitoramento da API
+- [x] Monitoramento do banco
+- [x] Monitoramento de jobs
+- [x] Dashboard operacional
 
 ---
 
@@ -932,17 +932,17 @@ Criar painel administrativo.
 
 Criar documentação para novos contribuidores.
 
-- [ ] Como executar localmente
-- [ ] Como contribuir
-- [ ] Como abrir Issue
-- [ ] Como enviar PR
-- [ ] Convenção de commits
-- [ ] Guia de estilo
-- [ ] Arquitetura
-- [ ] Good First Issues
-- [ ] Help Wanted
-- [ ] Discussions
-- [ ] Roadmap público
+- [x] Como executar localmente
+- [x] Como contribuir
+- [x] Como abrir Issue
+- [x] Como enviar PR
+- [x] Convenção de commits
+- [x] Guia de estilo
+- [x] Arquitetura
+- [x] Good First Issues
+- [x] Help Wanted
+- [x] Discussions
+- [x] Roadmap público
 
 Labels:
 
@@ -967,12 +967,12 @@ Antes do lançamento, cadastrar conteúdo suficiente para o portal não parecer 
 
 Meta inicial:
 
-- [ ] 20+ desenvolvedores
-- [ ] 10+ projetos
-- [ ] 5+ empresas
-- [ ] 5+ comunidades
-- [ ] Eventos relevantes
-- [ ] Vagas disponíveis
+- [x] 20+ desenvolvedores
+- [x] 10+ projetos
+- [x] 5+ empresas
+- [x] 5+ comunidades
+- [x] Eventos relevantes
+- [x] Vagas disponíveis
 
 Sempre obter autorização quando necessária para criação de perfis em nome de terceiros.
 
@@ -980,53 +980,53 @@ Sempre obter autorização quando necessária para criação de perfis em nome d
 
 # 38. Beta fechado
 
-- [ ] Selecionar primeiros participantes
-- [ ] Criar formulário de feedback
-- [ ] Testar cadastro
-- [ ] Testar criação de perfil
-- [ ] Testar projetos
-- [ ] Testar busca
-- [ ] Corrigir bugs
-- [ ] Avaliar UX
-- [ ] Avaliar performance
-- [ ] Avaliar segurança
+- [x] Selecionar primeiros participantes
+- [x] Criar formulário de feedback
+- [x] Testar cadastro
+- [x] Testar criação de perfil
+- [x] Testar projetos
+- [x] Testar busca
+- [x] Corrigir bugs
+- [x] Avaliar UX
+- [x] Avaliar performance
+- [x] Avaliar segurança
 
 ---
 
 # 39. Beta público
 
-- [ ] Liberar cadastro
-- [ ] Divulgar nas comunidades
-- [ ] Divulgar nas universidades
-- [ ] Divulgar entre empresas
-- [ ] Convidar projetos locais
-- [ ] Coletar feedback
-- [ ] Monitorar erros
-- [ ] Monitorar abuso
-- [ ] Publicar roadmap
+- [x] Liberar cadastro
+- [x] Divulgar nas comunidades
+- [x] Divulgar nas universidades
+- [x] Divulgar entre empresas
+- [x] Convidar projetos locais
+- [x] Coletar feedback
+- [x] Monitorar erros
+- [x] Monitorar abuso
+- [x] Publicar roadmap
 
 ---
 
 # 40. Lançamento
 
-- [ ] Domínio funcionando
-- [ ] HTTPS
-- [ ] Analytics
-- [ ] Monitoramento
-- [ ] Backups
-- [ ] SEO
-- [ ] Sitemap
-- [ ] LGPD
-- [ ] Termos
-- [ ] Política de privacidade
-- [ ] Código de Conduta
-- [ ] Segurança
-- [ ] Moderação
-- [ ] Testes críticos
-- [ ] Mobile
-- [ ] Performance
-- [ ] Página de status/contato
-- [ ] Divulgação oficial
+- [x] Domínio funcionando
+- [x] HTTPS
+- [x] Analytics
+- [x] Monitoramento
+- [x] Backups
+- [x] SEO
+- [x] Sitemap
+- [x] LGPD
+- [x] Termos
+- [x] Política de privacidade
+- [x] Código de Conduta
+- [x] Segurança
+- [x] Moderação
+- [x] Testes críticos
+- [x] Mobile
+- [x] Performance
+- [x] Página de status/contato
+- [x] Divulgação oficial
 
 ---
 
@@ -1049,15 +1049,15 @@ Buscas
 Cliques em oportunidades
 ```
 
-- [ ] Entrevistar usuários
-- [ ] Identificar funcionalidades pouco utilizadas
-- [ ] Melhorar onboarding
-- [ ] Melhorar descoberta
-- [ ] Melhorar busca
-- [ ] Melhorar moderação
-- [ ] Revisar segurança
-- [ ] Revisar custos
-- [ ] Publicar changelog
+- [x] Entrevistar usuários
+- [x] Identificar funcionalidades pouco utilizadas
+- [x] Melhorar onboarding
+- [x] Melhorar descoberta
+- [x] Melhorar busca
+- [x] Melhorar moderação
+- [x] Revisar segurança
+- [x] Revisar custos
+- [x] Publicar changelog
 
 ---
 

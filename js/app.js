@@ -1,3 +1,7 @@
+import { initSeedData, hasSeedData } from './seed.js';
+import { trackPageView } from './analytics.js';
+import { log } from './logging.js';
+
 export const ROUTES = {
   HOME: '#home',
   DEVELOPERS: '#developers',
@@ -68,5 +72,16 @@ export function initApp() {
     store.set('currentUser', JSON.parse(user));
   }
 
-  console.log('ManausDev app initialized');
+  if (!hasSeedData()) {
+    initSeedData();
+    log('Seed data initialized', { timestamp: new Date().toISOString() });
+  }
+
+  log('App initialized', { theme, hasUser: !!user });
+}
+
+export function initAnalytics() {
+  const path = window.location.pathname;
+  trackPageView(path);
+  log('Page tracked', { path });
 }

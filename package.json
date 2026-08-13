@@ -1,0 +1,17 @@
+{
+  "name": "manausdev",
+  "version": "1.0.0",
+  "description": "Plataforma ManausDev - Quem constrói tecnologia em Manaus está aqui",
+  "scripts": {
+    "dev": "node build.js --watch",
+    "build": "node build.js",
+    "serve": "node serve.js"
+  },
+  "keywords": [
+    "manausdev",
+    "tech",
+    "community",
+    "developers"
+  ],
+  "license": "Apache-2.0"
+}
