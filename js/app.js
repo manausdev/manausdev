@@ -10,6 +10,8 @@ export const ROUTES = {
   LOGIN: '#login',
   REGISTER: '#register',
   PROFILE: '#profile',
+  MY_PROJECTS: '#my-projects',
+  SETTINGS: '#settings',
   NOT_FOUND: '#not-found',
 };
 
