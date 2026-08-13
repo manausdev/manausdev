@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ManausDev — Quem constrói tecnologia em Manaus está aqui</title>
+  <meta name="description" content="Conectando desenvolvedores, projetos, empresas e comunidades de tecnologia em Manaus.">
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+  <header class="navbar" data-component="navbar">
+    <a href="/" class="navbar-brand" aria-label="ManausDev - Página inicial">ManausDev</a>
+    <nav aria-label="Navegação principal">
+      <ul class="navbar-nav" id="main-nav">
+        <li><a href="#devs" class="nav-link" data-section="devs">Devs</a></li>
+        <li><a href="#projetos" class="nav-link" data-section="projetos">Projetos</a></li>
+        <li><a href="#empresas" class="nav-link" data-section="empresas">Empresas</a></li>
+        <li><a href="#vagas" class="nav-link" data-section="vagas">Vagas</a></li>
+        <li><a href="#eventos" class="nav-link" data-section="eventos">Eventos</a></li>
+        <li><a href="#comunidades" class="nav-link" data-section="comunidades">Comunidades</a></li>
+      </ul>
+    </nav>
+    <div class="navbar-actions" style="display: flex; align-items: center; gap: var(--space-3);">
+      <button class="btn btn-ghost btn-sm" id="btn-search-toggle" aria-label="Abrir busca" data-action="open-search">Buscar</button>
+      <a href="/login" class="btn btn-primary btn-sm" id="btn-login" data-auth="login">Entrar</a>
+      <a href="/cadastro" class="btn btn-secondary btn-sm" id="btn-register" data-auth="register">Cadastrar</a>
+    </div>
+  </header>
+
+  <main>
+    <section id="hero" class="hero" data-section="hero" aria-labelledby="hero-title">
+      <div class="container" style="max-width: var(--max-width-3xl); margin: 0 auto; padding: var(--space-16) var(--space-6); text-align: center;">
+        <h1 id="hero-title" style="font-size: var(--text-4xl); font-weight: var(--weight-bold); color: var(--color-text); margin-bottom: var(--space-4); line-height: var(--leading-tight);">
+          Quem constrói tecnologia em Manaus está aqui
+        </h1>
+        <p class="hero-subtitle" style="font-size: var(--text-lg); color: var(--color-text-secondary); margin-bottom: var(--space-8); max-width: var(--max-width-2xl); margin-left: auto; margin-right: auto;">
+          Conectamos desenvolvedores, projetos, empresas e comunidades do ecossistema tech de Manaus.
+        </p>
+        <form class="search-form hero-search" id="hero-search" data-search="hero" style="max-width: var(--max-width-xl); margin: 0 auto var(--space-8);">
+          <div class="form-group" style="margin-bottom: 0;">
+            <input type="search" class="input" id="search-global" placeholder="Buscar devs, projetos, empresas, vagas..." aria-label="Busca global" data-search-input="global">
+          </div>
+        </form>
+        <div class="hero-actions" style="display: flex; gap: var(--space-3); justify-content: center; flex-wrap: wrap;">
+          <a href="/cadastro" class="btn btn-primary btn-lg" id="hero-cta" data-cta="register">Criar conta gratuita</a>
+          <a href="#projetos" class="btn btn-secondary btn-lg" data-cta="explore">Explorar projetos</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="estatisticas" class="estatisticas" data-section="estatisticas" aria-labelledby="estatisticas-title">
+      <div class="container" style="max-width: var(--max-width-3xl); margin: 0 auto; padding: var(--space-8) var(--space-6);">
+        <h2 id="estatisticas-title" class="sr-only">Estatísticas da comunidade</h2>
+        <div class="stats-grid" id="stats-grid" data-stats="grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: var(--space-6); text-align: center;">
+        </div>
+      </div>
+    </section>
+
+    <section id="projetos" class="projetos" data-section="projetos" aria-labelledby="projetos-title">
+      <div class="container" style="max-width: var(--max-width-3xl); margin: 0 auto; padding: var(--space-8) var(--space-6);">
+        <header style="display: flex; align-items: baseline; justify-content: space-between; margin-bottom: var(--space-6);">
+          <h2 id="projetos-title" style="font-size: var(--text-3xl); font-weight: var(--weight-bold);">Projetos em destaque</h2>
+          <a href="/projetos" class="nav-link" data-link="projetos">Ver todos</a>
+        </header>
+        <div class="projects-grid" id="projects-grid" data-projects="grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-6);">
+        </div>
+      </div>
+    </section>
+
+    <section id="devs" class="devs" data-section="devs" aria-labelledby="devs-title">
+      <div class="container" style="max-width: var(--max-width-3xl); margin: 0 auto; padding: var(--space-8) var(--space-6);">
+        <header style="display: flex; align-items: baseline; justify-content: space-between; margin-bottom: var(--space-6);">
+          <h2 id="devs-title" style="font-size: var(--text-3xl); font-weight: var(--weight-bold);">Desenvolvedores em destaque</h2>
+          <a href="/devs" class="nav-link" data-link="devs">Ver todos</a>
+        </header>
+        <div class="devs-grid" id="devs-grid" data-devs="grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--space-6);">
+        </div>
+      </div>
+    </section>
+
+    <section id="vagas" class="vagas" data-section="vagas" aria-labelledby="vagas-title">
+      <div class="container" style="max-width: var(--max-width-3xl); margin: 0 auto; padding: var(--space-8) var(--space-6);">
+        <header style="display: flex; align-items: baseline; justify-content: space-between; margin-bottom: var(--space-6);">
+          <h2 id="vagas-title" style="font-size: var(--text-3xl); font-weight: var(--weight-bold);">Vagas recentes</h2>
+          <a href="/vagas" class="nav-link" data-link="vagas">Ver todas</a>
+        </header>
+        <div class="jobs-grid" id="jobs-grid" data-jobs="grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-6);">
+        </div>
+      </div>
+    </section>
+
+    <section id="eventos" class="eventos" data-section="eventos" aria-labelledby="eventos-title">
+      <div class="container" style="max-width: var(--max-width-3xl); margin: 0 auto; padding: var(--space-8) var(--space-6);">
+        <header style="display: flex; align-items: baseline; justify-content: space-between; margin-bottom: var(--space-6);">
+          <h2 id="eventos-title" style="font-size: var(--text-3xl); font-weight: var(--weight-bold);">Próximos eventos</h2>
+          <a href="/eventos" class="nav-link" data-link="eventos">Ver todos</a>
+        </header>
+        <div class="events-grid" id="events-grid" data-events="grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-6);">
+        </div>
+      </div>
+    </section>
+
+    <section id="comunidades" class="comunidades" data-section="comunidades" aria-labelledby="comunidades-title">
+      <div class="container" style="max-width: var(--max-width-3xl); margin: 0 auto; padding: var(--space-8) var(--space-6);">
+        <header style="display: flex; align-items: baseline; justify-content: space-between; margin-bottom: var(--space-6);">
+          <h2 id="comunidades-title" style="font-size: var(--text-3xl); font-weight: var(--weight-bold);">Comunidades</h2>
+          <a href="/comunidades" class="nav-link" data-link="comunidades">Ver todas</a>
+        </header>
+        <div class="communities-grid" id="communities-grid" data-communities="grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-6);">
+        </div>
+      </div>
+    </section>
+
+    <section id="cta-final" class="cta-final" data-section="cta" aria-labelledby="cta-title">
+      <div class="container" style="max-width: var(--max-width-3xl); margin: 0 auto; padding: var(--space-12) var(--space-6); text-align: center;">
+        <h2 id="cta-title" style="font-size: var(--text-3xl); font-weight: var(--weight-bold); margin-bottom: var(--space-4);">Faça parte do ecossistema tech de Manaus</h2>
+        <p style="font-size: var(--text-lg); color: var(--color-text-secondary); margin-bottom: var(--space-8); max-width: var(--max-width-xl); margin-left: auto; margin-right: auto;">
+          Cadastre-se gratuitamente, crie seu perfil, compartilhe projetos e conecte-se com outros profissionais.
+        </p>
+        <a href="/cadastro" class="btn btn-primary btn-lg" data-cta="register-final">Criar conta gratuita</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" data-component="footer" role="contentinfo">
+    <div class="footer-content">
+      <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--space-4);">
+        <span style="font-weight: var(--weight-bold); font-size: var(--text-lg);">ManausDev</span>
+        <nav aria-label="Redes sociais">
+          <ul style="display: flex; gap: var(--space-4); list-style: none; margin: 0; padding: 0;">
+            <li><a href="https://github.com/manausdev" target="_blank" rel="noopener noreferrer" class="nav-link" data-social="github">GitHub</a></li>
+            <li><a href="https://twitter.com/manausdev" target="_blank" rel="noopener noreferrer" class="nav-link" data-social="twitter">Twitter</a></li>
+            <li><a href="https://linkedin.com/company/manausdev" target="_blank" rel="noopener noreferrer" class="nav-link" data-social="linkedin">LinkedIn</a></li>
+            <li><a href="https://discord.gg/manausdev" target="_blank" rel="noopener noreferrer" class="nav-link" data-social="discord">Discord</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--space-4);">
+        <ul style="display: flex; gap: var(--space-6); list-style: none; margin: 0; padding: 0; font-size: var(--text-sm);">
+          <li><a href="/sobre" data-footer="about">Sobre</a></li>
+          <li><a href="/termos" data-footer="terms">Termos</a></li>
+          <li><a href="/privacidade" data-footer="privacy">Privacidade</a></li>
+          <li><a href="/contato" data-footer="contact">Contato</a></li>
+        </ul>
+        <p class="footer-text">&copy; <span id="current-year">2026</span> ManausDev. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/utils.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/search.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    (function() {
+      'use strict';
+
+      const mockData = {
+        stats: [
+          { label: 'Desenvolvedores', value: 1240, icon: '👩‍💻' },
+          { label: 'Projetos', value: 86, icon: '🚀' },
+          { label: 'Empresas', value: 45, icon: '🏢' },
+          { label: 'Comunidades', value: 12, icon: '🤝' },
+          { label: 'Vagas', value: 37, icon: '💼' }
+        ],
+        projects: [
+          { id: 'p1', name: 'ManausHub', description: 'Plataforma de conexão entre profissionais de tech da região.', stack: ['React', 'Node.js', 'PostgreSQL'], links: { github: 'https://github.com/manausdev/manaus-hub', demo: 'https://manaushub.dev' } },
+          { id: 'p2', name: 'RioTech Maps', description: 'Mapa interativo de hotspots de tecnologia no Amazonas.', stack: ['Vue', 'Python', 'Mapbox'], links: { github: 'https://github.com/manausdev/riotech-maps' } },
+          { id: 'p3', name: 'DevsAM', description: 'Diretório aberto de desenvolvedores do Amazonas.', stack: ['Next.js', 'Prisma', 'Tailwind'], links: { github: 'https://github.com/manausdev/devsam' } }
+        ],
+        devs: [
+          { id: 'd1', name: 'Ana Silva', role: 'Frontend Engineer', stack: ['React', 'TypeScript', 'Tailwind'], avatar: 'https://i.pravatar.cc/150?u=ana' },
+          { id: 'd2', name: 'Carlos Mendes', role: 'Backend Developer', stack: ['Node.js', 'Go', 'Redis'], avatar: 'https://i.pravatar.cc/150?u=carlos' },
+          { id: 'd3', name: 'Fernanda Lima', role: 'Fullstack Developer', stack: ['Next.js', 'Python', 'AWS'], avatar: 'https://i.pravatar.cc/150?u=fernanda' }
+        ],
+        jobs: [
+          { id: 'j1', title: 'Desenvolvedor Frontend', company: 'TechNorte', modality: 'Remoto', link: '/vagas/j1' },
+          { id: 'j2', title: 'Engenheiro de Software', company: 'Amazonia Tech', modality: 'Híbrido', link: '/vagas/j2' },
+          { id: 'j3', title: 'Desenvolvedor Mobile', company: 'RioApps', modality: 'Presencial', link: '/vagas/j3' }
+        ],
+        events: [
+          { id: 'e1', name: 'ManausDev Meetup #12', date: '2026-09-15', location: 'Auditório da UFAM' },
+          { id: 'e2', name: 'Hackathon Amazônia Tech', date: '2026-10-02', location: 'Online' },
+          { id: 'e3', name: 'Workshop de React Native', date: '2026-08-28', location: 'Hub de Inovação' }
+        ],
+        communities: [
+          { id: 'c1', name: 'Mulheres na Tech AM', description: 'Espaço de apoio e networking para mulheres na tecnologia.', technologies: ['React', 'UX', 'Carreira'] },
+          { id: 'c2', name: 'Python Manaus', description: 'Comunidade de entusiastas e profissionais de Python.', technologies: ['Python', 'Data Science', 'Django'] },
+          { id: 'c3', name: 'Frontend AM', description: 'Discussões sobre interfaces, desempenho e acessibilidade web.', technologies: ['React', 'Vue', 'CSS'] }
+        ]
+      };
+
+      function formatNumber(num) {
+        return num.toLocaleString('pt-BR');
+      }
+
+      function renderStats() {
+        const container = document.getElementById('stats-grid');
+        if (!container) return;
+        container.innerHTML = mockData.stats.map(stat => `
+          <div class="card" data-stat="${stat.label.toLowerCase()}" style="text-align: center;">
+            <div style="font-size: var(--text-3xl); margin-bottom: var(--space-2);">${stat.icon}</div>
+            <div style="font-size: var(--text-3xl); font-weight: var(--weight-bold); color: var(--color-primary);">${formatNumber(stat.value)}</div>
+            <div style="font-size: var(--text-sm); color: var(--color-text-secondary); margin-top: var(--space-1);">${stat.label}</div>
+          </div>
+        `).join('');
+      }
+
+      function renderProjects() {
+        const container = document.getElementById('projects-grid');
+        if (!container) return;
+        container.innerHTML = mockData.projects.map(project => `
+          <article class="card" data-project-id="${project.id}">
+            <div class="card-header">
+              <h3 class="card-title">${project.name}</h3>
+            </div>
+            <div class="card-body">
+              <p style="margin-bottom: var(--space-3);">${project.description}</p>
+              <div style="display: flex; flex-wrap: wrap; gap: var(--space-2); margin-bottom: var(--space-4);">
+                ${project.stack.map(tech => `<span class="badge badge-primary">${tech}</span>`).join('')}
+              </div>
+              <div style="display: flex; gap: var(--space-3);">
+                ${project.links.github ? `<a href="${project.links.github}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm">GitHub</a>` : ''}
+                ${project.links.demo ? `<a href="${project.links.demo}" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm">Demo</a>` : ''}
+              </div>
+            </div>
+          </article>
+        `).join('');
+      }
+
+      function renderDevs() {
+        const container = document.getElementById('devs-grid');
+        if (!container) return;
+        container.innerHTML = mockData.devs.map(dev => `
+          <article class="card" data-dev-id="${dev.id}" style="display: flex; align-items: center; gap: var(--space-4);">
+            <img src="${dev.avatar}" alt="${dev.name}" style="width: 64px; height: 64px; border-radius: var(--radius-full); object-fit: cover; flex-shrink: 0;">
+            <div>
+              <h3 class="card-title" style="margin-bottom: var(--space-1);">${dev.name}</h3>
+              <p style="font-size: var(--text-sm); color: var(--color-text-secondary); margin-bottom: var(--space-2);">${dev.role}</p>
+              <div style="display: flex; flex-wrap: wrap; gap: var(--space-2);">
+                ${dev.stack.map(tech => `<span class="badge badge-secondary">${tech}</span>`).join('')}
+              </div>
+            </div>
+          </article>
+        `).join('');
+      }
+
+      function renderJobs() {
+        const container = document.getElementById('jobs-grid');
+        if (!container) return;
+        container.innerHTML = mockData.jobs.map(job => `
+          <article class="card" data-job-id="${job.id}">
+            <div class="card-header">
+              <h3 class="card-title">${job.title}</h3>
+            </div>
+            <div class="card-body">
+              <p style="margin-bottom: var(--space-2);">${job.company}</p>
+              <span class="badge badge-accent" style="margin-bottom: var(--space-4);">${job.modality}</span>
+              <div style="margin-top: var(--space-4);">
+                <a href="${job.link}" class="btn btn-primary btn-sm" data-job-link="${job.id}">Ver vaga</a>
+              </div>
+            </div>
+          </article>
+        `).join('');
+      }
+
+      function renderEvents() {
+        const container = document.getElementById('events-grid');
+        if (!container) return;
+        container.innerHTML = mockData.events.map(evt => {
+          const date = new Date(evt.date + 'T00:00:00');
+          const formatted = date.toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', year: 'numeric' });
+          return `
+            <article class="card" data-event-id="${evt.id}">
+              <div class="card-header">
+                <h3 class="card-title">${evt.name}</h3>
+              </div>
+              <div class="card-body">
+                <p style="margin-bottom: var(--space-1);"><strong>Data:</strong> ${formatted}</p>
+                <p><strong>Local:</strong> ${evt.location}</p>
+              </div>
+            </article>
+          `;
+        }).join('');
+      }
+
+      function renderCommunities() {
+        const container = document.getElementById('communities-grid');
+        if (!container) return;
+        container.innerHTML = mockData.communities.map(comm => `
+          <article class="card" data-community-id="${comm.id}">
+            <div class="card-header">
+              <h3 class="card-title">${comm.name}</h3>
+            </div>
+            <div class="card-body">
+              <p style="margin-bottom: var(--space-3);">${comm.description}</p>
+              <div style="display: flex; flex-wrap: wrap; gap: var(--space-2);">
+                ${comm.technologies.map(tech => `<span class="badge badge-primary">${tech}</span>`).join('')}
+              </div>
+            </div>
+          </article>
+        `).join('');
+      }
+
+      function init() {
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+        renderStats();
+        renderProjects();
+        renderDevs();
+        renderJobs();
+        renderEvents();
+        renderCommunities();
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init();
+      }
+    })();
+  </script>
+</body>
+</html>

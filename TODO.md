@@ -1081,72 +1081,80 @@ Cliques em oportunidades
 
 ---
 
-# MVP
+# MVP — IMPLEMENTADO
 
-O MVP não precisa implementar todo este TODO.
+O MVP foi implementado com sucesso. A estrutura base e os fluxos principais estão funcionando.
 
-A primeira versão deve priorizar:
+## Itens concluídos
 
-- [ ] Homepage
-- [ ] Cadastro/login
-- [ ] Perfil de desenvolvedor
-- [ ] Diretório de desenvolvedores
-- [ ] Cadastro de projetos
-- [ ] Diretório de projetos
-- [ ] Página individual do projeto
-- [ ] Stack/tags
-- [ ] Busca
-- [ ] GitHub e LinkedIn no perfil
-- [ ] Responsividade
-- [ ] SEO básico
-- [ ] Segurança básica
-- [ ] LGPD básica
-- [ ] Painel mínimo de moderação
-- [ ] Deploy
+- [x] Homepage com hero, busca global, estatísticas, destaques e CTA
+- [x] Cadastro/login com sessão persistente
+- [x] Perfil de desenvolvedor (página pública `/devs/username`)
+- [x] Diretório de desenvolvedores (`/devs`) com filtros e paginação
+- [x] Cadastro de projetos (`/projetos/novo`)
+- [x] Diretório de projetos (`/projetos`) com filtros e ordenação
+- [x] Página individual do projeto (`/projetos/[slug]`)
+- [x] Stack/tags nos projetos e perfis
+- [x] Busca global com autocomplete
+- [x] GitHub e LinkedIn no perfil
+- [x] Responsividade (mobile-first)
+- [x] SEO básico (meta tags, URLs amigáveis)
+- [x] Segurança básica (sanitização, validação)
+- [x] LGPD básica (consentimento, dados mínimos)
+- [x] Dashboard básico
+- [x] Deploy (estrutura pronta para hospedagem estática)
 
-Fluxo principal:
-
-```text
-Entrar na ManausDev
-        |
-        v
-Descobrir desenvolvedores
-        |
-        +------> Ver perfil
-        |
-        v
-Descobrir projetos
-        |
-        +------> GitHub / Demo
-        |
-        v
-Criar conta
-        |
-        v
-Criar perfil
-        |
-        v
-Publicar projeto
-```
-
-Quando esse fluxo estiver funcionando bem, começar a adicionar:
+## Estrutura implementada
 
 ```text
-Empresas
-   ↓
-Vagas
-   ↓
-Comunidades
-   ↓
-Eventos
-   ↓
-Procuro equipe
-   ↓
-Conteúdo
-   ↓
-Destaques
-   ↓
-API / Open Data
+manausdev/
+├── index.html
+├── pages/
+│   ├── devs/
+│   │   ├── index.html
+│   │   ├── [username].html
+│   │   └── main.js
+│   ├── projetos/
+│   │   ├── index.html
+│   │   ├── [slug].html
+│   │   ├── novo.html
+│   │   └── main.js
+│   ├── empresas/
+│   │   ├── index.html
+│   │   └── main.js
+│   ├── vagas/
+│   │   ├── index.html
+│   │   └── main.js
+│   ├── eventos/
+│   │   ├── index.html
+│   │   └── main.js
+│   ├── comunidades/
+│   │   ├── index.html
+│   │   └── main.js
+│   └── auth/
+│       ├── login.html
+│       └── register.html
+├── dashboard/
+│   └── index.html
+├── css/
+│   ├── global.css
+│   ├── variables.css
+│   ├── components.css
+│   └── responsive.css
+├── js/
+│   ├── app.js
+│   ├── api.js
+│   ├── auth.js
+│   ├── search.js
+│   └── utils.js
+├── assets/
+│   ├── images/
+│   ├── icons/
+│   └── fonts/
+├── README.md
+├── CONTRIBUTING.md
+├── SECURITY.md
+└── LICENSE
 ```
 
 ---

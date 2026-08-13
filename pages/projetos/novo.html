@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Novo Projeto | ManausDev</title>
+  <link rel="stylesheet" href="/css/variables.css">
+  <link rel="stylesheet" href="/css/global.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+</head>
+<body>
+  <header class="navbar" role="banner">
+    <a href="/#home" class="navbar-brand">ManausDev</a>
+    <nav aria-label="Navegação principal">
+      <ul class="navbar-nav">
+        <li><a href="/#developers" class="nav-link" data-route="developers">Desenvolvedores</a></li>
+        <li><a href="/#projects" class="nav-link active" data-route="projects">Projetos</a></li>
+        <li><a href="/#jobs" class="nav-link" data-route="jobs">Vagas</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main-content" role="main">
+    <section class="section" aria-labelledby="page-title">
+      <div class="container">
+        <h1 id="page-title">Novo Projeto</h1>
+        <p class="text-secondary">Cadastre um novo projeto na comunidade</p>
+      </div>
+
+      <div class="container">
+        <div class="card">
+          <form id="project-form" novalidate>
+            <div class="form-group">
+              <label class="label" for="project-name">Nome do projeto <span aria-hidden="true">*</span></label>
+              <input
+                type="text"
+                id="project-name"
+                class="input"
+                placeholder="Ex: E-commerce Local"
+                required
+                autocomplete="off"
+              >
+              <span class="error-message" id="error-name" aria-live="polite"></span>
+            </div>
+
+            <div class="form-group">
+              <label class="label" for="project-slug">Slug <span aria-hidden="true">*</span></label>
+              <input
+                type="text"
+                id="project-slug"
+                class="input"
+                placeholder="e-commerce-local"
+                required
+                pattern="^[a-z0-9]+(?:-[a-z0-9]+)*$"
+                autocomplete="off"
+              >
+              <span class="text-secondary" style="font-size: var(--text-xs);">Gerado automaticamente a partir do nome, mas você pode editar.</span>
+              <span class="error-message" id="error-slug" aria-live="polite"></span>
+            </div>
+
+            <div class="form-group">
+              <label class="label" for="project-description">Descrição <span aria-hidden="true">*</span></label>
+              <textarea
+                id="project-description"
+                class="input"
+                placeholder="Descreva o projeto..."
+                required
+              ></textarea>
+              <span class="error-message" id="error-description" aria-live="polite"></span>
+            </div>
+
+            <div class="form-group">
+              <label class="label" for="project-stack">Stack / Tecnologias</label>
+              <input
+                type="text"
+                id="project-stack"
+                class="input"
+                placeholder="Ex: React, Node.js, PostgreSQL"
+                autocomplete="off"
+              >
+              <span class="text-secondary" style="font-size: var(--text-xs);">Separe as tecnologias por vírgula.</span>
+            </div>
+
+            <div class="form-group">
+              <label class="label" for="project-repo">URL do repositório</label>
+              <input
+                type="url"
+                id="project-repo"
+                class="input"
+                placeholder="https://github.com/usuario/projeto"
+                autocomplete="url"
+              >
+              <span class="error-message" id="error-repo" aria-live="polite"></span>
+            </div>
+
+            <div class="form-group">
+              <label class="label" for="project-demo">URL da demo</label>
+              <input
+                type="url"
+                id="project-demo"
+                class="input"
+                placeholder="https://demo.seuprojeto.com"
+                autocomplete="url"
+              >
+              <span class="error-message" id="error-demo" aria-live="polite"></span>
+            </div>
+
+            <div class="form-group">
+              <label class="label" for="project-website">URL do website</label>
+              <input
+                type="url"
+                id="project-website"
+                class="input"
+                placeholder="https://seuprojeto.com"
+                autocomplete="url"
+              >
+              <span class="error-message" id="error-website" aria-live="polite"></span>
+            </div>
+
+            <div class="form-group">
+              <label class="label" for="project-status">Status <span aria-hidden="true">*</span></label>
+              <select id="project-status" class="select input" required>
+                <option value="">Selecione</option>
+                <option value="planning">Planejamento</option>
+                <option value="active">Em andamento</option>
+                <option value="completed">Concluído</option>
+                <option value="paused">Pausado</option>
+              </select>
+              <span class="error-message" id="error-status" aria-live="polite"></span>
+            </div>
+
+            <div class="form-group">
+              <label class="label" for="project-license">Licença</label>
+              <input
+                type="text"
+                id="project-license"
+                class="input"
+                placeholder="Ex: MIT"
+                autocomplete="off"
+              >
+            </div>
+
+            <div class="form-group">
+              <span class="label" style="margin-bottom: var(--space-2);">Informações adicionais</span>
+              <div style="display: flex; flex-direction: column; gap: var(--space-3);">
+                <label class="checkbox">
+                  <input type="checkbox" id="project-opensource">
+                  <span>Open Source</span>
+                </label>
+                <label class="checkbox">
+                  <input type="checkbox" id="project-collaborators">
+                  <span>Procura colaboradores</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="label" for="project-image">Imagem do projeto</label>
+              <input
+                type="file"
+                id="project-image"
+                class="input"
+                accept="image/*"
+              >
+              <span class="text-secondary" style="font-size: var(--text-xs);">Formatos aceitos: JPG, PNG, WebP. Tamanho máximo: 5MB.</span>
+              <span class="error-message" id="error-image" aria-live="polite"></span>
+            </div>
+
+            <div id="image-preview-container" style="display: none; margin-bottom: var(--space-4);">
+              <span class="label" style="margin-bottom: var(--space-2);">Pré-visualização</span>
+              <img id="image-preview" src="" alt="Pré-visualização da imagem do projeto" style="width: 100%; max-height: 20rem; object-fit: cover; border-radius: var(--radius-lg);">
+            </div>
+
+            <div style="display: flex; gap: var(--space-4); flex-wrap: wrap;">
+              <button type="submit" class="btn btn-primary">Salvar</button>
+              <a href="/projetos" class="btn btn-secondary">Cancelar</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="footer-content">
+      <p class="footer-text"> ManausDev. Todos os direitos reservados.</p>
+    </div>
+  </footer>
+
+  <div id="toast-container" aria-live="polite" aria-atomic="true" style="position: fixed; bottom: var(--space-6); right: var(--space-6); z-index: var(--z-fixed); display: flex; flex-direction: column; gap: var(--space-2);"></div>
+
+  <script type="module" src="/js/app.js"></script>
+  <script type="module" src="/js/auth.js"></script>
+  <script type="module" src="/js/utils.js"></script>
+  <script type="module" src="/js/api.js"></script>
+  <script type="module" src="/pages/projetos/novo.js"></script>
+</body>
+</html>
