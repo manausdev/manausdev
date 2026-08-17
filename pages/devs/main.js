@@ -1,5 +1,6 @@
-import { api } from '../../js/api.js';
-import { paginate, debounce } from '../../js/utils.js';
+import { api } from '/js/api.js';
+import { paginate, debounce } from '/js/utils.js';
+import { initApp } from '/js/app.js';
 
 const PAGE_SIZE = 9;
 const grid = document.getElementById('devs-grid');
@@ -220,6 +221,7 @@ function updateQueryFromFilters() {
 }
 
 async function init() {
+  initApp();
   allDevs = await api.getAll('developers');
 
   const techs = getTechs(allDevs);

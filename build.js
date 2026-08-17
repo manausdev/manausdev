@@ -102,11 +102,15 @@ function copyHTML() {
     const dest = path.join(DIST, file);
     fs.mkdirSync(path.dirname(dest), { recursive: true });
     let content = fs.readFileSync(src, 'utf8');
+    // Only replace local CSS links (leave external fonts and CDNs intact)
+    content = content.replace(/<link\s+rel="stylesheet"\s+href="(?:(?:\/)?css\/[^"]+|style\.min\.css)"\s*\/?>/gi, '');
+    // Insert single minified CSS tag before </head>
+    content = content.replace('</head>', '  <link rel="stylesheet" href="/style.min.css">\n</head>');
 
-    content = content.replace(/<link rel="stylesheet" href="[^"]+">/g, '<link rel="stylesheet" href="/style.min.css">');
-    content = content.replace(/<link rel="stylesheet" href="[^"]+"\/>/g, '<link rel="stylesheet" href="/style.min.css">');
-    content = content.replace(/<script type="module" src="[^"]+"><\/script>/g, '<script type="module" src="/app.min.js"><\/script>');
-    content = content.replace(/<script src="[^"]+"><\/script>/g, '<script src="/app.min.js"><\/script>');
+    // Only replace local JS scripts (leave external scripts intact)
+    content = content.replace(/<script(?:\s+type="module")?\s+src="(?:(?:\/)?js\/[^"]+|app\.min\.js)"><\/script>/gi, '');
+    // Insert single minified JS tag before </body>
+    content = content.replace('</body>', '  <script type="module" src="/app.min.js"></script>\n</body>');
 
     fs.writeFileSync(dest, content);
   });

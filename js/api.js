@@ -1,52 +1,32 @@
-const STORAGE_KEY = 'manausdev_db';
-const DELAY = 300;
+import { getSeedData, initSeedData } from './seed.js';
 
-const mockData = {
-  users: [
-    { id: 1, name: 'Ana Silva', email: 'ana@example.com', role: 'developer', avatar: 'https://i.pravatar.cc/150?u=1' },
-    { id: 2, name: 'Bruno Costa', email: 'bruno@example.com', role: 'company', avatar: 'https://i.pravatar.cc/150?u=2' },
-  ],
-  developers: [
-    { id: 1, name: 'Ana Silva', skills: ['JavaScript', 'React', 'Node.js'], location: 'Manaus-AM', available: true },
-    { id: 2, name: 'Carlos Lima', skills: ['Python', 'Django', 'AWS'], location: 'Manaus-AM', available: false },
-  ],
-  projects: [
-    { id: 1, title: 'E-commerce Local', description: 'Plataforma para pequenos negócios', status: 'active', userId: 1 },
-    { id: 2, title: 'App de Turismo', description: 'Guia turístico de Manaus', status: 'planning', userId: 2 },
-  ],
-  companies: [
-    { id: 1, name: 'TechNorte', industry: 'Software', location: 'Manaus-AM', size: '50-200' },
-    { id: 2, name: 'Amazônia Digital', industry: 'E-commerce', location: 'Manaus-AM', size: '10-50' },
-  ],
-  jobs: [
-    { id: 1, title: 'Frontend Developer', companyId: 1, type: 'CLT', remote: false, salary: 'R$ 4.000 - R$ 6.000' },
-    { id: 2, title: 'Backend Developer', companyId: 2, type: 'PJ', remote: true, salary: 'R$ 5.000 - R$ 8.000' },
-  ],
-  teams: [
-    { id: 1, name: 'Amazônia Devs', description: 'Comunidade de devs da região', members: [1, 2], projectId: 1 },
-    { id: 2, name: 'TechNorte Squad', description: 'Time de desenvolvimento interno', members: [2], projectId: null },
-  ],
-  events: [
-    { id: 1, title: 'Meetup React Manaus', date: '2026-09-15', location: 'Manaus-AM', type: 'meetup' },
-    { id: 2, title: 'Hackathon Amazônia', date: '2026-10-01', location: 'Manaus-AM', type: 'hackathon' },
-  ],
-  communities: [
-    { id: 1, name: 'Manaus Tech', description: 'Comunidade de tecnologia de Manaus', members: 1200, type: 'tech' },
-    { id: 2, name: 'Devs do Norte', description: 'Rede de desenvolvedores da região Norte', members: 850, type: 'tech' },
-  ],
-  articles: [
-    { id: 1, title: 'O ecossistema tech de Manaus', content: 'Manaus tem crescido no cenário tech...', authorId: 1, publishedAt: '2026-08-01' },
-    { id: 2, title: 'Dicas para devs iniciantes', content: 'Começar na programação pode ser desafiador...', authorId: 2, publishedAt: '2026-08-05' },
-  ],
-};
+const STORAGE_KEY = 'manausdev_db';
+const DELAY = 50;
 
 function loadData() {
-  const stored = localStorage.getItem(STORAGE_KEY);
+  initSeedData();
+  const seed = getSeedData();
+  let stored = localStorage.getItem(STORAGE_KEY);
+  
   if (!stored) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(mockData));
-    return JSON.parse(JSON.stringify(mockData));
+    if (seed) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(seed));
+      return seed;
+    }
+  } else {
+    try {
+      const parsed = JSON.parse(stored);
+      if (parsed.developers && parsed.developers.length > 5) {
+        return parsed;
+      }
+    } catch {}
   }
-  return JSON.parse(stored);
+
+  if (seed) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(seed));
+    return seed;
+  }
+  return { developers: [], projects: [], companies: [], events: [], communities: [], jobs: [] };
 }
 
 function saveData(data) {

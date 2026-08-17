@@ -99,3 +99,17 @@ export function truncate(text, length = 100) {
   if (text.length <= length) return text;
   return text.slice(0, length).trim() + '...';
 }
+
+export function paginate(items, page = 1, pageSize = 9) {
+  const p = Math.max(1, parseInt(page, 10) || 1);
+  const total = items.length;
+  const totalPages = Math.ceil(total / pageSize);
+  const start = (p - 1) * pageSize;
+  const data = items.slice(start, start + pageSize);
+  return {
+    data,
+    total,
+    page: p,
+    totalPages,
+  };
+}

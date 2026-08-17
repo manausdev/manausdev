@@ -6,10 +6,10 @@ const ROOT = process.cwd();
 const PORT = process.env.PORT || 8080;
 
 const MIME = {
-  '.html': 'text/html',
-  '.css': 'text/css',
-  '.js': 'application/javascript',
-  '.json': 'application/json',
+  '.html': 'text/html; charset=utf-8',
+  '.css': 'text/css; charset=utf-8',
+  '.js': 'application/javascript; charset=utf-8',
+  '.json': 'application/json; charset=utf-8',
   '.png': 'image/png',
   '.svg': 'image/svg+xml',
   '.jpg': 'image/jpeg',
@@ -21,9 +21,20 @@ const MIME = {
 };
 
 const server = http.createServer((req, res) => {
-  let filePath = req.url === '/' ? '/index.html' : req.url;
-  filePath = filePath.split('?')[0];
-  const fullPath = path.join(ROOT, filePath);
+  let reqUrl = req.url.split('?')[0];
+  let fullPath = path.join(ROOT, reqUrl);
+
+  // If path is directory or ends with '/', append index.html
+  try {
+    if (fs.existsSync(fullPath) && fs.statSync(fullPath).isDirectory()) {
+      fullPath = path.join(fullPath, 'index.html');
+    }
+  } catch {}
+
+  // If file doesn't exist, try appending .html
+  if (!fs.existsSync(fullPath) && fs.existsSync(fullPath + '.html')) {
+    fullPath = fullPath + '.html';
+  }
 
   const ext = path.extname(fullPath);
   const contentType = MIME[ext] || 'application/octet-stream';
@@ -31,11 +42,11 @@ const server = http.createServer((req, res) => {
   fs.readFile(fullPath, (err, data) => {
     if (err) {
       if (err.code === 'ENOENT') {
-        res.writeHead(404, { 'Content-Type': 'text/html' });
-        res.end('<h1>404 - Not Found</h1>');
+        res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
+        res.end('<h1>404 - Página não encontrada</h1>');
       } else {
-        res.writeHead(500, { 'Content-Type': 'text/plain' });
-        res.end('Server Error');
+        res.writeHead(500, { 'Content-Type': 'text/plain; charset=utf-8' });
+        res.end('Erro interno do servidor: ' + err.message);
       }
       return;
     }

@@ -1,426 +1,379 @@
 <!DOCTYPE html>
-<html class="dark" lang="pt-BR">
+<html lang="pt-BR">
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>ManausDev — Quem constrói tecnologia em Manaus está aqui</title>
 <meta name="description" content="A plataforma central do ecossistema de tecnologia de Manaus. Conecte-se com desenvolvedores, descubra projetos inovadores, encontre vagas e participe de eventos locais."/>
 
-<!-- Fonts -->
+<!-- Google Fonts -->
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1" rel="stylesheet"/>
 
-<!-- Tailwind CDN with tailored 2026+ configuration -->
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<script id="tailwind-config">
-  tailwind.config = {
-    darkMode: "class",
-    theme: {
-      extend: {
-        colors: {
-          background: "#090d16",
-          surface: "#0f172a",
-          "surface-container-lowest": "#060911",
-          "surface-container-low": "#0b1120",
-          "surface-container": "#111827",
-          "surface-container-high": "#1e293b",
-          "surface-container-highest": "#334155",
-          "surface-variant": "#1e293b",
-          "surface-bright": "#334155",
-          primary: "#00f5ff",
-          "primary-fixed": "#63f7ff",
-          "primary-fixed-dim": "#00dce5",
-          "primary-container": "#00f5ff",
-          "on-primary": "#00282b",
-          "on-primary-container": "#003739",
-          secondary: "#818cf8",
-          "secondary-container": "#3730a3",
-          "on-secondary-container": "#c7d2fe",
-          emerald: "#10b981",
-          "text-primary": "#f8fafc",
-          "text-secondary": "#94a3b8",
-          "on-surface": "#f8fafc",
-          "on-surface-variant": "#94a3b8",
-          outline: "#475569",
-          "outline-variant": "#1e293b",
-        },
-        fontFamily: {
-          display: ["Montserrat", "sans-serif"],
-          body: ["Inter", "sans-serif"],
-          code: ["JetBrains Mono", "monospace"],
-        },
-        borderRadius: {
-          DEFAULT: "0.375rem",
-          lg: "0.5rem",
-          xl: "0.875rem",
-          "2xl": "1.25rem",
-          full: "9999px",
-        },
-        boxShadow: {
-          glow: "0 0 25px -4px rgba(0, 245, 255, 0.35)",
-          "glow-emerald": "0 0 25px -4px rgba(16, 185, 129, 0.35)",
-        }
-      },
-    },
-  };
-</script>
-
+<!-- Core CSS Stylesheets -->
 <link rel="stylesheet" href="/css/variables.css"/>
 <link rel="stylesheet" href="/css/global.css"/>
 <link rel="stylesheet" href="/css/components.css"/>
 <link rel="stylesheet" href="/css/responsive.css"/>
 </head>
 
-<body class="bg-background text-on-surface font-body antialiased min-h-screen flex flex-col selection:bg-primary/20 selection:text-primary">
+<body>
 
-<!-- TOP NAVBAR -->
-<header class="sticky top-0 z-50 border-b border-white/[0.08] bg-background/80 backdrop-blur-xl transition-all duration-300">
-  <nav class="mx-auto flex max-w-7xl items-center justify-between px-5 py-3.5 md:px-10">
+<!-- SITE HEADER / NAVBAR -->
+<header class="site-header">
+  <div class="container nav-container">
     
     <!-- Logo -->
-    <a href="#" class="flex items-center gap-2.5 font-display text-lg font-extrabold tracking-tight group">
-      <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-primary text-on-primary shadow-glow transition-transform duration-300 group-hover:scale-105">
-        <span class="material-symbols-outlined text-[22px]">terminal</span>
+    <a href="#" class="nav-logo">
+      <span class="logo-badge">
+        <span class="material-symbols-outlined" style="font-size: 22px;">terminal</span>
       </span>
-      <span class="text-white">Manaus<span class="text-primary-fixed-dim">Dev</span></span>
-      <span class="hidden sm:inline-flex items-center gap-1 rounded-full bg-primary/10 px-2 py-0.5 font-code text-[10px] font-semibold text-primary border border-primary/20">v2026</span>
+      <span>Manaus<span style="color: var(--primary);">Dev</span></span>
+      <span class="badge badge-primary" style="font-size: 10px; padding: 2px 8px; margin-left: 4px;">2026+</span>
     </a>
 
-    <!-- Desktop Navigation Links -->
-    <ul class="hidden items-center gap-1 lg:flex bg-surface-container-high/40 p-1.5 rounded-full border border-white/[0.06] backdrop-blur-md">
-      <li><a href="pages/devs/" class="px-4 py-1.5 text-sm font-medium text-text-secondary rounded-full transition-all duration-200 hover:text-white hover:bg-white/[0.06]">Devs</a></li>
-      <li><a href="pages/projetos/" class="px-4 py-1.5 text-sm font-medium text-text-secondary rounded-full transition-all duration-200 hover:text-white hover:bg-white/[0.06]">Projetos</a></li>
-      <li><a href="pages/empresas/" class="px-4 py-1.5 text-sm font-medium text-text-secondary rounded-full transition-all duration-200 hover:text-white hover:bg-white/[0.06]">Empresas</a></li>
-      <li><a href="pages/vagas/" class="px-4 py-1.5 text-sm font-medium text-text-secondary rounded-full transition-all duration-200 hover:text-white hover:bg-white/[0.06]">Vagas</a></li>
-      <li><a href="pages/eventos/" class="px-4 py-1.5 text-sm font-medium text-text-secondary rounded-full transition-all duration-200 hover:text-white hover:bg-white/[0.06]">Eventos</a></li>
-      <li><a href="pages/comunidades/" class="px-4 py-1.5 text-sm font-medium text-text-secondary rounded-full transition-all duration-200 hover:text-white hover:bg-white/[0.06]">Comunidades</a></li>
-    </ul>
+    <!-- Nav Links (Desktop) -->
+    <nav class="nav-links">
+      <a href="/pages/devs/" class="nav-link">Devs</a>
+      <a href="/pages/projetos/" class="nav-link">Projetos</a>
+      <a href="/pages/empresas/" class="nav-link">Empresas</a>
+      <a href="/pages/vagas/" class="nav-link">Vagas</a>
+      <a href="/pages/eventos/" class="nav-link">Eventos</a>
+      <a href="/pages/comunidades/" class="nav-link">Comunidades</a>
+    </nav>
 
-    <!-- Quick Search & Actions -->
-    <div class="flex items-center gap-2.5">
-      <!-- Quick Search Trigger -->
-      <button id="search-modal-trigger" class="hidden sm:flex items-center gap-2 rounded-full bg-surface-container-high/60 px-3.5 py-1.5 text-xs text-text-secondary border border-white/[0.08] hover:border-primary/40 hover:text-white transition-all">
-        <span class="material-symbols-outlined text-[16px] text-primary">search</span>
-        <span>Buscar stack ou dev...</span>
-        <kbd class="rounded bg-background px-1.5 py-0.5 font-code text-[10px] text-text-muted border border-white/[0.08]">Ctrl K</kbd>
+    <!-- Nav Actions -->
+    <div class="nav-actions">
+      <button id="search-modal-trigger" class="btn btn-ghost btn-sm" style="display: inline-flex; align-items: center; gap: 6px; white-space: nowrap;">
+        <span class="material-symbols-outlined" style="font-size: 18px; color: var(--primary);">search</span>
+        <span class="search-text-label">Buscar</span>
+        <span class="font-code" style="font-size: 10px; opacity: 0.6; background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 4px;">Ctrl K</span>
       </button>
 
-      <a href="pages/auth/login.html" class="hidden md:inline-flex rounded-full border border-white/[0.1] px-4 py-1.5 text-sm font-medium text-white transition-all duration-200 hover:border-primary hover:text-primary hover:bg-primary/5">
-        Entrar
-      </a>
-      <a href="pages/auth/register.html" class="inline-flex items-center gap-1.5 rounded-full bg-primary px-4 py-1.5 text-sm font-semibold text-on-primary shadow-glow transition-all duration-200 hover:bg-primary-fixed hover:scale-105">
-        <span class="material-symbols-outlined text-[18px]">add_circle</span>
+      <a href="/pages/auth/login.html" class="btn btn-ghost btn-sm">Entrar</a>
+      <a href="/pages/auth/register.html" class="btn btn-primary btn-sm" style="white-space: nowrap;">
+        <span class="material-symbols-outlined" style="font-size: 16px;">add_circle</span>
         <span>Criar perfil</span>
       </a>
 
       <!-- Mobile Menu Toggle -->
-      <button id="mobile-menu-btn" class="flex lg:hidden items-center justify-center h-9 w-9 rounded-xl border border-white/[0.1] text-text-secondary hover:text-white hover:bg-white/[0.05]" aria-label="Abrir menu">
-        <span class="material-symbols-outlined text-[22px]">menu</span>
+      <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Abrir menu">
+        <span class="material-symbols-outlined" style="font-size: 22px;">menu</span>
       </button>
     </div>
-  </nav>
+  </div>
 
-  <!-- Mobile Drawer Menu -->
-  <div id="mobile-drawer" class="hidden lg:hidden border-t border-white/[0.08] bg-background/95 backdrop-blur-2xl px-6 py-5">
-    <div class="flex flex-col gap-2">
-      <button id="mobile-search-trigger" class="flex items-center gap-2.5 w-full rounded-xl bg-surface-container-high/70 p-3 text-sm text-text-secondary border border-white/[0.08] mb-2">
-        <span class="material-symbols-outlined text-primary text-[20px]">search</span>
-        <span>Buscar na comunidade...</span>
-      </button>
-      <a href="pages/devs/" class="flex items-center gap-3 p-2.5 text-sm font-medium text-text-secondary hover:text-white hover:bg-white/[0.05] rounded-lg">
-        <span class="material-symbols-outlined text-[20px] text-primary">groups</span> Devs em Manaus
-      </a>
-      <a href="pages/projetos/" class="flex items-center gap-3 p-2.5 text-sm font-medium text-text-secondary hover:text-white hover:bg-white/[0.05] rounded-lg">
-        <span class="material-symbols-outlined text-[20px] text-primary">terminal</span> Vitrine de Projetos
-      </a>
-      <a href="pages/empresas/" class="flex items-center gap-3 p-2.5 text-sm font-medium text-text-secondary hover:text-white hover:bg-white/[0.05] rounded-lg">
-        <span class="material-symbols-outlined text-[20px] text-primary">apartment</span> Empresas & Startups
-      </a>
-      <a href="pages/vagas/" class="flex items-center gap-3 p-2.5 text-sm font-medium text-text-secondary hover:text-white hover:bg-white/[0.05] rounded-lg">
-        <span class="material-symbols-outlined text-[20px] text-primary">work</span> Vagas de Tecnologia
-      </a>
-      <a href="pages/eventos/" class="flex items-center gap-3 p-2.5 text-sm font-medium text-text-secondary hover:text-white hover:bg-white/[0.05] rounded-lg">
-        <span class="material-symbols-outlined text-[20px] text-primary">event</span> Eventos & Meetups
-      </a>
-      <a href="pages/comunidades/" class="flex items-center gap-3 p-2.5 text-sm font-medium text-text-secondary hover:text-white hover:bg-white/[0.05] rounded-lg">
-        <span class="material-symbols-outlined text-[20px] text-primary">diversity_3</span> Comunidades
-      </a>
-      <div class="mt-3 pt-3 border-t border-white/[0.08] flex gap-2">
-        <a href="pages/auth/login.html" class="flex-1 text-center py-2 text-sm font-medium border border-white/[0.1] rounded-xl text-white">Entrar</a>
-        <a href="pages/auth/register.html" class="flex-1 text-center py-2 text-sm font-semibold bg-primary text-on-primary rounded-xl">Cadastrar</a>
-      </div>
-    </div>
+  <!-- Mobile Drawer -->
+  <div id="mobile-drawer" class="mobile-drawer hidden">
+    <button id="mobile-search-trigger" class="btn btn-secondary" style="width: 100%; justify-content: flex-start; margin-bottom: 8px;">
+      <span class="material-symbols-outlined" style="font-size: 18px; color: var(--primary);">search</span>
+      <span>Buscar no ecossistema...</span>
+    </button>
+    <a href="/pages/devs/" class="mobile-drawer-link">
+      <span class="material-symbols-outlined" style="color: var(--primary);">groups</span> Devs em Manaus
+    </a>
+    <a href="/pages/projetos/" class="mobile-drawer-link">
+      <span class="material-symbols-outlined" style="color: var(--secondary);">terminal</span> Vitrine de Projetos
+    </a>
+    <a href="/pages/empresas/" class="mobile-drawer-link">
+      <span class="material-symbols-outlined" style="color: var(--emerald);">apartment</span> Empresas & Startups
+    </a>
+    <a href="/pages/vagas/" class="mobile-drawer-link">
+      <span class="material-symbols-outlined" style="color: var(--primary);">work</span> Mural de Vagas
+    </a>
+    <a href="/pages/eventos/" class="mobile-drawer-link">
+      <span class="material-symbols-outlined" style="color: var(--secondary);">event</span> Eventos & Meetups
+    </a>
+    <a href="/pages/comunidades/" class="mobile-drawer-link">
+      <span class="material-symbols-outlined" style="color: var(--emerald);">diversity_3</span> Comunidades
+    </a>
   </div>
 </header>
 
-<main class="flex-grow">
-  
+<main style="flex: 1;">
+
   <!-- HERO SECTION -->
-  <section class="relative overflow-hidden border-b border-white/[0.06] px-5 pb-24 pt-14 md:px-12 md:pt-20">
+  <section class="hero-section">
     
-    <!-- Ambient River Background Wave -->
-    <svg class="pointer-events-none absolute inset-0 h-full w-full opacity-35" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-      <path class="river-line" d="M -50 120 C 250 220, 500 40, 750 160 S 1150 260, 1300 140" fill="none" stroke="#00dce5" stroke-width="1.8" opacity="0.7"/>
-      <path class="river-line" d="M -50 260 C 300 180, 550 380, 820 300 S 1180 160, 1300 320" fill="none" stroke="#818cf8" stroke-width="1.8" opacity="0.6" style="animation-delay:-4s"/>
-      <circle cx="150" cy="150" r="3" fill="#00f5ff" class="pulse-dot"/>
-      <circle cx="620" cy="90" r="3" fill="#818cf8" class="pulse-dot" style="animation-delay:-1s"/>
-      <circle cx="980" cy="210" r="3" fill="#10b981" class="pulse-dot" style="animation-delay:-2s"/>
-      <circle cx="420" cy="330" r="3" fill="#38bdf8" class="pulse-dot" style="animation-delay:-1.6s"/>
+    <!-- Ambient River Wave Background -->
+    <svg class="pointer-events-none" style="position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.35;" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <path class="river-line" d="M -50 120 C 250 220, 500 40, 750 160 S 1150 260, 1300 140" fill="none" stroke="#00dce5" stroke-width="2"/>
+      <path class="river-line" d="M -50 260 C 300 180, 550 380, 820 300 S 1180 160, 1300 320" fill="none" stroke="#818cf8" stroke-width="2" style="animation-delay: -4s;"/>
+      <circle cx="150" cy="150" r="3.5" fill="#00f5ff" class="pulse-dot"/>
+      <circle cx="620" cy="90" r="3.5" fill="#818cf8" class="pulse-dot" style="animation-delay: -1s;"/>
+      <circle cx="980" cy="210" r="3.5" fill="#10b981" class="pulse-dot" style="animation-delay: -2s;"/>
+      <circle cx="420" cy="330" r="3.5" fill="#38bdf8" class="pulse-dot" style="animation-delay: -1.6s;"/>
     </svg>
 
-    <div class="relative mx-auto max-w-4xl text-center">
+    <div class="container" style="position: relative; z-index: 10;">
       
       <!-- Location Pill -->
-      <div class="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 font-code text-xs font-medium text-primary backdrop-blur-md">
-        <span class="flex h-2 w-2 rounded-full bg-emerald animate-ping"></span>
-        <span class="material-symbols-outlined text-[15px]">location_on</span>
+      <div class="hero-pill">
+        <span class="status-dot active"></span>
+        <span class="material-symbols-outlined" style="font-size: 16px;">location_on</span>
         <span>Manaus, Amazonas — Ecossistema Tech Ativo</span>
       </div>
 
       <!-- Main Headline -->
-      <h1 class="mt-6 font-display text-4xl font-extrabold leading-[1.08] tracking-tight text-white sm:text-5xl md:text-6xl">
+      <h1 class="hero-title">
         Quem constrói o futuro tech em <span class="text-gradient">Manaus</span> está aqui.
       </h1>
 
-      <p class="mx-auto mt-6 max-w-2xl text-base text-text-secondary sm:text-lg leading-relaxed">
+      <p class="hero-subtitle">
         Conectamos desenvolvedores, criadores de produtos, software houses e comunidades da Amazônia. Encontre talentos locais, publique vagas e dê visibilidade aos seus projetos.
       </p>
 
       <!-- Instant Live Search Bar -->
-      <div class="mx-auto mt-8 max-w-xl">
-        <div class="relative flex items-center rounded-2xl bg-surface-container-high/80 p-2 border border-white/[0.12] backdrop-blur-xl shadow-glow focus-within:border-primary transition-all">
-          <span class="material-symbols-outlined pl-3 text-primary text-[24px]">search</span>
-          <input 
-            type="text" 
-            id="hero-live-search"
-            placeholder="Busque por tecnologia (React, Go, Python) ou cargo..." 
-            class="w-full bg-transparent px-3 py-2 text-sm text-white placeholder-text-muted focus:outline-none"
-          />
-          <button id="hero-search-btn" class="rounded-xl bg-primary px-4 py-2 text-xs font-bold text-on-primary hover:bg-primary-fixed transition-all flex items-center gap-1">
-            <span>Explorar</span>
-            <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
-          </button>
-        </div>
-        <div class="mt-2.5 flex flex-wrap justify-center items-center gap-1.5 text-xs text-text-muted">
-          <span>Popular:</span>
-          <button class="hero-tag-btn hover:text-primary hover:underline" data-tag="React">React</button>·
-          <button class="hero-tag-btn hover:text-primary hover:underline" data-tag="Node.js">Node.js</button>·
-          <button class="hero-tag-btn hover:text-primary hover:underline" data-tag="Python">Python</button>·
-          <button class="hero-tag-btn hover:text-primary hover:underline" data-tag="AWS">AWS</button>·
-          <button class="hero-tag-btn hover:text-primary hover:underline" data-tag="Flutter">Flutter</button>
-        </div>
+      <div class="hero-search-box">
+        <span class="material-symbols-outlined" style="color: var(--primary); font-size: 22px; margin-right: 8px;">search</span>
+        <input 
+          type="text" 
+          id="hero-live-search" 
+          class="hero-search-input" 
+          placeholder="Busque por tecnologia (React, Go, Python), cargo ou nome..."
+        />
+        <button id="hero-search-btn" class="btn btn-primary btn-sm">
+          <span>Explorar</span>
+          <span class="material-symbols-outlined" style="font-size: 16px;">arrow_forward</span>
+        </button>
+      </div>
+
+      <!-- Popular Tags -->
+      <div class="hero-tags">
+        <span>Popular:</span>
+        <button class="hero-tag-btn" data-tag="React">React</button> ·
+        <button class="hero-tag-btn" data-tag="Node.js">Node.js</button> ·
+        <button class="hero-tag-btn" data-tag="Python">Python</button> ·
+        <button class="hero-tag-btn" data-tag="AWS">AWS</button> ·
+        <button class="hero-tag-btn" data-tag="Flutter">Flutter</button>
       </div>
 
       <!-- Action Buttons -->
-      <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3.5">
-        <a href="pages/devs/" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-primary px-7 py-3.5 text-sm font-bold text-on-primary shadow-glow transition-all hover:bg-primary-fixed hover:-translate-y-0.5">
-          <span class="material-symbols-outlined text-[20px]">groups</span>
+      <div class="hero-actions">
+        <a href="/pages/devs/" class="btn btn-primary btn-lg">
+          <span class="material-symbols-outlined">groups</span>
           <span>Ver Desenvolvedores</span>
         </a>
-        <a href="pages/projetos/" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full border border-white/[0.15] bg-surface-container-high/50 px-7 py-3.5 text-sm font-semibold text-white backdrop-blur-md transition-all hover:border-primary/50 hover:bg-white/[0.08] hover:-translate-y-0.5">
-          <span class="material-symbols-outlined text-[20px]">terminal</span>
+        <a href="/pages/projetos/" class="btn btn-secondary btn-lg">
+          <span class="material-symbols-outlined">terminal</span>
           <span>Vitrine de Projetos</span>
         </a>
       </div>
-    </div>
 
-    <!-- Live Animated Statistics Counters -->
-    <div class="relative mx-auto mt-16 grid max-w-4xl grid-cols-2 gap-3.5 sm:grid-cols-4 sm:gap-5">
-      <div class="glass-card rounded-2xl p-5 text-center border-white/[0.08]">
-        <div class="flex items-center justify-center gap-1.5 text-primary mb-1">
-          <span class="material-symbols-outlined text-[20px]">code</span>
-          <span id="stat-devs" class="font-display text-3xl font-black text-white">21</span>
+      <!-- Live Animated Statistics Counters -->
+      <div class="stats-grid">
+        <div class="stat-card glass-card">
+          <div class="stat-number" style="color: var(--primary);">
+            <span class="material-symbols-outlined" style="font-size: 24px;">code</span>
+            <span id="stat-devs">21</span>
+          </div>
+          <p class="stat-label">Devs Cadastrados</p>
         </div>
-        <p class="font-code text-xs uppercase tracking-wider text-text-secondary">Devs Cadastrados</p>
+
+        <div class="stat-card glass-card">
+          <div class="stat-number" style="color: var(--secondary);">
+            <span class="material-symbols-outlined" style="font-size: 24px;">rocket_launch</span>
+            <span id="stat-projects">12</span>
+          </div>
+          <p class="stat-label">Projetos Ativos</p>
+        </div>
+
+        <div class="stat-card glass-card">
+          <div class="stat-number" style="color: var(--emerald);">
+            <span class="material-symbols-outlined" style="font-size: 24px;">apartment</span>
+            <span id="stat-companies">6</span>
+          </div>
+          <p class="stat-label">Empresas & Hubs</p>
+        </div>
+
+        <div class="stat-card glass-card">
+          <div class="stat-number" style="color: var(--primary);">
+            <span class="material-symbols-outlined" style="font-size: 24px;">event_upcoming</span>
+            <span id="stat-events">8</span>
+          </div>
+          <p class="stat-label">Eventos & Meetups</p>
+        </div>
       </div>
 
-      <div class="glass-card rounded-2xl p-5 text-center border-white/[0.08]">
-        <div class="flex items-center justify-center gap-1.5 text-primary mb-1">
-          <span class="material-symbols-outlined text-[20px]">rocket_launch</span>
-          <span id="stat-projects" class="font-display text-3xl font-black text-white">12</span>
-        </div>
-        <p class="font-code text-xs uppercase tracking-wider text-text-secondary">Projetos Ativos</p>
-      </div>
-
-      <div class="glass-card rounded-2xl p-5 text-center border-white/[0.08]">
-        <div class="flex items-center justify-center gap-1.5 text-primary mb-1">
-          <span class="material-symbols-outlined text-[20px]">apartment</span>
-          <span id="stat-companies" class="font-display text-3xl font-black text-white">6</span>
-        </div>
-        <p class="font-code text-xs uppercase tracking-wider text-text-secondary">Empresas & Hubs</p>
-      </div>
-
-      <div class="glass-card rounded-2xl p-5 text-center border-white/[0.08]">
-        <div class="flex items-center justify-center gap-1.5 text-primary mb-1">
-          <span class="material-symbols-outlined text-[20px]">event_upcoming</span>
-          <span id="stat-events" class="font-display text-3xl font-black text-white">8</span>
-        </div>
-        <p class="font-code text-xs uppercase tracking-wider text-text-secondary">Eventos & Meetups</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- LIVE DEVELOPERS SHOWCASE -->
-  <section class="mx-auto max-w-7xl px-5 py-20 md:px-10">
-    <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
-      <div>
-        <div class="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1 font-code text-xs font-semibold text-primary mb-2 border border-primary/20">
-          <span class="material-symbols-outlined text-[15px]">badge</span>
-          <span>Talentos de Manaus</span>
-        </div>
-        <h2 class="font-display text-2xl md:text-3xl font-extrabold text-white">Desenvolvedores em Destaque</h2>
-        <p class="text-sm text-text-secondary mt-1">Profissionais prontos para projetos, freelas e contratações em Manaus.</p>
-      </div>
-      <a href="pages/devs/" class="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:text-primary-fixed transition-colors">
-        <span>Ver todos os 21 desenvolvedores</span>
-        <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
-      </a>
-    </div>
-
-    <!-- Dynamic Featured Devs Grid -->
-    <div id="featured-devs-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-      <!-- Injected dynamically via JS -->
     </div>
   </section>
 
-  <!-- LIVE PROJECTS SHOWCASE -->
-  <section class="border-t border-white/[0.06] bg-surface-container-lowest/60 px-5 py-20 md:px-10">
-    <div class="mx-auto max-w-7xl">
-      <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
+  <!-- LIVE FEATURED DEVELOPERS -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
         <div>
-          <div class="inline-flex items-center gap-1.5 rounded-full bg-secondary/10 px-3 py-1 font-code text-xs font-semibold text-secondary mb-2 border border-secondary/20">
-            <span class="material-symbols-outlined text-[15px]">code_blocks</span>
+          <div class="badge badge-primary" style="margin-bottom: 8px;">
+            <span class="material-symbols-outlined" style="font-size: 14px;">badge</span>
+            <span>Talentos de Manaus</span>
+          </div>
+          <h2 class="section-title">Desenvolvedores em Destaque</h2>
+          <p class="section-desc">Profissionais prontos para projetos, freelas e contratações em Manaus.</p>
+        </div>
+        <a href="/pages/devs/" class="btn btn-ghost btn-sm">
+          <span>Ver todos os 21 desenvolvedores</span>
+          <span class="material-symbols-outlined" style="font-size: 16px;">arrow_forward</span>
+        </a>
+      </div>
+
+      <!-- Dynamic Featured Devs Grid -->
+      <div id="featured-devs-container" class="cards-grid-3">
+        <!-- Loaded dynamically via JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- LIVE FEATURED PROJECTS -->
+  <section class="section section-alt">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <div class="badge badge-secondary" style="margin-bottom: 8px;">
+            <span class="material-symbols-outlined" style="font-size: 14px;">code_blocks</span>
             <span>Vitrine Regional</span>
           </div>
-          <h2 class="font-display text-2xl md:text-3xl font-extrabold text-white">Projetos Feitos no Amazonas</h2>
-          <p class="text-sm text-text-secondary mt-1">Aplicações, bibliotecas e soluções criadas por desenvolvedores locais.</p>
+          <h2 class="section-title">Projetos Feitos no Amazonas</h2>
+          <p class="section-desc">Aplicações, bibliotecas e soluções criadas por desenvolvedores locais.</p>
         </div>
-        <a href="pages/projetos/" class="inline-flex items-center gap-1.5 text-sm font-semibold text-secondary hover:text-secondary-hover transition-colors">
+        <a href="/pages/projetos/" class="btn btn-ghost btn-sm">
           <span>Ver todos os projetos</span>
-          <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+          <span class="material-symbols-outlined" style="font-size: 16px;">arrow_forward</span>
         </a>
       </div>
 
       <!-- Dynamic Featured Projects Grid -->
-      <div id="featured-projects-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-        <!-- Injected dynamically via JS -->
+      <div id="featured-projects-container" class="cards-grid-3">
+        <!-- Loaded dynamically via JS -->
       </div>
     </div>
   </section>
 
   <!-- UPCOMING EVENTS & MEETUPS -->
-  <section class="mx-auto max-w-7xl px-5 py-20 md:px-10">
-    <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
-      <div>
-        <div class="inline-flex items-center gap-1.5 rounded-full bg-emerald/10 px-3 py-1 font-code text-xs font-semibold text-emerald mb-2 border border-emerald/20">
-          <span class="material-symbols-outlined text-[15px]">calendar_month</span>
-          <span>Agenda Tech</span>
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <div class="badge badge-emerald" style="margin-bottom: 8px;">
+            <span class="material-symbols-outlined" style="font-size: 14px;">calendar_month</span>
+            <span>Agenda Tech</span>
+          </div>
+          <h2 class="section-title">Próximos Eventos & Meetups</h2>
+          <p class="section-desc">Participe dos encontros presenciais e online da comunidade em Manaus.</p>
         </div>
-        <h2 class="font-display text-2xl md:text-3xl font-extrabold text-white">Próximos Eventos & Meetups</h2>
-        <p class="text-sm text-text-secondary mt-1">Participe dos encontros presenciais e online da comunidade em Manaus.</p>
+        <a href="/pages/eventos/" class="btn btn-ghost btn-sm">
+          <span>Ver calendário completo</span>
+          <span class="material-symbols-outlined" style="font-size: 16px;">arrow_forward</span>
+        </a>
       </div>
-      <a href="pages/eventos/" class="inline-flex items-center gap-1.5 text-sm font-semibold text-emerald hover:underline transition-colors">
-        <span>Ver calendário completo</span>
-        <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
-      </a>
-    </div>
 
-    <!-- Dynamic Events Grid -->
-    <div id="featured-events-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-      <!-- Injected dynamically via JS -->
+      <!-- Dynamic Events Grid -->
+      <div id="featured-events-container" class="cards-grid-4">
+        <!-- Loaded dynamically via JS -->
+      </div>
     </div>
   </section>
 
   <!-- PILLARS / ECOSYSTEM DIRECTORIES -->
-  <section class="border-t border-white/[0.06] bg-surface-container-low/40 px-5 py-20 md:px-10">
-    <div class="mx-auto max-w-7xl">
-      <div class="mb-12 max-w-2xl">
-        <p class="font-code text-xs uppercase tracking-wider text-primary">Tudo em um só lugar</p>
-        <h2 class="mt-2 font-display text-2xl md:text-3xl font-bold text-white">Explore os pilares da ManausDev</h2>
+  <section class="section section-alt">
+    <div class="container">
+      <div style="margin-bottom: 36px; max-width: 600px;">
+        <p class="font-code" style="font-size: 12px; color: var(--primary); text-transform: uppercase;">Tudo em um só lugar</p>
+        <h2 class="section-title" style="margin-top: 6px;">Explore os pilares da ManausDev</h2>
       </div>
 
-      <div class="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
-        <a href="pages/devs/" class="group glass-card rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1.5 hover:border-primary/50">
-          <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary border border-primary/20 group-hover:scale-110 transition-transform">
-            <span class="material-symbols-outlined text-[26px]">groups</span>
+      <div class="cards-grid-3">
+        <a href="/pages/devs/" class="pillar-card glass-card">
+          <div style="width: 44px; height: 44px; border-radius: var(--radius-md); background: rgba(0,245,255,0.1); color: var(--primary); display: flex; align-items: center; justify-content: center; border: 1px solid rgba(0,245,255,0.2);">
+            <span class="material-symbols-outlined" style="font-size: 24px;">groups</span>
           </div>
-          <h3 class="mt-5 font-display text-lg font-bold text-white group-hover:text-primary transition-colors">Desenvolvedores</h3>
-          <p class="mt-2 text-sm text-text-secondary leading-relaxed">Perfis completos com stacks, bio, disponibilidade para contratação e portfólios locais.</p>
-          <span class="mt-4 inline-flex items-center gap-1 text-xs font-semibold text-primary">Explorar Devs <span class="material-symbols-outlined text-[15px]">arrow_forward</span></span>
+          <div>
+            <h3 class="entity-title" style="margin-top: 12px;">Desenvolvedores</h3>
+            <p class="card-desc" style="margin-top: 6px;">Perfis completos com stacks, bio, disponibilidade para contratação e portfólios locais.</p>
+          </div>
+          <span class="card-link">Explorar Devs →</span>
         </a>
 
-        <a href="pages/projetos/" class="group glass-card rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1.5 hover:border-primary/50">
-          <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-secondary/10 text-secondary border border-secondary/20 group-hover:scale-110 transition-transform">
-            <span class="material-symbols-outlined text-[26px]">terminal</span>
+        <a href="/pages/projetos/" class="pillar-card glass-card">
+          <div style="width: 44px; height: 44px; border-radius: var(--radius-md); background: rgba(129,140,248,0.1); color: var(--secondary); display: flex; align-items: center; justify-content: center; border: 1px solid rgba(129,140,248,0.2);">
+            <span class="material-symbols-outlined" style="font-size: 24px;">terminal</span>
           </div>
-          <h3 class="mt-5 font-display text-lg font-bold text-white group-hover:text-secondary transition-colors">Vitrine de Projetos</h3>
-          <p class="mt-2 text-sm text-text-secondary leading-relaxed">Showcase do que a comunidade está construindo — repositórios open-source e apps em produção.</p>
-          <span class="mt-4 inline-flex items-center gap-1 text-xs font-semibold text-secondary">Ver Projetos <span class="material-symbols-outlined text-[15px]">arrow_forward</span></span>
+          <div>
+            <h3 class="entity-title" style="margin-top: 12px;">Vitrine de Projetos</h3>
+            <p class="card-desc" style="margin-top: 6px;">Showcase do que a comunidade está construindo — repositórios open-source e apps em produção.</p>
+          </div>
+          <span class="card-link" style="color: var(--secondary);">Ver Projetos →</span>
         </a>
 
-        <a href="pages/empresas/" class="group glass-card rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1.5 hover:border-primary/50">
-          <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald/10 text-emerald border border-emerald/20 group-hover:scale-110 transition-transform">
-            <span class="material-symbols-outlined text-[26px]">apartment</span>
+        <a href="/pages/empresas/" class="pillar-card glass-card">
+          <div style="width: 44px; height: 44px; border-radius: var(--radius-md); background: rgba(16,185,129,0.1); color: var(--emerald); display: flex; align-items: center; justify-content: center; border: 1px solid rgba(16,185,129,0.2);">
+            <span class="material-symbols-outlined" style="font-size: 24px;">apartment</span>
           </div>
-          <h3 class="mt-5 font-display text-lg font-bold text-white group-hover:text-emerald transition-colors">Empresas & Startups</h3>
-          <p class="mt-2 text-sm text-text-secondary leading-relaxed">Software houses, centros de P&D e startups ativas no polo de Manaus.</p>
-          <span class="mt-4 inline-flex items-center gap-1 text-xs font-semibold text-emerald">Conhecer Empresas <span class="material-symbols-outlined text-[15px]">arrow_forward</span></span>
+          <div>
+            <h3 class="entity-title" style="margin-top: 12px;">Empresas & Startups</h3>
+            <p class="card-desc" style="margin-top: 6px;">Software houses, centros de P&D e startups ativas no polo tecnológico de Manaus.</p>
+          </div>
+          <span class="card-link" style="color: var(--emerald);">Conhecer Empresas →</span>
         </a>
 
-        <a href="pages/vagas/" class="group glass-card rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1.5 hover:border-primary/50">
-          <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary border border-primary/20 group-hover:scale-110 transition-transform">
-            <span class="material-symbols-outlined text-[26px]">work</span>
+        <a href="/pages/vagas/" class="pillar-card glass-card">
+          <div style="width: 44px; height: 44px; border-radius: var(--radius-md); background: rgba(0,245,255,0.1); color: var(--primary); display: flex; align-items: center; justify-content: center; border: 1px solid rgba(0,245,255,0.2);">
+            <span class="material-symbols-outlined" style="font-size: 24px;">work</span>
           </div>
-          <h3 class="mt-5 font-display text-lg font-bold text-white group-hover:text-primary transition-colors">Mural de Vagas</h3>
-          <p class="mt-2 text-sm text-text-secondary leading-relaxed">Oportunidades presenciais, híbridas e remotas publicadas por contratantes locais.</p>
-          <span class="mt-4 inline-flex items-center gap-1 text-xs font-semibold text-primary">Buscar Vagas <span class="material-symbols-outlined text-[15px]">arrow_forward</span></span>
+          <div>
+            <h3 class="entity-title" style="margin-top: 12px;">Mural de Vagas</h3>
+            <p class="card-desc" style="margin-top: 6px;">Oportunidades presenciais, híbridas e remotas publicadas por contratantes locais.</p>
+          </div>
+          <span class="card-link">Buscar Vagas →</span>
         </a>
 
-        <a href="pages/eventos/" class="group glass-card rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1.5 hover:border-primary/50">
-          <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-secondary/10 text-secondary border border-secondary/20 group-hover:scale-110 transition-transform">
-            <span class="material-symbols-outlined text-[26px]">event</span>
+        <a href="/pages/eventos/" class="pillar-card glass-card">
+          <div style="width: 44px; height: 44px; border-radius: var(--radius-md); background: rgba(129,140,248,0.1); color: var(--secondary); display: flex; align-items: center; justify-content: center; border: 1px solid rgba(129,140,248,0.2);">
+            <span class="material-symbols-outlined" style="font-size: 24px;">event</span>
           </div>
-          <h3 class="mt-5 font-display text-lg font-bold text-white group-hover:text-secondary transition-colors">Eventos & Hackathons</h3>
-          <p class="mt-2 text-sm text-text-secondary leading-relaxed">Calendário atualizado de encontros presenciais, conferências e maratonas de código.</p>
-          <span class="mt-4 inline-flex items-center gap-1 text-xs font-semibold text-secondary">Ver Agenda <span class="material-symbols-outlined text-[15px]">arrow_forward</span></span>
+          <div>
+            <h3 class="entity-title" style="margin-top: 12px;">Eventos & Hackathons</h3>
+            <p class="card-desc" style="margin-top: 6px;">Calendário atualizado de encontros presenciais, conferências e maratonas de código.</p>
+          </div>
+          <span class="card-link" style="color: var(--secondary);">Ver Agenda →</span>
         </a>
 
-        <a href="pages/comunidades/" class="group glass-card rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1.5 hover:border-primary/50">
-          <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald/10 text-emerald border border-emerald/20 group-hover:scale-110 transition-transform">
-            <span class="material-symbols-outlined text-[26px]">diversity_3</span>
+        <a href="/pages/comunidades/" class="pillar-card glass-card">
+          <div style="width: 44px; height: 44px; border-radius: var(--radius-md); background: rgba(16,185,129,0.1); color: var(--emerald); display: flex; align-items: center; justify-content: center; border: 1px solid rgba(16,185,129,0.2);">
+            <span class="material-symbols-outlined" style="font-size: 24px;">diversity_3</span>
           </div>
-          <h3 class="mt-5 font-display text-lg font-bold text-white group-hover:text-emerald transition-colors">Grupos & Coletivos</h3>
-          <p class="mt-2 text-sm text-text-secondary leading-relaxed">Grupos de estudo, meetups de linguagens específicas e redes colaborativas da região.</p>
-          <span class="mt-4 inline-flex items-center gap-1 text-xs font-semibold text-emerald">Participar <span class="material-symbols-outlined text-[15px]">arrow_forward</span></span>
+          <div>
+            <h3 class="entity-title" style="margin-top: 12px;">Grupos & Coletivos</h3>
+            <p class="card-desc" style="margin-top: 6px;">Grupos de estudo, meetups de linguagens específicas e redes colaborativas da região.</p>
+          </div>
+          <span class="card-link" style="color: var(--emerald);">Participar →</span>
         </a>
       </div>
     </div>
   </section>
 
   <!-- CTA BANNER -->
-  <section class="px-5 py-24 md:px-10">
-    <div class="glass-card relative overflow-hidden mx-auto flex max-w-4xl flex-col items-center gap-6 rounded-3xl p-10 md:p-14 text-center border-primary/30 shadow-glow">
-      <div class="absolute -top-24 -right-24 h-64 w-64 rounded-full bg-primary/20 blur-3xl pointer-events-none"></div>
-      <div class="absolute -bottom-24 -left-24 h-64 w-64 rounded-full bg-secondary/20 blur-3xl pointer-events-none"></div>
-      
-      <span class="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 text-primary border border-primary/30">
-        <span class="material-symbols-outlined text-[28px]">hub</span>
-      </span>
-      <h2 class="font-display text-3xl md:text-4xl font-extrabold text-white">Faça parte do mapa de tecnologia de Manaus</h2>
-      <p class="max-w-xl text-base text-text-secondary">
-        Crie seu perfil profissional, adicione seus projetos e conecte-se com as oportunidades que movimentam a cena manauara.
-      </p>
-      <div class="flex flex-col sm:flex-row gap-3">
-        <a href="pages/auth/register.html" class="inline-flex items-center justify-center gap-2 rounded-full bg-primary px-8 py-3.5 text-sm font-bold text-on-primary shadow-glow transition-all hover:bg-primary-fixed hover:-translate-y-0.5">
-          <span class="material-symbols-outlined text-[18px]">person_add</span>
-          <span>Criar meu perfil gratuito</span>
-        </a>
-        <a href="pages/projetos/novo.html" class="inline-flex items-center justify-center gap-2 rounded-full border border-white/[0.15] bg-surface-container-high/60 px-8 py-3.5 text-sm font-semibold text-white transition-all hover:border-primary hover:text-primary">
-          <span class="material-symbols-outlined text-[18px]">publish</span>
-          <span>Publicar projeto</span>
-        </a>
+  <section class="section">
+    <div class="container">
+      <div class="glass-card" style="padding: 48px 32px; text-align: center; max-width: 800px; margin: 0 auto; border-color: rgba(0,245,255,0.3);">
+        <div style="width: 50px; height: 50px; border-radius: var(--radius-lg); background: rgba(0,245,255,0.1); color: var(--primary); display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; border: 1px solid rgba(0,245,255,0.25);">
+          <span class="material-symbols-outlined" style="font-size: 28px;">hub</span>
+        </div>
+        <h2 class="section-title">Faça parte do mapa de tecnologia de Manaus</h2>
+        <p class="section-desc" style="max-width: 540px; margin: 12px auto 28px;">
+          Crie seu perfil profissional, adicione seus projetos e conecte-se com as oportunidades que movimentam a cena manauara.
+        </p>
+        <div style="display: flex; flex-wrap: wrap; gap: 12px; justify-content: center;">
+          <a href="/pages/auth/register.html" class="btn btn-primary btn-lg">
+            <span class="material-symbols-outlined">person_add</span>
+            <span>Criar meu perfil gratuito</span>
+          </a>
+          <a href="/pages/projetos/novo.html" class="btn btn-secondary btn-lg">
+            <span class="material-symbols-outlined">publish</span>
+            <span>Publicar projeto</span>
+          </a>
+        </div>
       </div>
     </div>
   </section>
@@ -428,25 +381,24 @@
 </main>
 
 <!-- INSTANT SEARCH COMMAND MODAL (Ctrl+K) -->
-<div id="search-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80 p-4 backdrop-blur-md">
-  <div class="glass-card relative w-full max-w-2xl overflow-hidden rounded-2xl border-white/[0.15] shadow-2xl p-6">
-    <div class="flex items-center gap-3 border-b border-white/[0.1] pb-4">
-      <span class="material-symbols-outlined text-primary text-[24px]">search</span>
+<div id="search-modal" class="search-modal hidden">
+  <div class="search-modal-box glass-card">
+    <div style="display: flex; align-items: center; gap: 12px; padding-bottom: 16px; border-bottom: 1px solid var(--border-subtle);">
+      <span class="material-symbols-outlined" style="color: var(--primary); font-size: 24px;">search</span>
       <input 
         type="text" 
         id="modal-search-input" 
         placeholder="Buscar desenvolvedor, projeto, stack ou empresa..." 
-        class="w-full bg-transparent text-base text-white placeholder-text-muted focus:outline-none font-sans"
-        autofocus
+        style="flex: 1; font-size: 15px; color: #ffffff; outline: none;"
       />
-      <button id="close-search-modal" class="rounded-lg p-1.5 text-text-muted hover:text-white hover:bg-white/[0.05]">
-        <span class="material-symbols-outlined text-[20px]">close</span>
+      <button id="close-search-modal" class="btn btn-ghost btn-sm" style="padding: 4px 8px;">
+        <span class="material-symbols-outlined">close</span>
       </button>
     </div>
 
     <!-- Quick Search Results Container -->
-    <div id="modal-search-results" class="mt-4 max-h-96 overflow-y-auto space-y-2">
-      <div class="py-8 text-center text-text-muted text-sm">
+    <div id="modal-search-results" style="margin-top: 16px; max-height: 320px; overflow-y: auto;">
+      <div style="padding: 30px; text-align: center; color: var(--text-muted); font-size: 13px;">
         Digite para buscar talentos, stacks ou projetos de Manaus...
       </div>
     </div>
@@ -454,36 +406,36 @@
 </div>
 
 <!-- FOOTER -->
-<footer class="border-t border-white/[0.08] bg-surface-container-lowest px-5 py-12 md:px-10">
-  <div class="mx-auto max-w-7xl flex flex-col md:flex-row items-center justify-between gap-6">
+<footer class="site-footer">
+  <div class="container footer-inner">
     
-    <div class="flex items-center gap-3">
-      <span class="flex h-8 w-8 items-center justify-center rounded-xl bg-primary text-on-primary">
-        <span class="material-symbols-outlined text-[18px]">terminal</span>
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <span class="logo-badge" style="width: 30px; height: 30px;">
+        <span class="material-symbols-outlined" style="font-size: 18px;">terminal</span>
       </span>
       <div>
-        <p class="font-display text-sm font-extrabold text-white">Manaus<span class="text-primary-fixed-dim">Dev</span></p>
-        <p class="text-xs text-text-muted">A comunidade de tecnologia do Amazonas</p>
+        <p style="font-family: var(--font-display); font-weight: 800; font-size: 14px; color: #ffffff;">Manaus<span style="color: var(--primary);">Dev</span></p>
+        <p style="font-size: 11px; color: var(--text-muted);">A comunidade de tecnologia do Amazonas</p>
       </div>
     </div>
 
-    <ul class="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-text-secondary font-medium">
-      <li><a href="pages/sobre.html" class="hover:text-primary transition-colors">Sobre</a></li>
-      <li><a href="pages/conteudo/" class="hover:text-primary transition-colors">Conteúdo</a></li>
-      <li><a href="pages/contato.html" class="hover:text-primary transition-colors">Contato</a></li>
-      <li><a href="pages/termos.html" class="hover:text-primary transition-colors">Termos</a></li>
-      <li><a href="pages/privacidade.html" class="hover:text-primary transition-colors">Privacidade</a></li>
-      <li><a href="https://github.com/manausdev" target="_blank" rel="noopener noreferrer" class="hover:text-primary transition-colors">GitHub</a></li>
+    <ul class="footer-links">
+      <li><a href="/pages/sobre.html">Sobre</a></li>
+      <li><a href="/pages/conteudo/">Conteúdo</a></li>
+      <li><a href="/pages/contato.html">Contato</a></li>
+      <li><a href="/pages/termos.html">Termos</a></li>
+      <li><a href="/pages/privacidade.html">Privacidade</a></li>
+      <li><a href="https://github.com/manausdev" target="_blank" rel="noopener noreferrer">GitHub</a></li>
     </ul>
 
-    <p class="font-code text-xs text-text-muted">© 2026 ManausDev · Licença Apache-2.0</p>
+    <p class="font-code" style="font-size: 11px; color: var(--text-muted);">© 2026 ManausDev · Licença Apache-2.0</p>
   </div>
 </footer>
 
-<!-- Home Script for Dynamic Live Data and Interactivity -->
+<!-- Dynamic Data & Interactivity Module -->
 <script type="module">
-  import { api } from './js/api.js';
-  import { initApp } from './js/app.js';
+  import { api } from '/js/api.js';
+  import { initApp } from '/js/app.js';
 
   initApp();
 
@@ -521,36 +473,43 @@
       const devsContainer = document.getElementById('featured-devs-container');
       if (devsContainer && devs.length) {
         devsContainer.innerHTML = devs.slice(0, 6).map(dev => `
-          <div class="glass-card rounded-2xl p-5 border-white/[0.08] flex flex-col justify-between gap-4">
-            <div class="flex items-start justify-between gap-3">
-              <div class="flex items-center gap-3">
-                <img src="${dev.avatar || 'https://i.pravatar.cc/150?u=' + dev.id}" alt="${dev.name}" class="h-12 w-12 rounded-full border-2 border-primary/40 object-cover" />
-                <div>
-                  <h3 class="font-display text-base font-bold text-white">${dev.name}</h3>
-                  <p class="text-xs text-text-secondary">${dev.role || 'Engenheiro de Software'}</p>
+          <article class="dev-card glass-card">
+            <div>
+              <div class="card-top">
+                <div class="user-info">
+                  <img src="${dev.avatar || 'https://i.pravatar.cc/150?u=' + dev.id}" alt="${dev.name}" class="avatar" />
+                  <div>
+                    <h3 class="entity-title">${dev.name}</h3>
+                    <p class="entity-subtitle">${dev.role || 'Engenheiro de Software'}</p>
+                  </div>
                 </div>
+                <span class="badge-status ${dev.available ? 'available' : 'occupied'}">
+                  <span class="status-dot ${dev.available ? 'active' : ''}"></span>
+                  ${dev.available ? 'Disponível' : 'Ocupado'}
+                </span>
               </div>
-              <span class="inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[11px] font-semibold ${dev.available ? 'bg-emerald/15 text-emerald border border-emerald/30' : 'bg-white/[0.06] text-text-muted'}">
-                <span class="h-1.5 w-1.5 rounded-full ${dev.available ? 'bg-emerald animate-pulse' : 'bg-text-muted'}"></span>
-                ${dev.available ? 'Disponível' : 'Ocupado'}
-              </span>
-            </div>
-            
-            <p class="text-xs text-text-secondary line-clamp-2">${dev.bio || 'Desenvolvedor atuando no ecossistema de tecnologia de Manaus.'}</p>
-
-            <div class="flex flex-wrap gap-1.5">
-              ${(dev.skills || []).slice(0, 4).map(skill => `
-                <span class="rounded-lg bg-surface-container-high/80 px-2 py-0.5 font-code text-[11px] text-primary border border-white/[0.05]">${skill}</span>
-              `).join('')}
+              
+              <p class="card-desc" style="margin-top: 12px;">${dev.bio || 'Desenvolvedor atuando no ecossistema de tecnologia de Manaus.'}</p>
             </div>
 
-            <div class="pt-2 border-t border-white/[0.06] flex items-center justify-between">
-              <span class="text-xs text-text-muted flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">location_on</span> ${dev.location || 'Manaus-AM'}</span>
-              <a href="pages/devs/" class="text-xs font-semibold text-primary hover:text-primary-fixed flex items-center gap-0.5">
-                Ver perfil <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
-              </a>
+            <div>
+              <div class="tags-list" style="margin-bottom: 12px;">
+                ${(dev.skills || []).slice(0, 4).map(skill => `
+                  <span class="badge badge-tag">${skill}</span>
+                `).join('')}
+              </div>
+
+              <div class="card-bottom">
+                <span style="display: flex; align-items: center; gap: 4px;">
+                  <span class="material-symbols-outlined" style="font-size: 14px;">location_on</span>
+                  ${dev.location || 'Manaus-AM'}
+                </span>
+                <a href="/pages/devs/" class="card-link">
+                  Ver perfil →
+                </a>
+              </div>
             </div>
-          </div>
+          </article>
         `).join('');
       }
 
@@ -558,35 +517,39 @@
       const projectsContainer = document.getElementById('featured-projects-container');
       if (projectsContainer && projects.length) {
         projectsContainer.innerHTML = projects.slice(0, 6).map(project => `
-          <div class="glass-card rounded-2xl p-5 border-white/[0.08] flex flex-col justify-between gap-4">
-            <div class="flex items-start justify-between gap-3">
-              <div class="flex items-center gap-2.5">
-                <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-secondary/15 text-secondary border border-secondary/30">
-                  <span class="material-symbols-outlined text-[20px]">terminal</span>
-                </span>
-                <div>
-                  <h3 class="font-display text-base font-bold text-white">${project.title}</h3>
-                  <span class="font-code text-[10px] text-text-muted">Projeto Local</span>
+          <article class="project-card glass-card">
+            <div>
+              <div class="card-top">
+                <div class="user-info">
+                  <div style="width: 38px; height: 38px; border-radius: var(--radius-md); background: rgba(129,140,248,0.15); color: var(--secondary); display: flex; align-items: center; justify-content: center; border: 1px solid rgba(129,140,248,0.3);">
+                    <span class="material-symbols-outlined" style="font-size: 20px;">terminal</span>
+                  </div>
+                  <div>
+                    <h3 class="entity-title">${project.title}</h3>
+                    <span class="font-code" style="font-size: 10px; color: var(--text-muted);">Projeto Local</span>
+                  </div>
                 </div>
+                <span class="badge badge-primary">Ativo</span>
               </div>
-              <span class="rounded-full bg-primary/10 px-2.5 py-0.5 font-code text-[10px] font-semibold text-primary border border-primary/20">Ativo</span>
+
+              <p class="card-desc" style="margin-top: 12px;">${project.description || 'Solução inovadora desenvolvida pela comunidade tech de Manaus.'}</p>
             </div>
 
-            <p class="text-xs text-text-secondary line-clamp-2">${project.description || 'Solução inovadora desenvolvida pela comunidade tech de Manaus.'}</p>
+            <div>
+              <div class="tags-list" style="margin-bottom: 12px;">
+                ${(project.stack || []).slice(0, 4).map(s => `
+                  <span class="badge badge-tag" style="color: var(--secondary);">${s}</span>
+                `).join('')}
+              </div>
 
-            <div class="flex flex-wrap gap-1.5">
-              ${(project.stack || []).slice(0, 4).map(s => `
-                <span class="rounded-lg bg-surface-container-high/80 px-2 py-0.5 font-code text-[11px] text-secondary border border-white/[0.05]">${s}</span>
-              `).join('')}
+              <div class="card-bottom">
+                <span>Por dev da comunidade</span>
+                <a href="/pages/projetos/" class="card-link" style="color: var(--secondary);">
+                  Ver projeto →
+                </a>
+              </div>
             </div>
-
-            <div class="pt-2 border-t border-white/[0.06] flex items-center justify-between">
-              <span class="text-xs text-text-muted">Por dev da comunidade</span>
-              <a href="pages/projetos/" class="text-xs font-semibold text-secondary hover:underline flex items-center gap-0.5">
-                Ver projeto <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
-              </a>
-            </div>
-          </div>
+          </article>
         `).join('');
       }
 
@@ -594,24 +557,24 @@
       const eventsContainer = document.getElementById('featured-events-container');
       if (eventsContainer && events.length) {
         eventsContainer.innerHTML = events.slice(0, 4).map(event => `
-          <div class="glass-card rounded-2xl p-4 border-white/[0.08] flex flex-col justify-between gap-3">
-            <div class="flex items-center justify-between">
-              <span class="rounded-full bg-emerald/15 px-2.5 py-0.5 font-code text-[10px] font-semibold text-emerald uppercase">${event.type || 'Meetup'}</span>
-              <span class="font-code text-xs text-text-muted">${event.date || 'Em breve'}</span>
+          <article class="event-card glass-card">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <span class="badge badge-emerald" style="text-transform: uppercase;">${event.type || 'Meetup'}</span>
+              <span class="font-code" style="font-size: 11px; color: var(--text-muted);">${event.date || 'Em breve'}</span>
             </div>
-            <h3 class="font-display text-sm font-bold text-white">${event.title}</h3>
-            <p class="text-xs text-text-muted flex items-center gap-1">
-              <span class="material-symbols-outlined text-[14px] text-primary">pin_drop</span>
+            <h3 class="entity-title" style="font-size: 15px;">${event.title}</h3>
+            <p style="font-size: 12px; color: var(--text-muted); display: flex; align-items: center; gap: 4px;">
+              <span class="material-symbols-outlined" style="font-size: 14px; color: var(--primary);">pin_drop</span>
               <span>${event.location || 'Manaus-AM'}</span>
             </p>
-            <a href="pages/eventos/" class="text-xs font-semibold text-emerald hover:underline flex items-center justify-end gap-0.5">
-              Detalhes <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
-            </a>
-          </div>
+            <div style="text-align: right; padding-top: 8px; border-top: 1px solid var(--border-subtle);">
+              <a href="/pages/eventos/" class="card-link" style="color: var(--emerald);">Detalhes →</a>
+            </div>
+          </article>
         `).join('');
       }
 
-      // Setup live search
+      // Setup Search Modal & Keyboard Navigation
       setupSearch(devs, projects, companies);
 
     } catch (err) {
@@ -633,7 +596,6 @@
     function openSearch(initialQuery = '') {
       if (!modal) return;
       modal.classList.remove('hidden');
-      modal.classList.add('flex');
       if (modalInput) {
         modalInput.value = initialQuery;
         modalInput.focus();
@@ -644,7 +606,6 @@
     function closeSearch() {
       if (!modal) return;
       modal.classList.add('hidden');
-      modal.classList.remove('flex');
     }
 
     if (modalTrigger) modalTrigger.addEventListener('click', () => openSearch());
@@ -659,6 +620,13 @@
       }
       if (e.key === 'Escape') closeSearch();
     });
+
+    // Close when clicking modal backdrop
+    if (modal) {
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeSearch();
+      });
+    }
 
     // Hero search
     if (heroLiveSearch) {
@@ -683,7 +651,7 @@
       if (!resultsContainer) return;
       const q = query.toLowerCase().trim();
       if (!q) {
-        resultsContainer.innerHTML = '<div class="py-8 text-center text-text-muted text-sm">Digite uma stack, tecnologia ou nome para buscar...</div>';
+        resultsContainer.innerHTML = '<div style="padding: 30px; text-align: center; color: var(--text-muted); font-size: 13px;">Digite uma stack, tecnologia ou nome para buscar...</div>';
         return;
       }
 
@@ -702,36 +670,36 @@
       let html = '';
 
       if (matchDevs.length > 0) {
-        html += `<div class="font-code text-xs uppercase text-primary font-bold px-2 py-1">Desenvolvedores (${matchDevs.length})</div>`;
+        html += `<div class="font-code" style="font-size: 11px; text-transform: uppercase; color: var(--primary); font-weight: bold; padding: 4px 8px;">Desenvolvedores (${matchDevs.length})</div>`;
         html += matchDevs.slice(0, 4).map(d => `
-          <a href="pages/devs/" class="flex items-center justify-between p-3 rounded-xl hover:bg-white/[0.06] transition-colors border border-transparent hover:border-primary/20">
-            <div class="flex items-center gap-3">
-              <img src="${d.avatar || 'https://i.pravatar.cc/150?u=' + d.id}" class="w-8 h-8 rounded-full border border-primary/30" />
+          <a href="/pages/devs/" style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; border-radius: var(--radius-md); margin-bottom: 4px; background: rgba(255,255,255,0.03); border: 1px solid var(--border-subtle);">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <img src="${d.avatar || 'https://i.pravatar.cc/150?u=' + d.id}" style="width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--primary);" />
               <div>
-                <p class="text-sm font-bold text-white">${d.name}</p>
-                <p class="text-xs text-text-muted">${d.role || 'Dev'} · ${(d.skills || []).slice(0, 3).join(', ')}</p>
+                <p style="font-size: 13px; font-weight: bold; color: #ffffff;">${d.name}</p>
+                <p style="font-size: 11px; color: var(--text-muted);">${d.role || 'Dev'} · ${(d.skills || []).slice(0, 3).join(', ')}</p>
               </div>
             </div>
-            <span class="text-xs font-semibold text-primary">Ver perfil →</span>
+            <span style="font-size: 12px; font-weight: 600; color: var(--primary);">Ver perfil →</span>
           </a>
         `).join('');
       }
 
       if (matchProjects.length > 0) {
-        html += `<div class="font-code text-xs uppercase text-secondary font-bold px-2 py-1 mt-3">Projetos (${matchProjects.length})</div>`;
+        html += `<div class="font-code" style="font-size: 11px; text-transform: uppercase; color: var(--secondary); font-weight: bold; padding: 4px 8px; margin-top: 12px;">Projetos (${matchProjects.length})</div>`;
         html += matchProjects.slice(0, 4).map(p => `
-          <a href="pages/projetos/" class="flex items-center justify-between p-3 rounded-xl hover:bg-white/[0.06] transition-colors border border-transparent hover:border-secondary/20">
+          <a href="/pages/projetos/" style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; border-radius: var(--radius-md); margin-bottom: 4px; background: rgba(255,255,255,0.03); border: 1px solid var(--border-subtle);">
             <div>
-              <p class="text-sm font-bold text-white">${p.title}</p>
-              <p class="text-xs text-text-muted">${(p.stack || []).slice(0, 3).join(', ')}</p>
+              <p style="font-size: 13px; font-weight: bold; color: #ffffff;">${p.title}</p>
+              <p style="font-size: 11px; color: var(--text-muted);">${(p.stack || []).slice(0, 3).join(', ')}</p>
             </div>
-            <span class="text-xs font-semibold text-secondary">Ver projeto →</span>
+            <span style="font-size: 12px; font-weight: 600; color: var(--secondary);">Ver projeto →</span>
           </a>
         `).join('');
       }
 
       if (!html) {
-        html = `<div class="py-8 text-center text-text-muted text-sm">Nenhum resultado encontrado para "<strong>${query}</strong>".</div>`;
+        html = `<div style="padding: 30px; text-align: center; color: var(--text-muted); font-size: 13px;">Nenhum resultado encontrado para "<strong>${query}</strong>".</div>`;
       }
 
       resultsContainer.innerHTML = html;

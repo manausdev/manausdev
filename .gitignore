@@ -32,6 +32,10 @@ firebase-debug.log*
 firestore-debug.log*
 ui-debug.log*
 
+# Temporary screenshots & MCP dumps
+screenshot*.png
+browser-screenshot.png
+
 # Logs
 logs/
 *.log

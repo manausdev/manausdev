@@ -1,5 +1,6 @@
-import { api } from '../../js/api.js';
-import { paginate, debounce } from '../../js/utils.js';
+import { api } from '/js/api.js';
+import { paginate, debounce } from '/js/utils.js';
+import { initApp } from '/js/app.js';
 
 const PAGE_SIZE = 9;
 const grid = document.getElementById('projects-grid');
@@ -182,6 +183,7 @@ function updateQueryFromFilters() {
 }
 
 async function init() {
+  initApp();
   allProjects = await api.getAll('projects');
 
   const stacks = getStacks(allProjects);
