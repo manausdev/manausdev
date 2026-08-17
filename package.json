@@ -1,11 +1,13 @@
 {
   "name": "manausdev",
   "version": "1.0.0",
+  "type": "module",
   "description": "Plataforma ManausDev - Quem constrói tecnologia em Manaus está aqui",
   "scripts": {
     "dev": "node build.js --watch",
     "build": "node build.js",
-    "serve": "node serve.js"
+    "serve": "node serve.js",
+    "deploy": "node build.js && node scripts/deploy-hosting-rest.js"
   },
   "keywords": [
     "manausdev",
@@ -13,5 +15,8 @@
     "community",
     "developers"
   ],
-  "license": "Apache-2.0"
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "firebase-tools": "^15.27.0"
+  }
 }

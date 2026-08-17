@@ -6,8 +6,6 @@ const grid = document.getElementById('projects-grid');
 const pagination = document.getElementById('projects-pagination');
 const searchInput = document.getElementById('project-search');
 const stackSelect = document.getElementById('stack-select');
-const statusSelect = document.getElementById('status-select');
-const sortSelect = document.getElementById('sort-select');
 const clearBtn = document.getElementById('clear-project-filters');
 const resultCount = document.querySelector('[data-search-result-count]');
 
@@ -19,8 +17,6 @@ function getQueryParams() {
   return {
     search: params.get('search') || '',
     stack: params.get('stack') || '',
-    status: params.get('status') || '',
-    sort: params.get('sort') || 'recent',
     page: parseInt(params.get('page') || '1', 10),
   };
 }
@@ -46,49 +42,59 @@ function getStacks(projects) {
 }
 
 function renderStackOptions(stacks) {
-  stackSelect.innerHTML = '<option value="">Todas</option>' +
+  if (!stackSelect) return;
+  stackSelect.innerHTML = '<option value="">Todas as stacks</option>' +
     stacks.map((stack) => `<option value="${stack}">${stack}</option>`).join('');
 }
 
-function getStatusLabel(status) {
-  const labels = {
-    planning: 'Planejamento',
-    active: 'Em andamento',
-    completed: 'Concluído',
-    paused: 'Pausado',
-  };
-  return labels[status] || status;
-}
-
-function getStatusBadgeClass(status) {
-  const map = {
-    planning: 'secondary',
-    active: 'primary',
-    completed: 'accent',
-    paused: 'secondary',
-  };
-  return map[status] || 'secondary';
-}
-
 function renderCard(project) {
-  const statusLabel = getStatusLabel(project.status);
-  const statusClass = getStatusBadgeClass(project.status);
+  const repoLink = project.links && project.links.github ? project.links.github : null;
+  const demoLink = project.links && project.links.demo ? project.links.demo : null;
 
   return `
-    <article class="card card--project" role="listitem" data-id="${project.id}">
-      <div class="card-header">
-        <h3 class="card-title">${project.title}</h3>
-        <span class="badge badge-${statusClass}">${statusLabel}</span>
-      </div>
-      <div class="card-body">
-        <p class="text-secondary">${project.description || 'Sem descrição'}</p>
-        <div class="tags">
-          ${(project.stack || []).slice(0, 5).map((s) => `<span class="badge badge-secondary">${s}</span>`).join('')}
+    <article class="glass-card rounded-2xl p-5 border-white/[0.08] flex flex-col justify-between gap-4 transition-all duration-300 hover:-translate-y-1.5 hover:border-secondary/50 group" role="listitem" data-id="${project.id}">
+      <div>
+        <div class="flex items-start justify-between gap-3 mb-3">
+          <div class="flex items-center gap-2.5">
+            <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-secondary/15 text-secondary border border-secondary/30 group-hover:scale-105 transition-transform">
+              <span class="material-symbols-outlined text-[20px]">terminal</span>
+            </span>
+            <div>
+              <h3 class="font-display text-base font-bold text-white group-hover:text-secondary transition-colors">${project.title}</h3>
+              <span class="font-code text-[10px] text-text-muted">ID #${project.id}</span>
+            </div>
+          </div>
+          <span class="rounded-full bg-primary/10 px-2.5 py-0.5 font-code text-[10px] font-semibold text-primary border border-primary/20">Ativo</span>
         </div>
-        <div class="card-footer">
-          <a href="/#projects/${project.id}" class="btn btn-secondary btn-sm">Ver detalhes</a>
-          ${project.repository ? `<a href="${project.repository}" target="_blank" rel="noopener noreferrer" class="btn btn-ghost btn-sm">Repo</a>` : ''}
-          ${project.demo ? `<a href="${project.demo}" target="_blank" rel="noopener noreferrer" class="btn btn-ghost btn-sm">Demo</a>` : ''}
+
+        <p class="text-xs text-text-secondary leading-relaxed line-clamp-3">${project.description || 'Projeto construído e mantido por desenvolvedores de Manaus.'}</p>
+      </div>
+
+      <div>
+        <div class="flex flex-wrap gap-1.5 mb-4">
+          ${(project.stack || []).slice(0, 4).map((s) => `
+            <span class="rounded-lg bg-surface-container-high/80 px-2 py-0.5 font-code text-[11px] text-secondary border border-white/[0.05]">${s}</span>
+          `).join('')}
+        </div>
+
+        <div class="pt-3 border-t border-white/[0.06] flex items-center justify-between gap-2">
+          <div class="flex items-center gap-2">
+            ${repoLink ? `
+              <a href="${repoLink}" target="_blank" rel="noopener noreferrer" class="text-xs font-semibold text-text-secondary hover:text-white flex items-center gap-1">
+                <span class="material-symbols-outlined text-[14px]">code</span>
+                <span>GitHub</span>
+              </a>
+            ` : ''}
+            ${demoLink ? `
+              <a href="${demoLink}" target="_blank" rel="noopener noreferrer" class="text-xs font-semibold text-primary hover:underline flex items-center gap-1">
+                <span class="material-symbols-outlined text-[14px]">open_in_new</span>
+                <span>Demo</span>
+              </a>
+            ` : ''}
+          </div>
+          <a href="/pages/projetos/[slug].html?id=${project.id}" class="text-xs font-semibold text-secondary hover:underline flex items-center gap-0.5">
+            Ver detalhes <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+          </a>
         </div>
       </div>
     </article>
@@ -110,7 +116,7 @@ function renderPagination(totalItems, current) {
 
   for (let i = 1; i <= totalPages; i++) {
     if (i === current) {
-      html += `<button class="btn btn-sm" disabled aria-current="page">${i}</button>`;
+      html += `<button class="btn btn-primary btn-sm" disabled aria-current="page">${i}</button>`;
     } else {
       html += `<button class="btn btn-ghost btn-sm" data-page="${i}">${i}</button>`;
     }
@@ -124,22 +130,6 @@ function renderPagination(totalItems, current) {
   pagination.innerHTML = html;
 }
 
-function sortProjects(list, sortKey) {
-  const sorted = [...list];
-  switch (sortKey) {
-    case 'recent':
-      return sorted.sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
-    case 'popular':
-      return sorted.sort((a, b) => (b.likes || 0) - (a.likes || 0));
-    case 'name-asc':
-      return sorted.sort((a, b) => a.title.localeCompare(b.title));
-    case 'name-desc':
-      return sorted.sort((a, b) => b.title.localeCompare(a.title));
-    default:
-      return sorted;
-  }
-}
-
 function applyFilters() {
   const params = getQueryParams();
   currentPage = params.page || 1;
@@ -148,25 +138,25 @@ function applyFilters() {
 
   if (params.search) {
     const lower = params.search.toLowerCase();
-    filtered = filtered.filter((p) => p.title.toLowerCase().includes(lower));
+    filtered = filtered.filter((p) => 
+      p.title.toLowerCase().includes(lower) || 
+      (p.description || '').toLowerCase().includes(lower) ||
+      (p.stack || []).some(s => s.toLowerCase().includes(lower))
+    );
   }
 
   if (params.stack) {
     filtered = filtered.filter((p) => (p.stack || []).some((s) => s.toLowerCase() === params.stack.toLowerCase()));
   }
 
-  if (params.status) {
-    filtered = filtered.filter((p) => p.status === params.status);
+  if (resultCount) {
+    resultCount.textContent = `${filtered.length} projeto${filtered.length !== 1 ? 's' : ''} encontrado${filtered.length !== 1 ? 's' : ''}`;
   }
-
-  filtered = sortProjects(filtered, params.sort);
-
-  resultCount.textContent = `${filtered.length} projeto${filtered.length !== 1 ? 's' : ''} encontrado${filtered.length !== 1 ? 's' : ''}`;
 
   const paginated = paginate(filtered, currentPage, PAGE_SIZE);
 
   if (paginated.data.length === 0) {
-    grid.innerHTML = '<p class="text-secondary" id="projects-empty">Nenhum projeto encontrado.</p>';
+    grid.innerHTML = '<div class="col-span-full py-16 text-center text-text-muted glass-card rounded-2xl p-8">Nenhum projeto encontrado com os filtros selecionados.</div>';
   } else {
     grid.innerHTML = paginated.data.map(renderCard).join('');
   }
@@ -176,18 +166,14 @@ function applyFilters() {
 
 function syncFiltersFromQuery() {
   const params = getQueryParams();
-  searchInput.value = params.search;
-  stackSelect.value = params.stack;
-  statusSelect.value = params.status;
-  sortSelect.value = params.sort;
+  if (searchInput) searchInput.value = params.search;
+  if (stackSelect) stackSelect.value = params.stack;
 }
 
 function updateQueryFromFilters() {
   const params = {
-    search: searchInput.value.trim(),
-    stack: stackSelect.value,
-    status: statusSelect.value,
-    sort: sortSelect.value,
+    search: searchInput ? searchInput.value.trim() : '',
+    stack: stackSelect ? stackSelect.value : '',
     page: '1',
   };
 
@@ -203,31 +189,33 @@ async function init() {
 
   syncFiltersFromQuery();
 
-  searchInput.addEventListener('input', debounce(() => {
-    updateQueryFromFilters();
-  }, 300));
+  if (searchInput) {
+    searchInput.addEventListener('input', debounce(() => {
+      updateQueryFromFilters();
+    }, 300));
+  }
 
-  stackSelect.addEventListener('change', updateQueryFromFilters);
-  statusSelect.addEventListener('change', updateQueryFromFilters);
-  sortSelect.addEventListener('change', updateQueryFromFilters);
+  if (stackSelect) stackSelect.addEventListener('change', updateQueryFromFilters);
 
-  clearBtn.addEventListener('click', () => {
-    searchInput.value = '';
-    stackSelect.value = '';
-    statusSelect.value = '';
-    sortSelect.value = 'recent';
-    updateQueryFromFilters();
-  });
+  if (clearBtn) {
+    clearBtn.addEventListener('click', () => {
+      if (searchInput) searchInput.value = '';
+      if (stackSelect) stackSelect.value = '';
+      updateQueryFromFilters();
+    });
+  }
 
-  pagination.addEventListener('click', (e) => {
-    const btn = e.target.closest('button[data-page]');
-    if (!btn) return;
-    const params = getQueryParams();
-    params.page = btn.dataset.page;
-    setQueryParams(params);
-    applyFilters();
-    grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  });
+  if (pagination) {
+    pagination.addEventListener('click', (e) => {
+      const btn = e.target.closest('button[data-page]');
+      if (!btn) return;
+      const params = getQueryParams();
+      params.page = btn.dataset.page;
+      setQueryParams(params);
+      applyFilters();
+      grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  }
 
   window.addEventListener('popstate', () => {
     syncFiltersFromQuery();

@@ -3,116 +3,188 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Desenvolvedores | ManausDev</title>
+  <title>Desenvolvedores em Manaus | ManausDev</title>
+  <meta name="description" content="Diretório de desenvolvedores, engenheiros de software e talentos tech de Manaus e região amazônica." />
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1" rel="stylesheet"/>
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            background: "#090d16",
+            surface: "#0f172a",
+            "surface-container-low": "#0b1120",
+            "surface-container": "#111827",
+            "surface-container-high": "#1e293b",
+            primary: "#00f5ff",
+            "primary-fixed-dim": "#00dce5",
+            "on-primary": "#00282b",
+            secondary: "#818cf8",
+            emerald: "#10b981",
+            "text-primary": "#f8fafc",
+            "text-secondary": "#94a3b8",
+            "text-muted": "#64748b",
+            "on-surface": "#f8fafc",
+          },
+          fontFamily: {
+            display: ["Montserrat", "sans-serif"],
+            body: ["Inter", "sans-serif"],
+            code: ["JetBrains Mono", "monospace"],
+          }
+        },
+      },
+    };
+  </script>
+
   <link rel="stylesheet" href="/css/variables.css" />
   <link rel="stylesheet" href="/css/global.css" />
   <link rel="stylesheet" href="/css/components.css" />
-  <link rel="stylesheet" href="/css/utilities.css" />
+  <link rel="stylesheet" href="/css/responsive.css" />
 </head>
-<body class="bg-background text-on-background font-body-base antialiased flex h-screen overflow-hidden">
-  <!-- SideNavBar -->
-  <nav class="bg-surface h-full w-64 fixed left-0 top-0 hidden lg:flex flex-col bg-surface-container-low shadow-md z-40 border-r border-outline-variant/30">
-    <div class="p-6 mb-4">
-      <div class="flex items-center gap-3 mb-2">
-        <div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center">
-          <span class="material-symbols-outlined text-on-primary-container">hub</span>
-        </div>
-        <div>
-          <h1 class="font-headline-card text-headline-card text-primary-container">ManausDev</h1>
-          <p class="font-body-sm text-body-sm text-on-surface-variant">Amazonas Tech Scene</p>
-        </div>
+
+<body class="bg-background text-on-surface font-body antialiased flex flex-col lg:flex-row min-h-screen">
+  
+  <!-- Sidebar Navigation (Desktop) -->
+  <aside class="hidden lg:flex w-64 flex-col border-r border-white/[0.08] bg-surface-container-low/90 backdrop-blur-xl p-5 sticky top-0 h-screen justify-between z-40">
+    <div class="flex flex-col gap-6">
+      <a href="/" class="flex items-center gap-2.5 font-display text-lg font-extrabold tracking-tight">
+        <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-primary text-on-primary shadow-glow">
+          <span class="material-symbols-outlined text-[20px]">terminal</span>
+        </span>
+        <span class="text-white">Manaus<span class="text-primary-fixed-dim">Dev</span></span>
+      </a>
+
+      <nav class="flex flex-col gap-1 text-sm font-medium">
+        <a href="/" class="flex items-center gap-3 px-3 py-2.5 text-text-secondary hover:text-white hover:bg-white/[0.05] rounded-xl transition-all">
+          <span class="material-symbols-outlined text-[20px]">home</span>
+          <span>Início</span>
+        </a>
+        <a href="/pages/devs/" class="flex items-center gap-3 px-3 py-2.5 bg-primary/10 text-primary border border-primary/20 rounded-xl font-semibold transition-all">
+          <span class="material-symbols-outlined text-[20px]">groups</span>
+          <span>Desenvolvedores</span>
+        </a>
+        <a href="/pages/projetos/" class="flex items-center gap-3 px-3 py-2.5 text-text-secondary hover:text-white hover:bg-white/[0.05] rounded-xl transition-all">
+          <span class="material-symbols-outlined text-[20px]">terminal</span>
+          <span>Projetos</span>
+        </a>
+        <a href="/pages/empresas/" class="flex items-center gap-3 px-3 py-2.5 text-text-secondary hover:text-white hover:bg-white/[0.05] rounded-xl transition-all">
+          <span class="material-symbols-outlined text-[20px]">apartment</span>
+          <span>Empresas</span>
+        </a>
+        <a href="/pages/vagas/" class="flex items-center gap-3 px-3 py-2.5 text-text-secondary hover:text-white hover:bg-white/[0.05] rounded-xl transition-all">
+          <span class="material-symbols-outlined text-[20px]">work</span>
+          <span>Vagas</span>
+        </a>
+        <a href="/pages/eventos/" class="flex items-center gap-3 px-3 py-2.5 text-text-secondary hover:text-white hover:bg-white/[0.05] rounded-xl transition-all">
+          <span class="material-symbols-outlined text-[20px]">event</span>
+          <span>Eventos</span>
+        </a>
+        <a href="/pages/comunidades/" class="flex items-center gap-3 px-3 py-2.5 text-text-secondary hover:text-white hover:bg-white/[0.05] rounded-xl transition-all">
+          <span class="material-symbols-outlined text-[20px]">diversity_3</span>
+          <span>Comunidades</span>
+        </a>
+      </nav>
+    </div>
+
+    <div class="pt-4 border-t border-white/[0.08]">
+      <a href="/pages/auth/register.html" class="w-full flex items-center justify-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-xs font-bold text-on-primary shadow-glow transition-all hover:bg-primary-fixed">
+        <span class="material-symbols-outlined text-[16px]">add_circle</span>
+        <span>Cadastrar Perfil</span>
+      </a>
+    </div>
+  </aside>
+
+  <!-- Mobile Header -->
+  <header class="flex lg:hidden items-center justify-between border-b border-white/[0.08] bg-background/90 backdrop-blur-xl px-5 py-3.5 sticky top-0 z-40">
+    <a href="/" class="flex items-center gap-2 font-display text-base font-extrabold text-white">
+      <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-primary text-on-primary">
+        <span class="material-symbols-outlined text-[16px]">terminal</span>
+      </span>
+      Manaus<span class="text-primary">Dev</span>
+    </a>
+    <div class="flex items-center gap-2">
+      <a href="/" class="text-xs text-text-secondary hover:text-white">Início</a> ·
+      <a href="/pages/projetos/" class="text-xs text-text-secondary hover:text-white">Projetos</a> ·
+      <a href="/pages/vagas/" class="text-xs text-text-secondary hover:text-white">Vagas</a>
+    </div>
+  </header>
+
+  <!-- Main Content Container -->
+  <main class="flex-1 p-5 md:p-10 max-w-7xl mx-auto w-full">
+    
+    <!-- Page Header -->
+    <div class="mb-8">
+      <div class="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1 font-code text-xs font-semibold text-primary mb-2 border border-primary/20">
+        <span class="material-symbols-outlined text-[15px]">badge</span>
+        <span>Comunidade Regional</span>
       </div>
+      <h1 class="font-display text-3xl md:text-4xl font-extrabold text-white">Desenvolvedores em Manaus</h1>
+      <p class="text-sm text-text-secondary mt-1 max-w-2xl">
+        Encontre profissionais, filtre por stacks tecnológicas, áreas de atuação e veja quem está disponível para novos desafios.
+      </p>
     </div>
-    <div class="flex flex-col p-4 gap-2 flex-1">
-      <a class="flex items-center gap-3 p-3 text-on-surface-variant hover:bg-surface-variant/50 mx-2 my-1 rounded-xl cursor-pointer transition-all hover:translate-x-1" href="/#home">
-        <span class="material-symbols-outlined">home</span>
-        <span class="font-label-caps text-label-caps">Início</span>
-      </a>
-      <a class="flex items-center gap-3 p-3 text-on-surface-variant hover:bg-surface-variant/50 mx-2 my-1 rounded-xl cursor-pointer transition-all hover:translate-x-1" href="/projetos">
-        <span class="material-symbols-outlined">terminal</span>
-        <span class="font-label-caps text-label-caps">Projetos</span>
-      </a>
-      <a class="flex items-center gap-3 p-3 bg-primary-container text-on-primary-container rounded-xl mx-2 my-1 cursor-pointer transition-all" href="/devs">
-        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">groups</span>
-        <span class="font-label-caps text-label-caps">Desenvolvedores</span>
-      </a>
-      <a class="flex items-center gap-3 p-3 text-on-surface-variant hover:bg-surface-variant/50 mx-2 my-1 rounded-xl cursor-pointer transition-all hover:translate-x-1" href="/empresas">
-        <span class="material-symbols-outlined">business</span>
-        <span class="font-label-caps text-label-caps">Empresas</span>
-      </a>
-      <a class="flex items-center gap-3 p-3 text-on-surface-variant hover:bg-surface-variant/50 mx-2 my-1 rounded-xl cursor-pointer transition-all hover:translate-x-1" href="/vagas">
-        <span class="material-symbols-outlined">work</span>
-        <span class="font-label-caps text-label-caps">Vagas</span>
-      </a>
-      <a class="flex items-center gap-3 p-3 text-on-surface-variant hover:bg-surface-variant/50 mx-2 my-1 rounded-xl cursor-pointer transition-all hover:translate-x-1" href="/eventos">
-        <span class="material-symbols-outlined">event</span>
-        <span class="font-label-caps text-label-caps">Eventos</span>
-      </a>
-      <a class="flex items-center gap-3 p-3 text-on-surface-variant hover:bg-surface-variant/50 mx-2 my-1 rounded-xl cursor-pointer transition-all hover:translate-x-1" href="/comunidades">
-        <span class="material-symbols-outlined">forum</span>
-        <span class="font-label-caps text-label-caps">Comunidades</span>
-      </a>
-    </div>
-    <div class="p-4 mt-auto">
-      <a href="/cadastro" class="w-full bg-primary-container text-on-primary-container font-label-caps text-label-caps py-3 rounded-lg shadow-sm hover:shadow-md transition-shadow text-center block">
-        Criar conta
-      </a>
-    </div>
-  </nav>
 
-  <!-- Main Content -->
-  <main class="flex-1 lg:ml-64 h-full overflow-y-auto relative bg-background">
-    <div class="absolute inset-0 pointer-events-none opacity-10" style="background-image: radial-gradient(circle at 2px 2px, #00dce5 1px, transparent 0); background-size: 32px 32px;"></div>
-    <div class="max-w-[1280px] mx-auto px-margin-mobile md:px-margin-desktop py-12 md:py-16 relative z-10">
-      <!-- Page Header -->
-      <header class="mb-12">
-        <h2 class="font-display-hero-mobile md:font-display-hero text-display-hero-mobile md:text-display-hero text-on-background mb-4">Desenvolvedores</h2>
-        <p class="font-body-base text-body-base text-on-surface-variant max-w-2xl">
-          Descubra desenvolvedores da região de Manaus. Encontre talentos por stack, área e disponibilidade.
-        </p>
-      </header>
-
-      <!-- Filters -->
-      <section class="mb-10 flex flex-wrap gap-3">
-        <input type="search" id="search-input" class="input filter-input" placeholder="Buscar por nome..." />
-        <select id="tech-select" class="input select filter-input">
-          <option value="">Todas as tecnologias</option>
-        </select>
-        <select id="area-select" class="input select filter-input">
-          <option value="">Todas as áreas</option>
-          <option value="frontend">Frontend</option>
-          <option value="backend">Backend</option>
-          <option value="fullstack">Fullstack</option>
-          <option value="mobile">Mobile</option>
-          <option value="devops">DevOps</option>
-          <option value="data">Data</option>
-          <option value="design">Design</option>
-        </select>
-        <select id="level-select" class="input select filter-input">
-          <option value="">Todas as senioridades</option>
-          <option value="junior">Júnior</option>
-          <option value="pleno">Pleno</option>
-          <option value="senior">Sênior</option>
-          <option value="lead">Lead</option>
-        </select>
-        <select id="availability-select" class="input select filter-input">
-          <option value="">Disponibilidade</option>
-          <option value="available">Disponível</option>
-          <option value="unavailable">Indisponível</option>
-        </select>
-        <button type="button" class="px-5 py-2 rounded-full bg-surface-container text-on-surface font-label-caps text-label-caps shadow-sm border border-outline-variant/30 hover:border-primary-container hover:text-primary-container transition-all" id="clear-filters">
-          Limpar filtros
-        </button>
-      </section>
-
-      <!-- Devs Grid -->
-      <div id="devs-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-gutter-desktop" role="list" aria-label="Lista de desenvolvedores">
-        <p class="text-secondary" id="devs-empty">Nenhum desenvolvedor encontrado.</p>
+    <!-- Filters Toolbar -->
+    <div class="glass-card rounded-2xl p-4 md:p-5 mb-8 border-white/[0.08] flex flex-col md:flex-row flex-wrap items-center gap-3">
+      <div class="relative flex-1 min-w-[240px] w-full">
+        <span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-text-muted text-[18px]">search</span>
+        <input 
+          type="search" 
+          id="search-input" 
+          class="filter-input w-full pl-10 text-sm" 
+          placeholder="Buscar por nome, cargo ou stack..." 
+        />
       </div>
 
-      <!-- Pagination -->
-      <nav id="devs-pagination" class="pagination" aria-label="Paginação de desenvolvedores"></nav>
+      <select id="tech-select" class="filter-input w-full md:w-auto text-sm">
+        <option value="">Todas as tecnologias</option>
+      </select>
+
+      <select id="area-select" class="filter-input w-full md:w-auto text-sm">
+        <option value="">Todas as áreas</option>
+        <option value="frontend">Frontend</option>
+        <option value="backend">Backend</option>
+        <option value="fullstack">Fullstack</option>
+        <option value="mobile">Mobile</option>
+        <option value="devops">DevOps & Cloud</option>
+        <option value="data">Data Science</option>
+        <option value="design">UI/UX Design</option>
+      </select>
+
+      <select id="availability-select" class="filter-input w-full md:w-auto text-sm">
+        <option value="">Status de disponibilidade</option>
+        <option value="available">🟢 Disponível</option>
+        <option value="unavailable">⚪ Ocupado</option>
+      </select>
+
+      <button type="button" id="clear-filters" class="w-full md:w-auto px-4 py-2.5 rounded-xl border border-white/[0.1] bg-surface-container-high/60 text-xs font-semibold text-text-secondary hover:text-white hover:border-white/[0.2] transition-all">
+        Limpar
+      </button>
     </div>
+
+    <!-- Results Counter -->
+    <div class="flex items-center justify-between mb-6">
+      <span data-search-result-count class="font-code text-xs text-text-secondary">Carregando desenvolvedores...</span>
+      <span class="text-xs text-text-muted">Ordenado por relevância</span>
+    </div>
+
+    <!-- Devs Grid -->
+    <div id="devs-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5" role="list">
+      <!-- Injected via JavaScript -->
+    </div>
+
+    <!-- Pagination -->
+    <nav id="devs-pagination" class="pagination mt-10"></nav>
+
   </main>
 
   <script type="module" src="/js/app.js"></script>
