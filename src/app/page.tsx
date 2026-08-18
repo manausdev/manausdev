@@ -1,19 +1,17 @@
 import Link from 'next/link';
 import { 
-  Users, 
-  Code2, 
+  Terminal, 
+  ArrowRight, 
+  MapPin, 
+  Calendar as CalendarIcon, 
   Briefcase, 
   Sparkles, 
-  ArrowRight, 
-  Terminal, 
-  ExternalLink,
-  MapPin,
-  Calendar,
-  CheckCircle2,
-  Building2,
-  Compass
+  ChevronRight,
+  Code2,
+  Compass,
+  Map,
+  Flower2
 } from 'lucide-react';
-import { GithubIcon } from '@/components/icons';
 import { createClient } from '@/lib/supabase/server';
 import { MOCK_DEVS, MOCK_PROJECTS, MOCK_EVENTS, MOCK_JOBS } from '@/lib/data/mock-data';
 
@@ -41,265 +39,323 @@ export default async function HomePage() {
   }
 
   return (
-    <div className="relative overflow-hidden bg-[#f7f9fb]">
-      {/* Decorative Bio-Organic Leaf Path (Subtle 3-5% Opacity) */}
-      <div className="pointer-events-none absolute -top-24 right-0 w-[600px] h-[600px] bg-gradient-to-bl from-[#006c49]/5 via-[#00314a]/5 to-transparent rounded-full blur-3xl" />
-      <div className="pointer-events-none absolute top-[500px] -left-20 w-[500px] h-[500px] bg-gradient-to-tr from-[#003527]/4 to-transparent rounded-full blur-3xl" />
-
+    <div className="flex-grow flex flex-col relative z-10 overflow-x-hidden">
       {/* Hero Section */}
-      <section className="relative pt-20 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-center">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#006c49]/10 border border-[#006c49]/20 text-xs font-semibold text-[#006c49] mb-6 shadow-sm">
-          <span className="flex h-2 w-2 rounded-full bg-[#006c49] animate-pulse" />
-          <span>Comunidade & Inovação Tecnológica no Amazonas</span>
+      <section className="relative w-full pt-20 pb-32 flex items-center justify-center min-h-[80vh] overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <div 
+            className="w-full h-full bg-cover bg-center absolute inset-0"
+            style={{
+              backgroundImage: `url('https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?q=80&w=2000&auto=format&fit=crop')`
+            }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#003527]/95 via-[#003527]/85 to-[#003527]/60 backdrop-blur-[2px]" />
         </div>
 
-        <h1 className="font-display font-bold text-4xl sm:text-6xl lg:text-7xl tracking-tight text-[#003527] max-w-4xl mx-auto leading-[1.15] mb-6">
-          Quem constrói o futuro em <span className="text-[#006c49]">Manaus</span> está conectado aqui.
-        </h1>
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <div className="lg:col-span-9 flex flex-col gap-6 text-white">
+            <div className="inline-flex items-center gap-2 bg-[#006c49]/40 backdrop-blur-md border border-[#006c49]/60 px-4 py-1.5 rounded-full w-max shadow-sm">
+              <span className="w-2 h-2 rounded-full bg-[#6cf8bb] animate-pulse" />
+              <span className="text-xs font-semibold text-[#6cf8bb] uppercase tracking-widest font-mono">
+                Inovação Regional
+              </span>
+            </div>
 
-        <p className="max-w-2xl mx-auto text-base sm:text-lg text-[#404944] mb-10 leading-relaxed">
-          Descubra engenheiros de software, colabore em projetos de bioeconomia e tecnologia, acesse oportunidades no Polo Industrial e participe de encontros na Amazônia.
-        </p>
+            <h1 className="font-display font-bold text-3xl sm:text-5xl lg:text-6xl text-white drop-shadow-md leading-[1.15] tracking-tight">
+              A maior comunidade de tecnologia do Amazonas
+            </h1>
 
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 max-w-md mx-auto mb-16">
-          <Link
-            href="/devs"
-            className="btn-primary w-full sm:w-auto !py-3.5 !px-6"
-          >
-            <Users className="w-4 h-4" />
-            Explorar Desenvolvedores
-          </Link>
-          <Link
-            href="/projetos"
-            className="btn-secondary w-full sm:w-auto !py-3.5 !px-6"
-          >
-            <Code2 className="w-4 h-4 text-[#00314a]" />
-            Ver Projetos Tech
-          </Link>
+            <p className="text-base sm:text-lg text-[#eff1f3]/90 max-w-2xl leading-relaxed">
+              Quem constrói o futuro em Manaus está conectado aqui. Uma rede profissional focada em bioeconomia, inovação corporativa e engenharia de software de alta performance.
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-3.5 mt-2">
+              <Link
+                href="/devs"
+                className="btn-leaf !py-3.5 !px-6 text-sm font-semibold shadow-md flex items-center justify-center gap-2"
+              >
+                Explorar Desenvolvedores
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+              <Link
+                href="/projetos"
+                className="inline-flex items-center justify-center gap-2 bg-transparent border border-[#6cf8bb] text-[#6cf8bb] hover:bg-[#6cf8bb]/10 transition-colors px-6 py-3.5 rounded text-sm font-semibold"
+              >
+                Ver Projetos Locais
+              </Link>
+            </div>
+          </div>
         </div>
 
-        {/* Stats Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-5 max-w-4xl mx-auto">
-          <div className="manaus-card p-6 text-center border-t-4 border-t-[#003527]">
-            <div className="font-display font-bold text-3xl sm:text-4xl text-[#003527]">450+</div>
-            <div className="text-xs text-[#404944] mt-1.5 font-medium">Devs Cadastrados</div>
-          </div>
-          <div className="manaus-card p-6 text-center border-t-4 border-t-[#006c49]">
-            <div className="font-display font-bold text-3xl sm:text-4xl text-[#006c49]">120+</div>
-            <div className="text-xs text-[#404944] mt-1.5 font-medium">Projetos & Startups</div>
-          </div>
-          <div className="manaus-card p-6 text-center border-t-4 border-t-[#00314a]">
-            <div className="font-display font-bold text-3xl sm:text-4xl text-[#00314a]">18+</div>
-            <div className="text-xs text-[#404944] mt-1.5 font-medium">Comunidades Ativas</div>
-          </div>
-          <div className="manaus-card p-6 text-center border-t-4 border-t-[#064e3b]">
-            <div className="font-display font-bold text-3xl sm:text-4xl text-[#064e3b]">50+</div>
-            <div className="text-xs text-[#404944] mt-1.5 font-medium">Vagas no Amazonas</div>
+        {/* Stats Bar floating below hero */}
+        <div className="absolute bottom-0 left-0 w-full transform translate-y-1/2 px-4 sm:px-6 lg:px-8 z-20">
+          <div className="max-w-7xl mx-auto glass-card rounded-xl p-6 grid grid-cols-2 md:grid-cols-4 gap-4 divide-y md:divide-y-0 md:divide-x divide-[#bfc9c3]/30">
+            <div className="flex flex-col items-center justify-center text-center px-4 py-2">
+              <span className="font-display font-bold text-3xl sm:text-4xl text-[#003527]">450+</span>
+              <span className="text-xs font-semibold text-[#404944] uppercase tracking-wider mt-1">Devs Cadastrados</span>
+            </div>
+            <div className="flex flex-col items-center justify-center text-center px-4 py-2">
+              <span className="font-display font-bold text-3xl sm:text-4xl text-[#006c49]">120+</span>
+              <span className="text-xs font-semibold text-[#404944] uppercase tracking-wider mt-1">Projetos Tech</span>
+            </div>
+            <div className="flex flex-col items-center justify-center text-center px-4 py-2">
+              <span className="font-display font-bold text-3xl sm:text-4xl text-[#00496a]">18+</span>
+              <span className="text-xs font-semibold text-[#404944] uppercase tracking-wider mt-1">Comunidades Ativas</span>
+            </div>
+            <div className="flex flex-col items-center justify-center text-center px-4 py-2">
+              <span className="font-display font-bold text-3xl sm:text-4xl text-[#064e3b]">50+</span>
+              <span className="text-xs font-semibold text-[#404944] uppercase tracking-wider mt-1">Vagas no Amazonas</span>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Subtle River Path Separator */}
-      <div className="max-w-7xl mx-auto px-8 my-4 flex items-center justify-center opacity-25">
-        <svg width="100%" height="20" viewBox="0 0 1200 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M0 10 C 300 0, 600 20, 900 10 C 1050 5, 1150 15, 1200 10" stroke="#003527" strokeWidth="1.5" strokeDasharray="4 4"/>
-        </svg>
-      </div>
+      {/* Spacer for stats bar */}
+      <div className="h-24 md:h-32 w-full bg-white" />
 
-      {/* Featured Developers Section */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8">
-          <div>
-            <div className="flex items-center gap-1.5 text-xs font-mono text-[#006c49] font-semibold uppercase tracking-wider mb-2">
-              <Terminal className="w-3.5 h-3.5" />
-              <span>Rede de Profissionais</span>
+      {/* Developers in Focus */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white relative bio-texture">
+        <div className="max-w-7xl mx-auto flex flex-col gap-10">
+          <div className="flex flex-col md:flex-row justify-between items-end gap-3 border-b border-[#bfc9c3]/30 pb-4">
+            <div>
+              <h2 className="font-display font-bold text-2xl sm:text-3xl text-[#003527]">Talentos do Norte</h2>
+              <p className="text-sm text-[#404944] mt-1.5">Conheça os profissionais que estão elevando o nível técnico da região.</p>
             </div>
-            <h2 className="font-display font-bold text-2xl sm:text-3xl text-[#003527]">Desenvolvedores em Destaque</h2>
+            <Link
+              href="/devs"
+              className="text-xs font-semibold text-[#006c49] hover:text-[#003527] transition-colors flex items-center gap-1"
+            >
+              Ver todos os devs <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
           </div>
-          <Link href="/devs" className="text-sm font-semibold text-[#006c49] hover:underline inline-flex items-center gap-1 mt-2 sm:mt-0">
-            Ver todos os desenvolvedores <ArrowRight className="w-4 h-4" />
-          </Link>
-        </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {devs.slice(0, 4).map((dev) => (
-            <div key={dev.id} className="manaus-card p-6 flex flex-col justify-between">
-              <div>
-                <div className="flex items-center gap-3.5 mb-4">
-                  <div className="w-12 h-12 rounded-full bg-[#003527] text-white flex items-center justify-center font-display font-bold text-base shadow-sm">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {devs.slice(0, 4).map((dev, idx) => {
+              const borderColors = ['border-[#006c49]', 'border-[#00496a]', 'border-[#064e3b]', 'border-[#006c49]'];
+              const borderClass = borderColors[idx % borderColors.length];
+
+              return (
+                <div
+                  key={dev.id}
+                  className={`bg-white rounded-xl p-6 border-t-4 ${borderClass} shadow-card-ambient hover:shadow-card-hover transition-all flex flex-col items-center text-center gap-4 relative group overflow-hidden border border-[#e0e3e5]`}
+                >
+                  <div className="absolute inset-0 bg-gradient-to-b from-[#006c49]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+                  
+                  <div className="w-24 h-24 rounded-full bg-[#003527] text-white flex items-center justify-center font-display font-bold text-2xl border-2 border-[#eceef0] shadow-sm z-10">
                     {dev.full_name.charAt(0)}
                   </div>
-                  <div>
-                    <h3 className="font-display font-bold text-base text-[#003527] leading-tight">{dev.full_name}</h3>
-                    <p className="text-xs text-[#006c49] font-medium mt-0.5">{dev.role || 'Developer'}</p>
+
+                  <div className="z-10">
+                    <h3 className="font-display font-bold text-base text-[#191c1e]">{dev.full_name}</h3>
+                    <p className="text-xs text-[#404944] mt-0.5">{dev.role || 'Software Engineer'}</p>
+                  </div>
+
+                  <div className="flex flex-wrap justify-center gap-1.5 mt-1 z-10">
+                    {(dev.skills || []).slice(0, 3).map((skill, i) => (
+                      <span key={i} className="chip-leaf text-[11px] !py-0.5 !px-2">
+                        {skill}
+                      </span>
+                    ))}
                   </div>
                 </div>
-                <p className="text-xs text-[#404944] line-clamp-3 mb-5 leading-relaxed">
-                  {dev.bio || 'Profissional de tecnologia membro da comunidade ManausDev.'}
-                </p>
-                <div className="flex flex-wrap gap-1.5 mb-5">
-                  {(dev.skills || []).slice(0, 3).map((skill, i) => (
-                    <span key={i} className="chip-leaf text-[11px] !py-0.5 !px-2">
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-              </div>
-              <div className="pt-4 border-t border-[#e0e3e5] flex items-center justify-between text-xs text-[#707974]">
-                <span className="flex items-center gap-1 font-mono text-[11px]">
-                  <MapPin className="w-3.5 h-3.5 text-[#006c49]" />
-                  {dev.location || 'Manaus-AM'}
-                </span>
-                {dev.github && (
-                  <a href={dev.github} target="_blank" rel="noreferrer" className="text-[#404944] hover:text-[#003527] transition-colors">
-                    <GithubIcon className="w-4 h-4" />
-                  </a>
-                )}
-              </div>
-            </div>
-          ))}
+              );
+            })}
+          </div>
         </div>
       </section>
 
-      {/* Featured Projects Section */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-[#e0e3e5]/70">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8">
-          <div>
-            <div className="flex items-center gap-1.5 text-xs font-mono text-[#00314a] font-semibold uppercase tracking-wider mb-2">
-              <Code2 className="w-3.5 h-3.5" />
-              <span>Bioeconomia & Software</span>
-            </div>
-            <h2 className="font-display font-bold text-2xl sm:text-3xl text-[#003527]">Projetos Feitos no Amazonas</h2>
+      {/* Regional Projects (Bento Grid Style) */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-[#f2f4f6] relative">
+        <div className="max-w-7xl mx-auto flex flex-col gap-10">
+          <div className="text-center max-w-2xl mx-auto">
+            <h2 className="font-display font-bold text-2xl sm:text-3xl text-[#003527]">
+              Bioeconomia & Tech: Projetos Feitos no Amazonas
+            </h2>
+            <p className="text-sm text-[#404944] mt-2">
+              Soluções inovadoras desenvolvidas localmente com impacto global.
+            </p>
           </div>
-          <Link href="/projetos" className="text-sm font-semibold text-[#00314a] hover:underline inline-flex items-center gap-1 mt-2 sm:mt-0">
-            Explorar todos os projetos <ArrowRight className="w-4 h-4" />
-          </Link>
-        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {projects.slice(0, 3).map((project) => (
-            <div key={project.id} className="manaus-card p-6 flex flex-col justify-between border-t-4 border-t-[#00314a]">
-              <div>
-                <div className="flex items-start justify-between gap-2 mb-3">
-                  <h3 className="font-display font-bold text-lg text-[#003527]">{project.title}</h3>
-                  <span className="chip-leaf text-[10px] font-mono">
-                    Feito em Manaus 🌿
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
+            {/* Feature Large */}
+            <div className="md:col-span-8 bg-[#003527] rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow group relative border border-[#bfc9c3]/20 flex flex-col justify-end p-8 min-h-[320px]">
+              <div 
+                className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105 opacity-25"
+                style={{
+                  backgroundImage: `url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop')`
+                }}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#003527] via-[#003527]/80 to-transparent" />
+              
+              <div className="relative z-10 text-white">
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="bg-[#006c49] text-white px-2.5 py-1 rounded text-xs font-semibold inline-flex items-center gap-1 font-mono">
+                    <Flower2 className="w-3.5 h-3.5" /> Feito em Manaus
                   </span>
                 </div>
-                <p className="text-xs text-[#404944] leading-relaxed mb-5">
-                  {project.description}
+                <h3 className="font-display text-xl sm:text-2xl font-bold mb-2">ManausHub</h3>
+                <p className="text-sm text-white/90 max-w-lg mb-4 leading-relaxed">
+                  Plataforma open-source para mapeamento de startups, bioeconomia e talentos do ecossistema de inovação local.
                 </p>
-                <div className="flex flex-wrap gap-1.5 mb-6">
-                  {(project.stack || []).map((tech, i) => (
-                    <span key={i} className="chip-river text-[11px] font-mono">
-                      {tech}
-                    </span>
-                  ))}
+                <div className="flex flex-wrap gap-2">
+                  <span className="px-2.5 py-1 bg-white/15 backdrop-blur-sm text-white text-xs font-mono rounded border border-white/20">
+                    Next.js
+                  </span>
+                  <span className="px-2.5 py-1 bg-white/15 backdrop-blur-sm text-white text-xs font-mono rounded border border-white/20">
+                    Supabase
+                  </span>
+                  <span className="px-2.5 py-1 bg-white/15 backdrop-blur-sm text-white text-xs font-mono rounded border border-white/20">
+                    PostgreSQL
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Side Features */}
+            <div className="md:col-span-4 flex flex-col gap-6">
+              <div className="bg-white rounded-xl p-6 shadow-sm border-l-4 border-l-[#00496a] flex flex-col justify-between hover:translate-x-1 transition-transform border border-[#e0e3e5]">
+                <div>
+                  <div className="flex justify-between items-start mb-3">
+                    <h3 className="font-display font-bold text-base text-[#191c1e]">RioTech Maps</h3>
+                    <Map className="w-5 h-5 text-[#00496a]" />
+                  </div>
+                  <p className="text-xs text-[#404944] leading-relaxed mb-4">
+                    Sistema de navegação fluvial utilizando dados via satélite para rotas fluviais seguras no Amazonas.
+                  </p>
+                </div>
+                <div className="flex justify-between items-center pt-2 border-t border-[#e0e3e5]">
+                  <span className="chip-leaf text-[10px] font-mono">React Native</span>
+                  <span className="text-[11px] font-mono text-[#707974]">Feito em Manaus</span>
                 </div>
               </div>
 
-              <div className="flex items-center gap-3 pt-4 border-t border-[#e0e3e5] text-xs">
-                {project.links?.github && (
-                  <a href={project.links.github} target="_blank" rel="noreferrer" className="flex items-center gap-1.5 text-[#404944] hover:text-[#003527] font-medium">
-                    <GithubIcon className="w-4 h-4" /> Código
-                  </a>
-                )}
-                {project.links?.demo && (
-                  <a href={project.links.demo} target="_blank" rel="noreferrer" className="flex items-center gap-1 text-[#00314a] hover:underline font-semibold ml-auto">
-                    Demonstração <ExternalLink className="w-3.5 h-3.5" />
-                  </a>
-                )}
+              <div className="bg-white rounded-xl p-6 shadow-sm border-l-4 border-l-[#006c49] flex flex-col justify-between hover:translate-x-1 transition-transform border border-[#e0e3e5]">
+                <div>
+                  <div className="flex justify-between items-start mb-3">
+                    <h3 className="font-display font-bold text-base text-[#191c1e]">Amazônia Tur Tech</h3>
+                    <Compass className="w-5 h-5 text-[#006c49]" />
+                  </div>
+                  <p className="text-xs text-[#404944] leading-relaxed mb-4">
+                    App de turismo ecológico conectado com guias locais credenciados e conservação ambiental.
+                  </p>
+                </div>
+                <div className="flex justify-between items-center pt-2 border-t border-[#e0e3e5]">
+                  <span className="chip-leaf text-[10px] font-mono">Kotlin • IoT</span>
+                  <span className="text-[11px] font-mono text-[#707974]">Feito em Manaus</span>
+                </div>
               </div>
             </div>
-          ))}
+          </div>
         </div>
       </section>
 
-      {/* Events & Jobs Section */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-[#e0e3e5]/70">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-          {/* Upcoming Events */}
-          <div>
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="font-display font-bold text-xl text-[#003527] flex items-center gap-2">
-                <Calendar className="w-5 h-5 text-[#006c49]" />
+      {/* Events and Jobs (Side by Side) */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10">
+          {/* Events */}
+          <div className="flex flex-col gap-4">
+            <div className="flex justify-between items-center border-b border-[#bfc9c3]/30 pb-4 mb-2">
+              <h2 className="font-display font-bold text-lg sm:text-xl text-[#003527] flex items-center gap-2">
+                <CalendarIcon className="w-5 h-5 text-[#006c49]" />
                 Próximos Eventos
               </h2>
-              <Link href="/eventos" className="text-xs text-[#006c49] font-semibold hover:underline">Ver agenda</Link>
+              <Link href="/eventos" className="text-xs text-[#006c49] font-semibold hover:underline">
+                Ver calendário
+              </Link>
             </div>
-            <div className="space-y-3.5">
-              {events.slice(0, 3).map((ev) => (
-                <div key={ev.id} className="manaus-card p-5 flex items-center justify-between gap-4">
-                  <div>
-                    <span className="chip-river text-[10px] font-mono uppercase tracking-wider mb-1.5">{ev.type}</span>
-                    <h4 className="font-display font-bold text-sm text-[#003527] mt-1">{ev.title}</h4>
-                    <p className="text-xs text-[#404944] mt-1 flex items-center gap-1.5">
-                      <MapPin className="w-3.5 h-3.5 text-[#006c49]" /> {ev.location}
-                    </p>
-                  </div>
-                  {ev.link && (
-                    <a href={ev.link} target="_blank" rel="noreferrer" className="btn-secondary text-xs !py-2 !px-3.5">
-                      Participar
-                    </a>
-                  )}
-                </div>
-              ))}
-            </div>
+
+            <ul className="flex flex-col gap-3.5">
+              {events.slice(0, 3).map((ev) => {
+                const dateParts = ev.date ? ev.date.split('-') : ['2026', '12', '15'];
+                const months = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
+                const monthName = months[parseInt(dateParts[1] || '1', 10) - 1] || 'Dez';
+                const dayNum = dateParts[2] || '15';
+
+                return (
+                  <li 
+                    key={ev.id}
+                    className="bg-[#f2f4f6] hover:bg-[#eceef0] p-4 rounded-lg flex items-center gap-4 transition-colors group cursor-pointer border border-[#e0e3e5]"
+                  >
+                    <div className="bg-[#064e3b]/10 text-[#064e3b] p-3 rounded flex flex-col items-center justify-center min-w-[56px]">
+                      <span className="text-[10px] font-bold uppercase font-mono">{monthName}</span>
+                      <span className="font-display font-black text-lg">{dayNum}</span>
+                    </div>
+                    <div className="flex-grow">
+                      <h4 className="font-display font-bold text-sm text-[#191c1e] group-hover:text-[#006c49] transition-colors">
+                        {ev.title}
+                      </h4>
+                      <p className="text-xs text-[#404944] mt-0.5 flex items-center gap-1">
+                        <MapPin className="w-3.5 h-3.5 text-[#006c49]" /> {ev.location}
+                      </p>
+                    </div>
+                    <ChevronRight className="w-4 h-4 text-[#707974] group-hover:text-[#006c49] transition-colors" />
+                  </li>
+                );
+              })}
+            </ul>
           </div>
 
-          {/* Job Opportunities */}
-          <div>
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="font-display font-bold text-xl text-[#003527] flex items-center gap-2">
-                <Briefcase className="w-5 h-5 text-[#00314a]" />
-                Oportunidades de Emprego
+          {/* Jobs */}
+          <div className="flex flex-col gap-4">
+            <div className="flex justify-between items-center border-b border-[#bfc9c3]/30 pb-4 mb-2">
+              <h2 className="font-display font-bold text-lg sm:text-xl text-[#003527] flex items-center gap-2">
+                <Briefcase className="w-5 h-5 text-[#00496a]" />
+                Vagas Recentes
               </h2>
-              <Link href="/vagas" className="text-xs text-[#00314a] font-semibold hover:underline">Ver todas</Link>
+              <Link href="/vagas" className="text-xs text-[#00496a] font-semibold hover:underline">
+                Ver painel de vagas
+              </Link>
             </div>
-            <div className="space-y-3.5">
+
+            <ul className="flex flex-col gap-3.5">
               {jobs.slice(0, 3).map((job) => (
-                <div key={job.id} className="manaus-card p-5 flex items-center justify-between gap-4">
-                  <div>
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className="chip-leaf text-[10px] font-mono">
-                        {job.type}
-                      </span>
-                      {job.remote && (
-                        <span className="chip-river text-[10px] font-mono">
-                          100% Remoto
-                        </span>
-                      )}
-                    </div>
-                    <h4 className="font-display font-bold text-sm text-[#003527]">{job.title}</h4>
-                    <p className="text-xs text-[#404944] mt-0.5">{job.company_name || 'Empresa do Polo'} • {job.salary || 'A combinar'}</p>
+                <li
+                  key={job.id}
+                  className="bg-white p-4 rounded-lg border border-[#e0e3e5] shadow-sm hover:border-[#006c49] hover:shadow-md transition-all flex flex-col gap-2 cursor-pointer group"
+                >
+                  <div className="flex justify-between items-start">
+                    <h4 className="font-display font-bold text-sm text-[#191c1e] group-hover:text-[#006c49] transition-colors">
+                      {job.title}
+                    </h4>
+                    <span className="px-2 py-0.5 bg-[#f2f4f6] text-[#404944] text-[11px] font-mono rounded">
+                      {job.remote ? 'Remoto' : 'Presencial'}
+                    </span>
                   </div>
-                  {job.link && (
-                    <a href={job.link} target="_blank" rel="noreferrer" className="btn-primary text-xs !py-2 !px-3.5">
-                      Candidatar
-                    </a>
-                  )}
-                </div>
+                  <div className="flex items-center justify-between mt-1 text-xs text-[#707974]">
+                    <div className="flex items-center gap-2">
+                      <div className="w-5 h-5 rounded bg-[#003527]/10 flex items-center justify-center text-[#003527] font-bold text-[10px]">
+                        {(job.company_name || 'T').charAt(0)}
+                      </div>
+                      <span className="font-medium text-[#404944]">{job.company_name || 'TechNorte'}</span>
+                    </div>
+                    <span className="font-mono text-[11px] text-[#006c49] font-semibold">
+                      {job.salary || 'A combinar'}
+                    </span>
+                  </div>
+                </li>
               ))}
-            </div>
+            </ul>
           </div>
         </div>
       </section>
 
-      {/* CTA Join Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto text-center">
-        <div className="manaus-card bg-gradient-to-br from-[#003527] to-[#064e3b] text-white p-10 sm:p-14 relative overflow-hidden rounded-2xl shadow-elevated">
-          <div className="pointer-events-none absolute -bottom-20 -right-20 w-80 h-80 bg-[#6cf8bb]/15 blur-3xl rounded-full" />
-          <h2 className="font-display font-bold text-3xl sm:text-4xl text-white mb-4">
-            Faça parte da história da tecnologia no Amazonas.
+      {/* Final CTA */}
+      <section className="py-24 px-4 sm:px-6 lg:px-8 bg-[#003527] text-white text-center relative overflow-hidden">
+        <div className="absolute inset-0 opacity-10 pointer-events-none bio-texture" />
+        <div className="max-w-3xl mx-auto flex flex-col items-center gap-6 relative z-10">
+          <div className="w-12 h-12 rounded-xl bg-[#006c49] text-white flex items-center justify-center shadow-lg">
+            <Sparkles className="w-6 h-6 text-[#6cf8bb]" />
+          </div>
+          <h2 className="font-display font-bold text-3xl sm:text-5xl text-white">
+            Faça parte da história da tecnologia no Amazonas
           </h2>
-          <p className="text-sm sm:text-base text-[#80bea6] max-w-xl mx-auto mb-8 leading-relaxed">
-            Crie seu perfil profissional no ManausDev gratuitamente, compartilhe seus projetos e participe da nossa rede.
+          <p className="text-sm sm:text-base text-[#eff1f3]/85 max-w-xl">
+            Junte-se a centenas de profissionais locais, compartilhe conhecimento e encontre sua próxima oportunidade.
           </p>
           <Link
             href="/auth/register"
-            className="btn-leaf text-sm !py-3.5 !px-8 text-white !bg-[#006c49] hover:!bg-[#005236]"
+            className="mt-2 btn-leaf !py-4 !px-8 text-base font-semibold shadow-lg border-b-4 border-[#064e3b] w-full sm:w-auto"
           >
-            <Sparkles className="w-4 h-4" />
             Cadastrar meu perfil agora
           </Link>
         </div>

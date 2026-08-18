@@ -56,11 +56,24 @@ h1, h2, h3, h4, h5, h6 {
   letter-spacing: -0.015em;
 }
 
+/* Glass Card */
+.glass-card {
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(6, 78, 59, 0.08);
+  box-shadow: 0px 4px 25px rgba(6, 78, 59, 0.06);
+}
+
+/* Bio Texture Pattern */
+.bio-texture {
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M54.627 0l.83.83-54.627 54.627-.83-.83L54.627 0zm-14.142 0l.83.83-40.485 40.485-.83-.83L40.485 0zm14.142 28.284l.83.83-26.343 26.343-.83-.83L54.627 28.284z' fill='%23006c49' fill-opacity='0.03' fill-rule='evenodd'/%3E%3C/svg%3E");
+}
+
 /* Card Level */
 .manaus-card {
   background-color: #ffffff;
   border: 1px solid #e0e3e5;
-  border-radius: 1rem;
+  border-radius: 0.75rem;
   box-shadow: 0 4px 20px rgba(6, 78, 59, 0.04);
   transition: all 250ms cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -76,9 +89,9 @@ h1, h2, h3, h4, h5, h6 {
   background-color: #003527;
   color: #ffffff;
   font-weight: 600;
-  border-radius: 0.5rem;
+  border-radius: 0.25rem;
   padding: 0.625rem 1.25rem;
-  box-shadow: inset 0 -2px 0 0 rgba(0, 0, 0, 0.25), 0 2px 8px rgba(0, 53, 39, 0.15);
+  box-shadow: 0 2px 8px rgba(0, 53, 39, 0.15);
   transition: all 180ms ease;
   display: inline-flex;
   align-items: center;
@@ -88,16 +101,15 @@ h1, h2, h3, h4, h5, h6 {
 
 .btn-primary:hover {
   background-color: #064e3b;
-  box-shadow: inset 0 -2px 0 0 rgba(0, 0, 0, 0.3), 0 4px 14px rgba(0, 53, 39, 0.25);
   transform: translateY(-1px);
 }
 
 .btn-secondary {
   background-color: transparent;
-  color: #00314a;
-  border: 1px solid #00314a;
+  color: #006c49;
+  border: 1px solid #006c49;
   font-weight: 600;
-  border-radius: 0.5rem;
+  border-radius: 0.25rem;
   padding: 0.625rem 1.25rem;
   transition: all 180ms ease;
   display: inline-flex;
@@ -107,16 +119,16 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .btn-secondary:hover {
-  background-color: rgba(0, 49, 74, 0.05);
+  background-color: rgba(0, 108, 73, 0.08);
 }
 
 .btn-leaf {
   background-color: #006c49;
   color: #ffffff;
   font-weight: 600;
-  border-radius: 0.5rem;
+  border-radius: 0.25rem;
   padding: 0.625rem 1.25rem;
-  box-shadow: inset 0 -2px 0 0 rgba(0, 0, 0, 0.2), 0 2px 8px rgba(0, 108, 73, 0.2);
+  box-shadow: 0 2px 8px rgba(0, 108, 73, 0.2);
   transition: all 180ms ease;
   display: inline-flex;
   align-items: center;
@@ -135,7 +147,7 @@ h1, h2, h3, h4, h5, h6 {
   color: #006c49;
   border: 1px solid rgba(0, 108, 73, 0.2);
   font-weight: 500;
-  border-radius: 9999px;
+  border-radius: 0.25rem;
   padding: 0.25rem 0.625rem;
   font-size: 0.75rem;
   display: inline-flex;
@@ -148,7 +160,7 @@ h1, h2, h3, h4, h5, h6 {
   color: #00314a;
   border: 1px solid rgba(0, 49, 74, 0.15);
   font-weight: 500;
-  border-radius: 9999px;
+  border-radius: 0.25rem;
   padding: 0.25rem 0.625rem;
   font-size: 0.75rem;
   display: inline-flex;
@@ -160,7 +172,7 @@ h1, h2, h3, h4, h5, h6 {
 .manaus-input {
   background-color: #ffffff;
   border: 1px solid #e0e3e5;
-  border-radius: 0.5rem;
+  border-radius: 0.25rem;
   padding: 0.625rem 0.875rem;
   font-size: 0.875rem;
   color: #191c1e;
@@ -171,13 +183,6 @@ h1, h2, h3, h4, h5, h6 {
   outline: none;
   border-color: #006c49;
   box-shadow: 0 0 0 3px rgba(0, 108, 73, 0.12);
-}
-
-/* Bio-Accents & Subtle Gradients */
-.gradient-text-greentech {
-  background: linear-gradient(135deg, #003527 0%, #006c49 60%, #00314a 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
 }
 
 /* Subtle Scrollbar */
