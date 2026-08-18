@@ -11,6 +11,8 @@ coverage/
 dist/
 build/
 out/
+.next/
+legacy_pages/
 
 # Environment and Secrets
 .env

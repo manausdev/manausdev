@@ -1,197 +1,138 @@
-# ManausDev — Design System
+# 🌿 ManausDev — Design System (KISS)
 
-Documento de referência visual para toda a plataforma ManausDev.
+> **Identidade Visual Cyber-Amazônica**: A fusão entre o ecossistema tecnológico contemporâneo e a alma de Manaus — dos rios caudalosos à densa floresta tropical.
 
 ---
 
-## 1. Visão geral
+## 1. Conceito & Identidade Regional
 
-A identidade visual da ManausDev é baseada em um tema escuro moderno, com acentos em ciano/verde amazônico, tipografia limpa e efeitos sutis de vidro (glassmorphism). O objetivo é transmitir tecnologia, inovação e conexão com a região amazônica.
+O design system da **ManausDev** segue o princípio **KISS (*Keep It Simple, Stupid*)**: direto ao ponto, sem dezenas de tokens redundantes ou frameworks inchados. Toda a interface é orientada a **Dark-First**, inspirada na estética **Cyber-Amazônica**:
 
-## 2. Paleta de cores
+- 🌊 **Rio Negro:** Fundos escuros profundos e reflexivos como as águas escuras do Rio Negro.
+- ⚡ **Cyber Ciano (Igapó Tech):** Luzes de néon representando inovação, tecnologia e circuitos digitais.
+- 🍃 **Verde Vitória-Régia / Floresta:** O frescor e vitalidade da biodiversidade amazônica.
+- ☀️ **Solimões & Encontro das Águas:** Tons quentes e terrosos representando o encontro de ideias e calor humano.
+- 🌸 **Boto Rosa:** Acentos vibrantes para ações críticas e identidade cultural.
+- 🌌 **Açaí / Noite Ribeirinha:** Índigo suave para elementos secundários e transições.
 
-### Cores principais
-- **background**: `#121222`
-- **surface**: `#121222`
-- **surface-container-lowest**: `#0c0c1d`
-- **surface-container-low**: `#1a1a2b`
-- **surface-container**: `#1e1e2f`
-- **surface-container-high**: `#29283a`
-- **surface-container-highest**: `#333345`
-- **surface-variant**: `#333345`
-- **surface-bright**: `#38374a`
-- **primary**: `#e9feff`
-- **primary-fixed**: `#63f7ff`
-- **primary-fixed-dim**: `#00dce5`
-- **primary-container**: `#00f5ff`
-- **on-primary**: `#003739`
-- **on-primary-container**: `#006c71`
-- **on-primary-fixed**: `#002021`
-- **on-primary-fixed-variant**: `#004f53`
-- **secondary**: `#b7c4ff`
-- **secondary-container**: `#033bba`
-- **on-secondary**: `#002682`
-- **on-secondary-container**: `#a4b5ff`
-- **on-secondary-fixed**: `#001452`
-- **on-secondary-fixed-variant**: `#0038b6`
-- **secondary-fixed**: `#dde1ff`
-- **secondary-fixed-dim**: `#b7c4ff`
-- **tertiary**: `#fff8fb`
-- **tertiary-container**: `#f2d3ff`
-- **tertiary-fixed**: `#f4d9ff`
-- **tertiary-fixed-dim**: `#e5b5ff`
-- **on-tertiary**: `#4e0078`
-- **on-tertiary-container**: `#9700e1`
-- **on-tertiary-fixed**: `#30004b`
-- **on-tertiary-fixed-variant**: `#7000a8`
-- **text-primary**: `#e3e0f8`
-- **text-secondary**: `#849495`
-- **inverse-surface**: `#e3e0f8`
-- **inverse-primary**: `#00696e`
-- **inverse-on-surface**: `#2f2f40`
-- **outline**: `#849495`
-- **outline-variant**: `#3a494a`
-- **border-low-opacity**: `rgba(48, 86, 211, 0.2)`
-- **error**: `#ffb4ab`
-- **error-container**: `#93000a`
-- **on-error**: `#690005`
-- **on-error-container**: `#ffdad6`
-- **surface-tint**: `#00dce5`
-- **cobalt-elevated**: `#1b1b3a`
-- **cobalt-surface**: `#12122b`
+---
 
-## 3. Tipografia
+## 2. Paleta de Cores Regionalizada
 
-### Fontes
-- **Display / Hero / Headlines**: Montserrat (700, 800)
-- **Body / UI / Labels**: Inter (400, 600)
-- **Code**: JetBrains Mono (400)
+Uma paleta compacta, semântica e diretamente espelhada no arquivo [`css/variables.css`](file:///C:/Users/luann/Documents/GitHub/manausdev/css/variables.css).
 
-### Escala tipográfica
-- **display-hero**: 48px / line-height 1.1 / letter-spacing -0.03em / weight 800
-- **display-hero-mobile**: 32px / line-height 1.1 / letter-spacing -0.02em / weight 800
-- **headline-section**: 32px / line-height 1.2 / weight 700
-- **headline-card**: 20px / line-height 1.3 / weight 600
-- **body-base**: 16px / line-height 1.6 / weight 400
-- **body-sm**: 14px / line-height 1.5 / weight 400
-- **label-caps**: 11px / line-height 1.0 / letter-spacing 0.1em / weight 700
-- **code-snippet**: 14px / line-height 1.6 / weight 400
+### 2.1 Cores Base & Acentos Regionais
 
-## 4. Espaçamento
+| Token CSS | Hex | Referência Regional | Uso Principal |
+|---|---|---|---|
+| `--bg-main` | `#070A12` | **Rio Negro Profundo** | Fundo geral da aplicação (Dark-first) |
+| `--bg-surface` | `#0E1424` | **Igarapé Noturno** | Superfícies elevadas e cabeçalhos |
+| `--primary` | `#00F5FF` | **Cyber Ciano / Águas Claras** | Ações principais, foco, links ativos e glow |
+| `--emerald` | `#10B981` | **Verde Floresta / Vitória-Régia** | Sucesso, badges ecológicos, selo "Feito em Manaus" |
+| `--amber` | `#F59E0B` | **Solimões Dourado / Sol Poente** | Avisos, estrelas de destaque e tags quentes |
+| `--rose` | `#F43F5E` | **Boto-Cor-de-Rosa** | Erros, ações destrutivas e alertas críticos |
+| `--secondary` | `#818CF8` | **Açaí & Crepúsculo** | Acentos secundários, tags neutras e bordas |
 
-- **unit**: 4px
-- **gutter-mobile**: 16px
-- **gutter-desktop**: 24px
-- **margin-mobile**: 20px
-- **margin-desktop**: 48px
-- **section-gap**: 80px
+### 2.2 Textos & Contrastes (Bruma Amazônica)
 
-## 5. Border radius
+| Token CSS | Hex | Finalidade |
+|---|---|---|
+| `--text-main` | `#F8FAFC` | Texto principal, títulos e alto contraste |
+| `--text-secondary` | `#94A3B8` | Textos secundários, legendas e descrições |
+| `--text-muted` | `#64748B` | Placeholders, datas e informações secundárias |
 
-- **DEFAULT**: 0.125rem (2px)
-- **lg**: 0.25rem (4px)
-- **xl**: 0.5rem (8px)
-- **full**: 0.75rem (12px)
+### 2.3 Superfícies & Vidro (Manaus Glass)
 
-## 6. Componentes
+```css
+/* Tokens de Vidro e Bordas */
+--bg-card: rgba(15, 23, 42, 0.75);         /* Fundo translúcido com tom azulado */
+--bg-card-hover: rgba(22, 33, 62, 0.85);   /* Destaque no hover */
+--bg-input: rgba(11, 17, 33, 0.8);          /* Fundo para formulários */
+--border-subtle: rgba(255, 255, 255, 0.08); /* Linhas divisórias leves */
+--border-card: rgba(255, 255, 255, 0.12);   /* Contorno sutil dos cards */
+--border-focus: #00F5FF;                    /* Foco acessível */
+```
 
-### 6.1 Glass card
-Efeito de vidro com backdrop blur. Usado em cards principais.
+---
+
+## 3. Tipografia Essencial
+
+Apenas 3 famílias tipográficas com propósitos claros e objetivos:
+
+| Família | Fonte | Pesos | Onde Usar |
+|---|---|---|---|
+| **Display** | `Montserrat` | 700, 800, 900 | Hero, títulos de destaque (H1-H3), logos e números de métricas |
+| **Body** | `Inter` | 400, 500, 600 | Textos corridos, parágrafos, inputs, botões e labels |
+| **Code** | `JetBrains Mono` | 400, 500 | Trechos de código, atalhos (`Ctrl+K`), badges técnicos e tags |
+
+### Escala de Tamanhos Simples
+
+- **Hero Title:** `clamp(2rem, 5vw, 3.25rem)` (Montserrat 900 / line-height 1.1)
+- **Section Heading (H2):** `1.75rem` (Montserrat 800 / line-height 1.2)
+- **Card Title (H3):** `1.25rem` (Montserrat 700 / line-height 1.3)
+- **Body Normal:** `15px` / `0.9375rem` (Inter 400-500 / line-height 1.6)
+- **Body Small / Captions:** `13px` / `0.8125rem` (Inter 500)
+- **Badges / Monospace:** `11px` - `12px` (JetBrains Mono 500)
+
+---
+
+## 4. Espaçamento & Raios (Grid 4px)
+
+- **Unidade Base:** `4px`
+- **Espaçamentos Práticos:** `8px` (2), `12px` (3), `16px` (4), `24px` (6), `32px` (8), `48px` (12), `64px` (16)
+- **Raios de Borda (`border-radius`):**
+  - `--radius-sm`: `6px` (tags, atalhos)
+  - `--radius-md`: `10px` (inputs, botões padrão)
+  - `--radius-lg`: `14px` (modais compactos)
+  - `--radius-xl`: `20px` (cards principais)
+  - `--radius-full`: `9999px` (pills, filtros, avatares)
+
+---
+
+## 5. Componentes Principais (KISS)
+
+### 5.1 Card "Manaus Glass"
+O cartão principal translúcido com reflexo de água e glow no hover:
 
 ```css
 .glass-card {
-    background: rgba(26, 26, 43, 0.85);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(132, 148, 149, 0.3);
+  background: var(--bg-card);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-xl);
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.5);
+  transition: all 250ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-card:hover {
+  border-color: rgba(0, 245, 255, 0.4);
+  box-shadow: 0 0 25px -4px rgba(0, 245, 255, 0.35);
+  transform: translateY(-3px);
 }
 ```
 
-### 6.2 Inputs e selects
-- **Classe utilitária**: `.filter-input`
-- **Estilo**: `background: rgba(30, 30, 47, 0.8); border: 1px solid rgba(132, 148, 149, 0.3); color: #e3e0f8;`
-- **Focus**: `border-color: #00f5ff; box-shadow: 0 0 0 3px rgba(0, 245, 255, 0.2);`
-- **Placeholder**: `color: #849495`
-- **Options**: `background: #1a1a2b; color: #e3e0f8;`
+### 5.2 Botões
+- **Primário (Cyber Ciano):** `.btn-primary` → Fundo `#00F5FF`, texto escuro `#00282B`, glow suave.
+- **Secundário / Ghost:** `.btn-ghost` → Fundo transparente, borda sutil, hover com fundo branco translúcido.
+- **Destaque Regional (Floresta):** `.btn-emerald` → Fundo `#10B981`, texto branco, para ações comunitárias e ambientais.
 
-### 6.3 Botões
-- **Primário**: `bg-primary-container text-on-primary-container`
-- **Secundário**: `bg-surface-container text-on-surface border border-outline-variant/30`
-- **Hover**: `hover:border-primary-container hover:text-primary-container`
-- **Tamanhos**: `px-5 py-2 rounded-full` (filters), `px-6 py-3` (CTAs)
+### 5.3 Badges & Tags Regionais
+- **Feito em Manaus:** Badge oficial verde esmeralda com grafismo de folha/seiva ([`BADGE.md`](file:///C:/Users/luann/Documents/GitHub/manausdev/BADGE.md)).
+- **Tag Tech:** Fundo `rgba(0, 245, 255, 0.1)`, texto `#00F5FF`, fonte JetBrains Mono.
+- **Status Ativo / Comunidade:** Fundo `rgba(16, 185, 129, 0.12)`, texto `#10B981`.
+- **Destaque Solimões:** Fundo `rgba(245, 158, 11, 0.12)`, texto `#F59E0B`.
 
-### 6.3 Badges / Tags
-- **Categoria**: `px-2 py-1 bg-surface-container text-on-surface-variant text-xs rounded-md font-code-snippet`
-- **Featured**: `absolute top-4 right-4 bg-surface/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold text-primary-container`
+### 5.4 Inputs & Formulários
+- Fundo escuro `rgba(11, 17, 33, 0.8)` com borda sutil.
+- Ao focar: Borda `#00F5FF` e anel de foco `rgba(0, 245, 255, 0.2)`.
 
-### 6.4 Grid
-- **Bento grid**: `grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-gutter-desktop`
-- **Featured card**: `md:col-span-2` para cards em destaque
+---
 
-### 6.5 Sidebar (desktop)
-- **Largura**: `w-64` fixa
-- **Background**: `bg-surface-container-low`
-- **Borda direita**: `border-r border-outline-variant/30`
-- **Links**: `flex items-center gap-3 p-3 text-on-surface-variant hover:bg-surface-variant/50 rounded-xl`
-- **Link ativo**: `bg-primary-container text-on-primary-container rounded-xl`
+## 6. Diretrizes & Regras de Design (KISS)
 
-### 6.6 Navegação mobile
-- Sidebar oculta em mobile: `hidden lg:flex`
-- Main content ocupa tela cheia: `flex-1 lg:ml-64`
-
-## 7. Layouts por página
-
-### 7.1 Homepage / Project Showcase
-- Sidebar fixa à esquerda (desktop)
-- Header com título grande + descrição
-- Filtros horizontais com pills
-- Grid bento de projetos
-- Card featured com layout horizontal (`sm:flex-row`)
-- Cards normais com layout vertical
-- Footer com botão "Load More"
-
-### 7.2 Diretórios (Devs, Projetos, Empresas, Vagas, Eventos, Comunidades)
-- Navbar superior sticky
-- Filtros em linha
-- Grid de cards 3 colunas (desktop)
-- Paginação centralizada
-
-### 7.3 Dashboard
-- Sidebar + conteúdo principal
-- Cards de estatísticas em grid
-- Seções alternáveis (overview, perfil, projetos, configurações)
-
-## 8. Ícones
-
-- **Biblioteca**: Material Symbols Outlined
-- **Peso/Fill**: `wght,FILL@100..700,0..1`
-- **Uso**: `<span class="material-symbols-outlined">nome_do_icone</span>`
-- **Exemplos**: `groups`, `article`, `terminal`, `settings`, `public`, `smartphone`, `psychology`, `videogame_asset`, `star`, `fork_right`, `open_in_new`, `arrow_forward`, `expand_more`
-
-## 9. Tema
-
-- **Padrão**: Dark mode (`class="dark"` no `<html>`)
-- **Suporte a claro**: Cores invertidas usando `inverse-*` quando necessário
-- **Transições**: `transition-all duration-300` em cards e botões
-- **Hover states**: `hover:-translate-y-1 hover:shadow-md` em cards
-
-## 10. Responsividade
-
-- **Mobile first**: breakpoints `md:` (768px) e `lg:` (1024px)
-- **Sidebar**: oculta em mobile, fixa em desktop
-- **Grid**: 1 coluna (mobile) → 2 colunas (tablet) → 3 colunas (desktop)
-- **Cards featured**: `md:col-span-2` em tablets/desktops
-- **Padding**: `px-margin-mobile` (mobile) → `md:px-margin-desktop` (desktop)
-
-## 11. Assets e imagens
-
-- **Placeholder**: Imagens de projeto via `lh3.googleusercontent.com/aida-public/...`
-- **Avatares**: `https://i.pravatar.cc/150?u=...`
-- **Logos padrão**: `https://ui-avatars.com/api/?name=...&background=047857&color=fff&size=128`
-
-## 12. Referências
-
-- `index.html` — Homepage / Project Showcase
-- `pages/projetos/index.html` — Diretório de projetos
-- `pages/devs/index.html` — Diretório de desenvolvedores
-- `TODO.md` — Roadmap do projeto
+1. **Dark-First:** O Rio Negro é o padrão. Todas as interfaces devem priorizar o fundo escuro com alto contraste.
+2. **KISS (Simplicidade Suprema):** Use classes utilitárias e variáveis semânticas diretas do CSS (`--primary`, `--emerald`, `--bg-card`), evitando abstrações complexas e tokens fantasmas.
+3. **Identidade Local Orgânica:** Utilize as cores regionais com propósito (Verde para comunidade/projetos, Âmbar para eventos/destaques, Ciano para tech e código).
+4. **Performance & Vanilla:** Animações baseadas em `transform` e `opacity` aceleradas por hardware (tempo padrão `150ms` a `250ms`).
+5. **Acessibilidade (WCAG AA):** Todo texto sobre fundo escuro deve manter contraste mínimo de 4.5:1.

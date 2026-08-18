@@ -1,94 +1,116 @@
-# ManausDev
+# 🌿 ManausDev
 
-> Quem constrói tecnologia em Manaus está aqui.
+> **Quem constrói tecnologia em Manaus está aqui.**
 
-Plataforma comunitária para conectar desenvolvedores, projetos, empresas e entusiastas de tecnologia de Manaus.
+Plataforma comunitária moderna para conectar desenvolvedores, projetos open-source, empresas, vagas de trabalho e eventos de tecnologia no estado do Amazonas.
 
-## Stack
+---
 
-- **Frontend:** HTML5, CSS3, JavaScript (Vanilla)
-- **Backend/BaaS:** Supabase
-- **Banco de dados:** PostgreSQL (via Supabase)
-- **Autenticação:** Supabase Auth
-- **Storage:** Supabase Storage
+## ⚡ Stack Tecnológica
 
-## Estrutura do projeto
+- **Framework:** [Next.js](https://nextjs.org/) (App Router, React 19, Server & Client Components)
+- **Linguagem:** [TypeScript](https://www.typescriptlang.org/)
+- **Estilização:** [Tailwind CSS v4](https://tailwindcss.com/) com identidade visual **Cyber-Amazônica**
+- **BaaS & Backend:** [Supabase](https://supabase.com/) (`@supabase/ssr` e `@supabase/supabase-js`)
+- **Banco de Dados:** PostgreSQL com Row Level Security (RLS) e triggers automáticos
+- **Autenticação:** Supabase Auth (Email/Senha + OAuth GitHub) com middleware de sessão SSR
+
+---
+
+## 📁 Estrutura do Projeto
 
 ```text
 manausdev/
-├── index.html
-├── pages/
-│   ├── devs/
-│   ├── projetos/
-│   ├── empresas/
-│   ├── vagas/
-│   ├── equipes/
-│   ├── eventos/
-│   ├── comunidades/
-│   └── conteudo/
-├── css/
-│   ├── global.css
-│   ├── variables.css
-│   ├── components.css
-│   └── responsive.css
-├── js/
-│   ├── app.js
-│   ├── api.js
-│   ├── auth.js
-│   ├── search.js
-│   └── utils.js
-├── assets/
-│   ├── images/
-│   ├── icons/
-│   └── fonts/
-└── README.md
+├── src/
+│   ├── app/
+│   │   ├── layout.tsx              # Root layout com tipografia regional e SEO
+│   │   ├── page.tsx                # Landing page interativa
+│   │   ├── globals.css             # Design tokens Cyber-Amazônicos & glassmorphism
+│   │   ├── devs/page.tsx           # Diretório de desenvolvedores com busca & filtros
+│   │   ├── projetos/page.tsx       # Vitrine de projetos e startups locais
+│   │   ├── vagas/page.tsx          # Mural de vagas (PIM, Polo Digital e Remoto)
+│   │   ├── comunidades/page.tsx    # Comunidades técnicas de Manaus
+│   │   ├── eventos/page.tsx        # Agenda de meetups, hackathons e confs
+│   │   ├── empresas/page.tsx       # Empresas e Institutos de P&D de Manaus
+│   │   ├── dashboard/page.tsx      # Painel do membro (edição de perfil e projetos)
+│   │   ├── auth/
+│   │   │   ├── login/page.tsx      # Login via Email e GitHub
+│   │   │   ├── register/page.tsx   # Cadastro de novo usuário
+│   │   │   └── callback/route.ts   # Troca de código de autenticação SSR
+│   │   ├── sobre/page.tsx          # Manifesto e informações institucionais
+│   │   ├── contato/page.tsx        # Formulário de contato
+│   │   ├── termos/page.tsx         # Termos de uso
+│   │   └── privacidade/page.tsx    # Política de privacidade (LGPD)
+│   ├── components/
+│   │   ├── navbar.tsx              # Header responsivo com estado de autenticação
+│   │   ├── footer.tsx              # Rodapé com selo "Feito em Manaus"
+│   │   └── icons.tsx               # Ícones vetoriais
+│   ├── lib/
+│   │   ├── supabase/
+│   │   │   ├── client.ts           # Cliente Supabase para o Browser
+│   │   │   ├── server.ts           # Cliente Supabase SSR com Cookies
+│   │   │   └── middleware.ts       # Validação e renovação de sessão
+│   │   ├── data/
+│   │   │   └── mock-data.ts        # Dados de fallback para desenvolvimento local
+│   │   └── utils.ts                # Utilitários de classes e formatação
+│   ├── middleware.ts               # Middleware do Next.js para proteção de rotas
+│   └── types/
+│       └── database.ts             # Tipos TypeScript do schema Supabase
+├── supabase/
+│   ├── schema.sql                  # DDL das tabelas, RLS e triggers do PostgreSQL
+│   └── seed.sql                    # Carga inicial de dados mock
+├── scripts/                        # Scripts REST API / Automações (intactos)
+├── .env.example                    # Exemplo de variáveis de ambiente
+└── package.json
 ```
 
-## Como executar localmente
+---
 
-### Pré-requisitos
+## 🚀 Como Executar Localmente
 
-- Navegador moderno (Chrome, Firefox, Edge, Safari)
-- Conta no [Supabase](https://supabase.com/)
-
-### Configuração
-
-1. Clone o repositório:
+### 1. Clonar e Instalar Dependências
 
 ```bash
 git clone https://github.com/ManausDev/manausdev.git
 cd manausdev
+npm install
 ```
 
-2. Configure as variáveis de ambiente:
+### 2. Configurar o Supabase
+
+1. Crie um projeto no [Supabase](https://supabase.com/).
+2. No painel do Supabase, acesse o **SQL Editor** e execute o script [`supabase/schema.sql`](file:///C:/Users/luann/Documents/GitHub/manausdev/supabase/schema.sql).
+3. Opcionalmente, execute [`supabase/seed.sql`](file:///C:/Users/luann/Documents/GitHub/manausdev/supabase/seed.sql) para popular dados de teste.
+4. Copie as variáveis de ambiente:
 
 ```bash
-cp .env.example .env
+cp .env.example .env.local
 ```
 
-Edite o arquivo `.env` com suas credenciais do Supabase:
-
+Edite `.env.local`:
 ```env
-VITE_SUPABASE_URL=sua_url_do_supabase
-VITE_SUPABASE_ANON_KEY=sua_chave_anonima
+NEXT_PUBLIC_SUPABASE_URL=https://seu-projeto.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=sua-anon-key
+SUPABASE_SERVICE_ROLE_KEY=sua-service-role-key
 ```
 
-3. Execute o projeto:
+### 3. Executar o Servidor de Desenvolvimento
 
 ```bash
-# Com npm
 npm run dev
-
-# Ou com servidor estático simples
-npx serve .
 ```
 
-4. Acesse `http://localhost:5173` (ou a porta indicada pelo terminal).
+Acesse [http://localhost:3000](http://localhost:3000) no seu navegador.
 
-## Contribuição
+### 4. Build de Produção
 
-Consulte o arquivo [CONTRIBUTING.md](CONTRIBUTING.md) para saber como contribuir.
+```bash
+npm run build
+npm run start
+```
 
-## Licença
+---
 
-Este projeto está licenciado sob a [Apache License 2.0](LICENSE).
+## 📜 Licença
+
+Distribuído sob a licença **Apache License 2.0**. Consulte o arquivo [LICENSE](LICENSE) para mais detalhes.
