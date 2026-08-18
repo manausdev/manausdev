@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Inter, Montserrat, JetBrains_Mono } from 'next/font/google';
+import { Inter, Sora, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
 import { Navbar } from '@/components/navbar';
 import { Footer } from '@/components/footer';
@@ -10,10 +10,10 @@ const inter = Inter({
   display: 'swap',
 });
 
-const montserrat = Montserrat({
+const sora = Sora({
   subsets: ['latin'],
-  weight: ['600', '700', '800', '900'],
-  variable: '--font-montserrat',
+  weight: ['400', '600', '700', '800'],
+  variable: '--font-sora',
   display: 'swap',
 });
 
@@ -24,12 +24,12 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'ManausDev — Quem constrói tecnologia em Manaus está aqui',
-  description: 'Comunidade aberta e ecossistema de tecnologia, desenvolvedores, vagas e projetos no Amazonas.',
-  keywords: ['Manaus', 'Amazonas', 'Desenvolvedores', 'Tech', 'Next.js', 'Supabase', 'Projetos', 'Vagas'],
+  title: 'ManausDev — Ecossistema de Tecnologia do Amazonas',
+  description: 'Quem constrói tecnologia e inovação sustentável em Manaus está conectado aqui. Desenvolvedores, projetos, vagas e comunidades.',
+  keywords: ['Manaus', 'Amazonas', 'Desenvolvedores', 'Tech', 'Next.js', 'Supabase', 'Projetos', 'Vagas', 'GreenTech'],
   authors: [{ name: 'ManausDev Community' }],
   openGraph: {
-    title: 'ManausDev — Ecossistema Tech de Manaus',
+    title: 'ManausDev — Ecossistema de Tecnologia do Amazonas',
     description: 'Quem constrói tecnologia em Manaus está aqui.',
     type: 'website',
     locale: 'pt_BR',
@@ -42,8 +42,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="pt-BR" className={`${inter.variable} ${montserrat.variable} ${jetbrainsMono.variable}`}>
-      <body className="min-h-screen flex flex-col bg-[#070A12] text-slate-100 antialiased selection:bg-[#00F5FF]/30 selection:text-[#00F5FF]">
+    <html lang="pt-BR" className={`${inter.variable} ${sora.variable} ${jetbrainsMono.variable}`}>
+      <body className="min-h-screen flex flex-col bg-[#f7f9fb] text-[#191c1e] antialiased selection:bg-[#6cf8bb] selection:text-[#003527]">
         <Navbar />
         <main className="flex-1">
           {children}

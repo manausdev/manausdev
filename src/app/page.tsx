@@ -5,12 +5,13 @@ import {
   Briefcase, 
   Sparkles, 
   ArrowRight, 
-  ShieldCheck, 
   Terminal, 
-  TrendingUp, 
   ExternalLink,
   MapPin,
-  Calendar
+  Calendar,
+  CheckCircle2,
+  Building2,
+  Compass
 } from 'lucide-react';
 import { GithubIcon } from '@/components/icons';
 import { createClient } from '@/lib/supabase/server';
@@ -36,113 +37,121 @@ export default async function HomePage() {
     if (eventsRes.data && eventsRes.data.length > 0) events = eventsRes.data;
     if (jobsRes.data && jobsRes.data.length > 0) jobs = jobsRes.data;
   } catch (err) {
-    // Fallback to mock data silently
+    // Fallback to mock data
   }
 
   return (
-    <div className="relative overflow-hidden">
-      {/* Background Cyber-Gradients */}
-      <div className="pointer-events-none absolute -top-40 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-gradient-to-tr from-[#00F5FF]/15 via-[#818CF8]/10 to-[#10B981]/15 blur-3xl opacity-70" />
+    <div className="relative overflow-hidden bg-[#f7f9fb]">
+      {/* Decorative Bio-Organic Leaf Path (Subtle 3-5% Opacity) */}
+      <div className="pointer-events-none absolute -top-24 right-0 w-[600px] h-[600px] bg-gradient-to-bl from-[#006c49]/5 via-[#00314a]/5 to-transparent rounded-full blur-3xl" />
+      <div className="pointer-events-none absolute top-[500px] -left-20 w-[500px] h-[500px] bg-gradient-to-tr from-[#003527]/4 to-transparent rounded-full blur-3xl" />
 
       {/* Hero Section */}
       <section className="relative pt-20 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-center">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-mono text-slate-300 mb-6 backdrop-blur-sm shadow-sm">
-          <span className="flex h-2 w-2 rounded-full bg-[#10B981] animate-pulse" />
-          <span>A maior comunidade de tecnologia do Amazonas</span>
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#006c49]/10 border border-[#006c49]/20 text-xs font-semibold text-[#006c49] mb-6 shadow-sm">
+          <span className="flex h-2 w-2 rounded-full bg-[#006c49] animate-pulse" />
+          <span>Comunidade & Inovação Tecnológica no Amazonas</span>
         </div>
 
-        <h1 className="font-display font-black text-4xl sm:text-6xl lg:text-7xl tracking-tight text-white max-w-4xl mx-auto leading-[1.1] mb-6">
-          Quem constrói o futuro em <span className="gradient-text-cyber">Manaus</span> está conectado aqui.
+        <h1 className="font-display font-bold text-4xl sm:text-6xl lg:text-7xl tracking-tight text-[#003527] max-w-4xl mx-auto leading-[1.15] mb-6">
+          Quem constrói o futuro em <span className="text-[#006c49]">Manaus</span> está conectado aqui.
         </h1>
 
-        <p className="max-w-2xl mx-auto text-base sm:text-lg text-slate-300 mb-10 leading-relaxed">
-          Descubra desenvolvedores de alto nível, colabore em projetos open-source regionais, acesse oportunidades no polo tecnológico e participe de encontros na Amazônia.
+        <p className="max-w-2xl mx-auto text-base sm:text-lg text-[#404944] mb-10 leading-relaxed">
+          Descubra engenheiros de software, colabore em projetos de bioeconomia e tecnologia, acesse oportunidades no Polo Industrial e participe de encontros na Amazônia.
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 max-w-md mx-auto mb-16">
           <Link
             href="/devs"
-            className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl text-sm font-semibold bg-[#00F5FF] text-[#00282B] hover:bg-[#5df7ff] shadow-glow-primary transition-all duration-200"
+            className="btn-primary w-full sm:w-auto !py-3.5 !px-6"
           >
             <Users className="w-4 h-4" />
             Explorar Desenvolvedores
           </Link>
           <Link
             href="/projetos"
-            className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl text-sm font-medium border border-white/15 bg-white/5 text-white hover:bg-white/10 transition-all duration-200"
+            className="btn-secondary w-full sm:w-auto !py-3.5 !px-6"
           >
-            <Code2 className="w-4 h-4 text-emerald-400" />
-            Ver Projetos Locais
+            <Code2 className="w-4 h-4 text-[#00314a]" />
+            Ver Projetos Tech
           </Link>
         </div>
 
         {/* Stats Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
-          <div className="glass-card p-5 text-center">
-            <div className="font-display font-extrabold text-2xl sm:text-3xl text-[#00F5FF]">450+</div>
-            <div className="text-xs text-slate-400 mt-1 font-medium">Devs Cadastrados</div>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-5 max-w-4xl mx-auto">
+          <div className="manaus-card p-6 text-center border-t-4 border-t-[#003527]">
+            <div className="font-display font-bold text-3xl sm:text-4xl text-[#003527]">450+</div>
+            <div className="text-xs text-[#404944] mt-1.5 font-medium">Devs Cadastrados</div>
           </div>
-          <div className="glass-card p-5 text-center">
-            <div className="font-display font-extrabold text-2xl sm:text-3xl text-[#10B981]">120+</div>
-            <div className="text-xs text-slate-400 mt-1 font-medium">Projetos Tech</div>
+          <div className="manaus-card p-6 text-center border-t-4 border-t-[#006c49]">
+            <div className="font-display font-bold text-3xl sm:text-4xl text-[#006c49]">120+</div>
+            <div className="text-xs text-[#404944] mt-1.5 font-medium">Projetos & Startups</div>
           </div>
-          <div className="glass-card p-5 text-center">
-            <div className="font-display font-extrabold text-2xl sm:text-3xl text-[#F59E0B]">18+</div>
-            <div className="text-xs text-slate-400 mt-1 font-medium">Comunidades Ativas</div>
+          <div className="manaus-card p-6 text-center border-t-4 border-t-[#00314a]">
+            <div className="font-display font-bold text-3xl sm:text-4xl text-[#00314a]">18+</div>
+            <div className="text-xs text-[#404944] mt-1.5 font-medium">Comunidades Ativas</div>
           </div>
-          <div className="glass-card p-5 text-center">
-            <div className="font-display font-extrabold text-2xl sm:text-3xl text-[#818CF8]">50+</div>
-            <div className="text-xs text-slate-400 mt-1 font-medium">Vagas no Amazonas</div>
+          <div className="manaus-card p-6 text-center border-t-4 border-t-[#064e3b]">
+            <div className="font-display font-bold text-3xl sm:text-4xl text-[#064e3b]">50+</div>
+            <div className="text-xs text-[#404944] mt-1.5 font-medium">Vagas no Amazonas</div>
           </div>
         </div>
       </section>
+
+      {/* Subtle River Path Separator */}
+      <div className="max-w-7xl mx-auto px-8 my-4 flex items-center justify-center opacity-25">
+        <svg width="100%" height="20" viewBox="0 0 1200 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 10 C 300 0, 600 20, 900 10 C 1050 5, 1150 15, 1200 10" stroke="#003527" strokeWidth="1.5" strokeDasharray="4 4"/>
+        </svg>
+      </div>
 
       {/* Featured Developers Section */}
       <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8">
           <div>
-            <div className="flex items-center gap-2 text-xs font-mono text-[#00F5FF] uppercase tracking-wider mb-2">
+            <div className="flex items-center gap-1.5 text-xs font-mono text-[#006c49] font-semibold uppercase tracking-wider mb-2">
               <Terminal className="w-3.5 h-3.5" />
-              <span>Talentos do Norte</span>
+              <span>Rede de Profissionais</span>
             </div>
-            <h2 className="font-display font-bold text-2xl sm:text-3xl text-white">Desenvolvedores em Destaque</h2>
+            <h2 className="font-display font-bold text-2xl sm:text-3xl text-[#003527]">Desenvolvedores em Destaque</h2>
           </div>
-          <Link href="/devs" className="text-xs font-medium text-[#00F5FF] hover:underline inline-flex items-center gap-1 mt-2 sm:mt-0">
-            Ver todos os desenvolvedores <ArrowRight className="w-3.5 h-3.5" />
+          <Link href="/devs" className="text-sm font-semibold text-[#006c49] hover:underline inline-flex items-center gap-1 mt-2 sm:mt-0">
+            Ver todos os desenvolvedores <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {devs.slice(0, 4).map((dev) => (
-            <div key={dev.id} className="glass-card p-5 flex flex-col justify-between">
+            <div key={dev.id} className="manaus-card p-6 flex flex-col justify-between">
               <div>
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-[#00F5FF]/20 to-[#10B981]/20 border border-white/10 flex items-center justify-center text-white font-bold font-mono">
+                <div className="flex items-center gap-3.5 mb-4">
+                  <div className="w-12 h-12 rounded-full bg-[#003527] text-white flex items-center justify-center font-display font-bold text-base shadow-sm">
                     {dev.full_name.charAt(0)}
                   </div>
                   <div>
-                    <h3 className="font-display font-bold text-sm text-white">{dev.full_name}</h3>
-                    <p className="text-xs text-[#00F5FF]">{dev.role || 'Developer'}</p>
+                    <h3 className="font-display font-bold text-base text-[#003527] leading-tight">{dev.full_name}</h3>
+                    <p className="text-xs text-[#006c49] font-medium mt-0.5">{dev.role || 'Developer'}</p>
                   </div>
                 </div>
-                <p className="text-xs text-slate-300 line-clamp-2 mb-4 leading-relaxed">
-                  {dev.bio || 'Membro da comunidade ManausDev.'}
+                <p className="text-xs text-[#404944] line-clamp-3 mb-5 leading-relaxed">
+                  {dev.bio || 'Profissional de tecnologia membro da comunidade ManausDev.'}
                 </p>
-                <div className="flex flex-wrap gap-1.5 mb-4">
+                <div className="flex flex-wrap gap-1.5 mb-5">
                   {(dev.skills || []).slice(0, 3).map((skill, i) => (
-                    <span key={i} className="px-2 py-0.5 rounded text-[11px] font-mono bg-white/5 text-slate-300 border border-white/10">
+                    <span key={i} className="chip-leaf text-[11px] !py-0.5 !px-2">
                       {skill}
                     </span>
                   ))}
                 </div>
               </div>
-              <div className="pt-3 border-t border-white/5 flex items-center justify-between text-xs text-slate-400">
+              <div className="pt-4 border-t border-[#e0e3e5] flex items-center justify-between text-xs text-[#707974]">
                 <span className="flex items-center gap-1 font-mono text-[11px]">
-                  <MapPin className="w-3 h-3 text-emerald-400" />
+                  <MapPin className="w-3.5 h-3.5 text-[#006c49]" />
                   {dev.location || 'Manaus-AM'}
                 </span>
                 {dev.github && (
-                  <a href={dev.github} target="_blank" rel="noreferrer" className="text-slate-400 hover:text-white transition-colors">
+                  <a href={dev.github} target="_blank" rel="noreferrer" className="text-[#404944] hover:text-[#003527] transition-colors">
                     <GithubIcon className="w-4 h-4" />
                   </a>
                 )}
@@ -153,50 +162,50 @@ export default async function HomePage() {
       </section>
 
       {/* Featured Projects Section */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-white/5">
+      <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-[#e0e3e5]/70">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8">
           <div>
-            <div className="flex items-center gap-2 text-xs font-mono text-[#10B981] uppercase tracking-wider mb-2">
+            <div className="flex items-center gap-1.5 text-xs font-mono text-[#00314a] font-semibold uppercase tracking-wider mb-2">
               <Code2 className="w-3.5 h-3.5" />
-              <span>Bioeconomia & Tech</span>
+              <span>Bioeconomia & Software</span>
             </div>
-            <h2 className="font-display font-bold text-2xl sm:text-3xl text-white">Projetos Feitos no Amazonas</h2>
+            <h2 className="font-display font-bold text-2xl sm:text-3xl text-[#003527]">Projetos Feitos no Amazonas</h2>
           </div>
-          <Link href="/projetos" className="text-xs font-medium text-[#10B981] hover:underline inline-flex items-center gap-1 mt-2 sm:mt-0">
-            Explorar todos os projetos <ArrowRight className="w-3.5 h-3.5" />
+          <Link href="/projetos" className="text-sm font-semibold text-[#00314a] hover:underline inline-flex items-center gap-1 mt-2 sm:mt-0">
+            Explorar todos os projetos <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {projects.slice(0, 3).map((project) => (
-            <div key={project.id} className="glass-card p-6 flex flex-col justify-between">
+            <div key={project.id} className="manaus-card p-6 flex flex-col justify-between border-t-4 border-t-[#00314a]">
               <div>
                 <div className="flex items-start justify-between gap-2 mb-3">
-                  <h3 className="font-display font-bold text-base text-white">{project.title}</h3>
-                  <div className="px-2 py-0.5 rounded-full bg-[#10B981]/15 text-[#10B981] border border-[#10B981]/30 text-[10px] font-mono">
-                    Feito em Manaus
-                  </div>
+                  <h3 className="font-display font-bold text-lg text-[#003527]">{project.title}</h3>
+                  <span className="chip-leaf text-[10px] font-mono">
+                    Feito em Manaus 🌿
+                  </span>
                 </div>
-                <p className="text-xs text-slate-300 leading-relaxed mb-4">
+                <p className="text-xs text-[#404944] leading-relaxed mb-5">
                   {project.description}
                 </p>
                 <div className="flex flex-wrap gap-1.5 mb-6">
                   {(project.stack || []).map((tech, i) => (
-                    <span key={i} className="px-2 py-0.5 rounded text-[11px] font-mono bg-[#00F5FF]/10 text-[#00F5FF] border border-[#00F5FF]/20">
+                    <span key={i} className="chip-river text-[11px] font-mono">
                       {tech}
                     </span>
                   ))}
                 </div>
               </div>
 
-              <div className="flex items-center gap-3 pt-4 border-t border-white/5 text-xs">
+              <div className="flex items-center gap-3 pt-4 border-t border-[#e0e3e5] text-xs">
                 {project.links?.github && (
-                  <a href={project.links.github} target="_blank" rel="noreferrer" className="flex items-center gap-1 text-slate-300 hover:text-white">
-                    <GithubIcon className="w-3.5 h-3.5" /> Código
+                  <a href={project.links.github} target="_blank" rel="noreferrer" className="flex items-center gap-1.5 text-[#404944] hover:text-[#003527] font-medium">
+                    <GithubIcon className="w-4 h-4" /> Código
                   </a>
                 )}
                 {project.links?.demo && (
-                  <a href={project.links.demo} target="_blank" rel="noreferrer" className="flex items-center gap-1 text-[#00F5FF] hover:underline ml-auto">
+                  <a href={project.links.demo} target="_blank" rel="noreferrer" className="flex items-center gap-1 text-[#00314a] hover:underline font-semibold ml-auto">
                     Demonstração <ExternalLink className="w-3.5 h-3.5" />
                   </a>
                 )}
@@ -206,30 +215,30 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Events & Opportunities Grid */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-white/5">
+      {/* Events & Jobs Section */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-[#e0e3e5]/70">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
           {/* Upcoming Events */}
           <div>
             <div className="flex items-center justify-between mb-6">
-              <h2 className="font-display font-bold text-xl text-white flex items-center gap-2">
-                <Calendar className="w-5 h-5 text-[#F59E0B]" />
+              <h2 className="font-display font-bold text-xl text-[#003527] flex items-center gap-2">
+                <Calendar className="w-5 h-5 text-[#006c49]" />
                 Próximos Eventos
               </h2>
-              <Link href="/eventos" className="text-xs text-amber-400 hover:underline">Ver agenda</Link>
+              <Link href="/eventos" className="text-xs text-[#006c49] font-semibold hover:underline">Ver agenda</Link>
             </div>
-            <div className="space-y-3">
+            <div className="space-y-3.5">
               {events.slice(0, 3).map((ev) => (
-                <div key={ev.id} className="glass-surface p-4 rounded-xl flex items-center justify-between gap-4">
+                <div key={ev.id} className="manaus-card p-5 flex items-center justify-between gap-4">
                   <div>
-                    <span className="text-[11px] font-mono text-amber-400 uppercase tracking-wider">{ev.type}</span>
-                    <h4 className="font-display font-semibold text-sm text-white mt-0.5">{ev.title}</h4>
-                    <p className="text-xs text-slate-400 mt-1 flex items-center gap-1">
-                      <MapPin className="w-3 h-3 text-slate-500" /> {ev.location}
+                    <span className="chip-river text-[10px] font-mono uppercase tracking-wider mb-1.5">{ev.type}</span>
+                    <h4 className="font-display font-bold text-sm text-[#003527] mt-1">{ev.title}</h4>
+                    <p className="text-xs text-[#404944] mt-1 flex items-center gap-1.5">
+                      <MapPin className="w-3.5 h-3.5 text-[#006c49]" /> {ev.location}
                     </p>
                   </div>
                   {ev.link && (
-                    <a href={ev.link} target="_blank" rel="noreferrer" className="px-3 py-1.5 rounded-lg text-xs font-medium bg-white/5 border border-white/10 text-white hover:bg-white/10">
+                    <a href={ev.link} target="_blank" rel="noreferrer" className="btn-secondary text-xs !py-2 !px-3.5">
                       Participar
                     </a>
                   )}
@@ -241,31 +250,31 @@ export default async function HomePage() {
           {/* Job Opportunities */}
           <div>
             <div className="flex items-center justify-between mb-6">
-              <h2 className="font-display font-bold text-xl text-white flex items-center gap-2">
-                <Briefcase className="w-5 h-5 text-[#00F5FF]" />
-                Vagas Recentes
+              <h2 className="font-display font-bold text-xl text-[#003527] flex items-center gap-2">
+                <Briefcase className="w-5 h-5 text-[#00314a]" />
+                Oportunidades de Emprego
               </h2>
-              <Link href="/vagas" className="text-xs text-[#00F5FF] hover:underline">Ver todas</Link>
+              <Link href="/vagas" className="text-xs text-[#00314a] font-semibold hover:underline">Ver todas</Link>
             </div>
-            <div className="space-y-3">
+            <div className="space-y-3.5">
               {jobs.slice(0, 3).map((job) => (
-                <div key={job.id} className="glass-surface p-4 rounded-xl flex items-center justify-between gap-4">
+                <div key={job.id} className="manaus-card p-5 flex items-center justify-between gap-4">
                   <div>
-                    <div className="flex items-center gap-2">
-                      <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-[#00F5FF]/10 text-[#00F5FF] border border-[#00F5FF]/20">
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="chip-leaf text-[10px] font-mono">
                         {job.type}
                       </span>
                       {job.remote && (
-                        <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                          Remoto
+                        <span className="chip-river text-[10px] font-mono">
+                          100% Remoto
                         </span>
                       )}
                     </div>
-                    <h4 className="font-display font-semibold text-sm text-white mt-1">{job.title}</h4>
-                    <p className="text-xs text-slate-400 mt-0.5">{job.company_name || 'Empresa Local'} • {job.salary || 'A combinar'}</p>
+                    <h4 className="font-display font-bold text-sm text-[#003527]">{job.title}</h4>
+                    <p className="text-xs text-[#404944] mt-0.5">{job.company_name || 'Empresa do Polo'} • {job.salary || 'A combinar'}</p>
                   </div>
                   {job.link && (
-                    <a href={job.link} target="_blank" rel="noreferrer" className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-[#00F5FF]/10 text-[#00F5FF] border border-[#00F5FF]/30 hover:bg-[#00F5FF]/20">
+                    <a href={job.link} target="_blank" rel="noreferrer" className="btn-primary text-xs !py-2 !px-3.5">
                       Candidatar
                     </a>
                   )}
@@ -278,17 +287,17 @@ export default async function HomePage() {
 
       {/* CTA Join Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto text-center">
-        <div className="glass-card p-10 sm:p-14 relative overflow-hidden">
-          <div className="pointer-events-none absolute -bottom-20 -right-20 w-80 h-80 bg-[#00F5FF]/20 blur-3xl rounded-full" />
-          <h2 className="font-display font-extrabold text-3xl sm:text-4xl text-white mb-4">
+        <div className="manaus-card bg-gradient-to-br from-[#003527] to-[#064e3b] text-white p-10 sm:p-14 relative overflow-hidden rounded-2xl shadow-elevated">
+          <div className="pointer-events-none absolute -bottom-20 -right-20 w-80 h-80 bg-[#6cf8bb]/15 blur-3xl rounded-full" />
+          <h2 className="font-display font-bold text-3xl sm:text-4xl text-white mb-4">
             Faça parte da história da tecnologia no Amazonas.
           </h2>
-          <p className="text-sm sm:text-base text-slate-300 max-w-xl mx-auto mb-8">
-            Crie seu perfil profissional no ManausDev gratuitamente, exiba seus projetos e participe da nossa rede.
+          <p className="text-sm sm:text-base text-[#80bea6] max-w-xl mx-auto mb-8 leading-relaxed">
+            Crie seu perfil profissional no ManausDev gratuitamente, compartilhe seus projetos e participe da nossa rede.
           </p>
           <Link
             href="/auth/register"
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-xl text-sm font-semibold bg-[#00F5FF] text-[#00282B] hover:bg-[#5df7ff] shadow-glow-primary transition-all duration-200"
+            className="btn-leaf text-sm !py-3.5 !px-8 text-white !bg-[#006c49] hover:!bg-[#005236]"
           >
             <Sparkles className="w-4 h-4" />
             Cadastrar meu perfil agora

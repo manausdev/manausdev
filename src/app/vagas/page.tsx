@@ -45,57 +45,57 @@ export default function VagasPage() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div className="mb-10 text-center sm:text-left">
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#00F5FF]/10 text-[#00F5FF] border border-[#00F5FF]/25 text-xs font-mono mb-3">
+        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#00314a]/10 text-[#00314a] border border-[#00314a]/20 text-xs font-semibold mb-3">
           <Briefcase className="w-3.5 h-3.5" />
           <span>Mural de Carreiras</span>
         </div>
-        <h1 className="font-display font-black text-3xl sm:text-5xl text-white tracking-tight">
-          Vagas de Tech em <span className="gradient-text-cyber">Manaus</span>
+        <h1 className="font-display font-bold text-3xl sm:text-5xl text-[#003527] tracking-tight">
+          Vagas de Tecnologia em <span className="text-[#006c49]">Manaus</span>
         </h1>
-        <p className="text-slate-300 text-sm sm:text-base mt-2 max-w-2xl">
-          Encontre posições presenciais no Polo Industrial e oportunidades remotas para talentos do Norte.
+        <p className="text-[#404944] text-sm sm:text-base mt-2 max-w-2xl">
+          Encontre posições presenciais no Polo Industrial e oportunidades remotas com contratação para talentos da região.
         </p>
       </div>
 
       {/* Filters */}
-      <div className="glass-card p-4 sm:p-6 mb-8 space-y-4">
+      <div className="manaus-card p-5 sm:p-6 mb-8 space-y-4">
         <div className="flex flex-col sm:flex-row gap-4">
           <div className="relative flex-1">
-            <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
+            <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-[#707974]" />
             <input
               type="text"
-              placeholder="Buscar por cargo ou empresa..."
+              placeholder="Buscar por cargo, especialidade ou empresa..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full bg-[#070A12]/80 border border-white/10 rounded-xl pl-10 pr-4 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-[#00F5FF] focus:ring-1 focus:ring-[#00F5FF]"
+              className="manaus-input w-full pl-10"
             />
           </div>
 
           <button
             onClick={() => setOnlyRemote(!onlyRemote)}
-            className={`px-4 py-2.5 rounded-xl text-xs font-medium border flex items-center justify-center gap-2 transition-all ${
+            className={`px-4 py-2.5 rounded-lg text-xs font-semibold border flex items-center justify-center gap-2 transition-all ${
               onlyRemote
-                ? 'bg-[#10B981]/20 text-[#10B981] border-[#10B981]/50 shadow-sm'
-                : 'bg-white/5 text-slate-300 border-white/10 hover:bg-white/10'
+                ? 'bg-[#006c49]/10 text-[#006c49] border-[#006c49]'
+                : 'bg-white text-[#404944] border-[#e0e3e5] hover:bg-[#f2f4f6]'
             }`}
           >
-            <span className={`w-2 h-2 rounded-full ${onlyRemote ? 'bg-[#10B981]' : 'bg-slate-500'}`} />
+            <span className={`w-2 h-2 rounded-full ${onlyRemote ? 'bg-[#006c49]' : 'bg-[#707974]'}`} />
             Apenas Remoto
           </button>
         </div>
 
         <div className="flex items-center gap-2 overflow-x-auto pb-1">
-          <span className="text-xs text-slate-400 font-mono flex-shrink-0">Contrato:</span>
+          <span className="text-xs text-[#707974] font-medium flex-shrink-0">Contrato:</span>
           {['Todos', 'CLT', 'PJ', 'Estágio'].map((type) => {
             const isSelected = type === 'Todos' ? selectedType === null : selectedType === type;
             return (
               <button
                 key={type}
                 onClick={() => setSelectedType(type === 'Todos' ? null : type)}
-                className={`px-3 py-1 rounded-lg text-xs font-mono transition-colors ${
+                className={`px-3 py-1 rounded-full text-xs font-medium transition-colors ${
                   isSelected
-                    ? 'bg-[#00F5FF] text-[#00282B] font-semibold'
-                    : 'bg-white/5 text-slate-300 hover:text-white border border-white/10'
+                    ? 'bg-[#003527] text-white font-semibold'
+                    : 'bg-[#f2f4f6] text-[#404944] hover:bg-[#e6e8ea]'
                 }`}
               >
                 {type}
@@ -109,42 +109,42 @@ export default function VagasPage() {
       {loading ? (
         <div className="space-y-4">
           {[1, 2, 3].map((i) => (
-            <div key={i} className="glass-card p-6 h-32 animate-pulse bg-white/5" />
+            <div key={i} className="manaus-card p-6 h-32 animate-pulse bg-[#f2f4f6]" />
           ))}
         </div>
       ) : filteredJobs.length === 0 ? (
-        <div className="text-center py-16 glass-card">
-          <p className="text-slate-400 text-sm">Nenhuma vaga encontrada para os filtros selecionados.</p>
+        <div className="text-center py-16 manaus-card">
+          <p className="text-[#707974] text-sm">Nenhuma vaga encontrada para os filtros selecionados.</p>
         </div>
       ) : (
         <div className="space-y-4">
           {filteredJobs.map((job) => (
-            <div key={job.id} className="glass-card p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+            <div key={job.id} className="manaus-card p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-6 hover:border-l-4 hover:border-l-[#006c49]">
               <div className="space-y-2">
                 <div className="flex flex-wrap items-center gap-2">
-                  <span className="px-2.5 py-0.5 rounded text-xs font-mono font-semibold bg-[#00F5FF]/10 text-[#00F5FF] border border-[#00F5FF]/30">
+                  <span className="chip-leaf text-xs font-mono font-semibold">
                     {job.type}
                   </span>
                   {job.remote && (
-                    <span className="px-2.5 py-0.5 rounded text-xs font-mono font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+                    <span className="chip-river text-xs font-mono font-semibold">
                       100% Remoto
                     </span>
                   )}
                 </div>
 
-                <h2 className="font-display font-bold text-lg text-white">{job.title}</h2>
+                <h2 className="font-display font-bold text-lg text-[#003527]">{job.title}</h2>
 
-                <div className="flex flex-wrap items-center gap-4 text-xs text-slate-400 font-mono">
-                  <span className="flex items-center gap-1">
-                    <Building className="w-3.5 h-3.5 text-slate-500" />
+                <div className="flex flex-wrap items-center gap-4 text-xs text-[#707974]">
+                  <span className="flex items-center gap-1.5 font-medium">
+                    <Building className="w-3.5 h-3.5 text-[#006c49]" />
                     {job.company_name || 'Empresa Parceira'}
                   </span>
-                  <span className="flex items-center gap-1">
-                    <MapPin className="w-3.5 h-3.5 text-emerald-400" />
+                  <span className="flex items-center gap-1.5">
+                    <MapPin className="w-3.5 h-3.5 text-[#00314a]" />
                     {job.location || 'Manaus-AM'}
                   </span>
                   {job.salary && (
-                    <span className="flex items-center gap-1 text-amber-400">
+                    <span className="flex items-center gap-1.5 font-semibold text-[#006c49]">
                       <DollarSign className="w-3.5 h-3.5" />
                       {job.salary}
                     </span>
@@ -152,7 +152,7 @@ export default function VagasPage() {
                 </div>
 
                 {job.description && (
-                  <p className="text-xs text-slate-300 max-w-2xl leading-relaxed pt-1">
+                  <p className="text-xs text-[#404944] max-w-2xl leading-relaxed pt-1">
                     {job.description}
                   </p>
                 )}
@@ -160,7 +160,7 @@ export default function VagasPage() {
                 {job.skills && job.skills.length > 0 && (
                   <div className="flex flex-wrap gap-1.5 pt-2">
                     {job.skills.map((s, i) => (
-                      <span key={i} className="px-2 py-0.5 rounded text-[10px] font-mono bg-white/5 text-slate-300 border border-white/10">
+                      <span key={i} className="chip-river text-[10px] font-mono">
                         {s}
                       </span>
                     ))}
@@ -174,7 +174,7 @@ export default function VagasPage() {
                     href={job.link}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-semibold bg-[#00F5FF] text-[#00282B] hover:bg-[#5df7ff] shadow-glow-primary transition-all duration-200"
+                    className="btn-primary text-xs !py-2.5 !px-5"
                   >
                     <span>Candidatar</span>
                     <ExternalLink className="w-3.5 h-3.5" />
