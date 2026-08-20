@@ -60,14 +60,14 @@ export default function VagasPage() {
       {/* Filters */}
       <div className="manaus-card p-5 sm:p-6 mb-8 space-y-4">
         <div className="flex flex-col sm:flex-row gap-4">
-          <div className="relative flex-1">
-            <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-[#707974]" />
+          <div className="relative flex-1 flex items-center">
+            <Search className="w-4 h-4 absolute left-3.5 text-[#707974] pointer-events-none z-10" />
             <input
               type="text"
               placeholder="Buscar por cargo, especialidade ou empresa..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="manaus-input w-full pl-10"
+              className="manaus-input w-full !pl-10"
             />
           </div>
 

@@ -50,6 +50,7 @@ export interface Company {
   size?: string | null;
   website?: string | null;
   logo_url?: string | null;
+  image_url?: string | null;
   description?: string | null;
   created_by?: string | null;
   created_at?: string;
@@ -63,6 +64,7 @@ export interface Community {
   type?: string | null;
   links?: Record<string, string> | null;
   logo_url?: string | null;
+  image_url?: string | null;
   created_at?: string;
 }
 
@@ -74,6 +76,7 @@ export interface EventItem {
   location: string;
   type?: string | null;
   link?: string | null;
+  image_url?: string | null;
   organizer_id?: string | null;
   created_at?: string;
 }

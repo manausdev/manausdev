@@ -34,6 +34,7 @@ export default function DashboardPage() {
   const [newTitle, setNewTitle] = useState('');
   const [newDesc, setNewDesc] = useState('');
   const [newStack, setNewStack] = useState('');
+  const [newImageUrl, setNewImageUrl] = useState('');
   const [newGithub, setNewGithub] = useState('');
   const [newDemo, setNewDemo] = useState('');
   const [creatingProj, setCreatingProj] = useState(false);
@@ -151,6 +152,7 @@ export default function DashboardPage() {
           title: newTitle,
           description: newDesc,
           stack: stackArray,
+          image_url: newImageUrl || undefined,
           links,
           author_id: user.id,
         })
@@ -165,6 +167,7 @@ export default function DashboardPage() {
         setNewTitle('');
         setNewDesc('');
         setNewStack('');
+        setNewImageUrl('');
         setNewGithub('');
         setNewDemo('');
         setSuccessMsg('Projeto cadastrado com sucesso!');
@@ -430,6 +433,17 @@ export default function DashboardPage() {
                   placeholder="Next.js, Supabase, Tailwind, TypeScript"
                   value={newStack}
                   onChange={(e) => setNewStack(e.target.value)}
+                  className="manaus-input w-full"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-[#003527] mb-1.5">URL da Imagem / Screenshot (Preview)</label>
+                <input
+                  type="url"
+                  placeholder="https://exemplo.com/preview.png"
+                  value={newImageUrl}
+                  onChange={(e) => setNewImageUrl(e.target.value)}
                   className="manaus-input w-full"
                 />
               </div>

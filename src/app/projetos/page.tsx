@@ -64,14 +64,14 @@ export default function ProjetosPage() {
 
       {/* Filters */}
       <div className="manaus-card p-5 sm:p-6 mb-8 space-y-4">
-        <div className="relative">
-          <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-[#707974]" />
+        <div className="relative flex items-center">
+          <Search className="w-4 h-4 absolute left-3.5 text-[#707974] pointer-events-none z-10" />
           <input
             type="text"
             placeholder="Buscar projetos por título ou descrição..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="manaus-input w-full pl-10"
+            className="manaus-input w-full !pl-10"
           />
         </div>
 
@@ -109,7 +109,7 @@ export default function ProjetosPage() {
       {loading ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {[1, 2, 3, 4, 5, 6].map((i) => (
-            <div key={i} className="manaus-card p-6 h-56 animate-pulse bg-[#f2f4f6]" />
+            <div key={i} className="manaus-card h-80 animate-pulse bg-[#f2f4f6] rounded-xl" />
           ))}
         </div>
       ) : filteredProjects.length === 0 ? (
@@ -119,52 +119,77 @@ export default function ProjetosPage() {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredProjects.map((proj) => (
-            <div key={proj.id} className="manaus-card p-6 flex flex-col justify-between border-t-4 border-t-[#00314a]">
+            <div key={proj.id} className="manaus-card overflow-hidden flex flex-col justify-between border border-[#e0e3e5] group hover:border-[#006c49]/40 transition-all duration-300">
               <div>
-                <div className="flex items-start justify-between gap-3 mb-3">
-                  <h2 className="font-display font-bold text-lg text-[#003527]">{proj.title}</h2>
-                  <span className="chip-leaf text-[10px] font-mono flex-shrink-0">
-                    Feito em Manaus 🌿
-                  </span>
+                {/* Project Visual Preview */}
+                <div className="relative h-44 w-full bg-[#00281e] overflow-hidden border-b border-[#e0e3e5]">
+                  {proj.image_url ? (
+                    <img
+                      src={proj.image_url}
+                      alt={proj.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-90 group-hover:opacity-100"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-[#003527] to-[#002219] p-4 text-center relative overflow-hidden">
+                      <div className="absolute inset-0 bio-texture opacity-20" />
+                      <Code2 className="w-10 h-10 text-[#6cf8bb]/60 mb-2 relative z-10" />
+                      <span className="font-display font-bold text-sm text-[#eff1f3]/90 relative z-10">
+                        {proj.title}
+                      </span>
+                    </div>
+                  )}
+                  <div className="absolute top-3 right-3 z-10">
+                    <span className="bg-[#003527]/85 backdrop-blur-md text-[#6cf8bb] text-[10px] font-mono px-2.5 py-1 rounded-full border border-[#6cf8bb]/30 font-semibold shadow-sm">
+                      🌿 Manaus Tech
+                    </span>
+                  </div>
                 </div>
 
-                <p className="text-xs text-[#404944] line-clamp-3 mb-5 leading-relaxed">
-                  {proj.description}
-                </p>
+                <div className="p-5 sm:p-6">
+                  <div className="flex items-start justify-between gap-3 mb-2.5">
+                    <h2 className="font-display font-bold text-lg text-[#003527] group-hover:text-[#006c49] transition-colors">
+                      {proj.title}
+                    </h2>
+                  </div>
 
-                <div className="flex flex-wrap gap-1.5 mb-6">
-                  {(proj.stack || []).map((tech, i) => (
-                    <span key={i} className="chip-river text-[11px] font-mono">
-                      {tech}
-                    </span>
-                  ))}
+                  <p className="text-xs text-[#404944] line-clamp-3 mb-4 leading-relaxed">
+                    {proj.description}
+                  </p>
+
+                  <div className="flex flex-wrap gap-1.5 mb-2">
+                    {(proj.stack || []).map((tech, i) => (
+                      <span key={i} className="chip-river text-[11px] font-mono">
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </div>
 
-              <div className="pt-4 border-t border-[#e0e3e5] flex items-center justify-between text-xs">
+              <div className="px-5 pb-5 sm:px-6 sm:pb-6 pt-3 border-t border-[#e0e3e5]/70 flex items-center justify-between text-xs mt-auto">
                 {proj.links?.github ? (
                   <a
                     href={proj.links.github}
                     target="_blank"
                     rel="noreferrer"
-                    className="flex items-center gap-1.5 text-[#404944] hover:text-[#003527] font-medium"
+                    className="flex items-center gap-1.5 text-[#404944] hover:text-[#003527] font-medium transition-colors"
                   >
                     <GithubIcon className="w-4 h-4" />
                     <span>Repositório</span>
                   </a>
                 ) : <span />}
 
-                {proj.links?.demo && (
+                {proj.links?.demo ? (
                   <a
                     href={proj.links.demo}
                     target="_blank"
                     rel="noreferrer"
-                    className="flex items-center gap-1.5 text-[#00314a] hover:underline font-semibold"
+                    className="flex items-center gap-1.5 text-[#006c49] hover:text-[#003527] hover:underline font-semibold transition-colors"
                   >
-                    <span>Demo Online</span>
+                    <span>Ver Preview</span>
                     <ExternalLink className="w-3.5 h-3.5" />
                   </a>
-                )}
+                ) : null}
               </div>
             </div>
           ))}

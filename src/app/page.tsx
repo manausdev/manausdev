@@ -61,7 +61,7 @@ export default async function HomePage() {
               </span>
             </div>
 
-            <h1 className="font-display font-bold text-3xl sm:text-5xl lg:text-6xl text-white drop-shadow-md leading-[1.15] tracking-tight">
+            <h1 className="font-display font-bold text-3xl sm:text-5xl lg:text-6xl !text-white drop-shadow-md leading-[1.15] tracking-tight">
               A maior comunidade de tecnologia do Amazonas
             </h1>
 
@@ -346,7 +346,7 @@ export default async function HomePage() {
           <div className="w-12 h-12 rounded-xl bg-[#006c49] text-white flex items-center justify-center shadow-lg">
             <Sparkles className="w-6 h-6 text-[#6cf8bb]" />
           </div>
-          <h2 className="font-display font-bold text-3xl sm:text-5xl text-white">
+          <h2 className="font-display font-bold text-3xl sm:text-5xl !text-white">
             Faça parte da história da tecnologia no Amazonas
           </h2>
           <p className="text-sm sm:text-base text-[#eff1f3]/85 max-w-xl">

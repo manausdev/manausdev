@@ -111,6 +111,14 @@ npm run start
 
 ---
 
+## 📜 Decisões de Arquitetura (ADRs)
+
+Todas as decisões arquiteturais e evoluções de features são documentadas em formato ADR (Architecture Decision Records):
+
+* Acesse o índice completo: [**`docs/adr/README.md`**](docs/adr/README.md)
+
+---
+
 ## 📜 Licença
 
 Distribuído sob a licença **Apache License 2.0**. Consulte o arquivo [LICENSE](LICENSE) para mais detalhes.
