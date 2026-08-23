@@ -13,6 +13,7 @@ build/
 out/
 .next/
 legacy_pages/
+*.tsbuildinfo
 
 # Environment and Secrets
 .env

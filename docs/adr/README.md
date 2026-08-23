@@ -20,6 +20,7 @@
 | [ADR 0010](0010-project-visual-previews-and-showcase.md) | 2026-08-19 | Projetos & Showcase | Exibição de Visual Previews na Galeria e Vitrine de Projetos | **Aceito** |
 | [ADR 0011](0011-previews-and-branding-for-communities-events-companies.md) | 2026-08-19 | Comunidades / Eventos / Empresas | Visual Previews e Identidade de Marca para Ecossistema | **Aceito** |
 | [ADR 0012](0012-remove-firebase-tools-and-update-dependencies.md) | 2026-08-23 | DevOps / Dependências | Remoção do firebase-tools e atualização de dependências vulneráveis | **Aceito** |
+| [ADR 0013](0013-dynamic-routes-filter-sync-and-screen-gaps-resolution.md) | 2026-08-23 | Navegação & Fullstack | Resolução de Gaps de Tela, Rotas Dinâmicas com SSG e Sincronização via URL | **Aceito** |
 
 ---
 
@@ -30,6 +31,8 @@
   * Adoção de Next.js 16 (App Router), TypeScript, SSR cookies e Supabase PostgreSQL com RLS.
 * [`ADR 0007: Automação e Deploy via REST API (appcli roadmap)`](0007-rest-api-with-service-account-and-appcli.md)
   * Scripts REST em `scripts/` sem dependência de login interativo.
+* [`ADR 0013: Resolução de Gaps de Tela, Rotas Dinâmicas com SSG e Sincronização via URL`](0013-dynamic-routes-filter-sync-and-screen-gaps-resolution.md)
+  * Implementação de rotas dinâmicas SSG, sincronização de URL search params, persistência de contatos e CRUD completo no dashboard.
 
 ### 2. 🎨 Design System & Identidade Visual
 * [`ADR 0009: Design System Green-Tech (Corporate Modern & Bio-Organic)`](0009-corporate-modern-green-tech-design-system.md)
