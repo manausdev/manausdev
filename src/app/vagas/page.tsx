@@ -1,16 +1,25 @@
 'use client';
 
-import { useState, useEffect, useMemo } from 'react';
-import { Briefcase, MapPin, Search, DollarSign, ExternalLink, Building } from 'lucide-react';
+import { useState, useEffect, useMemo, Suspense } from 'react';
+import Link from 'next/link';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { Briefcase, MapPin, Search, DollarSign, ExternalLink, Building, ArrowRight } from 'lucide-react';
 import { MOCK_JOBS } from '@/lib/data/mock-data';
 import { createClient } from '@/lib/supabase/client';
 import type { Job } from '@/types/database';
 
-export default function VagasPage() {
+function VagasContent() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const initialSearch = searchParams.get('q') || '';
+  const initialType = searchParams.get('type');
+  const initialRemote = searchParams.get('remote') === 'true';
+
   const [jobs, setJobs] = useState<Job[]>(MOCK_JOBS);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedType, setSelectedType] = useState<string | null>(null);
-  const [onlyRemote, setOnlyRemote] = useState(false);
+  const [searchTerm, setSearchTerm] = useState(initialSearch);
+  const [selectedType, setSelectedType] = useState<string | null>(initialType);
+  const [onlyRemote, setOnlyRemote] = useState(initialRemote);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -29,6 +38,33 @@ export default function VagasPage() {
     }
     loadJobs();
   }, []);
+
+  const updateFilters = (newSearch: string, newType: string | null, newRemote: boolean) => {
+    const params = new URLSearchParams();
+    if (newSearch) params.set('q', newSearch);
+    if (newType) params.set('type', newType);
+    if (newRemote) params.set('remote', 'true');
+
+    const queryString = params.toString();
+    router.replace(`/vagas${queryString ? `?${queryString}` : ''}`, { scroll: false });
+  };
+
+  const handleSearchChange = (val: string) => {
+    setSearchTerm(val);
+    updateFilters(val, selectedType, onlyRemote);
+  };
+
+  const handleTypeChange = (type: string | null) => {
+    const nextType = type === selectedType ? null : type;
+    setSelectedType(nextType);
+    updateFilters(searchTerm, nextType, onlyRemote);
+  };
+
+  const handleRemoteToggle = () => {
+    const nextRemote = !onlyRemote;
+    setOnlyRemote(nextRemote);
+    updateFilters(searchTerm, selectedType, nextRemote);
+  };
 
   const filteredJobs = useMemo(() => {
     return jobs.filter((job) => {
@@ -66,13 +102,13 @@ export default function VagasPage() {
               type="text"
               placeholder="Buscar por cargo, especialidade ou empresa..."
               value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
+              onChange={(e) => handleSearchChange(e.target.value)}
               className="manaus-input w-full !pl-10"
             />
           </div>
 
           <button
-            onClick={() => setOnlyRemote(!onlyRemote)}
+            onClick={handleRemoteToggle}
             className={`px-4 py-2.5 rounded-lg text-xs font-semibold border flex items-center justify-center gap-2 transition-all ${
               onlyRemote
                 ? 'bg-[#006c49]/10 text-[#006c49] border-[#006c49]'
@@ -91,7 +127,7 @@ export default function VagasPage() {
             return (
               <button
                 key={type}
-                onClick={() => setSelectedType(type === 'Todos' ? null : type)}
+                onClick={() => handleTypeChange(type === 'Todos' ? null : type)}
                 className={`px-3 py-1 rounded-full text-xs font-medium transition-colors ${
                   isSelected
                     ? 'bg-[#003527] text-white font-semibold'
@@ -119,7 +155,7 @@ export default function VagasPage() {
       ) : (
         <div className="space-y-4">
           {filteredJobs.map((job) => (
-            <div key={job.id} className="manaus-card p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-6 hover:border-l-4 hover:border-l-[#006c49]">
+            <div key={job.id} className="manaus-card p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-6 hover:border-l-4 hover:border-l-[#006c49] transition-all">
               <div className="space-y-2">
                 <div className="flex flex-wrap items-center gap-2">
                   <span className="chip-leaf text-xs font-mono font-semibold">
@@ -132,7 +168,11 @@ export default function VagasPage() {
                   )}
                 </div>
 
-                <h2 className="font-display font-bold text-lg text-[#003527]">{job.title}</h2>
+                <Link href={`/vagas/${job.id}`}>
+                  <h2 className="font-display font-bold text-lg text-[#003527] hover:text-[#006c49] transition-colors">
+                    {job.title}
+                  </h2>
+                </Link>
 
                 <div className="flex flex-wrap items-center gap-4 text-xs text-[#707974]">
                   <span className="flex items-center gap-1.5 font-medium">
@@ -152,7 +192,7 @@ export default function VagasPage() {
                 </div>
 
                 {job.description && (
-                  <p className="text-xs text-[#404944] max-w-2xl leading-relaxed pt-1">
+                  <p className="text-xs text-[#404944] max-w-2xl leading-relaxed pt-1 line-clamp-2">
                     {job.description}
                   </p>
                 )}
@@ -168,23 +208,47 @@ export default function VagasPage() {
                 )}
               </div>
 
-              {job.link && (
-                <div className="flex-shrink-0">
+              <div className="flex sm:flex-col items-center sm:items-end gap-2 flex-shrink-0">
+                <Link
+                  href={`/vagas/${job.id}`}
+                  className="btn-leaf text-xs !py-2 !px-4 flex items-center gap-1"
+                >
+                  <span>Ver Detalhes</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
+                {job.link && (
                   <a
                     href={job.link}
                     target="_blank"
                     rel="noreferrer"
-                    className="btn-primary text-xs !py-2.5 !px-5"
+                    className="btn-primary text-xs !py-2 !px-4 flex items-center gap-1"
                   >
                     <span>Candidatar</span>
                     <ExternalLink className="w-3.5 h-3.5" />
                   </a>
-                </div>
-              )}
+                )}
+              </div>
             </div>
           ))}
         </div>
       )}
     </div>
+  );
+}
+
+export default function VagasPage() {
+  return (
+    <Suspense fallback={
+      <div className="max-w-7xl mx-auto px-4 py-12">
+        <div className="h-10 bg-[#e0e3e5] w-64 rounded-lg animate-pulse mb-8" />
+        <div className="space-y-4">
+          {[1, 2, 3].map((i) => (
+            <div key={i} className="manaus-card p-6 h-32 animate-pulse bg-[#f2f4f6]" />
+          ))}
+        </div>
+      </div>
+    }>
+      <VagasContent />
+    </Suspense>
   );
 }

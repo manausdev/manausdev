@@ -1,13 +1,23 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { Building2, Globe, MapPin, Users } from 'lucide-react';
+import { useState, useEffect, useMemo, Suspense } from 'react';
+import Link from 'next/link';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { Building2, Globe, MapPin, Users, Search, ArrowRight } from 'lucide-react';
 import { MOCK_COMPANIES } from '@/lib/data/mock-data';
 import { createClient } from '@/lib/supabase/client';
 import type { Company } from '@/types/database';
 
-export default function EmpresasPage() {
+function EmpresasContent() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const initialSearch = searchParams.get('q') || '';
+  const initialSize = searchParams.get('size');
+
   const [companies, setCompanies] = useState<Company[]>(MOCK_COMPANIES);
+  const [searchTerm, setSearchTerm] = useState(initialSearch);
+  const [selectedSize, setSelectedSize] = useState<string | null>(initialSize);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -27,6 +37,37 @@ export default function EmpresasPage() {
     loadCompanies();
   }, []);
 
+  const updateFilters = (newSearch: string, newSize: string | null) => {
+    const params = new URLSearchParams();
+    if (newSearch) params.set('q', newSearch);
+    if (newSize) params.set('size', newSize);
+
+    const queryString = params.toString();
+    router.replace(`/empresas${queryString ? `?${queryString}` : ''}`, { scroll: false });
+  };
+
+  const handleSearchChange = (val: string) => {
+    setSearchTerm(val);
+    updateFilters(val, selectedSize);
+  };
+
+  const handleSizeChange = (size: string | null) => {
+    const nextSize = size === selectedSize ? null : size;
+    setSelectedSize(nextSize);
+    updateFilters(searchTerm, nextSize);
+  };
+
+  const filteredCompanies = useMemo(() => {
+    return companies.filter((comp) => {
+      const matchSearch =
+        comp.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        (comp.industry && comp.industry.toLowerCase().includes(searchTerm.toLowerCase())) ||
+        (comp.description && comp.description.toLowerCase().includes(searchTerm.toLowerCase()));
+      const matchSize = selectedSize ? comp.size === selectedSize : true;
+      return matchSearch && matchSize;
+    });
+  }, [companies, searchTerm, selectedSize]);
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div className="mb-10 text-center sm:text-left">
@@ -42,19 +83,57 @@ export default function EmpresasPage() {
         </p>
       </div>
 
+      {/* Filters */}
+      <div className="manaus-card p-5 sm:p-6 mb-8 space-y-4">
+        <div className="relative flex items-center">
+          <Search className="w-4 h-4 absolute left-3.5 text-[#707974] pointer-events-none z-10" />
+          <input
+            type="text"
+            placeholder="Buscar por nome, setor ou descrição..."
+            value={searchTerm}
+            onChange={(e) => handleSearchChange(e.target.value)}
+            className="manaus-input w-full !pl-10"
+          />
+        </div>
+
+        <div className="flex items-center gap-2 overflow-x-auto pb-1">
+          <span className="text-xs text-[#707974] font-medium flex-shrink-0">Porte:</span>
+          {['Todos', '10-50', '50-200', '500+'].map((size) => {
+            const isSelected = size === 'Todos' ? selectedSize === null : selectedSize === size;
+            return (
+              <button
+                key={size}
+                onClick={() => handleSizeChange(size === 'Todos' ? null : size)}
+                className={`px-3 py-1 rounded-full text-xs font-medium transition-colors ${
+                  isSelected
+                    ? 'bg-[#003527] text-white font-semibold'
+                    : 'bg-[#f2f4f6] text-[#404944] hover:bg-[#e6e8ea]'
+                }`}
+              >
+                {size}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
       {loading ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {[1, 2, 3, 4, 5, 6].map((i) => (
             <div key={i} className="manaus-card h-80 animate-pulse bg-[#f2f4f6] rounded-xl" />
           ))}
         </div>
+      ) : filteredCompanies.length === 0 ? (
+        <div className="text-center py-16 manaus-card">
+          <p className="text-[#707974] text-sm">Nenhuma organização encontrada com esses critérios.</p>
+        </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {companies.map((comp) => (
+          {filteredCompanies.map((comp) => (
             <div key={comp.id} className="manaus-card overflow-hidden flex flex-col justify-between border border-[#e0e3e5] group hover:border-[#006c49]/40 transition-all duration-300">
               <div>
                 {/* Company Preview Image Header */}
-                <div className="relative h-36 w-full bg-[#00281e] overflow-hidden border-b border-[#e0e3e5]">
+                <Link href={`/empresas/${comp.id}`} className="block relative h-36 w-full bg-[#00281e] overflow-hidden border-b border-[#e0e3e5]">
                   {comp.image_url ? (
                     <img
                       src={comp.image_url}
@@ -78,7 +157,7 @@ export default function EmpresasPage() {
                       </span>
                     </div>
                   )}
-                </div>
+                </Link>
 
                 <div className="p-5 sm:p-6">
                   <div className="flex items-start gap-3 mb-3">
@@ -95,9 +174,11 @@ export default function EmpresasPage() {
                       </div>
                     )}
                     <div>
-                      <h2 className="font-display font-bold text-base text-[#003527] group-hover:text-[#006c49] transition-colors leading-tight">
-                        {comp.name}
-                      </h2>
+                      <Link href={`/empresas/${comp.id}`}>
+                        <h2 className="font-display font-bold text-base text-[#003527] group-hover:text-[#006c49] transition-colors leading-tight">
+                          {comp.name}
+                        </h2>
+                      </Link>
                       <span className="text-xs text-[#006c49] font-semibold block mt-0.5">
                         {comp.industry || 'Tecnologia'}
                       </span>
@@ -115,22 +196,37 @@ export default function EmpresasPage() {
                   <MapPin className="w-3.5 h-3.5 text-[#006c49]" />
                   {comp.location || 'Manaus-AM'}
                 </span>
-                {comp.website && (
-                  <a
-                    href={comp.website}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#f2f4f6] hover:bg-[#006c49]/10 text-[#003527] hover:text-[#006c49] border border-[#e0e3e5] hover:border-[#006c49]/30 transition-colors font-semibold text-xs"
+                <div className="flex items-center gap-2">
+                  <Link
+                    href={`/empresas/${comp.id}`}
+                    className="text-xs font-semibold text-[#006c49] hover:underline flex items-center gap-1"
                   >
-                    <span>Website</span>
-                    <Globe className="w-3.5 h-3.5" />
-                  </a>
-                )}
+                    <span>Ver Perfil</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </Link>
+                </div>
               </div>
             </div>
           ))}
         </div>
       )}
     </div>
+  );
+}
+
+export default function EmpresasPage() {
+  return (
+    <Suspense fallback={
+      <div className="max-w-7xl mx-auto px-4 py-12">
+        <div className="h-10 bg-[#e0e3e5] w-64 rounded-lg animate-pulse mb-8" />
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {[1, 2, 3, 4, 5, 6].map((i) => (
+            <div key={i} className="manaus-card h-80 animate-pulse bg-[#f2f4f6] rounded-xl" />
+          ))}
+        </div>
+      </div>
+    }>
+      <EmpresasContent />
+    </Suspense>
   );
 }

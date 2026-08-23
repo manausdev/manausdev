@@ -1,17 +1,26 @@
 'use client';
 
-import { useState, useMemo, useEffect } from 'react';
-import { Search, MapPin, Globe, Users, CheckCircle2 } from 'lucide-react';
+import { useState, useMemo, useEffect, Suspense } from 'react';
+import Link from 'next/link';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { Search, MapPin, Globe, Users, ArrowRight } from 'lucide-react';
 import { GithubIcon } from '@/components/icons';
 import { MOCK_DEVS } from '@/lib/data/mock-data';
 import { createClient } from '@/lib/supabase/client';
 import type { Profile } from '@/types/database';
 
-export default function DevsPage() {
+function DevsContent() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const initialSkill = searchParams.get('skill');
+  const initialSearch = searchParams.get('q') || '';
+  const initialAvailable = searchParams.get('available') === 'true';
+
   const [devs, setDevs] = useState<Profile[]>(MOCK_DEVS);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedSkill, setSelectedSkill] = useState<string | null>(null);
-  const [onlyAvailable, setOnlyAvailable] = useState(false);
+  const [searchTerm, setSearchTerm] = useState(initialSearch);
+  const [selectedSkill, setSelectedSkill] = useState<string | null>(initialSkill);
+  const [onlyAvailable, setOnlyAvailable] = useState(initialAvailable);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -30,6 +39,34 @@ export default function DevsPage() {
     }
     loadDevs();
   }, []);
+
+  // Sync state to URL params without full page reload
+  const updateFilters = (newSearch: string, newSkill: string | null, newAvailable: boolean) => {
+    const params = new URLSearchParams();
+    if (newSearch) params.set('q', newSearch);
+    if (newSkill) params.set('skill', newSkill);
+    if (newAvailable) params.set('available', 'true');
+
+    const queryString = params.toString();
+    router.replace(`/devs${queryString ? `?${queryString}` : ''}`, { scroll: false });
+  };
+
+  const handleSearchChange = (val: string) => {
+    setSearchTerm(val);
+    updateFilters(val, selectedSkill, onlyAvailable);
+  };
+
+  const handleSkillChange = (skill: string | null) => {
+    const nextSkill = skill === selectedSkill ? null : skill;
+    setSelectedSkill(nextSkill);
+    updateFilters(searchTerm, nextSkill, onlyAvailable);
+  };
+
+  const handleAvailableToggle = () => {
+    const nextAvail = !onlyAvailable;
+    setOnlyAvailable(nextAvail);
+    updateFilters(searchTerm, selectedSkill, nextAvail);
+  };
 
   const allSkills = useMemo(() => {
     const skills = new Set<string>();
@@ -77,13 +114,13 @@ export default function DevsPage() {
               type="text"
               placeholder="Buscar por nome, especialidade ou tecnologia..."
               value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
+              onChange={(e) => handleSearchChange(e.target.value)}
               className="manaus-input w-full !pl-10"
             />
           </div>
 
           <button
-            onClick={() => setOnlyAvailable(!onlyAvailable)}
+            onClick={handleAvailableToggle}
             className={`px-4 py-2.5 rounded-lg text-xs font-semibold border flex items-center justify-center gap-2 transition-all ${
               onlyAvailable
                 ? 'bg-[#006c49]/10 text-[#006c49] border-[#006c49]'
@@ -100,7 +137,7 @@ export default function DevsPage() {
           <div className="flex items-center gap-2 overflow-x-auto pb-1 pt-1">
             <span className="text-xs text-[#707974] font-medium flex-shrink-0">Filtro:</span>
             <button
-              onClick={() => setSelectedSkill(null)}
+              onClick={() => handleSkillChange(null)}
               className={`px-3 py-1 rounded-full text-xs font-medium transition-colors flex-shrink-0 ${
                 selectedSkill === null
                   ? 'bg-[#003527] text-white font-semibold'
@@ -112,7 +149,7 @@ export default function DevsPage() {
             {allSkills.map((skill) => (
               <button
                 key={skill}
-                onClick={() => setSelectedSkill(skill === selectedSkill ? null : skill)}
+                onClick={() => handleSkillChange(skill)}
                 className={`px-3 py-1 rounded-full text-xs font-medium transition-colors flex-shrink-0 ${
                   selectedSkill === skill
                     ? 'bg-[#003527] text-white font-semibold'
@@ -140,18 +177,20 @@ export default function DevsPage() {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredDevs.map((dev) => (
-            <div key={dev.id} className="manaus-card p-6 flex flex-col justify-between">
+            <div key={dev.id} className="manaus-card p-6 flex flex-col justify-between group hover:border-[#006c49]/50 transition-all">
               <div>
                 <div className="flex items-start justify-between gap-3 mb-4">
-                  <div className="flex items-center gap-3.5">
-                    <div className="w-12 h-12 rounded-full bg-[#003527] text-white flex items-center justify-center font-display font-bold text-base shadow-sm">
+                  <Link href={`/devs/${dev.username}`} className="flex items-center gap-3.5 group-hover:opacity-90">
+                    <div className="w-12 h-12 rounded-full bg-[#003527] text-white flex items-center justify-center font-display font-bold text-base shadow-sm flex-shrink-0">
                       {dev.full_name.charAt(0)}
                     </div>
                     <div>
-                      <h2 className="font-display font-bold text-base text-[#003527] leading-tight">{dev.full_name}</h2>
+                      <h2 className="font-display font-bold text-base text-[#003527] leading-tight group-hover:text-[#006c49] transition-colors">
+                        {dev.full_name}
+                      </h2>
                       <p className="text-xs text-[#006c49] font-medium">@{dev.username}</p>
                     </div>
-                  </div>
+                  </Link>
                   {dev.available ? (
                     <span className="chip-leaf text-[10px] font-mono">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#006c49]" />
@@ -183,17 +222,14 @@ export default function DevsPage() {
                   <MapPin className="w-3.5 h-3.5 text-[#006c49]" />
                   {dev.location || 'Manaus-AM'}
                 </span>
-                <div className="flex items-center gap-3">
-                  {dev.github && (
-                    <a href={dev.github} target="_blank" rel="noreferrer" className="text-[#404944] hover:text-[#003527] transition-colors">
-                      <GithubIcon className="w-4 h-4" />
-                    </a>
-                  )}
-                  {dev.website && (
-                    <a href={dev.website} target="_blank" rel="noreferrer" className="text-[#404944] hover:text-[#00314a] transition-colors">
-                      <Globe className="w-4 h-4" />
-                    </a>
-                  )}
+                <div className="flex items-center gap-2.5">
+                  <Link
+                    href={`/devs/${dev.username}`}
+                    className="text-xs font-semibold text-[#006c49] hover:underline flex items-center gap-1"
+                  >
+                    <span>Perfil</span>
+                    <ArrowRight className="w-3 h-3" />
+                  </Link>
                 </div>
               </div>
             </div>
@@ -201,5 +237,22 @@ export default function DevsPage() {
         </div>
       )}
     </div>
+  );
+}
+
+export default function DevsPage() {
+  return (
+    <Suspense fallback={
+      <div className="max-w-7xl mx-auto px-4 py-12">
+        <div className="h-10 bg-[#e0e3e5] w-64 rounded-lg animate-pulse mb-8" />
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {[1, 2, 3, 4, 5, 6].map((i) => (
+            <div key={i} className="manaus-card p-6 h-56 animate-pulse bg-[#f2f4f6]" />
+          ))}
+        </div>
+      </div>
+    }>
+      <DevsContent />
+    </Suspense>
   );
 }

@@ -1,7 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Sparkles, Users, ExternalLink, MessageSquare } from 'lucide-react';
+import Link from 'next/link';
+import { Sparkles, Users, ExternalLink, MessageSquare, ArrowRight } from 'lucide-react';
 import { MOCK_COMMUNITIES } from '@/lib/data/mock-data';
 import { createClient } from '@/lib/supabase/client';
 import type { Community } from '@/types/database';
@@ -54,7 +55,7 @@ export default function ComunidadesPage() {
             <div key={comm.id} className="manaus-card overflow-hidden flex flex-col justify-between border border-[#e0e3e5] group hover:border-[#006c49]/40 transition-all duration-300">
               <div>
                 {/* Visual Preview Header */}
-                <div className="relative h-40 w-full bg-[#00281e] overflow-hidden border-b border-[#e0e3e5]">
+                <Link href={`/comunidades/${comm.id}`} className="block relative h-40 w-full bg-[#00281e] overflow-hidden border-b border-[#e0e3e5]">
                   {comm.image_url ? (
                     <img
                       src={comm.image_url}
@@ -76,7 +77,7 @@ export default function ComunidadesPage() {
                       {comm.members_count}+ membros
                     </span>
                   </div>
-                </div>
+                </Link>
 
                 <div className="p-5 sm:p-6">
                   <div className="flex items-start justify-between gap-3 mb-2.5">
@@ -85,7 +86,9 @@ export default function ComunidadesPage() {
                         {comm.name.charAt(0)}
                       </div>
                       <div>
-                        <h2 className="font-display font-bold text-base text-[#003527] group-hover:text-[#006c49] transition-colors">{comm.name}</h2>
+                        <Link href={`/comunidades/${comm.id}`}>
+                          <h2 className="font-display font-bold text-base text-[#003527] group-hover:text-[#006c49] transition-colors">{comm.name}</h2>
+                        </Link>
                         <span className="text-[11px] font-mono text-[#006c49] font-medium">{comm.type}</span>
                       </div>
                     </div>
@@ -97,20 +100,29 @@ export default function ComunidadesPage() {
                 </div>
               </div>
 
-              <div className="px-5 pb-5 sm:px-6 sm:pb-6 pt-3 border-t border-[#e0e3e5]/70 flex flex-wrap items-center gap-2 text-xs mt-auto">
-                {Object.entries(comm.links || {}).map(([key, url]) => (
-                  <a
-                    key={key}
-                    href={url}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#f2f4f6] hover:bg-[#006c49]/10 text-[#003527] hover:text-[#006c49] border border-[#e0e3e5] hover:border-[#006c49]/30 transition-colors capitalize text-xs font-semibold"
-                  >
-                    <MessageSquare className="w-3.5 h-3.5 text-[#006c49]" />
-                    {key}
-                    <ExternalLink className="w-3 h-3 opacity-60" />
-                  </a>
-                ))}
+              <div className="px-5 pb-5 sm:px-6 sm:pb-6 pt-3 border-t border-[#e0e3e5]/70 flex items-center justify-between text-xs mt-auto">
+                <Link
+                  href={`/comunidades/${comm.id}`}
+                  className="text-xs font-semibold text-[#006c49] hover:underline flex items-center gap-1"
+                >
+                  <span>Página da Comunidade</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
+
+                <div className="flex flex-wrap items-center gap-1.5">
+                  {Object.entries(comm.links || {}).slice(0, 1).map(([key, url]) => (
+                    <a
+                      key={key}
+                      href={url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-1 px-2 py-1 rounded bg-[#f2f4f6] hover:bg-[#006c49]/10 text-[#003527] hover:text-[#006c49] border border-[#e0e3e5] transition-colors capitalize text-[11px] font-semibold"
+                    >
+                      <MessageSquare className="w-3 h-3 text-[#006c49]" />
+                      {key}
+                    </a>
+                  ))}
+                </div>
               </div>
             </div>
           ))}

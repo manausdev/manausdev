@@ -1,16 +1,24 @@
 'use client';
 
-import { useState, useEffect, useMemo } from 'react';
-import { Search, Code2, ExternalLink } from 'lucide-react';
+import { useState, useEffect, useMemo, Suspense } from 'react';
+import Link from 'next/link';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { Search, Code2, ExternalLink, ArrowRight } from 'lucide-react';
 import { GithubIcon } from '@/components/icons';
 import { MOCK_PROJECTS } from '@/lib/data/mock-data';
 import { createClient } from '@/lib/supabase/client';
 import type { Project } from '@/types/database';
 
-export default function ProjetosPage() {
+function ProjetosContent() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const initialSearch = searchParams.get('q') || '';
+  const initialStack = searchParams.get('stack');
+
   const [projects, setProjects] = useState<Project[]>(MOCK_PROJECTS);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedTech, setSelectedTech] = useState<string | null>(null);
+  const [searchTerm, setSearchTerm] = useState(initialSearch);
+  const [selectedTech, setSelectedTech] = useState<string | null>(initialStack);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -29,6 +37,26 @@ export default function ProjetosPage() {
     }
     loadProjects();
   }, []);
+
+  const updateFilters = (newSearch: string, newStack: string | null) => {
+    const params = new URLSearchParams();
+    if (newSearch) params.set('q', newSearch);
+    if (newStack) params.set('stack', newStack);
+
+    const queryString = params.toString();
+    router.replace(`/projetos${queryString ? `?${queryString}` : ''}`, { scroll: false });
+  };
+
+  const handleSearchChange = (val: string) => {
+    setSearchTerm(val);
+    updateFilters(val, selectedTech);
+  };
+
+  const handleTechChange = (tech: string | null) => {
+    const nextTech = tech === selectedTech ? null : tech;
+    setSelectedTech(nextTech);
+    updateFilters(searchTerm, nextTech);
+  };
 
   const allTechs = useMemo(() => {
     const set = new Set<string>();
@@ -70,7 +98,7 @@ export default function ProjetosPage() {
             type="text"
             placeholder="Buscar projetos por título ou descrição..."
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={(e) => handleSearchChange(e.target.value)}
             className="manaus-input w-full !pl-10"
           />
         </div>
@@ -79,7 +107,7 @@ export default function ProjetosPage() {
           <div className="flex items-center gap-2 overflow-x-auto pb-1 pt-1">
             <span className="text-xs text-[#707974] font-medium flex-shrink-0">Stack:</span>
             <button
-              onClick={() => setSelectedTech(null)}
+              onClick={() => handleTechChange(null)}
               className={`px-3 py-1 rounded-full text-xs font-medium transition-colors flex-shrink-0 ${
                 selectedTech === null
                   ? 'bg-[#003527] text-white font-semibold'
@@ -91,7 +119,7 @@ export default function ProjetosPage() {
             {allTechs.map((tech) => (
               <button
                 key={tech}
-                onClick={() => setSelectedTech(tech === selectedTech ? null : tech)}
+                onClick={() => handleTechChange(tech)}
                 className={`px-3 py-1 rounded-full text-xs font-medium transition-colors flex-shrink-0 ${
                   selectedTech === tech
                     ? 'bg-[#003527] text-white font-semibold'
@@ -122,7 +150,7 @@ export default function ProjetosPage() {
             <div key={proj.id} className="manaus-card overflow-hidden flex flex-col justify-between border border-[#e0e3e5] group hover:border-[#006c49]/40 transition-all duration-300">
               <div>
                 {/* Project Visual Preview */}
-                <div className="relative h-44 w-full bg-[#00281e] overflow-hidden border-b border-[#e0e3e5]">
+                <Link href={`/projetos/${proj.id}`} className="block relative h-44 w-full bg-[#00281e] overflow-hidden border-b border-[#e0e3e5]">
                   {proj.image_url ? (
                     <img
                       src={proj.image_url}
@@ -143,13 +171,15 @@ export default function ProjetosPage() {
                       🌿 Manaus Tech
                     </span>
                   </div>
-                </div>
+                </Link>
 
                 <div className="p-5 sm:p-6">
                   <div className="flex items-start justify-between gap-3 mb-2.5">
-                    <h2 className="font-display font-bold text-lg text-[#003527] group-hover:text-[#006c49] transition-colors">
-                      {proj.title}
-                    </h2>
+                    <Link href={`/projetos/${proj.id}`}>
+                      <h2 className="font-display font-bold text-lg text-[#003527] group-hover:text-[#006c49] transition-colors">
+                        {proj.title}
+                      </h2>
+                    </Link>
                   </div>
 
                   <p className="text-xs text-[#404944] line-clamp-3 mb-4 leading-relaxed">
@@ -158,43 +188,73 @@ export default function ProjetosPage() {
 
                   <div className="flex flex-wrap gap-1.5 mb-2">
                     {(proj.stack || []).map((tech, i) => (
-                      <span key={i} className="chip-river text-[11px] font-mono">
+                      <button
+                        key={i}
+                        onClick={() => handleTechChange(tech)}
+                        className="chip-river text-[11px] font-mono hover:bg-[#00314a]/20 transition-colors"
+                      >
                         {tech}
-                      </span>
+                      </button>
                     ))}
                   </div>
                 </div>
               </div>
 
               <div className="px-5 pb-5 sm:px-6 sm:pb-6 pt-3 border-t border-[#e0e3e5]/70 flex items-center justify-between text-xs mt-auto">
-                {proj.links?.github ? (
-                  <a
-                    href={proj.links.github}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="flex items-center gap-1.5 text-[#404944] hover:text-[#003527] font-medium transition-colors"
-                  >
-                    <GithubIcon className="w-4 h-4" />
-                    <span>Repositório</span>
-                  </a>
-                ) : <span />}
+                <Link
+                  href={`/projetos/${proj.id}`}
+                  className="text-xs font-semibold text-[#006c49] hover:underline flex items-center gap-1"
+                >
+                  <span>Detalhes</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
 
-                {proj.links?.demo ? (
-                  <a
-                    href={proj.links.demo}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="flex items-center gap-1.5 text-[#006c49] hover:text-[#003527] hover:underline font-semibold transition-colors"
-                  >
-                    <span>Ver Preview</span>
-                    <ExternalLink className="w-3.5 h-3.5" />
-                  </a>
-                ) : null}
+                <div className="flex items-center gap-3">
+                  {proj.links?.github && (
+                    <a
+                      href={proj.links.github}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-[#404944] hover:text-[#003527] transition-colors"
+                      title="Repositório"
+                    >
+                      <GithubIcon className="w-4 h-4" />
+                    </a>
+                  )}
+                  {proj.links?.demo && (
+                    <a
+                      href={proj.links.demo}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-[#006c49] hover:text-[#003527] transition-colors"
+                      title="Demo"
+                    >
+                      <ExternalLink className="w-4 h-4" />
+                    </a>
+                  )}
+                </div>
               </div>
             </div>
           ))}
         </div>
       )}
     </div>
+  );
+}
+
+export default function ProjetosPage() {
+  return (
+    <Suspense fallback={
+      <div className="max-w-7xl mx-auto px-4 py-12">
+        <div className="h-10 bg-[#e0e3e5] w-64 rounded-lg animate-pulse mb-8" />
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {[1, 2, 3, 4, 5, 6].map((i) => (
+            <div key={i} className="manaus-card h-80 animate-pulse bg-[#f2f4f6] rounded-xl" />
+          ))}
+        </div>
+      </div>
+    }>
+      <ProjetosContent />
+    </Suspense>
   );
 }
