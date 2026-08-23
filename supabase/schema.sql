@@ -95,6 +95,17 @@ create table if not exists public.jobs (
   created_at timestamptz default now() not null
 );
 
+-- 7. Tabela de Mensagens de Contato
+create table if not exists public.contacts (
+  id uuid default uuid_generate_v4() primary key,
+  name text not null,
+  email text not null,
+  subject text not null,
+  message text not null,
+  status text default 'unread',
+  created_at timestamptz default now() not null
+);
+
 -- ==============================================================================
 -- 🔒 Row Level Security (RLS)
 -- ==============================================================================
@@ -105,6 +116,7 @@ alter table public.projects enable row level security;
 alter table public.communities enable row level security;
 alter table public.events enable row level security;
 alter table public.jobs enable row level security;
+alter table public.contacts enable row level security;
 
 -- Perfis: Leitura pública, edição pelo próprio usuário
 create policy "Perfis visíveis publicamente" on public.profiles
@@ -154,6 +166,18 @@ create policy "Vagas visíveis publicamente" on public.jobs
 create policy "Usuários autenticados podem publicar vagas" on public.jobs
   for insert with check (auth.role() = 'authenticated');
 
+-- Contatos: Inserção pública, leitura apenas por admins
+create policy "Qualquer pessoa pode enviar mensagem de contato" on public.contacts
+  for insert with check (true);
+
+create policy "Apenas administradores podem ler mensagens" on public.contacts
+  for select using (
+    exists (
+      select 1 from public.profiles
+      where profiles.id = auth.uid() and profiles.is_admin = true
+    )
+  );
+
 -- ==============================================================================
 -- ⚡ Trigger para criação automática de perfil ao registrar usuário
 -- ==============================================================================
@@ -186,3 +210,4 @@ $$;
 create or replace trigger on_auth_user_created
   after insert on auth.users
   for each row execute procedure public.handle_new_user();
+
