@@ -13,15 +13,23 @@ export default function RegisterPage() {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [acceptTerms, setAcceptTerms] = useState(true);
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!acceptTerms) {
+      setErrorMsg('Você precisa concordar com os Termos de Uso e a Política de Privacidade.');
+      return;
+    }
+
     setLoading(true);
     setErrorMsg(null);
     setSuccessMsg(null);
+
+    const cleanUsername = username.toLowerCase().replace(/[^a-z0-9_-]/g, '');
 
     try {
       const supabase = createClient();
@@ -31,7 +39,7 @@ export default function RegisterPage() {
         options: {
           data: {
             full_name: fullName,
-            user_name: username.toLowerCase().replace(/[^a-z0-9_-]/g, ''),
+            user_name: cleanUsername,
           },
           emailRedirectTo: `${window.location.origin}/auth/callback`,
         },
@@ -122,7 +130,7 @@ export default function RegisterPage() {
                   required
                   placeholder="seunome"
                   value={username}
-                  onChange={(e) => setUsername(e.target.value)}
+                  onChange={(e) => setUsername(e.target.value.toLowerCase().replace(/[^a-z0-9_-]/g, ''))}
                   className="manaus-input w-full pl-10"
                 />
               </div>
@@ -157,6 +165,27 @@ export default function RegisterPage() {
                   className="manaus-input w-full pl-10"
                 />
               </div>
+            </div>
+
+            <div className="flex items-start gap-2.5 pt-1">
+              <input
+                type="checkbox"
+                id="terms"
+                checked={acceptTerms}
+                onChange={(e) => setAcceptTerms(e.target.checked)}
+                className="mt-0.5 h-4 w-4 rounded border-[#bfc9c3] text-[#006c49] focus:ring-[#006c49]"
+              />
+              <label htmlFor="terms" className="text-xs text-[#404944] leading-tight">
+                Concordo com os{' '}
+                <Link href="/termos" target="_blank" className="text-[#006c49] underline hover:text-[#003527]">
+                  Termos de Uso
+                </Link>{' '}
+                e a{' '}
+                <Link href="/privacidade" target="_blank" className="text-[#006c49] underline hover:text-[#003527]">
+                  Política de Privacidade
+                </Link>
+                .
+              </label>
             </div>
 
             <button
