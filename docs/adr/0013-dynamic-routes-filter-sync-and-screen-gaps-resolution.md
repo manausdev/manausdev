@@ -61,3 +61,4 @@ A auditoria técnica documentada em [`docs/gaps-screens.md`](../gaps-screens.md)
 - [`docs/gaps-screens.md`](../gaps-screens.md)
 - [`supabase/schema.sql`](../../supabase/schema.sql)
 - [`src/types/database.ts`](../../src/types/database.ts)
+
