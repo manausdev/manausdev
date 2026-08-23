@@ -11,13 +11,11 @@ import {
   Save, 
   CheckCircle2, 
   AlertCircle, 
-  Globe, 
-  MapPin, 
-  Sparkles,
-  Briefcase
+  Trash2,
+  Edit3,
+  ExternalLink
 } from 'lucide-react';
-import { GithubIcon } from '@/components/icons';
-import type { Profile, Project } from '@/types/database';
+import type { Profile, Project, Database, ProjectLinks } from '@/types/database';
 
 export default function DashboardPage() {
   const router = useRouter();
@@ -29,15 +27,16 @@ export default function DashboardPage() {
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
-  // New project form modal/state
-  const [isAddingProject, setIsAddingProject] = useState(false);
-  const [newTitle, setNewTitle] = useState('');
-  const [newDesc, setNewDesc] = useState('');
-  const [newStack, setNewStack] = useState('');
-  const [newImageUrl, setNewImageUrl] = useState('');
-  const [newGithub, setNewGithub] = useState('');
-  const [newDemo, setNewDemo] = useState('');
-  const [creatingProj, setCreatingProj] = useState(false);
+  // Project form modal/state (Create & Edit)
+  const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
+  const [editingProjectId, setEditingProjectId] = useState<string | null>(null);
+  const [formTitle, setFormTitle] = useState('');
+  const [formDesc, setFormDesc] = useState('');
+  const [formStack, setFormStack] = useState('');
+  const [formImageUrl, setFormImageUrl] = useState('');
+  const [formGithub, setFormGithub] = useState('');
+  const [formDemo, setFormDemo] = useState('');
+  const [submittingProj, setSubmittingProj] = useState(false);
 
   useEffect(() => {
     async function loadUserData() {
@@ -78,12 +77,13 @@ export default function DashboardPage() {
         const { data: userProjects } = await supabase
           .from('projects')
           .select('*')
-          .eq('author_id', currentUser.id);
+          .eq('author_id', currentUser.id)
+          .order('created_at', { ascending: false });
 
         if (userProjects) {
           setProjects(userProjects);
         }
-      } catch (err: any) {
+      } catch (err: unknown) {
         console.error('Erro ao carregar dados:', err);
       } finally {
         setLoading(false);
@@ -102,81 +102,159 @@ export default function DashboardPage() {
 
     try {
       const supabase = createClient();
-      const payload = {
+      const skillsArray = typeof profile.skills === 'string'
+        ? (profile.skills as string).split(',').map(s => s.trim()).filter(Boolean)
+        : profile.skills || [];
+
+      const profilePayload: Database['public']['Tables']['profiles']['Insert'] = {
         id: user.id,
-        username: profile.username || user.email?.split('@')[0],
+        username: profile.username || user.email?.split('@')[0] || 'user',
         full_name: profile.full_name || '',
         email: user.email,
-        role: profile.role,
-        bio: profile.bio,
+        role: profile.role || 'Developer',
+        bio: profile.bio || null,
         location: profile.location || 'Manaus-AM',
-        github: profile.github,
-        website: profile.website,
+        github: profile.github || null,
+        website: profile.website || null,
         available: profile.available ?? true,
-        skills: typeof profile.skills === 'string' 
-          ? (profile.skills as string).split(',').map(s => s.trim()).filter(Boolean)
-          : profile.skills || [],
+        skills: skillsArray,
         updated_at: new Date().toISOString(),
       };
 
-      const { error } = await (supabase.from('profiles') as any)
-        .upsert(payload, { onConflict: 'id' });
+      const { error } = await supabase
+        .from('profiles')
+        // @ts-expect-error Supabase postgrest query builder overload
+        .upsert(profilePayload);
 
       if (error) throw error;
 
       setSuccessMsg('Perfil atualizado com sucesso no Supabase!');
       setTimeout(() => setSuccessMsg(null), 4000);
-    } catch (err: any) {
-      setErrorMsg(err?.message || 'Falha ao salvar perfil.');
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Falha ao salvar perfil.';
+      setErrorMsg(message);
     } finally {
       setSaving(false);
     }
   };
 
-  const handleCreateProject = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!user) return;
-    setCreatingProj(true);
+  const openAddProjectModal = () => {
+    setEditingProjectId(null);
+    setFormTitle('');
+    setFormDesc('');
+    setFormStack('');
+    setFormImageUrl('');
+    setFormGithub('');
+    setFormDemo('');
+    setIsProjectModalOpen(true);
+  };
+
+  const openEditProjectModal = (proj: Project) => {
+    setEditingProjectId(proj.id);
+    setFormTitle(proj.title);
+    setFormDesc(proj.description);
+    setFormStack(proj.stack ? proj.stack.join(', ') : '');
+    setFormImageUrl(proj.image_url || '');
+    setFormGithub(proj.links?.github || '');
+    setFormDemo(proj.links?.demo || proj.links?.website || '');
+    setIsProjectModalOpen(true);
+  };
+
+  const handleDeleteProject = async (projectId: string) => {
+    if (!confirm('Tem certeza que deseja excluir este projeto?')) return;
     setErrorMsg(null);
 
     try {
       const supabase = createClient();
-      const stackArray = newStack.split(',').map(s => s.trim()).filter(Boolean);
-      const links = {
-        github: newGithub || undefined,
-        demo: newDemo || undefined,
-      };
-
-      const { data, error } = await (supabase.from('projects') as any)
-        .insert({
-          title: newTitle,
-          description: newDesc,
-          stack: stackArray,
-          image_url: newImageUrl || undefined,
-          links,
-          author_id: user.id,
-        })
-        .select()
-        .single();
+      const { error } = await supabase
+        .from('projects')
+        .delete()
+        .eq('id', projectId);
 
       if (error) throw error;
 
-      if (data) {
-        setProjects([data, ...projects]);
-        setIsAddingProject(false);
-        setNewTitle('');
-        setNewDesc('');
-        setNewStack('');
-        setNewImageUrl('');
-        setNewGithub('');
-        setNewDemo('');
-        setSuccessMsg('Projeto cadastrado com sucesso!');
-        setTimeout(() => setSuccessMsg(null), 4000);
+      setProjects(projects.filter(p => p.id !== projectId));
+      setSuccessMsg('Projeto excluído com sucesso!');
+      setTimeout(() => setSuccessMsg(null), 4000);
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Falha ao excluir projeto.';
+      setErrorMsg(message);
+    }
+  };
+
+  const handleSaveProject = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!user) return;
+    setSubmittingProj(true);
+    setErrorMsg(null);
+
+    try {
+      const supabase = createClient();
+      const stackArray = formStack.split(',').map(s => s.trim()).filter(Boolean);
+      const links: ProjectLinks = {
+        github: formGithub || undefined,
+        demo: formDemo || undefined,
+      };
+
+      if (editingProjectId) {
+        // Update existing
+        const updatePayload: Database['public']['Tables']['projects']['Update'] = {
+          title: formTitle,
+          description: formDesc,
+          stack: stackArray,
+          image_url: formImageUrl || null,
+          links,
+          updated_at: new Date().toISOString(),
+        };
+
+        const { data, error } = await supabase
+          .from('projects')
+          // @ts-expect-error Supabase postgrest query builder overload
+          .update(updatePayload)
+          .eq('id', editingProjectId)
+          .select()
+          .single();
+
+        if (error) throw error;
+
+        if (data) {
+          setProjects(projects.map(p => p.id === editingProjectId ? data : p));
+          setIsProjectModalOpen(false);
+          setSuccessMsg('Projeto atualizado com sucesso!');
+          setTimeout(() => setSuccessMsg(null), 4000);
+        }
+      } else {
+        // Insert new
+        const insertPayload: Database['public']['Tables']['projects']['Insert'] = {
+          title: formTitle,
+          description: formDesc,
+          stack: stackArray,
+          image_url: formImageUrl || null,
+          links,
+          author_id: user.id,
+        };
+
+        const { data, error } = await supabase
+          .from('projects')
+          // @ts-expect-error Supabase postgrest query builder overload
+          .insert(insertPayload)
+          .select()
+          .single();
+
+        if (error) throw error;
+
+        if (data) {
+          setProjects([data, ...projects]);
+          setIsProjectModalOpen(false);
+          setSuccessMsg('Projeto publicado com sucesso!');
+          setTimeout(() => setSuccessMsg(null), 4000);
+        }
       }
-    } catch (err: any) {
-      setErrorMsg(err?.message || 'Falha ao cadastrar projeto.');
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Falha ao salvar projeto.';
+      setErrorMsg(message);
     } finally {
-      setCreatingProj(false);
+      setSubmittingProj(false);
     }
   };
 
@@ -204,7 +282,7 @@ export default function DashboardPage() {
         </div>
 
         <button
-          onClick={() => setIsAddingProject(true)}
+          onClick={openAddProjectModal}
           className="btn-leaf text-xs"
         >
           <Plus className="w-4 h-4" />
@@ -299,7 +377,7 @@ export default function DashboardPage() {
                   type="text"
                   placeholder="React, Next.js, Node.js, Supabase, Tailwind, Python"
                   value={Array.isArray(profile.skills) ? profile.skills.join(', ') : profile.skills || ''}
-                  onChange={(e) => setProfile({ ...profile, skills: e.target.value as any })}
+                  onChange={(e) => setProfile({ ...profile, skills: e.target.value.split(',').map(s => s.trim()) })}
                   className="manaus-input w-full"
                 />
               </div>
@@ -369,7 +447,7 @@ export default function DashboardPage() {
               <div className="text-center py-8">
                 <p className="text-xs text-[#707974] mb-3">Você ainda não cadastrou projetos.</p>
                 <button
-                  onClick={() => setIsAddingProject(true)}
+                  onClick={openAddProjectModal}
                   className="text-xs text-[#006c49] font-bold hover:underline"
                 >
                   + Publicar primeiro projeto
@@ -378,15 +456,49 @@ export default function DashboardPage() {
             ) : (
               <div className="space-y-3">
                 {projects.map((proj) => (
-                  <div key={proj.id} className="p-3.5 rounded-xl bg-[#f2f4f6] border border-[#e0e3e5]">
-                    <h4 className="font-display font-bold text-sm text-[#003527]">{proj.title}</h4>
-                    <p className="text-xs text-[#404944] line-clamp-2 mt-1">{proj.description}</p>
-                    <div className="flex flex-wrap gap-1 mt-2.5">
-                      {proj.stack?.map((s, i) => (
-                        <span key={i} className="chip-river text-[10px] font-mono !py-0.5 !px-1.5">
-                          {s}
-                        </span>
-                      ))}
+                  <div key={proj.id} className="p-4 rounded-xl bg-[#f2f4f6] border border-[#e0e3e5] flex flex-col justify-between gap-3">
+                    <div>
+                      <div className="flex items-start justify-between gap-2">
+                        <h4 className="font-display font-bold text-sm text-[#003527]">{proj.title}</h4>
+                        <div className="flex items-center gap-1.5">
+                          <button
+                            onClick={() => openEditProjectModal(proj)}
+                            className="p-1 text-[#404944] hover:text-[#006c49] rounded hover:bg-white transition-colors"
+                            title="Editar Projeto"
+                          >
+                            <Edit3 className="w-3.5 h-3.5" />
+                          </button>
+                          <button
+                            onClick={() => handleDeleteProject(proj.id)}
+                            className="p-1 text-[#707974] hover:text-[#ba1a1a] rounded hover:bg-[#ffdad6]/40 transition-colors"
+                            title="Excluir Projeto"
+                          >
+                            <Trash2 className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+                      </div>
+                      <p className="text-xs text-[#404944] line-clamp-2 mt-1">{proj.description}</p>
+                    </div>
+
+                    <div className="flex items-center justify-between pt-2 border-t border-[#e0e3e5]">
+                      <div className="flex flex-wrap gap-1">
+                        {proj.stack?.slice(0, 2).map((s, i) => (
+                          <span key={i} className="chip-river text-[10px] font-mono !py-0.5 !px-1.5">
+                            {s}
+                          </span>
+                        ))}
+                      </div>
+                      {proj.links?.demo || proj.links?.github ? (
+                        <a
+                          href={proj.links.demo || proj.links.github}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="text-[11px] font-semibold text-[#006c49] hover:underline flex items-center gap-1"
+                        >
+                          <span>Ver</span>
+                          <ExternalLink className="w-3 h-3" />
+                        </a>
+                      ) : null}
                     </div>
                   </div>
                 ))}
@@ -396,20 +508,22 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      {/* Add Project Modal */}
-      {isAddingProject && (
+      {/* Project Modal (Add or Edit) */}
+      {isProjectModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
           <div className="manaus-card w-full max-w-lg p-6 sm:p-8 relative shadow-elevated">
-            <h3 className="font-display font-bold text-xl text-[#003527] mb-4">Publicar Novo Projeto</h3>
-            <form onSubmit={handleCreateProject} className="space-y-4">
+            <h3 className="font-display font-bold text-xl text-[#003527] mb-4">
+              {editingProjectId ? 'Editar Projeto' : 'Publicar Novo Projeto'}
+            </h3>
+            <form onSubmit={handleSaveProject} className="space-y-4">
               <div>
                 <label className="block text-xs font-semibold text-[#003527] mb-1.5">Título do Projeto</label>
                 <input
                   type="text"
                   required
                   placeholder="Ex: RioTech Maps"
-                  value={newTitle}
-                  onChange={(e) => setNewTitle(e.target.value)}
+                  value={formTitle}
+                  onChange={(e) => setFormTitle(e.target.value)}
                   className="manaus-input w-full"
                 />
               </div>
@@ -420,8 +534,8 @@ export default function DashboardPage() {
                   rows={3}
                   required
                   placeholder="Descreva o propósito do projeto e impacto regional..."
-                  value={newDesc}
-                  onChange={(e) => setNewDesc(e.target.value)}
+                  value={formDesc}
+                  onChange={(e) => setFormDesc(e.target.value)}
                   className="manaus-input w-full"
                 />
               </div>
@@ -431,8 +545,8 @@ export default function DashboardPage() {
                 <input
                   type="text"
                   placeholder="Next.js, Supabase, Tailwind, TypeScript"
-                  value={newStack}
-                  onChange={(e) => setNewStack(e.target.value)}
+                  value={formStack}
+                  onChange={(e) => setFormStack(e.target.value)}
                   className="manaus-input w-full"
                 />
               </div>
@@ -442,8 +556,8 @@ export default function DashboardPage() {
                 <input
                   type="url"
                   placeholder="https://exemplo.com/preview.png"
-                  value={newImageUrl}
-                  onChange={(e) => setNewImageUrl(e.target.value)}
+                  value={formImageUrl}
+                  onChange={(e) => setFormImageUrl(e.target.value)}
                   className="manaus-input w-full"
                 />
               </div>
@@ -454,8 +568,8 @@ export default function DashboardPage() {
                   <input
                     type="url"
                     placeholder="https://github.com/..."
-                    value={newGithub}
-                    onChange={(e) => setNewGithub(e.target.value)}
+                    value={formGithub}
+                    onChange={(e) => setFormGithub(e.target.value)}
                     className="manaus-input w-full"
                   />
                 </div>
@@ -464,8 +578,8 @@ export default function DashboardPage() {
                   <input
                     type="url"
                     placeholder="https://..."
-                    value={newDemo}
-                    onChange={(e) => setNewDemo(e.target.value)}
+                    value={formDemo}
+                    onChange={(e) => setFormDemo(e.target.value)}
                     className="manaus-input w-full"
                   />
                 </div>
@@ -474,17 +588,17 @@ export default function DashboardPage() {
               <div className="flex items-center justify-end gap-3 pt-4 border-t border-[#e0e3e5]">
                 <button
                   type="button"
-                  onClick={() => setIsAddingProject(false)}
+                  onClick={() => setIsProjectModalOpen(false)}
                   className="px-4 py-2 rounded-lg text-xs font-semibold text-[#707974] hover:text-[#191c1e]"
                 >
                   Cancelar
                 </button>
                 <button
                   type="submit"
-                  disabled={creatingProj}
+                  disabled={submittingProj}
                   className="btn-leaf text-xs !py-2 !px-5 disabled:opacity-50"
                 >
-                  {creatingProj ? 'Salvando...' : 'Publicar'}
+                  {submittingProj ? 'Salvando...' : editingProjectId ? 'Salvar Alterações' : 'Publicar'}
                 </button>
               </div>
             </form>
