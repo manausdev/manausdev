@@ -19,6 +19,7 @@
 | [ADR 0009](0009-corporate-modern-green-tech-design-system.md) | 2026-08-18 | UI / Design System | Design System Green-Tech (Corporate Modern & Bio-Organic) | **Aceito** |
 | [ADR 0010](0010-project-visual-previews-and-showcase.md) | 2026-08-19 | Projetos & Showcase | Exibição de Visual Previews na Galeria e Vitrine de Projetos | **Aceito** |
 | [ADR 0011](0011-previews-and-branding-for-communities-events-companies.md) | 2026-08-19 | Comunidades / Eventos / Empresas | Visual Previews e Identidade de Marca para Ecossistema | **Aceito** |
+| [ADR 0012](0012-remove-firebase-tools-and-update-dependencies.md) | 2026-08-23 | DevOps / Dependências | Remoção do firebase-tools e atualização de dependências vulneráveis | **Aceito** |
 
 ---
 
