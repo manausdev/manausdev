@@ -21,6 +21,7 @@
 | [ADR 0011](0011-previews-and-branding-for-communities-events-companies.md) | 2026-08-19 | Comunidades / Eventos / Empresas | Visual Previews e Identidade de Marca para Ecossistema | **Aceito** |
 | [ADR 0012](0012-remove-firebase-tools-and-update-dependencies.md) | 2026-08-23 | DevOps / Dependências | Remoção do firebase-tools e atualização de dependências vulneráveis | **Aceito** |
 | [ADR 0013](0013-dynamic-routes-filter-sync-and-screen-gaps-resolution.md) | 2026-08-23 | Navegação & Fullstack | Resolução de Gaps de Tela, Rotas Dinâmicas com SSG e Sincronização via URL | **Aceito** |
+| [ADR 0014](0014-fix-critical-nextjs-rce-and-remove-dead-middleware.md) | 2026-09-25 | DevOps / Segurança | Correção de RCE crítico no Next.js e remoção de Middleware morto | **Aceito** |
 
 ---
 
