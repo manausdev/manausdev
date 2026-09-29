@@ -1,15 +1,15 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import {
-  ArrowLeft,
-  Code2,
-  ExternalLink,
-  Star,
-  Clock,
-} from 'lucide-react';
+  ArrowLeftIcon,
+  Code2Icon,
+  ExternalLinkIcon,
+  StarIcon,
+  ClockIcon,
+} from '@/components/icons';
 import { GithubIcon } from '@/components/icons';
 import { createClient } from '@/lib/supabase/server';
-import { MOCK_PROJECTS } from '@/lib/data/mock-data';
+import { MOCK_PROJECTS } from '@/lib/data/mock';
 import type { Project } from '@/types/database';
 
 export async function generateStaticParams() {
@@ -69,7 +69,7 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
         href="/projetos"
         className="inline-flex items-center gap-2 text-xs font-semibold text-accent-text hover:text-ink transition-colors mb-8"
       >
-        <ArrowLeft className="w-4 h-4" />
+        <ArrowLeftIcon className="w-4 h-4" />
         Voltar para o mural de projetos
       </Link>
 
@@ -79,7 +79,7 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
             <div className="flex flex-wrap items-center gap-2">
               {project.featured && (
                 <span className="chip-leaf text-xs font-mono font-semibold flex items-center gap-1">
-                  <Star className="w-3 h-3" />
+                  <StarIcon className="w-3 h-3" />
                   Destaque
                 </span>
               )}
@@ -113,7 +113,7 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
                 className="btn-primary !py-3 !px-6 text-xs flex items-center gap-2 shadow-md w-full sm:w-auto justify-center"
               >
                 <span>Ver Demo</span>
-                <ExternalLink className="w-4 h-4" />
+                <ExternalLinkIcon className="w-4 h-4" />
               </a>
             )}
           </div>
@@ -149,7 +149,7 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
                   key={i}
                   className="chip-river text-xs !py-1 !px-3 font-mono font-semibold"
                 >
-                  <Code2 className="w-3 h-3 inline-block mr-1" />
+                  <Code2Icon className="w-3 h-3 inline-block mr-1" />
                   {tech}
                 </span>
               ))}
@@ -159,7 +159,7 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
 
         <div className="pt-6 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-faint">
           <span className="flex items-center gap-1.5">
-            <Clock className="w-4 h-4 text-accent-text" />
+            <ClockIcon className="w-4 h-4 text-accent-text" />
             Projeto em destaque na comunidade ManausDev
           </span>
           {project.links?.github && (

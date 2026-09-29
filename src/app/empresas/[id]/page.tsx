@@ -1,16 +1,16 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { 
-  ArrowLeft, 
-  Building2, 
-  MapPin, 
-  Globe, 
-  Users, 
-  Briefcase, 
-  ExternalLink 
-} from 'lucide-react';
+  ArrowLeftIcon, 
+  Building2Icon, 
+  MapPinIcon, 
+  GlobeIcon, 
+  UsersIcon, 
+  BriefcaseIcon, 
+  ExternalLinkIcon 
+} from '@/components/icons';
 import { createClient } from '@/lib/supabase/server';
-import { MOCK_COMPANIES, MOCK_JOBS } from '@/lib/data/mock-data';
+import { MOCK_COMPANIES, MOCK_JOBS } from '@/lib/data/mock';
 import type { Company, Job } from '@/types/database';
 
 export async function generateStaticParams() {
@@ -69,7 +69,7 @@ export default async function CompanyDetailPage({ params }: CompanyDetailPagePro
         href="/empresas"
         className="inline-flex items-center gap-2 text-xs font-semibold text-accent-text hover:text-ink transition-colors mb-8"
       >
-        <ArrowLeft className="w-4 h-4" />
+        <ArrowLeftIcon className="w-4 h-4" />
         Voltar para o diretório de empresas
       </Link>
 
@@ -83,13 +83,13 @@ export default async function CompanyDetailPage({ params }: CompanyDetailPagePro
             />
           ) : (
             <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-brand p-4 text-center">
-              <Building2 className="w-16 h-16 text-neon/60 mb-2" />
+              <Building2Icon className="w-16 h-16 text-neon/60 mb-2" />
             </div>
           )}
           {company.size && (
             <div className="absolute top-4 right-4 z-10">
               <span className="bg-deep/90 backdrop-blur-md text-neon text-xs font-mono px-3 py-1.5 rounded-full border border-neon/30 font-semibold shadow-md flex items-center gap-1.5">
-                <Users className="w-3.5 h-3.5 text-neon" />
+                <UsersIcon className="w-3.5 h-3.5 text-neon" />
                 {company.size} colaboradores
               </span>
             </div>
@@ -128,7 +128,7 @@ export default async function CompanyDetailPage({ params }: CompanyDetailPagePro
                 className="btn-primary !py-2.5 !px-5 text-xs flex items-center gap-2"
               >
                 <span>Acessar Website</span>
-                <Globe className="w-4 h-4" />
+                <GlobeIcon className="w-4 h-4" />
               </a>
             )}
           </div>
@@ -144,11 +144,11 @@ export default async function CompanyDetailPage({ params }: CompanyDetailPagePro
 
           <div className="flex flex-wrap gap-6 pt-4 border-t border-border text-xs text-faint">
             <span className="flex items-center gap-1.5 font-mono">
-              <MapPin className="w-4 h-4 text-accent-text" />
+              <MapPinIcon className="w-4 h-4 text-accent-text" />
               {company.location || 'Manaus-AM'}
             </span>
             <span className="flex items-center gap-1.5 font-mono">
-              <Building2 className="w-4 h-4 text-accent-text" />
+              <Building2Icon className="w-4 h-4 text-accent-text" />
               {company.industry || 'Tecnologia'}
             </span>
           </div>
@@ -159,7 +159,7 @@ export default async function CompanyDetailPage({ params }: CompanyDetailPagePro
       {companyJobs.length > 0 && (
         <div className="mt-10">
           <div className="flex items-center gap-2 mb-6">
-            <Briefcase className="w-5 h-5 text-accent-text" />
+            <BriefcaseIcon className="w-5 h-5 text-accent-text" />
             <h2 className="font-display font-bold text-xl text-ink">Vagas Abertas nesta Empresa</h2>
           </div>
 
@@ -188,4 +188,3 @@ export default async function CompanyDetailPage({ params }: CompanyDetailPagePro
     </div>
   );
 }
-

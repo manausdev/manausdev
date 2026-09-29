@@ -1,17 +1,17 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { 
-  ArrowLeft, 
-  Briefcase, 
-  MapPin, 
-  DollarSign, 
-  ExternalLink, 
-  Building, 
-  CheckCircle2, 
-  Clock 
-} from 'lucide-react';
+  ArrowLeftIcon, 
+  BriefcaseIcon, 
+  MapPinIcon, 
+  DollarSignIcon, 
+  ExternalLinkIcon, 
+  BuildingIcon, 
+  CheckCircle2Icon, 
+  ClockIcon 
+} from '@/components/icons';
 import { createClient } from '@/lib/supabase/server';
-import { MOCK_JOBS } from '@/lib/data/mock-data';
+import { MOCK_JOBS } from '@/lib/data/mock';
 import type { Job } from '@/types/database';
 
 export async function generateStaticParams() {
@@ -82,7 +82,7 @@ export default async function JobDetailPage({ params }: JobDetailPageProps) {
         href="/vagas"
         className="inline-flex items-center gap-2 text-xs font-semibold text-accent-text hover:text-ink transition-colors mb-8"
       >
-        <ArrowLeft className="w-4 h-4" />
+        <ArrowLeftIcon className="w-4 h-4" />
         Voltar para o mural de vagas
       </Link>
 
@@ -106,16 +106,16 @@ export default async function JobDetailPage({ params }: JobDetailPageProps) {
 
             <div className="flex flex-wrap items-center gap-4 text-xs sm:text-sm text-faint">
               <span className="flex items-center gap-1.5 font-medium text-ink">
-                <Building className="w-4 h-4 text-accent-text" />
+                <BuildingIcon className="w-4 h-4 text-accent-text" />
                 {job.company_name || 'Empresa Parceira'}
               </span>
               <span className="flex items-center gap-1.5 font-mono">
-                <MapPin className="w-4 h-4 text-accent-text" />
+                <MapPinIcon className="w-4 h-4 text-accent-text" />
                 {job.location || 'Manaus-AM'}
               </span>
               {job.salary && (
                 <span className="flex items-center gap-1.5 font-semibold text-accent-text font-mono">
-                  <DollarSign className="w-4 h-4" />
+                  <DollarSignIcon className="w-4 h-4" />
                   {job.salary}
                 </span>
               )}
@@ -131,7 +131,7 @@ export default async function JobDetailPage({ params }: JobDetailPageProps) {
                 className="btn-primary !py-3 !px-6 text-xs flex items-center gap-2 shadow-md w-full sm:w-auto justify-center"
               >
                 <span>Candidatar-se Agora</span>
-                <ExternalLink className="w-4 h-4" />
+                <ExternalLinkIcon className="w-4 h-4" />
               </a>
             </div>
           )}
@@ -163,7 +163,7 @@ export default async function JobDetailPage({ params }: JobDetailPageProps) {
 
         <div className="pt-6 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-faint">
           <span className="flex items-center gap-1.5">
-            <Clock className="w-4 h-4 text-accent-text" />
+            <ClockIcon className="w-4 h-4 text-accent-text" />
             Vaga ativa na comunidade ManausDev
           </span>
           {job.link && (
@@ -181,4 +181,3 @@ export default async function JobDetailPage({ params }: JobDetailPageProps) {
     </div>
   );
 }
-

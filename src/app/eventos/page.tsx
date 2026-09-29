@@ -3,8 +3,8 @@
 import { useState, useEffect, useMemo, Suspense } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Calendar, MapPin, Search, ArrowRight } from 'lucide-react';
-import { MOCK_EVENTS } from '@/lib/data/mock-data';
+import { CalendarDaysIcon, MapPinIcon, SearchIcon, ArrowRightIcon } from '@/components/icons';
+import { MOCK_EVENTS } from '@/lib/data/mock';
 import { createClient } from '@/lib/supabase/client';
 import { formatDate } from '@/lib/utils';
 import type { EventItem } from '@/types/database';
@@ -73,7 +73,7 @@ function EventosContent() {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div className="mb-10 text-center sm:text-left">
         <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-accent/10 text-accent-text border border-accent/20 text-xs font-semibold mb-3">
-          <Calendar className="w-3.5 h-3.5" />
+          <CalendarDaysIcon className="w-3.5 h-3.5" />
           <span>Agenda & Hackathons</span>
         </div>
         <h1 className="font-display font-bold text-3xl sm:text-5xl text-ink tracking-tight">
@@ -87,7 +87,7 @@ function EventosContent() {
       {/* Filters */}
       <div className="manaus-card p-5 sm:p-6 mb-8 space-y-4">
         <div className="relative flex items-center">
-          <Search className="w-4 h-4 absolute left-3.5 text-faint pointer-events-none z-10" />
+          <SearchIcon className="w-4 h-4 absolute left-3.5 text-faint pointer-events-none z-10" />
           <input
             type="text"
             placeholder="Buscar por título, assunto ou local..."
@@ -144,7 +144,7 @@ function EventosContent() {
                   ) : (
                     <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-brand p-4 text-center relative overflow-hidden">
                       <div className="absolute inset-0 bio-texture opacity-20" />
-                      <Calendar className="w-10 h-10 text-neon/60 mb-2 relative z-10" />
+                      <CalendarDaysIcon className="w-10 h-10 text-neon/60 mb-2 relative z-10" />
                       <span className="font-display font-bold text-sm text-on-dark/90 relative z-10">
                         {ev.title}
                       </span>
@@ -173,7 +173,7 @@ function EventosContent() {
                   </p>
 
                   <div className="flex items-center gap-1.5 text-xs text-faint">
-                    <MapPin className="w-3.5 h-3.5 text-accent-text flex-shrink-0" />
+                    <MapPinIcon className="w-3.5 h-3.5 text-accent-text flex-shrink-0" />
                     <span className="font-medium text-muted">{ev.location}</span>
                   </div>
                 </div>
@@ -185,7 +185,7 @@ function EventosContent() {
                   className="btn-leaf text-xs !py-2 !px-4 flex items-center gap-1"
                 >
                   <span>Ver Detalhes</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
+                  <ArrowRightIcon className="w-3.5 h-3.5" />
                 </Link>
 
                 {ev.link && (
@@ -223,3 +223,4 @@ export default function EventosPage() {
     </Suspense>
   );
 }
+

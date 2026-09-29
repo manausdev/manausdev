@@ -4,18 +4,18 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import {
-  MapPin,
-  Globe,
-  ArrowLeft,
-  Briefcase,
-  Code2,
-  CalendarDays,
-  Clock,
-  UserX,
-} from 'lucide-react';
+  MapPinIcon,
+  GlobeIcon,
+  ArrowLeftIcon,
+  BriefcaseIcon,
+  Code2Icon,
+  CalendarDaysIcon,
+  ClockIcon,
+  UserXIcon,
+} from '@/components/icons';
 import { GithubIcon, LinkedinIcon } from '@/components/icons';
 import { createClient } from '@/lib/supabase/client';
-import { MOCK_DEVS, MOCK_PROJECTS, MOCK_EVENTS } from '@/lib/data/mock-data';
+import { MOCK_DEVS, MOCK_PROJECTS, MOCK_EVENTS } from '@/lib/data/mock';
 import { availabilityMeta, seniorityLabel } from '@/lib/devs-meta';
 import type { Profile, Project, EventItem } from '@/types/database';
 
@@ -126,14 +126,14 @@ export default function DevProfileClient() {
     return (
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="manaus-card p-10 border border-border text-center">
-          <UserX className="w-10 h-10 text-faint mx-auto mb-4" />
+          <UserXIcon className="w-10 h-10 text-faint mx-auto mb-4" />
           <h1 className="font-display font-bold text-xl text-ink">Dev não encontrado</h1>
           <p className="text-sm text-muted mt-2">
             O perfil <span className="font-mono text-accent-text">@{username}</span> não existe ou
             foi removido do diretório.
           </p>
           <Link href="/devs" className="btn-primary inline-flex items-center gap-2 text-xs !py-2.5 !px-5 mt-6">
-            <ArrowLeft className="w-4 h-4" />
+            <ArrowLeftIcon className="w-4 h-4" />
             Voltar para o diretório
           </Link>
         </div>
@@ -148,7 +148,7 @@ export default function DevProfileClient() {
         href="/devs"
         className="inline-flex items-center gap-2 text-xs font-semibold text-accent-text hover:text-ink transition-colors mb-8"
       >
-        <ArrowLeft className="w-4 h-4" />
+        <ArrowLeftIcon className="w-4 h-4" />
         Voltar para o diretório de desenvolvedores
       </Link>
 
@@ -210,7 +210,7 @@ export default function DevProfileClient() {
                 rel="noreferrer"
                 className="btn-primary !py-2.5 !px-4 text-xs flex-1 sm:flex-initial justify-center"
               >
-                <Globe className="w-4 h-4" />
+                <GlobeIcon className="w-4 h-4" />
                 <span>Website</span>
               </a>
             )}
@@ -255,23 +255,23 @@ export default function DevProfileClient() {
 
           <div className="flex flex-wrap gap-6 pt-4 border-t border-border text-xs text-faint">
             <span className="flex items-center gap-1.5 font-mono">
-              <MapPin className="w-4 h-4 text-accent-text" />
+              <MapPinIcon className="w-4 h-4 text-accent-text" />
               {dev.city || dev.location || 'Manaus-AM'}
             </span>
             <span className="flex items-center gap-1.5 font-mono">
-              <Briefcase className="w-4 h-4 text-accent-text" />
+              <BriefcaseIcon className="w-4 h-4 text-accent-text" />
               {dev.role || 'Engenheiro de Software'}
             </span>
             <span className="flex items-center gap-1.5 font-mono">
-              <Code2 className="w-4 h-4 text-accent-text" />
+              <Code2Icon className="w-4 h-4 text-accent-text" />
               {devProjects.length} {devProjects.length === 1 ? 'projeto' : 'projetos'}
             </span>
             <span className="flex items-center gap-1.5 font-mono">
-              <CalendarDays className="w-4 h-4 text-accent-text" />
+              <CalendarDaysIcon className="w-4 h-4 text-accent-text" />
               {devEvents.length} {devEvents.length === 1 ? 'evento organizado' : 'eventos organizados'}
             </span>
             <span className="flex items-center gap-1.5 font-mono">
-              <Clock className="w-4 h-4 text-accent-text" />
+              <ClockIcon className="w-4 h-4 text-accent-text" />
               Membro desde {formatMemberSince(dev.created_at)}
             </span>
           </div>
@@ -282,7 +282,7 @@ export default function DevProfileClient() {
       {devProjects.length > 0 && (
         <div className="mt-10">
           <div className="flex items-center gap-2 mb-6">
-            <Code2 className="w-5 h-5 text-accent-text" />
+            <Code2Icon className="w-5 h-5 text-accent-text" />
             <h2 className="font-display font-bold text-xl text-ink">Projetos Publicados</h2>
           </div>
 
@@ -316,7 +316,7 @@ export default function DevProfileClient() {
       {devEvents.length > 0 && (
         <div className="mt-10">
           <div className="flex items-center gap-2 mb-6">
-            <CalendarDays className="w-5 h-5 text-accent-text" />
+            <CalendarDaysIcon className="w-5 h-5 text-accent-text" />
             <h2 className="font-display font-bold text-xl text-ink">Eventos Organizados</h2>
           </div>
 

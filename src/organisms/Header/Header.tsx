@@ -7,27 +7,27 @@ import { createClient } from '@/lib/supabase/client';
 import { ThemeToggle } from '@/organisms/ThemeToggle/ThemeToggle';
 import { User } from '@supabase/supabase-js';
 import {
-  Users,
-  Code2,
-  Briefcase,
-  Sparkles,
-  Menu,
-  X,
-  Calendar,
-  Building2,
-  LogOut,
-  LayoutDashboard,
-} from 'lucide-react';
+  UsersIcon,
+  Code2Icon,
+  BriefcaseIcon,
+  SparklesIcon,
+  MenuIcon,
+  XIcon,
+  CalendarDaysIcon,
+  Building2Icon,
+  LogOutIcon,
+  LayoutDashboardIcon,
+} from '@/components/icons';
 import { cn } from '@/lib/utils';
 import styles from './Header.module.css';
 
 const NAV_LINKS = [
-  { href: '/devs', label: 'Desenvolvedores', icon: Users },
-  { href: '/projetos', label: 'Projetos', icon: Code2 },
-  { href: '/vagas', label: 'Vagas', icon: Briefcase },
-  { href: '/comunidades', label: 'Comunidades', icon: Sparkles },
-  { href: '/eventos', label: 'Eventos', icon: Calendar },
-  { href: '/empresas', label: 'Empresas', icon: Building2 },
+  { href: '/devs', label: 'Desenvolvedores', icon: UsersIcon },
+  { href: '/projetos', label: 'Projetos', icon: Code2Icon },
+  { href: '/vagas', label: 'Vagas', icon: BriefcaseIcon },
+  { href: '/comunidades', label: 'Comunidades', icon: SparklesIcon },
+  { href: '/eventos', label: 'Eventos', icon: CalendarDaysIcon },
+  { href: '/empresas', label: 'Empresas', icon: Building2Icon },
 ];
 
 export function Header() {
@@ -104,7 +104,7 @@ export function Header() {
           ) : user ? (
             <div className={styles.authUser}>
               <Link href="/dashboard" className={styles.painelBtn}>
-                <LayoutDashboard className="w-3.5 h-3.5" />
+                <LayoutDashboardIcon className="w-3.5 h-3.5" />
                 <span>Painel</span>
               </Link>
               <button
@@ -113,7 +113,7 @@ export function Header() {
                 aria-label="Sair da conta"
                 className={styles.signOut}
               >
-                <LogOut className="w-4 h-4" />
+                <LogOutIcon className="w-4 h-4" />
               </button>
             </div>
           ) : (
@@ -136,7 +136,7 @@ export function Header() {
             aria-label="Abrir menu"
             aria-expanded={mobileMenuOpen}
           >
-            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {mobileMenuOpen ? <XIcon className="w-6 h-6" /> : <MenuIcon className="w-6 h-6" />}
           </button>
         </div>
       </div>
@@ -165,7 +165,7 @@ export function Header() {
                   onClick={() => setMobileMenuOpen(false)}
                   className={styles.mobileBtnLeaf}
                 >
-                  <LayoutDashboard className="w-4 h-4" />
+                  <LayoutDashboardIcon className="w-4 h-4" />
                   Meu Painel
                 </Link>
                 <button

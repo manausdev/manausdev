@@ -1,14 +1,14 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { 
-  ArrowLeft, 
-  Sparkles, 
-  Users, 
-  MessageSquare, 
-  ExternalLink 
-} from 'lucide-react';
+  ArrowLeftIcon, 
+  SparklesIcon, 
+  UsersIcon, 
+  MessageSquareIcon, 
+  ExternalLinkIcon 
+} from '@/components/icons';
 import { createClient } from '@/lib/supabase/server';
-import { MOCK_COMMUNITIES } from '@/lib/data/mock-data';
+import { MOCK_COMMUNITIES } from '@/lib/data/mock';
 import type { Community } from '@/types/database';
 
 export async function generateStaticParams() {
@@ -52,7 +52,7 @@ export default async function CommunityDetailPage({ params }: CommunityDetailPag
         href="/comunidades"
         className="inline-flex items-center gap-2 text-xs font-semibold text-accent-text hover:text-ink transition-colors mb-8"
       >
-        <ArrowLeft className="w-4 h-4" />
+        <ArrowLeftIcon className="w-4 h-4" />
         Voltar para a lista de comunidades
       </Link>
 
@@ -66,12 +66,12 @@ export default async function CommunityDetailPage({ params }: CommunityDetailPag
             />
           ) : (
             <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-brand p-4 text-center">
-              <Sparkles className="w-16 h-16 text-neon/60 mb-2" />
+              <SparklesIcon className="w-16 h-16 text-neon/60 mb-2" />
             </div>
           )}
           <div className="absolute top-4 right-4 z-10">
             <span className="bg-deep/90 backdrop-blur-md text-neon text-xs font-mono px-3 py-1.5 rounded-full border border-neon/30 font-semibold shadow-md flex items-center gap-1.5">
-              <Users className="w-3.5 h-3.5 text-neon" />
+              <UsersIcon className="w-3.5 h-3.5 text-neon" />
               {community.members_count}+ membros
             </span>
           </div>
@@ -110,9 +110,9 @@ export default async function CommunityDetailPage({ params }: CommunityDetailPag
                     rel="noreferrer"
                     className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-surface-1 hover:bg-accent/10 text-ink hover:text-accent-text border border-border hover:border-accent/30 transition-all font-semibold text-xs capitalize"
                   >
-                    <MessageSquare className="w-4 h-4 text-accent-text" />
+                    <MessageSquareIcon className="w-4 h-4 text-accent-text" />
                     <span>Entrar no {key}</span>
-                    <ExternalLink className="w-3.5 h-3.5 opacity-60" />
+                    <ExternalLinkIcon className="w-3.5 h-3.5 opacity-60" />
                   </a>
                 ))}
               </div>
@@ -123,4 +123,3 @@ export default async function CommunityDetailPage({ params }: CommunityDetailPag
     </div>
   );
 }
-

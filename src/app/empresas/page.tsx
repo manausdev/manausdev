@@ -3,8 +3,8 @@
 import { useState, useEffect, useMemo, Suspense } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Building2, Globe, MapPin, Users, Search, ArrowRight } from 'lucide-react';
-import { MOCK_COMPANIES } from '@/lib/data/mock-data';
+import { Building2Icon, GlobeIcon, MapPinIcon, UsersIcon, SearchIcon, ArrowRightIcon } from '@/components/icons';
+import { MOCK_COMPANIES } from '@/lib/data/mock';
 import { createClient } from '@/lib/supabase/client';
 import type { Company } from '@/types/database';
 
@@ -72,7 +72,7 @@ function EmpresasContent() {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div className="mb-10 text-center sm:text-left">
         <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-deep/10 text-accent-text border border-deep/20 text-xs font-semibold mb-3">
-          <Building2 className="w-3.5 h-3.5" />
+          <Building2Icon className="w-3.5 h-3.5" />
           <span>Polo Tecnológico & Institutos</span>
         </div>
         <h1 className="font-display font-bold text-3xl sm:text-5xl text-ink tracking-tight">
@@ -86,7 +86,7 @@ function EmpresasContent() {
       {/* Filters */}
       <div className="manaus-card p-5 sm:p-6 mb-8 space-y-4">
         <div className="relative flex items-center">
-          <Search className="w-4 h-4 absolute left-3.5 text-faint pointer-events-none z-10" />
+          <SearchIcon className="w-4 h-4 absolute left-3.5 text-faint pointer-events-none z-10" />
           <input
             type="text"
             placeholder="Buscar por nome, setor ou descrição..."
@@ -143,7 +143,7 @@ function EmpresasContent() {
                   ) : (
                     <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-brand p-4 text-center relative overflow-hidden">
                       <div className="absolute inset-0 bio-texture opacity-20" />
-                      <Building2 className="w-10 h-10 text-neon/60 mb-2 relative z-10" />
+                      <Building2Icon className="w-10 h-10 text-neon/60 mb-2 relative z-10" />
                       <span className="font-display font-bold text-sm text-on-dark/90 relative z-10">
                         {comp.name}
                       </span>
@@ -152,7 +152,7 @@ function EmpresasContent() {
                   {comp.size && (
                     <div className="absolute top-3 right-3 z-10">
                       <span className="bg-deep/90 backdrop-blur-md text-neon text-[10px] font-mono px-2.5 py-1 rounded-full border border-neon/30 font-semibold shadow-sm flex items-center gap-1">
-                        <Users className="w-3 h-3 text-neon" />
+                        <UsersIcon className="w-3 h-3 text-neon" />
                         {comp.size}
                       </span>
                     </div>
@@ -193,7 +193,7 @@ function EmpresasContent() {
 
               <div className="px-5 pb-5 sm:px-6 sm:pb-6 pt-3 border-t border-border/70 flex items-center justify-between text-xs text-faint mt-auto">
                 <span className="flex items-center gap-1 font-mono text-[11px]">
-                  <MapPin className="w-3.5 h-3.5 text-accent-text" />
+                  <MapPinIcon className="w-3.5 h-3.5 text-accent-text" />
                   {comp.location || 'Manaus-AM'}
                 </span>
                 <div className="flex items-center gap-2">
@@ -202,7 +202,7 @@ function EmpresasContent() {
                     className="text-xs font-semibold text-accent-text hover:underline flex items-center gap-1"
                   >
                     <span>Ver Perfil</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
+                    <ArrowRightIcon className="w-3.5 h-3.5" />
                   </Link>
                 </div>
               </div>
@@ -230,3 +230,4 @@ export default function EmpresasPage() {
     </Suspense>
   );
 }
+

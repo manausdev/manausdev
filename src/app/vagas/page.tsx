@@ -3,8 +3,8 @@
 import { useState, useEffect, useMemo, Suspense } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Briefcase, MapPin, Search, DollarSign, ExternalLink, Building, ArrowRight } from 'lucide-react';
-import { MOCK_JOBS } from '@/lib/data/mock-data';
+import { BriefcaseIcon, MapPinIcon, SearchIcon, DollarSignIcon, ExternalLinkIcon, BuildingIcon, ArrowRightIcon } from '@/components/icons';
+import { MOCK_JOBS } from '@/lib/data/mock';
 import { createClient } from '@/lib/supabase/client';
 import type { Job } from '@/types/database';
 
@@ -82,7 +82,7 @@ function VagasContent() {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div className="mb-10 text-center sm:text-left">
         <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-deep/10 text-accent-text border border-deep/20 text-xs font-semibold mb-3">
-          <Briefcase className="w-3.5 h-3.5" />
+          <BriefcaseIcon className="w-3.5 h-3.5" />
           <span>Mural de Carreiras</span>
         </div>
         <h1 className="font-display font-bold text-3xl sm:text-5xl text-ink tracking-tight">
@@ -97,7 +97,7 @@ function VagasContent() {
       <div className="manaus-card p-5 sm:p-6 mb-8 space-y-4">
         <div className="flex flex-col sm:flex-row gap-4">
           <div className="relative flex-1 flex items-center">
-            <Search className="w-4 h-4 absolute left-3.5 text-faint pointer-events-none z-10" />
+            <SearchIcon className="w-4 h-4 absolute left-3.5 text-faint pointer-events-none z-10" />
             <input
               type="text"
               placeholder="Buscar por cargo, especialidade ou empresa..."
@@ -176,16 +176,16 @@ function VagasContent() {
 
                 <div className="flex flex-wrap items-center gap-4 text-xs text-faint">
                   <span className="flex items-center gap-1.5 font-medium">
-                    <Building className="w-3.5 h-3.5 text-accent-text" />
+                    <BuildingIcon className="w-3.5 h-3.5 text-accent-text" />
                     {job.company_name || 'Empresa Parceira'}
                   </span>
                   <span className="flex items-center gap-1.5">
-                    <MapPin className="w-3.5 h-3.5 text-accent-text" />
+                    <MapPinIcon className="w-3.5 h-3.5 text-accent-text" />
                     {job.location || 'Manaus-AM'}
                   </span>
                   {job.salary && (
                     <span className="flex items-center gap-1.5 font-semibold text-accent-text">
-                      <DollarSign className="w-3.5 h-3.5" />
+                      <DollarSignIcon className="w-3.5 h-3.5" />
                       {job.salary}
                     </span>
                   )}
@@ -214,7 +214,7 @@ function VagasContent() {
                   className="btn-leaf text-xs !py-2 !px-4 flex items-center gap-1"
                 >
                   <span>Ver Detalhes</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
+                  <ArrowRightIcon className="w-3.5 h-3.5" />
                 </Link>
                 {job.link && (
                   <a
@@ -224,7 +224,7 @@ function VagasContent() {
                     className="btn-primary text-xs !py-2 !px-4 flex items-center gap-1"
                   >
                     <span>Candidatar</span>
-                    <ExternalLink className="w-3.5 h-3.5" />
+                    <ExternalLinkIcon className="w-3.5 h-3.5" />
                   </a>
                 )}
               </div>
@@ -252,3 +252,4 @@ export default function VagasPage() {
     </Suspense>
   );
 }
+

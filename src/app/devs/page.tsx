@@ -5,24 +5,22 @@ import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Suspense } from 'react';
 import {
-  Search,
-  MapPin,
-  Users,
-  ArrowRight,
-  Code2,
-  CalendarDays,
-  ChevronLeft,
-  ChevronRight,
-  X,
-} from 'lucide-react';
+  SearchIcon,
+  MapPinIcon,
+  UsersIcon,
+  ArrowRightIcon,
+  Code2Icon,
+  CalendarDaysIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  XIcon,
+} from '@/components/icons';
 import { GithubIcon } from '@/components/icons';
 import { createClient } from '@/lib/supabase/client';
+import { cn } from '@/lib/utils';
+import { ListingGrid } from '@/organisms/ListingGrid/ListingGrid';
 import {
   MOCK_DEVS,
-  MOCK_PROJECTS,
-  MOCK_EVENTS,
-  getMockProjectsByAuthor,
-  getMockEventsByOrganizer,
   getMockDevStats,
 } from '@/lib/data/mock';
 import {
@@ -32,7 +30,8 @@ import {
   SORT_OPTIONS,
 } from '@/lib/devs-meta';
 import { useMockData } from '@/lib/env';
-import type { Profile, Project, EventItem } from '@/types/database';
+import type { Profile } from '@/types/database';
+import styles from './devs.module.css';
 
 const PAGE_SIZE = 24;
 
@@ -310,48 +309,44 @@ function DevsDirectory() {
   const rangeEnd = Math.min(page * PAGE_SIZE, total);
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <div className="mb-8">
-        <div className="flex flex-wrap items-center gap-3">
-          <h1 className="font-display font-bold text-3xl sm:text-4xl text-ink">Diretório de Devs</h1>
-          <span className="chip-river !text-[11px] font-mono font-semibold flex items-center gap-1.5">
-            <Users className="w-3.5 h-3.5" />
+    <div className={styles.container}>
+      <div className={styles.header}>
+        <div className={styles.titleRow}>
+          <h1 className={styles.title}>Diretório de Devs</h1>
+          <span className={cn('chip-river', styles.countChip)}>
+            <UsersIcon />
             {total} {total === 1 ? 'desenvolvedor' : 'desenvolvedores'}
           </span>
-          {useMock && (
-            <span className="!text-[10px] font-mono px-2 py-0.5 rounded-full bg-surface-1 text-faint">
-              modo demonstração
-            </span>
-          )}
+          {useMock && <span className={styles.mockBadge}>modo demonstração</span>}
         </div>
-        <p className="text-sm text-muted mt-2 max-w-2xl">
+        <p className={styles.subtitle}>
           Encontre talentos de Manaus e região por cidade, stack e disponibilidade — e veja o que cada dev construiu na comunidade.
         </p>
       </div>
 
-      <div className="manaus-card border border-border p-4 sm:p-5 mb-8 space-y-4">
+      <div className={cn('manaus-card', styles.filters)}>
         <form
           onSubmit={(e) => {
             e.preventDefault();
             updateFilters({ q: inputValue });
           }}
-          className="flex flex-col sm:flex-row gap-3"
+          className={styles.searchForm}
         >
-          <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-faint" />
+          <div className={styles.searchWrap}>
+            <SearchIcon className={styles.searchIcon} />
             <input
               type="text"
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               placeholder="Buscar por nome, @username, cargo ou bio..."
-              className="manaus-input pl-10"
+              className={cn('manaus-input', styles.searchInput)}
             />
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+          <div className={styles.selectsGrid}>
             <select
               value={cityFilter}
               onChange={(e) => updateFilters({ cidade: e.target.value })}
-              className="manaus-input !py-2 text-xs"
+              className={cn('manaus-input', styles.select)}
               aria-label="Filtrar por cidade"
             >
               <option value="">Todas as cidades</option>
@@ -364,7 +359,7 @@ function DevsDirectory() {
             <select
               value={availabilityParam}
               onChange={(e) => updateFilters({ disponibilidade: e.target.value })}
-              className="manaus-input !py-2 text-xs"
+              className={cn('manaus-input', styles.select)}
               aria-label="Filtrar por disponibilidade"
             >
               <option value="">Disponibilidade</option>
@@ -377,7 +372,7 @@ function DevsDirectory() {
             <select
               value={seniorityFilter}
               onChange={(e) => updateFilters({ senioridade: e.target.value })}
-              className="manaus-input !py-2 text-xs"
+              className={cn('manaus-input', styles.select)}
               aria-label="Filtrar por senioridade"
             >
               <option value="">Senioridade</option>
@@ -390,7 +385,7 @@ function DevsDirectory() {
             <select
               value={sortOption}
               onChange={(e) => updateFilters({ sort: e.target.value })}
-              className="manaus-input !py-2 text-xs"
+              className={cn('manaus-input', styles.select)}
               aria-label="Ordenar resultados"
             >
               {SORT_OPTIONS.map((s) => (
@@ -403,7 +398,7 @@ function DevsDirectory() {
         </form>
 
         {skillFacets.length > 0 && (
-          <div className="flex flex-wrap items-center gap-2">
+          <div className={styles.facets}>
             {skillFacets.map(({ skill, count }) => {
               const active = selectedStacks.includes(skill);
               return (
@@ -411,14 +406,10 @@ function DevsDirectory() {
                   key={skill}
                   type="button"
                   onClick={() => toggleStack(skill)}
-                  className={`!text-[11px] font-mono font-semibold px-2.5 py-1 rounded-full transition-colors ${
-                    active
-                      ? 'chip-leaf'
-                      : 'border border-border text-muted hover:border-accent/40 hover:text-ink'
-                  }`}
+                  className={cn(styles.facetBtn, active && styles.facetBtnActive)}
                 >
                   {skill}
-                  <span className="ml-1 opacity-60">{count}</span>
+                  <span className={styles.facetCount}>{count}</span>
                 </button>
               );
             })}
@@ -426,16 +417,16 @@ function DevsDirectory() {
         )}
 
         {hasActiveFilters && (
-          <div className="flex items-center justify-between border-t border-border pt-3">
-            <p className="text-[11px] font-mono text-faint">
+          <div className={styles.activeBar}>
+            <p className={styles.rangeText}>
               Mostrando {rangeStart}-{rangeEnd} de {total}
             </p>
             <button
               type="button"
               onClick={() => router.replace('/devs', { scroll: false })}
-              className="flex items-center gap-1 text-[11px] font-mono font-semibold text-accent-text hover:underline"
+              className={styles.clearBtn}
             >
-              <X className="w-3.5 h-3.5" />
+              <XIcon />
               Limpar filtros
             </button>
           </div>
@@ -443,44 +434,44 @@ function DevsDirectory() {
       </div>
 
       {loading ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+        <ListingGrid variant="cardsWide">
           {Array.from({ length: 6 }).map((_, i) => (
-            <div key={i} className="manaus-card border border-border p-5 h-64 animate-pulse">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-12 h-12 rounded-full bg-surface-2" />
-                <div className="space-y-2">
-                  <div className="h-3.5 w-32 rounded bg-surface-2" />
-                  <div className="h-2.5 w-20 rounded bg-surface-2" />
+            <div key={i} className={cn('manaus-card', styles.skeletonCard)}>
+              <div className={styles.skelRow}>
+                <div className={styles.skelAvatar} />
+                <div className={styles.skelLines}>
+                  <div className={cn(styles.skelLine, styles.skelLineA)} />
+                  <div className={cn(styles.skelLine, styles.skelLineB)} />
                 </div>
               </div>
-              <div className="h-3 w-full rounded bg-surface-2 mb-2" />
-              <div className="h-3 w-2/3 rounded bg-surface-2 mb-4" />
-              <div className="flex gap-1.5">
-                <div className="h-5 w-14 rounded-full bg-surface-2" />
-                <div className="h-5 w-16 rounded-full bg-surface-2" />
-                <div className="h-5 w-12 rounded-full bg-surface-2" />
+              <div className={cn(styles.skelLine, styles.skelLineC)} />
+              <div className={cn(styles.skelLine, styles.skelLineD)} />
+              <div className={styles.skelChips}>
+                <div className={cn(styles.skelChip, styles.skelChipA)} />
+                <div className={cn(styles.skelChip, styles.skelChipB)} />
+                <div className={cn(styles.skelChip, styles.skelChipC)} />
               </div>
             </div>
           ))}
-        </div>
+        </ListingGrid>
       ) : devs.length === 0 ? (
-        <div className="manaus-card border border-border p-12 text-center">
-          <Users className="w-10 h-10 text-faint mx-auto mb-4" />
-          <h3 className="font-display font-bold text-lg text-ink mb-1">Nenhum dev encontrado</h3>
-          <p className="text-sm text-muted mb-6">
+        <div className={cn('manaus-card', styles.emptyCard)}>
+          <UsersIcon className={styles.emptyIcon} />
+          <h3 className={styles.emptyTitle}>Nenhum dev encontrado</h3>
+          <p className={styles.emptyText}>
             Tente remover alguns filtros ou buscar por outra tecnologia.
           </p>
           <button
             type="button"
             onClick={() => router.replace('/devs', { scroll: false })}
-            className="btn-primary !py-2.5 !px-5 text-xs"
+            className={cn('btn-primary', styles.emptyBtn)}
           >
             Limpar filtros
           </button>
         </div>
       ) : (
         <>
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+          <ListingGrid variant="cardsWide">
             {devs.map((dev) => {
               const availability = AVAILABILITY_META[dev.availability ?? 'open'] ?? AVAILABILITY_META.open;
               const skills = dev.skills ?? [];
@@ -489,72 +480,70 @@ function DevsDirectory() {
                 <Link
                   key={dev.id}
                   href={`/devs/${dev.username}`}
-                  className="manaus-card border border-border p-5 flex flex-col gap-3 group hover:border-accent/40 transition-colors"
+                  className={cn('manaus-card', styles.card)}
                 >
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="flex items-center gap-3 min-w-0">
-                      <div className="w-12 h-12 rounded-full bg-deep text-white flex items-center justify-center font-display font-bold text-lg border-2 border-border shrink-0 overflow-hidden">
+                  <div className={styles.cardTop}>
+                    <div className={styles.cardIdRow}>
+                      <div className={styles.avatar}>
                         {dev.avatar_url ? (
                           <img
                             src={dev.avatar_url}
                             alt={dev.full_name}
-                            className="w-full h-full rounded-full object-cover"
+                            className={styles.avatarImg}
                           />
                         ) : (
                           dev.full_name.charAt(0)
                         )}
                       </div>
-                      <div className="min-w-0">
-                        <h3 className="font-display font-bold text-ink truncate group-hover:text-accent-text transition-colors">
-                          {dev.full_name}
-                        </h3>
-                        <p className="text-xs text-muted truncate">@{dev.username}</p>
+                      <div className={styles.idBlock}>
+                        <h3 className={styles.devName}>{dev.full_name}</h3>
+                        <p className={styles.devUsername}>@{dev.username}</p>
                       </div>
                     </div>
-                    <span className={`${availability.className} flex items-center gap-1.5 shrink-0`}>
-                      <span className={`w-1.5 h-1.5 rounded-full ${availability.dot}`} />
+                    <span className={cn(availability.className, styles.availability)}>
+                      <span className={cn(availability.dot, styles.dot)} />
                       {availability.label}
                     </span>
                   </div>
 
-                  <p className="text-xs text-muted font-medium">
+                  <p className={styles.devRole}>
                     {dev.role || 'Developer'}
                     {dev.seniority ? ` · ${SENIORITY_LABELS[dev.seniority] ?? dev.seniority}` : ''}
                   </p>
 
-                  {dev.bio && <p className="text-xs text-faint line-clamp-2">{dev.bio}</p>}
+                  {dev.bio && <p className={styles.devBio}>{dev.bio}</p>}
 
-                  <div className="flex flex-wrap gap-1.5">
+                  <div className={styles.skills}>
                     {skills.slice(0, 3).map((skill) => (
-                      <span key={skill} className="chip-river !text-[10px] font-mono">
+                      <span key={skill} className={cn('chip-river', styles.skillChip)}>
                         {skill}
                       </span>
                     ))}
                     {extraSkills > 0 && (
-                      <span className="text-[10px] font-mono text-faint self-center">+{extraSkills} mais</span>
+                      <span className={styles.extraSkills}>+{extraSkills} mais</span>
                     )}
                   </div>
 
-                  <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] font-mono text-faint border-t border-border pt-3 mt-auto">
-                    <span className="flex items-center gap-1">
-                      <MapPin className="w-3 h-3 text-accent-text" />
+                  <div className={styles.cardMeta}>
+                    <span className={styles.metaItem}>
+                      <MapPinIcon />
                       {dev.city || 'Manaus'}
                     </span>
-                    <span className="flex items-center gap-1">
-                      <Code2 className="w-3 h-3 text-accent-text" />
+                    <span className={styles.metaItem}>
+                      <Code2Icon />
                       {dev.projects_count} {dev.projects_count === 1 ? 'projeto' : 'projetos'}
                     </span>
-                    <span className="flex items-center gap-1">
-                      <CalendarDays className="w-3 h-3 text-accent-text" />
+                    <span className={styles.metaItem}>
+                      <CalendarDaysIcon />
                       {dev.events_count} {dev.events_count === 1 ? 'evento' : 'eventos'}
                     </span>
                   </div>
 
-                  <div className="flex items-center justify-between">
-                    <span className="text-[10px] font-mono text-faint">
+                  <div className={styles.cardFooter}>
+                    <span className={styles.memberSince}>
                       Membro desde {formatMemberSince(dev.created_at)}
                     </span>
-                    <div className="flex items-center gap-2.5">
+                    <div className={styles.footerActions}>
                       {dev.github && (
                         <span
                           role="link"
@@ -563,44 +552,44 @@ function DevsDirectory() {
                             e.preventDefault();
                             window.open(dev.github!, '_blank', 'noreferrer');
                           }}
-                          className="text-faint hover:text-ink transition-colors"
+                          className={styles.githubLink}
                         >
-                          <GithubIcon className="w-4 h-4" />
+                          <GithubIcon />
                         </span>
                       )}
-                      <span className="text-xs font-semibold text-accent-text flex items-center gap-1">
+                      <span className={styles.profileLink}>
                         Perfil
-                        <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+                        <ArrowRightIcon />
                       </span>
                     </div>
                   </div>
                 </Link>
               );
             })}
-          </div>
+          </ListingGrid>
 
           {totalPages > 1 && (
-            <div className="flex items-center justify-center gap-4 mt-10">
+            <div className={styles.pagination}>
               <button
                 type="button"
                 disabled={page <= 1}
                 onClick={() => goToPage(page - 1)}
-                className="btn-secondary !py-2 !px-3 text-xs disabled:opacity-40 disabled:cursor-not-allowed"
+                className={cn('btn-secondary', styles.pageBtn)}
                 aria-label="Página anterior"
               >
-                <ChevronLeft className="w-4 h-4" />
+                <ChevronLeftIcon />
               </button>
-              <span className="text-xs font-mono text-muted">
+              <span className={styles.pageInfo}>
                 Página {page} de {totalPages}
               </span>
               <button
                 type="button"
                 disabled={page >= totalPages}
                 onClick={() => goToPage(page + 1)}
-                className="btn-secondary !py-2 !px-3 text-xs disabled:opacity-40 disabled:cursor-not-allowed"
+                className={cn('btn-secondary', styles.pageBtn)}
                 aria-label="Próxima página"
               >
-                <ChevronRight className="w-4 h-4" />
+                <ChevronRightIcon />
               </button>
             </div>
           )}
@@ -614,13 +603,13 @@ export default function DevsPage() {
   return (
     <Suspense
       fallback={
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="h-10 w-64 rounded bg-surface-2 animate-pulse mb-8" />
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+        <div className={styles.container}>
+          <div className={styles.fallbackTitle} />
+          <ListingGrid variant="cardsWide">
             {Array.from({ length: 6 }).map((_, i) => (
-              <div key={i} className="manaus-card border border-border p-5 h-64 animate-pulse" />
+              <div key={i} className={cn('manaus-card', styles.skeletonCard)} />
             ))}
-          </div>
+          </ListingGrid>
         </div>
       }
     >

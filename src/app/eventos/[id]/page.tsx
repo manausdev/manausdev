@@ -1,16 +1,16 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { 
-  ArrowLeft, 
-  Calendar, 
-  MapPin, 
-  ExternalLink, 
-  Clock, 
-  Share2, 
-  Sparkles 
-} from 'lucide-react';
+  ArrowLeftIcon, 
+  CalendarDaysIcon, 
+  MapPinIcon, 
+  ExternalLinkIcon, 
+  ClockIcon, 
+  Share2Icon, 
+  SparklesIcon 
+} from '@/components/icons';
 import { createClient } from '@/lib/supabase/server';
-import { MOCK_EVENTS } from '@/lib/data/mock-data';
+import { MOCK_EVENTS } from '@/lib/data/mock';
 import { formatDate } from '@/lib/utils';
 import type { EventItem } from '@/types/database';
 
@@ -55,7 +55,7 @@ export default async function EventDetailPage({ params }: EventDetailPageProps) 
         href="/eventos"
         className="inline-flex items-center gap-2 text-xs font-semibold text-accent-text hover:text-ink transition-colors mb-8"
       >
-        <ArrowLeft className="w-4 h-4" />
+        <ArrowLeftIcon className="w-4 h-4" />
         Voltar para a agenda de eventos
       </Link>
 
@@ -69,7 +69,7 @@ export default async function EventDetailPage({ params }: EventDetailPageProps) 
             />
           ) : (
             <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-brand p-4 text-center">
-              <Calendar className="w-16 h-16 text-neon/60 mb-2" />
+              <CalendarDaysIcon className="w-16 h-16 text-neon/60 mb-2" />
             </div>
           )}
           <div className="absolute top-4 left-4 z-10">
@@ -89,7 +89,7 @@ export default async function EventDetailPage({ params }: EventDetailPageProps) 
                 {event.title}
               </h1>
               <div className="flex items-center gap-1.5 text-xs sm:text-sm text-muted mt-2">
-                <MapPin className="w-4 h-4 text-accent-text flex-shrink-0" />
+                <MapPinIcon className="w-4 h-4 text-accent-text flex-shrink-0" />
                 <span>{event.location}</span>
               </div>
             </div>
@@ -103,7 +103,7 @@ export default async function EventDetailPage({ params }: EventDetailPageProps) 
                   className="btn-leaf !py-3 !px-6 text-xs flex items-center gap-2 shadow-md w-full sm:w-auto justify-center"
                 >
                   <span>Garantir Inscrição</span>
-                  <ExternalLink className="w-4 h-4" />
+                  <ExternalLinkIcon className="w-4 h-4" />
                 </a>
               </div>
             )}
@@ -111,7 +111,7 @@ export default async function EventDetailPage({ params }: EventDetailPageProps) 
 
           <div>
             <h2 className="text-xs font-mono uppercase tracking-wider text-faint font-semibold mb-3 flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-accent-text" />
+              <SparklesIcon className="w-4 h-4 text-accent-text" />
               Sobre o Evento
             </h2>
             <p className="text-sm sm:text-base text-ink leading-relaxed whitespace-pre-line max-w-3xl">
@@ -140,4 +140,3 @@ export default async function EventDetailPage({ params }: EventDetailPageProps) 
     </div>
   );
 }
-

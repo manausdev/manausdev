@@ -6,16 +6,16 @@ import { createClient } from '@/lib/supabase/client';
 import { AVAILABILITY_FILTERS } from '@/lib/devs-meta';
 import { User } from '@supabase/supabase-js';
 import { 
-  UserCircle2, 
-  Code2, 
-  Plus, 
-  Save, 
-  CheckCircle2, 
-  AlertCircle, 
-  Trash2,
-  Edit3,
-  ExternalLink
-} from 'lucide-react';
+  UserCircle2Icon, 
+  Code2Icon, 
+  PlusIcon, 
+  SaveIcon, 
+  CheckCircle2Icon, 
+  AlertCircleIcon, 
+  Trash2Icon,
+  Edit3Icon,
+  ExternalLinkIcon
+} from '@/components/icons';
 import type { Profile, Project, Database, ProjectLinks } from '@/types/database';
 
 export default function DashboardPage() {
@@ -289,21 +289,21 @@ export default function DashboardPage() {
           onClick={openAddProjectModal}
           className="btn-leaf text-xs"
         >
-          <Plus className="w-4 h-4" />
+          <PlusIcon className="w-4 h-4" />
           Publicar Projeto
         </button>
       </div>
 
       {successMsg && (
         <div className="mb-6 p-4 rounded-xl bg-success-soft border border-success/30 text-success-text text-xs flex items-center gap-2 font-medium">
-          <CheckCircle2 className="w-4 h-4 flex-shrink-0 text-accent-text" />
+          <CheckCircle2Icon className="w-4 h-4 flex-shrink-0 text-accent-text" />
           <span>{successMsg}</span>
         </div>
       )}
 
       {errorMsg && (
         <div className="mb-6 p-4 rounded-xl bg-danger-soft border border-danger/30 text-danger-text text-xs flex items-center gap-2">
-          <AlertCircle className="w-4 h-4 flex-shrink-0 text-danger" />
+          <AlertCircleIcon className="w-4 h-4 flex-shrink-0 text-danger" />
           <span>{errorMsg}</span>
         </div>
       )}
@@ -313,7 +313,7 @@ export default function DashboardPage() {
         <div className="lg:col-span-2">
           <div className="manaus-card p-6 sm:p-8">
             <div className="flex items-center gap-2.5 mb-6 pb-4 border-b border-border">
-              <UserCircle2 className="w-5 h-5 text-accent-text" />
+              <UserCircle2Icon className="w-5 h-5 text-accent-text" />
               <h2 className="font-display font-bold text-lg text-ink">Dados do Perfil</h2>
             </div>
 
@@ -460,7 +460,7 @@ export default function DashboardPage() {
                   disabled={saving}
                   className="btn-primary text-xs !py-2.5 !px-6 disabled:opacity-50"
                 >
-                  <Save className="w-4 h-4" />
+                  <SaveIcon className="w-4 h-4" />
                   {saving ? 'Salvando...' : 'Salvar Alterações'}
                 </button>
               </div>
@@ -473,7 +473,7 @@ export default function DashboardPage() {
           <div className="manaus-card p-6">
             <div className="flex items-center justify-between mb-4 pb-3 border-b border-border">
               <div className="flex items-center gap-2">
-                <Code2 className="w-5 h-5 text-accent-text" />
+                <Code2Icon className="w-5 h-5 text-accent-text" />
                 <h3 className="font-display font-bold text-base text-ink">Meus Projetos</h3>
               </div>
               <span className="chip-leaf text-[10px] font-mono">{projects.length} projeto(s)</span>
@@ -502,14 +502,14 @@ export default function DashboardPage() {
                             className="p-1 text-muted hover:text-accent-text rounded hover:bg-surface-1 transition-colors"
                             title="Editar Projeto"
                           >
-                            <Edit3 className="w-3.5 h-3.5" />
+                            <Edit3Icon className="w-3.5 h-3.5" />
                           </button>
                           <button
                             onClick={() => handleDeleteProject(proj.id)}
                             className="p-1 text-faint hover:text-danger rounded hover:bg-danger-soft transition-colors"
                             title="Excluir Projeto"
                           >
-                            <Trash2 className="w-3.5 h-3.5" />
+                            <Trash2Icon className="w-3.5 h-3.5" />
                           </button>
                         </div>
                       </div>
@@ -532,7 +532,7 @@ export default function DashboardPage() {
                           className="text-[11px] font-semibold text-accent-text hover:underline flex items-center gap-1"
                         >
                           <span>Ver</span>
-                          <ExternalLink className="w-3 h-3" />
+                          <ExternalLinkIcon className="w-3 h-3" />
                         </a>
                       ) : null}
                     </div>
@@ -644,3 +644,4 @@ export default function DashboardPage() {
     </div>
   );
 }
+

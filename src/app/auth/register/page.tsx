@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
-import { Mail, Lock, User, AlertCircle, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { MailIcon, LockIcon, UserIcon, AlertCircleIcon, ArrowRightIcon, CheckCircle2Icon } from '@/components/icons';
 import { GithubIcon } from '@/components/icons';
 
 export default function RegisterPage() {
@@ -93,14 +93,14 @@ export default function RegisterPage() {
 
           {errorMsg && (
             <div className="mb-6 p-3.5 rounded-lg bg-danger-soft border border-danger/30 text-danger-text text-xs flex items-center gap-2">
-              <AlertCircle className="w-4 h-4 flex-shrink-0 text-danger" />
+              <AlertCircleIcon className="w-4 h-4 flex-shrink-0 text-danger" />
               <span>{errorMsg}</span>
             </div>
           )}
 
           {successMsg && (
             <div className="mb-6 p-3.5 rounded-lg bg-success-soft border border-success/30 text-success-text text-xs flex items-center gap-2 font-medium">
-              <CheckCircle2 className="w-4 h-4 flex-shrink-0 text-accent-text" />
+              <CheckCircle2Icon className="w-4 h-4 flex-shrink-0 text-accent-text" />
               <span>{successMsg}</span>
             </div>
           )}
@@ -109,7 +109,7 @@ export default function RegisterPage() {
             <div>
               <label className="block text-xs font-semibold text-ink mb-1.5">Nome Completo</label>
               <div className="relative">
-                <User className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-faint" />
+                <UserIcon className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-faint" />
                 <input
                   type="text"
                   required
@@ -139,7 +139,7 @@ export default function RegisterPage() {
             <div>
               <label className="block text-xs font-semibold text-ink mb-1.5">Email</label>
               <div className="relative">
-                <Mail className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-faint" />
+                <MailIcon className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-faint" />
                 <input
                   type="email"
                   required
@@ -154,7 +154,7 @@ export default function RegisterPage() {
             <div>
               <label className="block text-xs font-semibold text-ink mb-1.5">Senha (mínimo 6 caracteres)</label>
               <div className="relative">
-                <Lock className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-faint" />
+                <LockIcon className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-faint" />
                 <input
                   type="password"
                   required
@@ -194,7 +194,7 @@ export default function RegisterPage() {
               className="btn-leaf w-full !py-3 disabled:opacity-50 mt-2"
             >
               {loading ? 'Criando conta...' : 'Criar meu Cadastro'}
-              <ArrowRight className="w-4 h-4" />
+              <ArrowRightIcon className="w-4 h-4" />
             </button>
           </form>
 
@@ -227,3 +227,4 @@ export default function RegisterPage() {
     </div>
   );
 }
+

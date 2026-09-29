@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { MessageSquare, Send, CheckCircle2, AlertCircle } from 'lucide-react';
+import { MessageSquareIcon, SendIcon, CheckCircle2Icon, AlertCircleIcon } from '@/components/icons';
 import { createClient } from '@/lib/supabase/client';
 import type { Database } from '@/types/database';
 
@@ -52,7 +52,7 @@ export default function ContatoPage() {
     <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
       <div className="text-center mb-10">
         <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-accent/10 text-accent-text border border-accent/20 text-xs font-semibold mb-3">
-          <MessageSquare className="w-3.5 h-3.5" />
+          <MessageSquareIcon className="w-3.5 h-3.5" />
           <span>Fale Conosco</span>
         </div>
         <h1 className="font-display font-bold text-3xl sm:text-4xl text-ink">Contato & Parcerias</h1>
@@ -65,7 +65,7 @@ export default function ContatoPage() {
         {sent ? (
           <div className="text-center py-10 space-y-3">
             <div className="inline-flex p-3 rounded-full bg-success-soft text-success-text mb-2">
-              <CheckCircle2 className="w-8 h-8 text-accent-text" />
+              <CheckCircle2Icon className="w-8 h-8 text-accent-text" />
             </div>
             <h2 className="font-display font-bold text-xl text-ink">Mensagem Recebida!</h2>
             <p className="text-xs text-muted max-w-md mx-auto">
@@ -88,7 +88,7 @@ export default function ContatoPage() {
           <form onSubmit={handleSubmit} className="space-y-4">
             {errorMsg && (
               <div className="p-3.5 rounded-lg bg-danger-soft border border-danger/30 text-danger-text text-xs flex items-center gap-2">
-                <AlertCircle className="w-4 h-4 flex-shrink-0 text-danger" />
+                <AlertCircleIcon className="w-4 h-4 flex-shrink-0 text-danger" />
                 <span>{errorMsg}</span>
               </div>
             )}
@@ -147,7 +147,7 @@ export default function ContatoPage() {
               disabled={loading}
               className="btn-primary w-full sm:w-auto text-xs !py-3 !px-6 disabled:opacity-50 flex items-center justify-center gap-2"
             >
-              <Send className="w-4 h-4" />
+              <SendIcon className="w-4 h-4" />
               <span>{loading ? 'Enviando...' : 'Enviar Mensagem'}</span>
             </button>
           </form>
@@ -156,3 +156,4 @@ export default function ContatoPage() {
     </div>
   );
 }
+

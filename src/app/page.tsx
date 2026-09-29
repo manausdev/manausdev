@@ -1,18 +1,18 @@
 import Link from 'next/link';
 import { 
-  ArrowRight, 
-  MapPin, 
-  Calendar as CalendarIcon, 
-  Briefcase, 
-  Sparkles, 
-  ChevronRight,
-  Code2, 
-  Compass, 
-  Map, 
-  Flower2 
-} from 'lucide-react';
+  ArrowRightIcon, 
+  MapPinIcon, 
+  CalendarDaysIcon as CalendarIcon, 
+  BriefcaseIcon, 
+  SparklesIcon, 
+  ChevronRightIcon,
+  Code2Icon, 
+  CompassIcon, 
+  MapIcon, 
+  Flower2Icon 
+} from '@/components/icons';
 import { createClient } from '@/lib/supabase/server';
-import { MOCK_DEVS, MOCK_PROJECTS, MOCK_EVENTS, MOCK_JOBS, MOCK_COMMUNITIES } from '@/lib/data/mock-data';
+import { MOCK_DEVS, MOCK_PROJECTS, MOCK_EVENTS, MOCK_JOBS, MOCK_COMMUNITIES } from '@/lib/data/mock';
 
 export default async function HomePage() {
   let devs = MOCK_DEVS;
@@ -97,7 +97,7 @@ export default async function HomePage() {
                 className="btn-leaf !py-3.5 !px-6 text-sm font-semibold shadow-md flex items-center justify-center gap-2"
               >
                 Explorar Desenvolvedores
-                <ArrowRight className="w-4 h-4" />
+                <ArrowRightIcon className="w-4 h-4" />
               </Link>
               <Link
                 href="/projetos"
@@ -147,7 +147,7 @@ export default async function HomePage() {
               href="/devs"
               className="text-xs font-semibold text-accent-text hover:text-ink transition-colors flex items-center gap-1"
             >
-              Ver todos os devs <ArrowRight className="w-3.5 h-3.5" />
+              Ver todos os devs <ArrowRightIcon className="w-3.5 h-3.5" />
             </Link>
           </div>
 
@@ -216,7 +216,7 @@ export default async function HomePage() {
               <div className="relative z-10 text-white">
                 <div className="flex items-center gap-2 mb-3">
                   <span className="bg-accent text-white px-2.5 py-1 rounded text-xs font-semibold inline-flex items-center gap-1 font-mono">
-                    <Flower2 className="w-3.5 h-3.5" /> Feito em Manaus
+                    <Flower2Icon className="w-3.5 h-3.5" /> Feito em Manaus
                   </span>
                 </div>
                 <h3 className="font-display text-xl sm:text-2xl font-bold mb-2">{projects[0]?.title || 'ManausHub'}</h3>
@@ -244,7 +244,7 @@ export default async function HomePage() {
                   <div>
                     <div className="flex justify-between items-start mb-3">
                       <h3 className="font-display font-bold text-base text-ink">{proj.title}</h3>
-                      {idx === 0 ? <Map className="w-5 h-5 text-accent-text" /> : <Compass className="w-5 h-5 text-accent-text" />}
+                      {idx === 0 ? <MapIcon className="w-5 h-5 text-accent-text" /> : <CompassIcon className="w-5 h-5 text-accent-text" />}
                     </div>
                     <p className="text-xs text-muted leading-relaxed mb-4 line-clamp-2">
                       {proj.description}
@@ -299,10 +299,10 @@ export default async function HomePage() {
                             {ev.title}
                           </h4>
                           <p className="text-xs text-muted mt-0.5 flex items-center gap-1">
-                            <MapPin className="w-3.5 h-3.5 text-accent-text" /> {ev.location}
+                            <MapPinIcon className="w-3.5 h-3.5 text-accent-text" /> {ev.location}
                           </p>
                         </div>
-                        <ChevronRight className="w-4 h-4 text-faint group-hover:text-accent-text transition-colors flex-shrink-0" />
+                        <ChevronRightIcon className="w-4 h-4 text-faint group-hover:text-accent-text transition-colors flex-shrink-0" />
                       </div>
                     </Link>
                   </li>
@@ -315,7 +315,7 @@ export default async function HomePage() {
           <div className="flex flex-col gap-4">
             <div className="flex justify-between items-center border-b border-border-strong/30 pb-4 mb-2">
               <h2 className="font-display font-bold text-lg sm:text-xl text-ink flex items-center gap-2">
-                <Briefcase className="w-5 h-5 text-accent-text" />
+                <BriefcaseIcon className="w-5 h-5 text-accent-text" />
                 Vagas Recentes
               </h2>
               <Link href="/vagas" className="text-xs text-accent-text font-semibold hover:underline">
@@ -362,7 +362,7 @@ export default async function HomePage() {
         <div className="absolute inset-0 opacity-10 pointer-events-none bio-texture" />
         <div className="max-w-3xl mx-auto flex flex-col items-center gap-6 relative z-10">
           <div className="w-12 h-12 rounded-xl bg-accent text-white flex items-center justify-center shadow-lg">
-            <Sparkles className="w-6 h-6 text-neon-text" />
+            <SparklesIcon className="w-6 h-6 text-neon-text" />
           </div>
           <h2 className="font-display font-bold text-3xl sm:text-5xl !text-white">
             Faça parte da história da tecnologia no Amazonas
@@ -381,4 +381,6 @@ export default async function HomePage() {
     </div>
   );
 }
+
+
 

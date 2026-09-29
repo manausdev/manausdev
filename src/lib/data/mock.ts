@@ -1,4 +1,168 @@
-import type { Profile, Project, EventItem } from '@/types/database';
+import type {
+  Profile,
+  Project,
+  EventItem,
+  Company,
+  Community,
+  Job,
+} from '@/types/database';
+
+export const MOCK_COMPANIES: Company[] = [
+  {
+    id: '1',
+    name: 'TechNorte',
+    industry: 'Software & Cloud',
+    location: 'Manaus-AM',
+    size: '50-200',
+    website: 'https://technorte.dev',
+    description:
+      'Desenvolvimento ágil de software e modernização cloud para o Polo Industrial de Manaus.',
+    logo_url:
+      'https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?auto=format&fit=crop&w=160&q=80',
+    image_url:
+      'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80',
+    created_at: new Date().toISOString(),
+  },
+  {
+    id: '2',
+    name: 'Amazônia Digital',
+    industry: 'E-commerce & Logística',
+    location: 'Manaus-AM',
+    size: '10-50',
+    website: 'https://amazoniadigital.com.br',
+    description: 'Soluções logísticas e de e-commerce conectando o Norte ao resto do país.',
+    logo_url:
+      'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=160&q=80',
+    image_url:
+      'https://images.unsplash.com/photo-1553413077-190dd305871c?auto=format&fit=crop&w=800&q=80',
+    created_at: new Date().toISOString(),
+  },
+  {
+    id: '3',
+    name: 'RioApps',
+    industry: 'Mobile Solutions',
+    location: 'Manaus-AM',
+    size: '10-50',
+    website: 'https://rioapps.tech',
+    description:
+      'Aplicativos corporativos e mobile experience de alto padrão para marcas da Amazônia.',
+    logo_url:
+      'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=160&q=80',
+    image_url:
+      'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80',
+    created_at: new Date().toISOString(),
+  },
+  {
+    id: '4',
+    name: 'Sidia Instituto de Ciência e Tecnologia',
+    industry: 'P&D e Inovação',
+    location: 'Manaus-AM',
+    size: '500+',
+    website: 'https://sidia.com',
+    description: 'Um dos maiores institutos de pesquisa e inovação tecnológica da América Latina.',
+    logo_url:
+      'https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?auto=format&fit=crop&w=160&q=80',
+    image_url:
+      'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80',
+    created_at: new Date().toISOString(),
+  },
+];
+
+export const MOCK_COMMUNITIES: Community[] = [
+  {
+    id: '1',
+    name: 'Manaus Tech Hub',
+    description:
+      'A maior comunidade aberta de tecnologia, inovação e startups de Manaus.',
+    members_count: 1250,
+    type: 'Geral',
+    links: { discord: 'https://discord.gg/manausdev' },
+    image_url:
+      'https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=800&q=80',
+    created_at: new Date().toISOString(),
+  },
+  {
+    id: '2',
+    name: 'Devs do Norte',
+    description:
+      'Rede de desenvolvedores de software conectando talentos de toda a Amazônia.',
+    members_count: 890,
+    type: 'Desenvolvimento',
+    links: { telegram: 'https://t.me/devsdonorte' },
+    image_url:
+      'https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=800&q=80',
+    created_at: new Date().toISOString(),
+  },
+  {
+    id: '3',
+    name: 'Python Manaus',
+    description:
+      'Encontros, palestras e hackathons em torno do ecossistema Python no Amazonas.',
+    members_count: 430,
+    type: 'Linguagem',
+    links: { github: 'https://github.com/pythonmanaus' },
+    image_url:
+      'https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&w=800&q=80',
+    created_at: new Date().toISOString(),
+  },
+  {
+    id: '4',
+    name: 'Mulheres na Tech AM',
+    description:
+      'Comunidade dedicada ao protagonismo feminino e capacitação técnica no estado.',
+    members_count: 310,
+    type: 'Diversidade',
+    links: { instagram: 'https://instagram.com/mulheresnatech.am' },
+    image_url:
+      'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=800&q=80',
+    created_at: new Date().toISOString(),
+  },
+];
+
+export const MOCK_JOBS: Job[] = [
+  {
+    id: '1',
+    title: 'Desenvolvedor Frontend Sênior (Next.js)',
+    company_name: 'TechNorte',
+    type: 'CLT',
+    remote: false,
+    salary: 'R$ 7.500 - R$ 11.000',
+    location: 'Manaus-AM',
+    skills: ['React', 'Next.js', 'TypeScript', 'Tailwind'],
+    description:
+      'Liderar desenvolvimento frontend de novas plataformas cloud com foco em UX excepcional.',
+    link: 'https://technorte.dev/vagas',
+    created_at: new Date().toISOString(),
+  },
+  {
+    id: '2',
+    title: 'Engenheiro Backend Go / PostgreSQL',
+    company_name: 'Amazônia Digital',
+    type: 'PJ',
+    remote: true,
+    salary: 'R$ 8.000 - R$ 13.000',
+    location: 'Remoto (AM)',
+    skills: ['Go', 'PostgreSQL', 'Docker', 'Redis'],
+    description:
+      'Arquitetura de microsserviços de alto rendimento para infraestrutura e pagamentos.',
+    link: 'https://amazoniadigital.com.br/vagas',
+    created_at: new Date().toISOString(),
+  },
+  {
+    id: '3',
+    title: 'Desenvolvedor Mobile React Native',
+    company_name: 'RioApps',
+    type: 'CLT',
+    remote: true,
+    salary: 'R$ 5.500 - R$ 8.500',
+    location: 'Híbrido - Adrianópolis',
+    skills: ['React Native', 'TypeScript', 'Offline-First'],
+    description:
+      'Construir experiências mobile modernas e fluidas para os maiores clientes do Norte.',
+    link: 'https://rioapps.tech/vagas',
+    created_at: new Date().toISOString(),
+  },
+];
 
 export const MOCK_DEVS: Profile[] = [
   {

@@ -3,9 +3,9 @@
 import { useState, useEffect, useMemo, Suspense } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Search, Code2, ExternalLink, ArrowRight } from 'lucide-react';
+import { SearchIcon, Code2Icon, ExternalLinkIcon, ArrowRightIcon } from '@/components/icons';
 import { GithubIcon } from '@/components/icons';
-import { MOCK_PROJECTS } from '@/lib/data/mock-data';
+import { MOCK_PROJECTS } from '@/lib/data/mock';
 import { createClient } from '@/lib/supabase/client';
 import type { Project } from '@/types/database';
 
@@ -79,7 +79,7 @@ function ProjetosContent() {
       {/* Header */}
       <div className="mb-10 text-center sm:text-left">
         <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-deep/10 text-accent-text border border-deep/20 text-xs font-semibold mb-3">
-          <Code2 className="w-3.5 h-3.5" />
+          <Code2Icon className="w-3.5 h-3.5" />
           <span>Inovação & Bioeconomia</span>
         </div>
         <h1 className="font-display font-bold text-3xl sm:text-5xl text-ink tracking-tight">
@@ -93,7 +93,7 @@ function ProjetosContent() {
       {/* Filters */}
       <div className="manaus-card p-5 sm:p-6 mb-8 space-y-4">
         <div className="relative flex items-center">
-          <Search className="w-4 h-4 absolute left-3.5 text-faint pointer-events-none z-10" />
+          <SearchIcon className="w-4 h-4 absolute left-3.5 text-faint pointer-events-none z-10" />
           <input
             type="text"
             placeholder="Buscar projetos por título ou descrição..."
@@ -160,7 +160,7 @@ function ProjetosContent() {
                   ) : (
                     <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-brand p-4 text-center relative overflow-hidden">
                       <div className="absolute inset-0 bio-texture opacity-20" />
-                      <Code2 className="w-10 h-10 text-neon/60 mb-2 relative z-10" />
+                      <Code2Icon className="w-10 h-10 text-neon/60 mb-2 relative z-10" />
                       <span className="font-display font-bold text-sm text-on-dark/90 relative z-10">
                         {proj.title}
                       </span>
@@ -206,7 +206,7 @@ function ProjetosContent() {
                   className="text-xs font-semibold text-accent-text hover:underline flex items-center gap-1"
                 >
                   <span>Detalhes</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
+                  <ArrowRightIcon className="w-3.5 h-3.5" />
                 </Link>
 
                 <div className="flex items-center gap-3">
@@ -229,7 +229,7 @@ function ProjetosContent() {
                       className="text-accent-text hover:text-ink transition-colors"
                       title="Demo"
                     >
-                      <ExternalLink className="w-4 h-4" />
+                      <ExternalLinkIcon className="w-4 h-4" />
                     </a>
                   )}
                 </div>
@@ -258,3 +258,4 @@ export default function ProjetosPage() {
     </Suspense>
   );
 }
+

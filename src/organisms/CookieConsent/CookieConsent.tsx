@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { ShieldCheck, X } from 'lucide-react';
+import { ShieldCheckIcon, XIcon } from '@/components/icons';
 import styles from './CookieConsent.module.css';
 
 const CONSENT_KEY = 'manausdev_cookie_consent';
@@ -38,7 +38,7 @@ export function CookieConsent() {
       <div className={styles.card}>
         <div className={styles.row}>
           <div className={styles.iconBox}>
-            <ShieldCheck className={styles.icon} />
+            <ShieldCheckIcon className={styles.icon} />
           </div>
           <div className={styles.body}>
             <h3 className={styles.title}>Privacidade & Transparência 🌿</h3>
@@ -62,7 +62,7 @@ export function CookieConsent() {
             title="Fechar"
             aria-label="Fechar banner"
           >
-            <X className={styles.closeIcon} />
+            <XIcon className={styles.closeIcon} />
           </button>
         </div>
       </div>
