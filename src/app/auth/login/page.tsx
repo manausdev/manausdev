@@ -66,29 +66,29 @@ function LoginForm() {
 
   return (
     <div className="w-full max-w-md">
-      <div className="manaus-card p-8 sm:p-10 relative overflow-hidden shadow-card-ambient border border-[#e0e3e5]">
+      <div className="manaus-card p-8 sm:p-10 relative overflow-hidden shadow-card-ambient border border-border">
         <div className="text-center mb-8">
-          <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-[#003527] text-white mb-4 shadow-sm">
+          <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-deep text-white mb-4 shadow-sm">
             <span className="text-2xl font-mono">🌿</span>
           </div>
-          <h1 className="font-display font-bold text-2xl text-[#003527]">Bem-vindo de volta</h1>
-          <p className="text-xs text-[#404944] mt-1.5">
+          <h1 className="font-display font-bold text-2xl text-ink">Bem-vindo de volta</h1>
+          <p className="text-xs text-muted mt-1.5">
             Acesse sua conta ManausDev e gerencie seu perfil profissional
           </p>
         </div>
 
         {errorMsg && (
-          <div className="mb-6 p-3.5 rounded-lg bg-[#ffdad6] border border-[#ba1a1a]/30 text-[#93000a] text-xs flex items-center gap-2">
-            <AlertCircle className="w-4 h-4 flex-shrink-0 text-[#ba1a1a]" />
+          <div className="mb-6 p-3.5 rounded-lg bg-danger-soft border border-danger/30 text-danger-text text-xs flex items-center gap-2">
+            <AlertCircle className="w-4 h-4 flex-shrink-0 text-danger" />
             <span>{errorMsg}</span>
           </div>
         )}
 
         <form onSubmit={handleEmailLogin} className="space-y-4">
           <div>
-            <label className="block text-xs font-semibold text-[#003527] mb-1.5">Email</label>
+            <label className="block text-xs font-semibold text-ink mb-1.5">Email</label>
             <div className="relative">
-              <Mail className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-[#707974]" />
+              <Mail className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-faint" />
               <input
                 type="email"
                 required
@@ -101,9 +101,9 @@ function LoginForm() {
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-[#003527] mb-1.5">Senha</label>
+            <label className="block text-xs font-semibold text-ink mb-1.5">Senha</label>
             <div className="relative">
-              <Lock className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-[#707974]" />
+              <Lock className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-faint" />
               <input
                 type="password"
                 required
@@ -127,9 +127,9 @@ function LoginForm() {
 
         <div className="relative my-6 text-center">
           <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t border-[#e0e3e5]" />
+            <div className="w-full border-t border-border" />
           </div>
-          <span className="relative bg-[#ffffff] px-3 text-[11px] font-mono text-[#707974] font-medium">
+          <span className="relative bg-surface px-3 text-[11px] font-mono text-faint font-medium">
             OU ENTRE COM
           </span>
         </div>
@@ -137,15 +137,15 @@ function LoginForm() {
         <button
           onClick={() => handleOAuthLogin('github')}
           type="button"
-          className="flex items-center justify-center gap-2.5 w-full py-2.5 rounded-lg text-xs font-semibold bg-[#f2f4f6] hover:bg-[#e6e8ea] text-[#003527] border border-[#e0e3e5] transition-colors"
+          className="flex items-center justify-center gap-2.5 w-full py-2.5 rounded-lg text-xs font-semibold bg-surface-1 hover:bg-surface-2 text-ink border border-border transition-colors"
         >
           <GithubIcon className="w-4 h-4" />
           Continuar com GitHub
         </button>
 
-        <p className="mt-8 text-center text-xs text-[#404944]">
+        <p className="mt-8 text-center text-xs text-muted">
           Ainda não possui uma conta?{' '}
-          <Link href="/auth/register" className="text-[#006c49] font-bold hover:underline">
+          <Link href="/auth/register" className="text-accent-text font-bold hover:underline">
             Cadastre-se grátis
           </Link>
         </p>
@@ -156,11 +156,11 @@ function LoginForm() {
 
 export default function LoginPage() {
   return (
-    <div className="min-h-[80vh] flex items-center justify-center px-4 py-12 bg-[#f7f9fb]">
+    <div className="min-h-[80vh] flex items-center justify-center px-4 py-12 bg-canvas">
       <Suspense fallback={
         <div className="manaus-card p-10 text-center max-w-md w-full animate-pulse">
-          <div className="h-8 w-8 bg-[#006c49]/20 rounded-full mx-auto mb-4" />
-          <div className="h-4 bg-[#e0e3e5] rounded w-3/4 mx-auto" />
+          <div className="h-8 w-8 bg-accent/20 rounded-full mx-auto mb-4" />
+          <div className="h-4 bg-surface-2 rounded w-3/4 mx-auto" />
         </div>
       }>
         <LoginForm />

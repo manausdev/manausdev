@@ -1,4 +1,4 @@
-# 🌿 ManausDev
+# 🌊 ManausDev
 
 > **Quem constrói tecnologia em Manaus está aqui.**
 
@@ -10,10 +10,10 @@ Plataforma comunitária moderna para conectar desenvolvedores, projetos open-sou
 
 - **Framework:** [Next.js](https://nextjs.org/) (App Router, React 19, Server & Client Components)
 - **Linguagem:** [TypeScript](https://www.typescriptlang.org/)
-- **Estilização:** [Tailwind CSS v4](https://tailwindcss.com/) com identidade visual **Cyber-Amazônica**
+- **Estilização:** [Tailwind CSS v4](https://tailwindcss.com/) com identidade visual **Blue-Tech** (tokens semânticos + modo claro/escuro)
 - **BaaS & Backend:** [Supabase](https://supabase.com/) (`@supabase/ssr` e `@supabase/supabase-js`)
 - **Banco de Dados:** PostgreSQL com Row Level Security (RLS) e triggers automáticos
-- **Autenticação:** Supabase Auth (Email/Senha + OAuth GitHub) com middleware de sessão SSR
+- **Autenticação:** Supabase Auth (Email/Senha + OAuth GitHub) com sessão SSR via cookies
 
 ---
 
@@ -23,9 +23,9 @@ Plataforma comunitária moderna para conectar desenvolvedores, projetos open-sou
 manausdev/
 ├── src/
 │   ├── app/
-│   │   ├── layout.tsx              # Root layout com tipografia regional e SEO
+│   │   ├── layout.tsx              # Root layout com tipografia regional, SEO e tema anti-flash
 │   │   ├── page.tsx                # Landing page interativa
-│   │   ├── globals.css             # Design tokens Cyber-Amazônicos & glassmorphism
+│   │   ├── globals.css             # Design tokens Blue-Tech (claro/escuro) & componentes CSS
 │   │   ├── devs/page.tsx           # Diretório de desenvolvedores com busca & filtros
 │   │   ├── projetos/page.tsx       # Vitrine de projetos e startups locais
 │   │   ├── vagas/page.tsx          # Mural de vagas (PIM, Polo Digital e Remoto)
@@ -44,21 +44,23 @@ manausdev/
 │   ├── components/
 │   │   ├── navbar.tsx              # Header responsivo com estado de autenticação
 │   │   ├── footer.tsx              # Rodapé com selo "Feito em Manaus"
+│   │   ├── theme-toggle.tsx        # Alternância de tema claro/escuro (localStorage)
+│   │   ├── cookie-consent.tsx      # Banner de consentimento de cookies (LGPD)
 │   │   └── icons.tsx               # Ícones vetoriais
 │   ├── lib/
 │   │   ├── supabase/
 │   │   │   ├── client.ts           # Cliente Supabase para o Browser
-│   │   │   ├── server.ts           # Cliente Supabase SSR com Cookies
-│   │   │   └── middleware.ts       # Validação e renovação de sessão
+│   │   │   └── server.ts          # Cliente Supabase SSR com Cookies
 │   │   ├── data/
 │   │   │   └── mock-data.ts        # Dados de fallback para desenvolvimento local
 │   │   └── utils.ts                # Utilitários de classes e formatação
-│   ├── middleware.ts               # Middleware do Next.js para proteção de rotas
 │   └── types/
 │       └── database.ts             # Tipos TypeScript do schema Supabase
 ├── supabase/
-│   ├── schema.sql                  # DDL das tabelas, RLS e triggers do PostgreSQL
-│   └── seed.sql                    # Carga inicial de dados mock
+│   ├── config.toml                 # Configuração do projeto Supabase (CLI)
+│   ├── migrations/                 # Migrations versionadas do PostgreSQL
+│   ├── schema.sql                   # DDL das tabelas, RLS e triggers do PostgreSQL
+│   └── seed.sql                     # Carga inicial de dados mock
 ├── scripts/                        # Scripts REST API / Automações (intactos)
 ├── .env.example                    # Exemplo de variáveis de ambiente
 └── package.json

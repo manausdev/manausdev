@@ -80,14 +80,14 @@ export default async function JobDetailPage({ params }: JobDetailPageProps) {
 
       <Link
         href="/vagas"
-        className="inline-flex items-center gap-2 text-xs font-semibold text-[#006c49] hover:text-[#003527] transition-colors mb-8"
+        className="inline-flex items-center gap-2 text-xs font-semibold text-accent-text hover:text-ink transition-colors mb-8"
       >
         <ArrowLeft className="w-4 h-4" />
         Voltar para o mural de vagas
       </Link>
 
-      <div className="manaus-card p-6 sm:p-10 border border-[#e0e3e5] space-y-8">
-        <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-6 pb-6 border-b border-[#e0e3e5]">
+      <div className="manaus-card p-6 sm:p-10 border border-border space-y-8">
+        <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-6 pb-6 border-b border-border">
           <div className="space-y-3">
             <div className="flex flex-wrap items-center gap-2">
               <span className="chip-leaf text-xs font-mono font-semibold">
@@ -100,21 +100,21 @@ export default async function JobDetailPage({ params }: JobDetailPageProps) {
               )}
             </div>
 
-            <h1 className="font-display font-bold text-2xl sm:text-4xl text-[#003527]">
+            <h1 className="font-display font-bold text-2xl sm:text-4xl text-ink">
               {job.title}
             </h1>
 
-            <div className="flex flex-wrap items-center gap-4 text-xs sm:text-sm text-[#707974]">
-              <span className="flex items-center gap-1.5 font-medium text-[#003527]">
-                <Building className="w-4 h-4 text-[#006c49]" />
+            <div className="flex flex-wrap items-center gap-4 text-xs sm:text-sm text-faint">
+              <span className="flex items-center gap-1.5 font-medium text-ink">
+                <Building className="w-4 h-4 text-accent-text" />
                 {job.company_name || 'Empresa Parceira'}
               </span>
               <span className="flex items-center gap-1.5 font-mono">
-                <MapPin className="w-4 h-4 text-[#00314a]" />
+                <MapPin className="w-4 h-4 text-accent-text" />
                 {job.location || 'Manaus-AM'}
               </span>
               {job.salary && (
-                <span className="flex items-center gap-1.5 font-semibold text-[#006c49] font-mono">
+                <span className="flex items-center gap-1.5 font-semibold text-accent-text font-mono">
                   <DollarSign className="w-4 h-4" />
                   {job.salary}
                 </span>
@@ -138,17 +138,17 @@ export default async function JobDetailPage({ params }: JobDetailPageProps) {
         </div>
 
         <div>
-          <h2 className="text-xs font-mono uppercase tracking-wider text-[#707974] font-semibold mb-3">
+          <h2 className="text-xs font-mono uppercase tracking-wider text-faint font-semibold mb-3">
             Descrição da Posição
           </h2>
-          <p className="text-sm sm:text-base text-[#191c1e] leading-relaxed whitespace-pre-line">
+          <p className="text-sm sm:text-base text-ink leading-relaxed whitespace-pre-line">
             {job.description || 'Estamos em busca de profissionais talentosos para compor nosso time.'}
           </p>
         </div>
 
         {job.skills && job.skills.length > 0 && (
           <div>
-            <h2 className="text-xs font-mono uppercase tracking-wider text-[#707974] font-semibold mb-3">
+            <h2 className="text-xs font-mono uppercase tracking-wider text-faint font-semibold mb-3">
               Competências & Tecnologias Requeridas
             </h2>
             <div className="flex flex-wrap gap-2">
@@ -161,9 +161,9 @@ export default async function JobDetailPage({ params }: JobDetailPageProps) {
           </div>
         )}
 
-        <div className="pt-6 border-t border-[#e0e3e5] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#707974]">
+        <div className="pt-6 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-faint">
           <span className="flex items-center gap-1.5">
-            <Clock className="w-4 h-4 text-[#006c49]" />
+            <Clock className="w-4 h-4 text-accent-text" />
             Vaga ativa na comunidade ManausDev
           </span>
           {job.link && (
@@ -171,7 +171,7 @@ export default async function JobDetailPage({ params }: JobDetailPageProps) {
               href={job.link}
               target="_blank"
               rel="noreferrer"
-              className="text-[#006c49] font-bold hover:underline"
+              className="text-accent-text font-bold hover:underline"
             >
               Acessar portal da empresa →
             </a>

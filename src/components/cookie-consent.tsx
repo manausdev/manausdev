@@ -33,16 +33,16 @@ export function CookieConsent() {
       aria-label="Consentimento de Cookies e Privacidade"
       className="fixed bottom-4 right-4 left-4 sm:left-auto sm:max-w-md z-50 animate-in fade-in slide-in-from-bottom-4 duration-300"
     >
-      <div className="bg-[#ffffff] border border-[#006c49]/30 rounded-2xl p-5 shadow-elevated">
+      <div className="bg-surface border border-accent/30 rounded-2xl p-5 shadow-elevated">
         <div className="flex items-start gap-3">
-          <div className="p-2 rounded-lg bg-[#006c49]/10 text-[#006c49] flex-shrink-0 mt-0.5">
+          <div className="p-2 rounded-lg bg-accent/10 text-accent-text flex-shrink-0 mt-0.5">
             <ShieldCheck className="w-5 h-5" />
           </div>
           <div className="space-y-1.5 flex-1">
-            <h3 className="font-display font-bold text-sm text-[#003527]">
+            <h3 className="font-display font-bold text-sm text-ink">
               Privacidade & Transparência 🌿
             </h3>
-            <p className="text-xs text-[#404944] leading-relaxed">
+            <p className="text-xs text-muted leading-relaxed">
               Utilizamos cookies essenciais para manter sua sessão e melhorar a navegação na plataforma. Em conformidade com a LGPD, seus dados pessoais estão protegidos.
             </p>
             <div className="flex items-center gap-3 pt-2">
@@ -54,7 +54,7 @@ export function CookieConsent() {
               </button>
               <Link
                 href="/privacidade"
-                className="text-xs text-[#006c49] hover:underline font-semibold"
+                className="text-xs text-accent-text hover:underline font-semibold"
               >
                 Saiba mais
               </Link>
@@ -62,7 +62,7 @@ export function CookieConsent() {
           </div>
           <button
             onClick={handleDecline}
-            className="text-[#707974] hover:text-[#191c1e] p-1 -mr-1 -mt-1"
+            className="text-faint hover:text-ink p-1 -mr-1 -mt-1"
             title="Fechar"
             aria-label="Fechar banner"
           >

@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { createClient } from '@/lib/supabase/client';
+import { ThemeToggle } from '@/components/theme-toggle';
 import { User } from '@supabase/supabase-js';
 import { 
   Users, 
@@ -65,25 +66,25 @@ export function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-50 border-b border-[#e0e3e5] bg-[#ffffff]/90 backdrop-blur-md transition-all">
+    <header className="sticky top-0 z-50 border-b border-border bg-surface/90 backdrop-blur-md transition-all">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
         {/* Brand Logo */}
         <Link href="/" className="flex items-center gap-2.5 group">
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#003527] text-white shadow-sm group-hover:bg-[#064e3b] transition-colors">
-            <span className="font-bold text-base font-mono">🌿</span>
+          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-brand text-on-neon shadow-sm transition-opacity hover:opacity-90">
+            <span className="font-bold text-base font-mono">{'</>'}</span>
           </div>
           <div className="flex flex-col">
-            <span className="font-display font-bold text-lg tracking-tight text-[#003527] flex items-center">
-              Manaus<span className="text-[#006c49]">Dev</span>
+            <span className="font-display font-bold text-lg tracking-tight text-ink flex items-center">
+              Manaus<span className="text-accent-text">Dev</span>
             </span>
-            <span className="text-[10px] text-[#006c49] font-mono tracking-widest -mt-1 font-semibold">
+            <span className="text-[10px] text-accent-text font-mono tracking-widest -mt-1 font-semibold">
               AMAZONAS • TECH
             </span>
           </div>
         </Link>
 
         {/* Desktop Navigation Links */}
-        <nav className="hidden md:flex items-center gap-1">
+        <nav className="hidden xl:flex items-center gap-1">
           {NAV_LINKS.map(({ href, label, icon: Icon }) => {
             const isActive = pathname.startsWith(href);
             return (
@@ -92,8 +93,8 @@ export function Navbar() {
                 href={href}
                 className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-all ${
                   isActive
-                    ? 'bg-[#003527]/10 text-[#003527] font-semibold'
-                    : 'text-[#404944] hover:text-[#003527] hover:bg-[#f2f4f6]'
+                    ? 'bg-accent/10 text-accent-text font-semibold'
+                    : 'text-muted hover:text-ink hover:bg-surface-1'
                 }`}
               >
                 <Icon className="w-4 h-4 opacity-75" />
@@ -104,9 +105,10 @@ export function Navbar() {
         </nav>
 
         {/* Desktop Auth */}
-        <div className="hidden md:flex items-center gap-3">
+        <div className="hidden xl:flex items-center gap-3">
+          <ThemeToggle />
           {loading ? (
-            <div className="h-8 w-20 bg-[#e0e3e5] animate-pulse rounded-lg" />
+            <div className="h-8 w-20 bg-surface-2 animate-pulse rounded-lg" />
           ) : user ? (
             <div className="flex items-center gap-2">
               <Link
@@ -119,7 +121,7 @@ export function Navbar() {
               <button
                 onClick={handleSignOut}
                 title="Sair da conta"
-                className="p-2 rounded-lg text-[#707974] hover:text-[#ba1a1a] hover:bg-[#ffdad6]/40 transition-colors"
+                className="p-2 rounded-lg text-faint hover:text-danger hover:bg-danger-soft transition-colors"
               >
                 <LogOut className="w-4 h-4" />
               </button>
@@ -128,7 +130,7 @@ export function Navbar() {
             <div className="flex items-center gap-2.5">
               <Link
                 href="/auth/login"
-                className="px-3.5 py-2 rounded-lg text-sm font-semibold text-[#003527] hover:bg-[#f2f4f6] transition-colors"
+                className="px-3.5 py-2 rounded-lg text-sm font-semibold text-ink hover:bg-surface-1 transition-colors"
               >
                 Entrar
               </Link>
@@ -143,18 +145,21 @@ export function Navbar() {
         </div>
 
         {/* Mobile trigger */}
-        <button
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="md:hidden p-2 rounded-lg text-[#404944] hover:text-[#003527] hover:bg-[#f2f4f6]"
-          aria-label="Abrir menu"
-        >
-          {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-        </button>
+        <div className="flex items-center gap-1 xl:hidden">
+          <ThemeToggle />
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="p-2 rounded-lg text-muted hover:text-ink hover:bg-surface-1"
+            aria-label="Abrir menu"
+          >
+            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-b border-[#e0e3e5] bg-[#ffffff] px-4 py-4 space-y-2">
+        <div className="xl:hidden border-b border-border bg-surface px-4 py-4 space-y-2">
           {NAV_LINKS.map(({ href, label, icon: Icon }) => {
             const isActive = pathname.startsWith(href);
             return (
@@ -164,8 +169,8 @@ export function Navbar() {
                 onClick={() => setMobileMenuOpen(false)}
                 className={`flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
                   isActive
-                    ? 'bg-[#003527]/10 text-[#003527] font-semibold'
-                    : 'text-[#404944] hover:text-[#003527] hover:bg-[#f2f4f6]'
+                    ? 'bg-accent/10 text-accent-text font-semibold'
+                    : 'text-muted hover:text-ink hover:bg-surface-1'
                 }`}
               >
                 <Icon className="w-4 h-4" />
@@ -173,7 +178,7 @@ export function Navbar() {
               </Link>
             );
           })}
-          <div className="pt-3 border-t border-[#e0e3e5] flex flex-col gap-2">
+          <div className="pt-3 border-t border-border flex flex-col gap-2">
             {user ? (
               <>
                 <Link
@@ -189,7 +194,7 @@ export function Navbar() {
                     setMobileMenuOpen(false);
                     handleSignOut();
                   }}
-                  className="w-full py-2.5 rounded-lg text-xs font-semibold text-[#ba1a1a] bg-[#ffdad6]/40 hover:bg-[#ffdad6]/70 transition-colors"
+                  className="w-full py-2.5 rounded-lg text-xs font-semibold text-danger bg-danger-soft/40 hover:bg-danger-soft transition-colors"
                 >
                   Sair da Conta
                 </button>

@@ -16,12 +16,13 @@
 | [ADR 0006](0006-static-site-deploy.md) | 2026-08-13 | DevOps / Deploy | Deploy como site estático | *Aceito* |
 | [ADR 0007](0007-rest-api-with-service-account-and-appcli.md) | 2026-08-15 | DevOps / CLI | Automação e Deploy via REST API com Service Account | **Aceito** |
 | [ADR 0008](0008-migrate-to-nextjs-and-supabase.md) | 2026-08-17 | Core / Fullstack | Migração para Next.js (App Router) e Supabase | **Aceito** |
-| [ADR 0009](0009-corporate-modern-green-tech-design-system.md) | 2026-08-18 | UI / Design System | Design System Green-Tech (Corporate Modern & Bio-Organic) | **Aceito** |
+| [ADR 0009](0009-corporate-modern-green-tech-design-system.md) | 2026-08-18 | UI / Design System | Design System Green-Tech (Corporate Modern & Bio-Organic) | *Superado* |
 | [ADR 0010](0010-project-visual-previews-and-showcase.md) | 2026-08-19 | Projetos & Showcase | Exibição de Visual Previews na Galeria e Vitrine de Projetos | **Aceito** |
 | [ADR 0011](0011-previews-and-branding-for-communities-events-companies.md) | 2026-08-19 | Comunidades / Eventos / Empresas | Visual Previews e Identidade de Marca para Ecossistema | **Aceito** |
 | [ADR 0012](0012-remove-firebase-tools-and-update-dependencies.md) | 2026-08-23 | DevOps / Dependências | Remoção do firebase-tools e atualização de dependências vulneráveis | **Aceito** |
 | [ADR 0013](0013-dynamic-routes-filter-sync-and-screen-gaps-resolution.md) | 2026-08-23 | Navegação & Fullstack | Resolução de Gaps de Tela, Rotas Dinâmicas com SSG e Sincronização via URL | **Aceito** |
 | [ADR 0014](0014-fix-critical-nextjs-rce-and-remove-dead-middleware.md) | 2026-09-25 | DevOps / Segurança | Correção de RCE crítico no Next.js e remoção de Middleware morto | **Aceito** |
+| [ADR 0015](0015-rebrand-blue-tech-palette-and-dark-mode.md) | 2026-09-29 | UI / Design System | Rebrand para a paleta Blue-Tech com modo claro/escuro | **Aceito** |
 
 ---
 
@@ -36,8 +37,10 @@
   * Implementação de rotas dinâmicas SSG, sincronização de URL search params, persistência de contatos e CRUD completo no dashboard.
 
 ### 2. 🎨 Design System & Identidade Visual
+* [`ADR 0015: Rebrand para a paleta Blue-Tech com modo claro/escuro`](0015-rebrand-blue-tech-palette-and-dark-mode.md)
+  * Paleta oficial extraída do logo (`#0073FD`, `#009BFD`, `#02B8B5`, `#4BD76D`), tokens CSS semânticos, dark mode via classe `.dark` + `ThemeToggle` e gradiente da marca como utility.
 * [`ADR 0009: Design System Green-Tech (Corporate Modern & Bio-Organic)`](0009-corporate-modern-green-tech-design-system.md)
-  * Paleta semântica com Deep Amazon Green (`#003527`), Leaf Green (`#006c49`), River Blue (`#00314a`), tipografia Sora + Inter e texturas bio-orgânicas.
+  * *Superado pelo ADR 0015.* Paleta semântica com Deep Amazon Green (`#003527`), Leaf Green (`#006c49`), River Blue (`#00314a`), tipografia Sora + Inter e texturas bio-orgânicas.
 
 ### 3. 🚀 Vitrines & Módulos Visuais
 * [`ADR 0010: Previews Visuais em Projetos`](0010-project-visual-previews-and-showcase.md)

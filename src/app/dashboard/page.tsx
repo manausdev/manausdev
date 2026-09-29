@@ -261,22 +261,22 @@ export default function DashboardPage() {
   if (loading) {
     return (
       <div className="max-w-7xl mx-auto px-4 py-20 text-center">
-        <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-[#006c49] border-r-transparent" />
-        <p className="mt-4 text-xs font-mono text-[#707974]">Carregando dados do perfil...</p>
+        <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-accent border-r-transparent" />
+        <p className="mt-4 text-xs font-mono text-faint">Carregando dados do perfil...</p>
       </div>
     );
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 bg-[#f7f9fb]">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 bg-canvas">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
         <div>
-          <span className="text-xs font-mono text-[#006c49] uppercase tracking-wider font-semibold">Painel do Membro</span>
-          <h1 className="font-display font-bold text-2xl sm:text-4xl text-[#003527]">
+          <span className="text-xs font-mono text-accent-text uppercase tracking-wider font-semibold">Painel do Membro</span>
+          <h1 className="font-display font-bold text-2xl sm:text-4xl text-ink">
             Olá, {profile.full_name || 'Desenvolvedor'} 🌿
           </h1>
-          <p className="text-xs text-[#404944] mt-1">
+          <p className="text-xs text-muted mt-1">
             Gerencie seu perfil visível na comunidade e seus projetos submetidos.
           </p>
         </div>
@@ -291,15 +291,15 @@ export default function DashboardPage() {
       </div>
 
       {successMsg && (
-        <div className="mb-6 p-4 rounded-xl bg-[#6cf8bb]/20 border border-[#006c49]/30 text-[#00714d] text-xs flex items-center gap-2 font-medium">
-          <CheckCircle2 className="w-4 h-4 flex-shrink-0 text-[#006c49]" />
+        <div className="mb-6 p-4 rounded-xl bg-success-soft border border-success/30 text-success-text text-xs flex items-center gap-2 font-medium">
+          <CheckCircle2 className="w-4 h-4 flex-shrink-0 text-accent-text" />
           <span>{successMsg}</span>
         </div>
       )}
 
       {errorMsg && (
-        <div className="mb-6 p-4 rounded-xl bg-[#ffdad6] border border-[#ba1a1a]/30 text-[#93000a] text-xs flex items-center gap-2">
-          <AlertCircle className="w-4 h-4 flex-shrink-0 text-[#ba1a1a]" />
+        <div className="mb-6 p-4 rounded-xl bg-danger-soft border border-danger/30 text-danger-text text-xs flex items-center gap-2">
+          <AlertCircle className="w-4 h-4 flex-shrink-0 text-danger" />
           <span>{errorMsg}</span>
         </div>
       )}
@@ -308,15 +308,15 @@ export default function DashboardPage() {
         {/* Profile Settings Form */}
         <div className="lg:col-span-2">
           <div className="manaus-card p-6 sm:p-8">
-            <div className="flex items-center gap-2.5 mb-6 pb-4 border-b border-[#e0e3e5]">
-              <UserCircle2 className="w-5 h-5 text-[#006c49]" />
-              <h2 className="font-display font-bold text-lg text-[#003527]">Dados do Perfil</h2>
+            <div className="flex items-center gap-2.5 mb-6 pb-4 border-b border-border">
+              <UserCircle2 className="w-5 h-5 text-accent-text" />
+              <h2 className="font-display font-bold text-lg text-ink">Dados do Perfil</h2>
             </div>
 
             <form onSubmit={handleSaveProfile} className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-semibold text-[#003527] mb-1.5">Nome Completo</label>
+                  <label className="block text-xs font-semibold text-ink mb-1.5">Nome Completo</label>
                   <input
                     type="text"
                     value={profile.full_name || ''}
@@ -325,7 +325,7 @@ export default function DashboardPage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-[#003527] mb-1.5">Username (@)</label>
+                  <label className="block text-xs font-semibold text-ink mb-1.5">Username (@)</label>
                   <input
                     type="text"
                     value={profile.username || ''}
@@ -337,7 +337,7 @@ export default function DashboardPage() {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-semibold text-[#003527] mb-1.5">Cargo / Especialidade</label>
+                  <label className="block text-xs font-semibold text-ink mb-1.5">Cargo / Especialidade</label>
                   <input
                     type="text"
                     placeholder="Ex: Fullstack Engineer"
@@ -347,7 +347,7 @@ export default function DashboardPage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-[#003527] mb-1.5">Localização</label>
+                  <label className="block text-xs font-semibold text-ink mb-1.5">Localização</label>
                   <input
                     type="text"
                     placeholder="Manaus-AM"
@@ -359,7 +359,7 @@ export default function DashboardPage() {
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-[#003527] mb-1.5">Bio / Apresentação</label>
+                <label className="block text-xs font-semibold text-ink mb-1.5">Bio / Apresentação</label>
                 <textarea
                   rows={3}
                   placeholder="Fale brevemente sobre sua experiência e interesses no ecossistema..."
@@ -370,7 +370,7 @@ export default function DashboardPage() {
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-[#003527] mb-1.5">
+                <label className="block text-xs font-semibold text-ink mb-1.5">
                   Habilidades / Tecnologias (separadas por vírgula)
                 </label>
                 <input
@@ -384,7 +384,7 @@ export default function DashboardPage() {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-semibold text-[#003527] mb-1.5">GitHub URL</label>
+                  <label className="block text-xs font-semibold text-ink mb-1.5">GitHub URL</label>
                   <input
                     type="url"
                     placeholder="https://github.com/usuario"
@@ -394,7 +394,7 @@ export default function DashboardPage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-[#003527] mb-1.5">Portfólio / Site Pessoal</label>
+                  <label className="block text-xs font-semibold text-ink mb-1.5">Portfólio / Site Pessoal</label>
                   <input
                     type="url"
                     placeholder="https://meusite.dev"
@@ -411,14 +411,14 @@ export default function DashboardPage() {
                   id="available"
                   checked={profile.available ?? true}
                   onChange={(e) => setProfile({ ...profile, available: e.target.checked })}
-                  className="h-4 w-4 rounded border-[#bfc9c3] text-[#006c49] focus:ring-[#006c49]"
+                  className="h-4 w-4 rounded border-border-strong text-accent-text focus:ring-accent"
                 />
-                <label htmlFor="available" className="text-xs text-[#404944] font-medium">
+                <label htmlFor="available" className="text-xs text-muted font-medium">
                   Estou disponível para novas oportunidades profissionais ou consultoria
                 </label>
               </div>
 
-              <div className="pt-4 border-t border-[#e0e3e5] flex justify-end">
+              <div className="pt-4 border-t border-border flex justify-end">
                 <button
                   type="submit"
                   disabled={saving}
@@ -435,20 +435,20 @@ export default function DashboardPage() {
         {/* User Projects Sidebar */}
         <div className="space-y-6">
           <div className="manaus-card p-6">
-            <div className="flex items-center justify-between mb-4 pb-3 border-b border-[#e0e3e5]">
+            <div className="flex items-center justify-between mb-4 pb-3 border-b border-border">
               <div className="flex items-center gap-2">
-                <Code2 className="w-5 h-5 text-[#006c49]" />
-                <h3 className="font-display font-bold text-base text-[#003527]">Meus Projetos</h3>
+                <Code2 className="w-5 h-5 text-accent-text" />
+                <h3 className="font-display font-bold text-base text-ink">Meus Projetos</h3>
               </div>
               <span className="chip-leaf text-[10px] font-mono">{projects.length} projeto(s)</span>
             </div>
 
             {projects.length === 0 ? (
               <div className="text-center py-8">
-                <p className="text-xs text-[#707974] mb-3">Você ainda não cadastrou projetos.</p>
+                <p className="text-xs text-faint mb-3">Você ainda não cadastrou projetos.</p>
                 <button
                   onClick={openAddProjectModal}
-                  className="text-xs text-[#006c49] font-bold hover:underline"
+                  className="text-xs text-accent-text font-bold hover:underline"
                 >
                   + Publicar primeiro projeto
                 </button>
@@ -456,31 +456,31 @@ export default function DashboardPage() {
             ) : (
               <div className="space-y-3">
                 {projects.map((proj) => (
-                  <div key={proj.id} className="p-4 rounded-xl bg-[#f2f4f6] border border-[#e0e3e5] flex flex-col justify-between gap-3">
+                  <div key={proj.id} className="p-4 rounded-xl bg-surface-1 border border-border flex flex-col justify-between gap-3">
                     <div>
                       <div className="flex items-start justify-between gap-2">
-                        <h4 className="font-display font-bold text-sm text-[#003527]">{proj.title}</h4>
+                        <h4 className="font-display font-bold text-sm text-ink">{proj.title}</h4>
                         <div className="flex items-center gap-1.5">
                           <button
                             onClick={() => openEditProjectModal(proj)}
-                            className="p-1 text-[#404944] hover:text-[#006c49] rounded hover:bg-white transition-colors"
+                            className="p-1 text-muted hover:text-accent-text rounded hover:bg-surface-1 transition-colors"
                             title="Editar Projeto"
                           >
                             <Edit3 className="w-3.5 h-3.5" />
                           </button>
                           <button
                             onClick={() => handleDeleteProject(proj.id)}
-                            className="p-1 text-[#707974] hover:text-[#ba1a1a] rounded hover:bg-[#ffdad6]/40 transition-colors"
+                            className="p-1 text-faint hover:text-danger rounded hover:bg-danger-soft transition-colors"
                             title="Excluir Projeto"
                           >
                             <Trash2 className="w-3.5 h-3.5" />
                           </button>
                         </div>
                       </div>
-                      <p className="text-xs text-[#404944] line-clamp-2 mt-1">{proj.description}</p>
+                      <p className="text-xs text-muted line-clamp-2 mt-1">{proj.description}</p>
                     </div>
 
-                    <div className="flex items-center justify-between pt-2 border-t border-[#e0e3e5]">
+                    <div className="flex items-center justify-between pt-2 border-t border-border">
                       <div className="flex flex-wrap gap-1">
                         {proj.stack?.slice(0, 2).map((s, i) => (
                           <span key={i} className="chip-river text-[10px] font-mono !py-0.5 !px-1.5">
@@ -493,7 +493,7 @@ export default function DashboardPage() {
                           href={proj.links.demo || proj.links.github}
                           target="_blank"
                           rel="noreferrer"
-                          className="text-[11px] font-semibold text-[#006c49] hover:underline flex items-center gap-1"
+                          className="text-[11px] font-semibold text-accent-text hover:underline flex items-center gap-1"
                         >
                           <span>Ver</span>
                           <ExternalLink className="w-3 h-3" />
@@ -512,12 +512,12 @@ export default function DashboardPage() {
       {isProjectModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
           <div className="manaus-card w-full max-w-lg p-6 sm:p-8 relative shadow-elevated">
-            <h3 className="font-display font-bold text-xl text-[#003527] mb-4">
+            <h3 className="font-display font-bold text-xl text-ink mb-4">
               {editingProjectId ? 'Editar Projeto' : 'Publicar Novo Projeto'}
             </h3>
             <form onSubmit={handleSaveProject} className="space-y-4">
               <div>
-                <label className="block text-xs font-semibold text-[#003527] mb-1.5">Título do Projeto</label>
+                <label className="block text-xs font-semibold text-ink mb-1.5">Título do Projeto</label>
                 <input
                   type="text"
                   required
@@ -529,7 +529,7 @@ export default function DashboardPage() {
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-[#003527] mb-1.5">Descrição</label>
+                <label className="block text-xs font-semibold text-ink mb-1.5">Descrição</label>
                 <textarea
                   rows={3}
                   required
@@ -541,7 +541,7 @@ export default function DashboardPage() {
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-[#003527] mb-1.5">Stack (separadas por vírgula)</label>
+                <label className="block text-xs font-semibold text-ink mb-1.5">Stack (separadas por vírgula)</label>
                 <input
                   type="text"
                   placeholder="Next.js, Supabase, Tailwind, TypeScript"
@@ -552,7 +552,7 @@ export default function DashboardPage() {
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-[#003527] mb-1.5">URL da Imagem / Screenshot (Preview)</label>
+                <label className="block text-xs font-semibold text-ink mb-1.5">URL da Imagem / Screenshot (Preview)</label>
                 <input
                   type="url"
                   placeholder="https://exemplo.com/preview.png"
@@ -564,7 +564,7 @@ export default function DashboardPage() {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-semibold text-[#003527] mb-1.5">Link GitHub</label>
+                  <label className="block text-xs font-semibold text-ink mb-1.5">Link GitHub</label>
                   <input
                     type="url"
                     placeholder="https://github.com/..."
@@ -574,7 +574,7 @@ export default function DashboardPage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-[#003527] mb-1.5">Demo / Site</label>
+                  <label className="block text-xs font-semibold text-ink mb-1.5">Demo / Site</label>
                   <input
                     type="url"
                     placeholder="https://..."
@@ -585,11 +585,11 @@ export default function DashboardPage() {
                 </div>
               </div>
 
-              <div className="flex items-center justify-end gap-3 pt-4 border-t border-[#e0e3e5]">
+              <div className="flex items-center justify-end gap-3 pt-4 border-t border-border">
                 <button
                   type="button"
                   onClick={() => setIsProjectModalOpen(false)}
-                  className="px-4 py-2 rounded-lg text-xs font-semibold text-[#707974] hover:text-[#191c1e]"
+                  className="px-4 py-2 rounded-lg text-xs font-semibold text-faint hover:text-ink"
                 >
                   Cancelar
                 </button>

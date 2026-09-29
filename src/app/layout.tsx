@@ -4,6 +4,7 @@ import './globals.css';
 import { Navbar } from '@/components/navbar';
 import { Footer } from '@/components/footer';
 import { CookieConsent } from '@/components/cookie-consent';
+import { themeInitScript } from '@/components/theme-toggle';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -43,8 +44,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="pt-BR" className={`${inter.variable} ${sora.variable} ${jetbrainsMono.variable}`}>
-      <body className="min-h-screen flex flex-col bg-[#f7f9fb] text-[#191c1e] antialiased selection:bg-[#6cf8bb] selection:text-[#003527]">
+    <html lang="pt-BR" suppressHydrationWarning className={`${inter.variable} ${sora.variable} ${jetbrainsMono.variable}`}>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+      </head>
+      <body className="min-h-screen flex flex-col bg-canvas text-ink antialiased selection:bg-neon selection:text-ink">
         <Navbar />
         <main className="flex-1">
           {children}

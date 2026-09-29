@@ -51,12 +51,12 @@ export default function ContatoPage() {
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
       <div className="text-center mb-10">
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#006c49]/10 text-[#006c49] border border-[#006c49]/20 text-xs font-semibold mb-3">
+        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-accent/10 text-accent-text border border-accent/20 text-xs font-semibold mb-3">
           <MessageSquare className="w-3.5 h-3.5" />
           <span>Fale Conosco</span>
         </div>
-        <h1 className="font-display font-bold text-3xl sm:text-4xl text-[#003527]">Contato & Parcerias</h1>
-        <p className="text-[#404944] text-sm mt-2">
+        <h1 className="font-display font-bold text-3xl sm:text-4xl text-ink">Contato & Parcerias</h1>
+        <p className="text-muted text-sm mt-2">
           Dúvidas, parcerias, sugestões ou interesse em apoiar as iniciativas da ManausDev.
         </p>
       </div>
@@ -64,12 +64,12 @@ export default function ContatoPage() {
       <div className="manaus-card p-8">
         {sent ? (
           <div className="text-center py-10 space-y-3">
-            <div className="inline-flex p-3 rounded-full bg-[#6cf8bb]/30 text-[#00714d] mb-2">
-              <CheckCircle2 className="w-8 h-8 text-[#006c49]" />
+            <div className="inline-flex p-3 rounded-full bg-success-soft text-success-text mb-2">
+              <CheckCircle2 className="w-8 h-8 text-accent-text" />
             </div>
-            <h2 className="font-display font-bold text-xl text-[#003527]">Mensagem Recebida!</h2>
-            <p className="text-xs text-[#404944] max-w-md mx-auto">
-              Obrigado por entrar em contato, <strong className="text-[#003527]">{name}</strong>. Nossa equipe responderá no e-mail <span className="font-mono text-[#006c49]">{email}</span> em breve.
+            <h2 className="font-display font-bold text-xl text-ink">Mensagem Recebida!</h2>
+            <p className="text-xs text-muted max-w-md mx-auto">
+              Obrigado por entrar em contato, <strong className="text-ink">{name}</strong>. Nossa equipe responderá no e-mail <span className="font-mono text-accent-text">{email}</span> em breve.
             </p>
             <button
               onClick={() => {
@@ -87,15 +87,15 @@ export default function ContatoPage() {
         ) : (
           <form onSubmit={handleSubmit} className="space-y-4">
             {errorMsg && (
-              <div className="p-3.5 rounded-lg bg-[#ffdad6] border border-[#ba1a1a]/30 text-[#93000a] text-xs flex items-center gap-2">
-                <AlertCircle className="w-4 h-4 flex-shrink-0 text-[#ba1a1a]" />
+              <div className="p-3.5 rounded-lg bg-danger-soft border border-danger/30 text-danger-text text-xs flex items-center gap-2">
+                <AlertCircle className="w-4 h-4 flex-shrink-0 text-danger" />
                 <span>{errorMsg}</span>
               </div>
             )}
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-semibold text-[#003527] mb-1.5">Seu Nome</label>
+                <label className="block text-xs font-semibold text-ink mb-1.5">Seu Nome</label>
                 <input
                   type="text"
                   required
@@ -106,7 +106,7 @@ export default function ContatoPage() {
                 />
               </div>
               <div>
-                <label className="block text-xs font-semibold text-[#003527] mb-1.5">Seu Email</label>
+                <label className="block text-xs font-semibold text-ink mb-1.5">Seu Email</label>
                 <input
                   type="email"
                   required
@@ -119,7 +119,7 @@ export default function ContatoPage() {
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-[#003527] mb-1.5">Assunto</label>
+              <label className="block text-xs font-semibold text-ink mb-1.5">Assunto</label>
               <input
                 type="text"
                 required
@@ -131,7 +131,7 @@ export default function ContatoPage() {
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-[#003527] mb-1.5">Mensagem</label>
+              <label className="block text-xs font-semibold text-ink mb-1.5">Mensagem</label>
               <textarea
                 rows={4}
                 required

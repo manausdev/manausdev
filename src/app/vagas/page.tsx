@@ -81,14 +81,14 @@ function VagasContent() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div className="mb-10 text-center sm:text-left">
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#00314a]/10 text-[#00314a] border border-[#00314a]/20 text-xs font-semibold mb-3">
+        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-deep/10 text-accent-text border border-deep/20 text-xs font-semibold mb-3">
           <Briefcase className="w-3.5 h-3.5" />
           <span>Mural de Carreiras</span>
         </div>
-        <h1 className="font-display font-bold text-3xl sm:text-5xl text-[#003527] tracking-tight">
-          Vagas de Tecnologia em <span className="text-[#006c49]">Manaus</span>
+        <h1 className="font-display font-bold text-3xl sm:text-5xl text-ink tracking-tight">
+          Vagas de Tecnologia em <span className="text-accent-text">Manaus</span>
         </h1>
-        <p className="text-[#404944] text-sm sm:text-base mt-2 max-w-2xl">
+        <p className="text-muted text-sm sm:text-base mt-2 max-w-2xl">
           Encontre posições presenciais no Polo Industrial e oportunidades remotas com contratação para talentos da região.
         </p>
       </div>
@@ -97,7 +97,7 @@ function VagasContent() {
       <div className="manaus-card p-5 sm:p-6 mb-8 space-y-4">
         <div className="flex flex-col sm:flex-row gap-4">
           <div className="relative flex-1 flex items-center">
-            <Search className="w-4 h-4 absolute left-3.5 text-[#707974] pointer-events-none z-10" />
+            <Search className="w-4 h-4 absolute left-3.5 text-faint pointer-events-none z-10" />
             <input
               type="text"
               placeholder="Buscar por cargo, especialidade ou empresa..."
@@ -111,17 +111,17 @@ function VagasContent() {
             onClick={handleRemoteToggle}
             className={`px-4 py-2.5 rounded-lg text-xs font-semibold border flex items-center justify-center gap-2 transition-all ${
               onlyRemote
-                ? 'bg-[#006c49]/10 text-[#006c49] border-[#006c49]'
-                : 'bg-white text-[#404944] border-[#e0e3e5] hover:bg-[#f2f4f6]'
+                ? 'bg-accent/10 text-accent-text border-accent'
+                : 'bg-surface text-muted border-border hover:bg-surface-1'
             }`}
           >
-            <span className={`w-2 h-2 rounded-full ${onlyRemote ? 'bg-[#006c49]' : 'bg-[#707974]'}`} />
+            <span className={`w-2 h-2 rounded-full ${onlyRemote ? 'bg-accent' : 'bg-faint'}`} />
             Apenas Remoto
           </button>
         </div>
 
         <div className="flex items-center gap-2 overflow-x-auto pb-1">
-          <span className="text-xs text-[#707974] font-medium flex-shrink-0">Contrato:</span>
+          <span className="text-xs text-faint font-medium flex-shrink-0">Contrato:</span>
           {['Todos', 'CLT', 'PJ', 'Estágio'].map((type) => {
             const isSelected = type === 'Todos' ? selectedType === null : selectedType === type;
             return (
@@ -130,8 +130,8 @@ function VagasContent() {
                 onClick={() => handleTypeChange(type === 'Todos' ? null : type)}
                 className={`px-3 py-1 rounded-full text-xs font-medium transition-colors ${
                   isSelected
-                    ? 'bg-[#003527] text-white font-semibold'
-                    : 'bg-[#f2f4f6] text-[#404944] hover:bg-[#e6e8ea]'
+                    ? 'bg-deep text-white font-semibold'
+                    : 'bg-surface-1 text-muted hover:bg-surface-2'
                 }`}
               >
                 {type}
@@ -145,17 +145,17 @@ function VagasContent() {
       {loading ? (
         <div className="space-y-4">
           {[1, 2, 3].map((i) => (
-            <div key={i} className="manaus-card p-6 h-32 animate-pulse bg-[#f2f4f6]" />
+            <div key={i} className="manaus-card p-6 h-32 animate-pulse bg-surface-1" />
           ))}
         </div>
       ) : filteredJobs.length === 0 ? (
         <div className="text-center py-16 manaus-card">
-          <p className="text-[#707974] text-sm">Nenhuma vaga encontrada para os filtros selecionados.</p>
+          <p className="text-faint text-sm">Nenhuma vaga encontrada para os filtros selecionados.</p>
         </div>
       ) : (
         <div className="space-y-4">
           {filteredJobs.map((job) => (
-            <div key={job.id} className="manaus-card p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-6 hover:border-l-4 hover:border-l-[#006c49] transition-all">
+            <div key={job.id} className="manaus-card p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-6 hover:border-l-4 hover:border-l-accent transition-all">
               <div className="space-y-2">
                 <div className="flex flex-wrap items-center gap-2">
                   <span className="chip-leaf text-xs font-mono font-semibold">
@@ -169,22 +169,22 @@ function VagasContent() {
                 </div>
 
                 <Link href={`/vagas/${job.id}`}>
-                  <h2 className="font-display font-bold text-lg text-[#003527] hover:text-[#006c49] transition-colors">
+                  <h2 className="font-display font-bold text-lg text-ink hover:text-accent-text transition-colors">
                     {job.title}
                   </h2>
                 </Link>
 
-                <div className="flex flex-wrap items-center gap-4 text-xs text-[#707974]">
+                <div className="flex flex-wrap items-center gap-4 text-xs text-faint">
                   <span className="flex items-center gap-1.5 font-medium">
-                    <Building className="w-3.5 h-3.5 text-[#006c49]" />
+                    <Building className="w-3.5 h-3.5 text-accent-text" />
                     {job.company_name || 'Empresa Parceira'}
                   </span>
                   <span className="flex items-center gap-1.5">
-                    <MapPin className="w-3.5 h-3.5 text-[#00314a]" />
+                    <MapPin className="w-3.5 h-3.5 text-accent-text" />
                     {job.location || 'Manaus-AM'}
                   </span>
                   {job.salary && (
-                    <span className="flex items-center gap-1.5 font-semibold text-[#006c49]">
+                    <span className="flex items-center gap-1.5 font-semibold text-accent-text">
                       <DollarSign className="w-3.5 h-3.5" />
                       {job.salary}
                     </span>
@@ -192,7 +192,7 @@ function VagasContent() {
                 </div>
 
                 {job.description && (
-                  <p className="text-xs text-[#404944] max-w-2xl leading-relaxed pt-1 line-clamp-2">
+                  <p className="text-xs text-muted max-w-2xl leading-relaxed pt-1 line-clamp-2">
                     {job.description}
                   </p>
                 )}
@@ -240,10 +240,10 @@ export default function VagasPage() {
   return (
     <Suspense fallback={
       <div className="max-w-7xl mx-auto px-4 py-12">
-        <div className="h-10 bg-[#e0e3e5] w-64 rounded-lg animate-pulse mb-8" />
+        <div className="h-10 bg-surface-2 w-64 rounded-lg animate-pulse mb-8" />
         <div className="space-y-4">
           {[1, 2, 3].map((i) => (
-            <div key={i} className="manaus-card p-6 h-32 animate-pulse bg-[#f2f4f6]" />
+            <div key={i} className="manaus-card p-6 h-32 animate-pulse bg-surface-1" />
           ))}
         </div>
       </div>

@@ -67,14 +67,14 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
 
       <Link
         href="/projetos"
-        className="inline-flex items-center gap-2 text-xs font-semibold text-[#006c49] hover:text-[#003527] transition-colors mb-8"
+        className="inline-flex items-center gap-2 text-xs font-semibold text-accent-text hover:text-ink transition-colors mb-8"
       >
         <ArrowLeft className="w-4 h-4" />
         Voltar para o mural de projetos
       </Link>
 
-      <div className="manaus-card p-6 sm:p-10 border border-[#e0e3e5] space-y-8">
-        <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-6 pb-6 border-b border-[#e0e3e5]">
+      <div className="manaus-card p-6 sm:p-10 border border-border space-y-8">
+        <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-6 pb-6 border-b border-border">
           <div className="space-y-3">
             <div className="flex flex-wrap items-center gap-2">
               {project.featured && (
@@ -88,7 +88,7 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
               </span>
             </div>
 
-            <h1 className="font-display font-bold text-2xl sm:text-4xl text-[#003527]">
+            <h1 className="font-display font-bold text-2xl sm:text-4xl text-ink">
               {project.title}
             </h1>
           </div>
@@ -120,7 +120,7 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
         </div>
 
         {project.image_url && (
-          <div className="relative h-56 sm:h-72 w-full rounded-xl overflow-hidden border border-[#e0e3e5] bg-[#00281e]">
+          <div className="relative h-56 sm:h-72 w-full rounded-xl overflow-hidden border border-border bg-deep">
             <img
               src={project.image_url}
               alt={project.title}
@@ -130,17 +130,17 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
         )}
 
         <div>
-          <h2 className="text-xs font-mono uppercase tracking-wider text-[#707974] font-semibold mb-3">
+          <h2 className="text-xs font-mono uppercase tracking-wider text-faint font-semibold mb-3">
             Sobre o Projeto
           </h2>
-          <p className="text-sm sm:text-base text-[#191c1e] leading-relaxed whitespace-pre-line">
+          <p className="text-sm sm:text-base text-ink leading-relaxed whitespace-pre-line">
             {project.description}
           </p>
         </div>
 
         {project.stack && project.stack.length > 0 && (
           <div>
-            <h2 className="text-xs font-mono uppercase tracking-wider text-[#707974] font-semibold mb-3">
+            <h2 className="text-xs font-mono uppercase tracking-wider text-faint font-semibold mb-3">
               Stack & Tecnologias
             </h2>
             <div className="flex flex-wrap gap-2">
@@ -157,9 +157,9 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
           </div>
         )}
 
-        <div className="pt-6 border-t border-[#e0e3e5] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#707974]">
+        <div className="pt-6 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-faint">
           <span className="flex items-center gap-1.5">
-            <Clock className="w-4 h-4 text-[#006c49]" />
+            <Clock className="w-4 h-4 text-accent-text" />
             Projeto em destaque na comunidade ManausDev
           </span>
           {project.links?.github && (
@@ -167,7 +167,7 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
               href={project.links.github}
               target="_blank"
               rel="noreferrer"
-              className="text-[#006c49] font-bold hover:underline"
+              className="text-accent-text font-bold hover:underline"
             >
               Contribuir no GitHub →
             </a>

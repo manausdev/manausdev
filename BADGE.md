@@ -4,39 +4,39 @@ Badge oficial do projeto ManausDev. Use-o no seu README, site ou documentação 
 
 ## Arquivos
 
-- `assets/images/feito-em-manaus.svg` — Badge principal (modo claro)
-- `assets/images/feito-em-manaus-dark.svg` — Badge para modo escuro
-- `assets/images/feito-em-manaus.png` — Versão rasterizada (PNG)
+- `public/assets/feito-em-manaus.svg` — Badge principal (modo claro)
+- `public/assets/feito-em-manaus-dark.svg` — Badge para modo escuro
+- `public/assets/feito-em-manaus.png` — Versão rasterizada (PNG @2x, 280×84)
 
 ## Uso em Markdown
 
 ### README.md (modo claro)
 
 ```markdown
-![Feito em Manaus](assets/images/feito-em-manaus.svg)
+![Feito em Manaus](public/assets/feito-em-manaus.svg)
 ```
 
 ### README.md (modo escuro com seletor de tema)
 
 ```markdown
 <picture>
-  <source srcset="assets/images/feito-em-manaus-dark.svg" media="(prefers-color-scheme: dark)">
-  <img src="assets/images/feito-em-manaus.svg" alt="Feito em Manaus">
+  <source srcset="public/assets/feito-em-manaus-dark.svg" media="(prefers-color-scheme: dark)">
+  <img src="public/assets/feito-em-manaus.svg" alt="Feito em Manaus">
 </picture>
 ```
 
 ### Badge para perfis GitHub / repositórios públicos
 
 ```markdown
-![Feito em Manaus](https://raw.githubusercontent.com/manausdev/manausdev/main/assets/images/feito-em-manaus.svg)
+![Feito em Manaus](https://raw.githubusercontent.com/manausdev/manausdev/main/public/assets/feito-em-manaus.svg)
 ```
 
 ## Uso em HTML
 
 ```html
 <picture>
-  <source srcset="assets/images/feito-em-manaus-dark.svg" media="(prefers-color-scheme: dark)">
-  <img src="assets/images/feito-em-manaus.svg" alt="Feito em Manaus" width="140" height="42">
+  <source srcset="/assets/feito-em-manaus-dark.svg" media="(prefers-color-scheme: dark)">
+  <img src="/assets/feito-em-manaus.svg" alt="Feito em Manaus" width="140" height="42">
 </picture>
 ```
 

@@ -31,14 +31,14 @@ export default function ComunidadesPage() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div className="mb-10 text-center sm:text-left">
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#006c49]/10 text-[#006c49] border border-[#006c49]/20 text-xs font-semibold mb-3">
+        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-accent/10 text-accent-text border border-accent/20 text-xs font-semibold mb-3">
           <Sparkles className="w-3.5 h-3.5" />
           <span>Rede Colaborativa</span>
         </div>
-        <h1 className="font-display font-bold text-3xl sm:text-5xl text-[#003527] tracking-tight">
-          Comunidades em <span className="text-[#006c49]">Manaus</span>
+        <h1 className="font-display font-bold text-3xl sm:text-5xl text-ink tracking-tight">
+          Comunidades em <span className="text-accent-text">Manaus</span>
         </h1>
-        <p className="text-[#404944] text-sm sm:text-base mt-2 max-w-2xl">
+        <p className="text-muted text-sm sm:text-base mt-2 max-w-2xl">
           Grupos de estudos, meetups periódicos, comunidades técnicas e espaços de troca aberta de conhecimento.
         </p>
       </div>
@@ -46,16 +46,16 @@ export default function ComunidadesPage() {
       {loading ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {[1, 2, 3, 4, 5, 6].map((i) => (
-            <div key={i} className="manaus-card h-80 animate-pulse bg-[#f2f4f6] rounded-xl" />
+            <div key={i} className="manaus-card h-80 animate-pulse bg-surface-1 rounded-xl" />
           ))}
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {communities.map((comm) => (
-            <div key={comm.id} className="manaus-card overflow-hidden flex flex-col justify-between border border-[#e0e3e5] group hover:border-[#006c49]/40 transition-all duration-300">
+            <div key={comm.id} className="manaus-card overflow-hidden flex flex-col justify-between border border-border group hover:border-accent/40 transition-all duration-300">
               <div>
                 {/* Visual Preview Header */}
-                <Link href={`/comunidades/${comm.id}`} className="block relative h-40 w-full bg-[#00281e] overflow-hidden border-b border-[#e0e3e5]">
+                <Link href={`/comunidades/${comm.id}`} className="block relative h-40 w-full bg-deep overflow-hidden border-b border-border">
                   {comm.image_url ? (
                     <img
                       src={comm.image_url}
@@ -63,17 +63,17 @@ export default function ComunidadesPage() {
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-90 group-hover:opacity-100"
                     />
                   ) : (
-                    <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-[#003527] to-[#002219] p-4 text-center relative overflow-hidden">
+                    <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-brand p-4 text-center relative overflow-hidden">
                       <div className="absolute inset-0 bio-texture opacity-20" />
-                      <Sparkles className="w-10 h-10 text-[#6cf8bb]/60 mb-2 relative z-10" />
-                      <span className="font-display font-bold text-sm text-[#eff1f3]/90 relative z-10">
+                      <Sparkles className="w-10 h-10 text-neon/60 mb-2 relative z-10" />
+                      <span className="font-display font-bold text-sm text-on-dark/90 relative z-10">
                         {comm.name}
                       </span>
                     </div>
                   )}
                   <div className="absolute top-3 right-3 z-10">
-                    <span className="bg-[#003527]/85 backdrop-blur-md text-[#6cf8bb] text-[10px] font-mono px-2.5 py-1 rounded-full border border-[#6cf8bb]/30 font-semibold shadow-sm flex items-center gap-1">
-                      <Users className="w-3 h-3 text-[#6cf8bb]" />
+                    <span className="bg-deep/85 backdrop-blur-md text-neon text-[10px] font-mono px-2.5 py-1 rounded-full border border-neon/30 font-semibold shadow-sm flex items-center gap-1">
+                      <Users className="w-3 h-3 text-neon" />
                       {comm.members_count}+ membros
                     </span>
                   </div>
@@ -82,28 +82,28 @@ export default function ComunidadesPage() {
                 <div className="p-5 sm:p-6">
                   <div className="flex items-start justify-between gap-3 mb-2.5">
                     <div className="flex items-center gap-3">
-                      <div className="w-9 h-9 rounded-lg bg-[#003527] text-white flex items-center justify-center font-display font-bold text-sm shadow-sm flex-shrink-0">
+                      <div className="w-9 h-9 rounded-lg bg-deep text-white flex items-center justify-center font-display font-bold text-sm shadow-sm flex-shrink-0">
                         {comm.name.charAt(0)}
                       </div>
                       <div>
                         <Link href={`/comunidades/${comm.id}`}>
-                          <h2 className="font-display font-bold text-base text-[#003527] group-hover:text-[#006c49] transition-colors">{comm.name}</h2>
+                          <h2 className="font-display font-bold text-base text-ink group-hover:text-accent-text transition-colors">{comm.name}</h2>
                         </Link>
-                        <span className="text-[11px] font-mono text-[#006c49] font-medium">{comm.type}</span>
+                        <span className="text-[11px] font-mono text-accent-text font-medium">{comm.type}</span>
                       </div>
                     </div>
                   </div>
 
-                  <p className="text-xs text-[#404944] leading-relaxed mb-4 line-clamp-3">
+                  <p className="text-xs text-muted leading-relaxed mb-4 line-clamp-3">
                     {comm.description}
                   </p>
                 </div>
               </div>
 
-              <div className="px-5 pb-5 sm:px-6 sm:pb-6 pt-3 border-t border-[#e0e3e5]/70 flex items-center justify-between text-xs mt-auto">
+              <div className="px-5 pb-5 sm:px-6 sm:pb-6 pt-3 border-t border-border/70 flex items-center justify-between text-xs mt-auto">
                 <Link
                   href={`/comunidades/${comm.id}`}
-                  className="text-xs font-semibold text-[#006c49] hover:underline flex items-center gap-1"
+                  className="text-xs font-semibold text-accent-text hover:underline flex items-center gap-1"
                 >
                   <span>Página da Comunidade</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -116,9 +116,9 @@ export default function ComunidadesPage() {
                       href={url}
                       target="_blank"
                       rel="noreferrer"
-                      className="inline-flex items-center gap-1 px-2 py-1 rounded bg-[#f2f4f6] hover:bg-[#006c49]/10 text-[#003527] hover:text-[#006c49] border border-[#e0e3e5] transition-colors capitalize text-[11px] font-semibold"
+                      className="inline-flex items-center gap-1 px-2 py-1 rounded bg-surface-1 hover:bg-accent/10 text-ink hover:text-accent-text border border-border transition-colors capitalize text-[11px] font-semibold"
                     >
-                      <MessageSquare className="w-3 h-3 text-[#006c49]" />
+                      <MessageSquare className="w-3 h-3 text-accent-text" />
                       {key}
                     </a>
                   ))}
