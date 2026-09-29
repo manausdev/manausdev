@@ -17,14 +17,22 @@ import {
 } from 'lucide-react';
 import { GithubIcon } from '@/components/icons';
 import { createClient } from '@/lib/supabase/client';
-import { MOCK_DEVS, MOCK_PROJECTS, MOCK_EVENTS } from '@/lib/data/mock-data';
+import {
+  MOCK_DEVS,
+  MOCK_PROJECTS,
+  MOCK_EVENTS,
+  getMockProjectsByAuthor,
+  getMockEventsByOrganizer,
+  getMockDevStats,
+} from '@/lib/data/mock';
 import {
   AVAILABILITY_FILTERS,
   AVAILABILITY_META,
   SENIORITY_LABELS,
   SORT_OPTIONS,
 } from '@/lib/devs-meta';
-import type { Profile } from '@/types/database';
+import { useMockData } from '@/lib/env';
+import type { Profile, Project, EventItem } from '@/types/database';
 
 const PAGE_SIZE = 24;
 
@@ -53,20 +61,10 @@ function formatMemberSince(iso?: string): string {
   }
 }
 
-const MOCK_STATS = (() => {
-  const stats = new Map<string, { projects: number; events: number }>();
-  for (const dev of MOCK_DEVS) {
-    stats.set(dev.id, {
-      projects: MOCK_PROJECTS.filter((p) => p.author_id === dev.id).length,
-      events: MOCK_EVENTS.filter((e) => e.organizer_id === dev.id).length,
-    });
-  }
-  return stats;
-})();
-
 function DevsDirectory() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const useMock = useMockData();
 
   const searchTerm = searchParams.get('q') ?? '';
   const selectedStacks = useMemo(() => {
@@ -85,7 +83,6 @@ function DevsDirectory() {
   const [devs, setDevs] = useState<DevWithStats[]>([]);
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(true);
-  const [usingMock, setUsingMock] = useState(false);
   const [skillFacets, setSkillFacets] = useState<{ skill: string; count: number }[]>([]);
   const [cities, setCities] = useState<string[]>([]);
 
@@ -94,16 +91,25 @@ function DevsDirectory() {
   }, [searchTerm]);
 
   const loadFacets = useCallback(async () => {
-    const mockSkillCounts = new Map<string, number>();
-    for (const dev of MOCK_DEVS) {
-      for (const skill of dev.skills ?? []) {
-        mockSkillCounts.set(skill, (mockSkillCounts.get(skill) ?? 0) + 1);
+    if (useMock) {
+      const mockSkillCounts = new Map<string, number>();
+      for (const dev of MOCK_DEVS) {
+        for (const skill of dev.skills ?? []) {
+          mockSkillCounts.set(skill, (mockSkillCounts.get(skill) ?? 0) + 1);
+        }
       }
+      const mockFacets = Array.from(mockSkillCounts.entries())
+        .map(([skill, count]) => ({ skill, count }))
+        .sort((a, b) => b.count - a.count || a.skill.localeCompare(b.skill))
+        .slice(0, 12);
+      setSkillFacets(mockFacets);
+
+      const unique = Array.from(
+        new Set(MOCK_DEVS.map((d) => d.city).filter((c): c is string => Boolean(c)))
+      ).sort((a, b) => a.localeCompare(b));
+      setCities(unique.length > 0 ? unique : ['Manaus']);
+      return;
     }
-    const mockFacets = Array.from(mockSkillCounts.entries())
-      .map(([skill, count]) => ({ skill, count }))
-      .sort((a, b) => b.count - a.count || a.skill.localeCompare(b.skill))
-      .slice(0, 12);
 
     try {
       const supabase = createClient();
@@ -126,7 +132,7 @@ function DevsDirectory() {
             .slice(0, 12)
         );
       } else {
-        setSkillFacets(mockFacets);
+        setSkillFacets([]);
       }
 
       if (citiesData && citiesData.length > 0) {
@@ -142,7 +148,7 @@ function DevsDirectory() {
         setCities(['Manaus']);
       }
     } catch {
-      setSkillFacets(mockFacets);
+      setSkillFacets([]);
       setCities(['Manaus']);
     }
   }, []);
@@ -155,6 +161,46 @@ function DevsDirectory() {
     setLoading(true);
     const clean = sanitizeSearchTerm(searchTerm);
     const availabilityDb = AVAILABILITY_FILTERS.find((a) => a.param === availabilityParam)?.db;
+
+    if (useMock) {
+      const filtered = MOCK_DEVS.filter((dev) => {
+        if (clean) {
+          const haystack = `${dev.full_name} ${dev.username} ${dev.role ?? ''} ${dev.bio ?? ''}`.toLowerCase();
+          if (!haystack.includes(clean.toLowerCase())) return false;
+        }
+        if (
+          selectedStacks.length > 0 &&
+          !selectedStacks.every((s) =>
+            (dev.skills ?? []).some((sk) => sk.toLowerCase() === s.toLowerCase())
+          )
+        ) {
+          return false;
+        }
+        if (cityFilter && (dev.city ?? 'Manaus') !== cityFilter) return false;
+        if (availabilityDb && dev.availability !== availabilityDb) return false;
+        if (seniorityFilter && dev.seniority !== seniorityFilter) return false;
+        return true;
+      });
+
+      filtered.sort((a, b) => {
+        if (sortOption === 'nome') return (a.full_name ?? '').localeCompare(b.full_name ?? '');
+        if (sortOption === 'antigos') return (a.created_at ?? '').localeCompare(b.created_at ?? '');
+        return (b.created_at ?? '').localeCompare(a.created_at ?? '');
+      });
+
+      const start = (page - 1) * PAGE_SIZE;
+      const pageRows = filtered.slice(start, start + PAGE_SIZE);
+      setDevs(
+        pageRows.map((dev) => ({
+          ...dev,
+          projects_count: getMockDevStats(dev.id).projects,
+          events_count: getMockDevStats(dev.id).events,
+        }))
+      );
+      setTotal(filtered.length);
+      setLoading(false);
+      return;
+    }
 
     try {
       const supabase = createClient();
@@ -198,52 +244,17 @@ function DevsDirectory() {
           }))
         );
         setTotal(count ?? data.length);
-        setUsingMock(false);
-        return;
+      } else {
+        setDevs([]);
+        setTotal(0);
       }
-      throw new Error('no-results');
     } catch {
-      // Fallback: dados de demonstração filtrados no cliente
-      const filtered = MOCK_DEVS.filter((dev) => {
-        if (clean) {
-          const haystack = `${dev.full_name} ${dev.username} ${dev.role ?? ''} ${dev.bio ?? ''}`.toLowerCase();
-          if (!haystack.includes(clean.toLowerCase())) return false;
-        }
-        if (
-          selectedStacks.length > 0 &&
-          !selectedStacks.every((s) =>
-            (dev.skills ?? []).some((sk) => sk.toLowerCase() === s.toLowerCase())
-          )
-        ) {
-          return false;
-        }
-        if (cityFilter && (dev.city ?? 'Manaus') !== cityFilter) return false;
-        if (availabilityDb && dev.availability !== availabilityDb) return false;
-        if (seniorityFilter && dev.seniority !== seniorityFilter) return false;
-        return true;
-      });
-
-      filtered.sort((a, b) => {
-        if (sortOption === 'nome') return (a.full_name ?? '').localeCompare(b.full_name ?? '');
-        if (sortOption === 'antigos') return (a.created_at ?? '').localeCompare(b.created_at ?? '');
-        return (b.created_at ?? '').localeCompare(a.created_at ?? '');
-      });
-
-      const start = (page - 1) * PAGE_SIZE;
-      const pageRows = filtered.slice(start, start + PAGE_SIZE);
-      setDevs(
-        pageRows.map((dev) => ({
-          ...dev,
-          projects_count: MOCK_STATS.get(dev.id)?.projects ?? 0,
-          events_count: MOCK_STATS.get(dev.id)?.events ?? 0,
-        }))
-      );
-      setTotal(filtered.length);
-      setUsingMock(true);
+      setDevs([]);
+      setTotal(0);
     } finally {
       setLoading(false);
     }
-  }, [searchTerm, selectedStacks, cityFilter, availabilityParam, seniorityFilter, sortOption, page]);
+  }, [searchTerm, selectedStacks, cityFilter, availabilityParam, seniorityFilter, sortOption, page, useMock]);
 
   useEffect(() => {
     loadDevs();
@@ -300,7 +311,6 @@ function DevsDirectory() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      {/* Header */}
       <div className="mb-8">
         <div className="flex flex-wrap items-center gap-3">
           <h1 className="font-display font-bold text-3xl sm:text-4xl text-ink">Diretório de Devs</h1>
@@ -308,9 +318,9 @@ function DevsDirectory() {
             <Users className="w-3.5 h-3.5" />
             {total} {total === 1 ? 'desenvolvedor' : 'desenvolvedores'}
           </span>
-          {usingMock && (
+          {useMock && (
             <span className="!text-[10px] font-mono px-2 py-0.5 rounded-full bg-surface-1 text-faint">
-              dados de demonstração
+              modo demonstração
             </span>
           )}
         </div>
@@ -319,7 +329,6 @@ function DevsDirectory() {
         </p>
       </div>
 
-      {/* Barra de filtros */}
       <div className="manaus-card border border-border p-4 sm:p-5 mb-8 space-y-4">
         <form
           onSubmit={(e) => {
@@ -433,7 +442,6 @@ function DevsDirectory() {
         )}
       </div>
 
-      {/* Grid de devs */}
       {loading ? (
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
           {Array.from({ length: 6 }).map((_, i) => (
@@ -571,7 +579,6 @@ function DevsDirectory() {
             })}
           </div>
 
-          {/* Paginação */}
           {totalPages > 1 && (
             <div className="flex items-center justify-center gap-4 mt-10">
               <button
