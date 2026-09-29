@@ -22,18 +22,19 @@
   /* Typography */
   --ink: #191918;
   --body: #3c4249;
-  --muted: #667080;
-  --faint: #8a93a0;
+  --muted: #556070;
+  --faint: #5f6d7d;
 
   /* Brand */
-  --accent: #0073fd;
-  --accent-hover: #005fcc;
-  --accent-text: #0073fd;
+  --accent: #0068e8;
+  --accent-hover: #0057c7;
+  --accent-text: #0057c7;
   --accent-soft: #e6f0ff;
   --on-accent: #ffffff;
   --brand-blue: #009bfd;
   --cyan: #02b8b5;
   --neon: #4bd76d;
+  --neon-text: #1a7a3c;
   --on-neon: #06280f;
 
   /* Always-dark surfaces (badges, avatars, hero overlays) */
@@ -69,7 +70,7 @@
   --ink: #f2f5f8;
   --body: #c2cad3;
   --muted: #939da8;
-  --faint: #6e7883;
+  --faint: #95a0ad;
 
   --accent: #0a6bde;
   --accent-hover: #0c82f5;
@@ -79,6 +80,7 @@
   --brand-blue: #009bfd;
   --cyan: #2ed6d2;
   --neon: #4bd76d;
+  --neon-text: #6ee79a;
   --on-neon: #06280f;
 
   --deep: #0e2839;
@@ -115,6 +117,7 @@
   --color-brand-blue: var(--brand-blue);
   --color-cyan: var(--cyan);
   --color-neon: var(--neon);
+  --color-neon-text: var(--neon-text);
   --color-on-neon: var(--on-neon);
 
   --color-deep: var(--deep);
@@ -157,7 +160,6 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-display);
-  color: var(--ink);
   letter-spacing: -0.015em;
 }
 

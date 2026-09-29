@@ -78,7 +78,7 @@ export default async function HomePage() {
           <div className="lg:col-span-9 flex flex-col gap-6 text-white">
             <div className="inline-flex items-center gap-2 bg-accent/40 backdrop-blur-md border border-accent/60 px-4 py-1.5 rounded-full w-max shadow-sm">
               <span className="w-2 h-2 rounded-full bg-neon animate-pulse" />
-              <span className="text-xs font-semibold text-neon uppercase tracking-widest font-mono">
+              <span className="text-xs font-semibold text-neon-text uppercase tracking-widest font-mono">
                 Inovação Regional
               </span>
             </div>
@@ -101,7 +101,7 @@ export default async function HomePage() {
               </Link>
               <Link
                 href="/projetos"
-                className="inline-flex items-center justify-center gap-2 bg-transparent border border-neon text-neon hover:bg-neon/10 transition-colors px-6 py-3.5 rounded text-sm font-semibold"
+                className="inline-flex items-center justify-center gap-2 bg-transparent border border-neon text-neon-text hover:bg-neon/10 transition-colors px-6 py-3.5 rounded text-sm font-semibold"
               >
                 Ver Projetos Locais
               </Link>
@@ -362,7 +362,7 @@ export default async function HomePage() {
         <div className="absolute inset-0 opacity-10 pointer-events-none bio-texture" />
         <div className="max-w-3xl mx-auto flex flex-col items-center gap-6 relative z-10">
           <div className="w-12 h-12 rounded-xl bg-accent text-white flex items-center justify-center shadow-lg">
-            <Sparkles className="w-6 h-6 text-neon" />
+            <Sparkles className="w-6 h-6 text-neon-text" />
           </div>
           <h2 className="font-display font-bold text-3xl sm:text-5xl !text-white">
             Faça parte da história da tecnologia no Amazonas
@@ -381,3 +381,4 @@ export default async function HomePage() {
     </div>
   );
 }
+
