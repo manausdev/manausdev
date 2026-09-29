@@ -20,10 +20,10 @@ export default async function HomePage() {
   let events = MOCK_EVENTS;
   let jobs = MOCK_JOBS;
 
-  let devsCount = MOCK_DEVS.length + 440; // baseline community metric
-  let projectsCount = MOCK_PROJECTS.length + 115;
-  let communitiesCount = MOCK_COMMUNITIES.length + 14;
-  let jobsCount = MOCK_JOBS.length + 47;
+  let devsCount = MOCK_DEVS.length;
+  let projectsCount = MOCK_PROJECTS.length;
+  let communitiesCount = MOCK_COMMUNITIES.length;
+  let jobsCount = MOCK_JOBS.length;
 
   try {
     const supabase = await createClient();
@@ -37,7 +37,7 @@ export default async function HomePage() {
       communitiesCountRes,
       jobsCountRes
     ] = await Promise.all([
-      supabase.from('profiles').select('*').limit(4),
+      supabase.from('profiles').select('id, username, full_name, role, skills').limit(4),
       supabase.from('projects').select('*').limit(3),
       supabase.from('events').select('*').order('date', { ascending: true }).limit(3),
       supabase.from('jobs').select('*').limit(3),
