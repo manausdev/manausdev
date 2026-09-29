@@ -2,137 +2,131 @@
 name: browser-inspection
 description: >-
   Guia e procedimentos completos para inspecionar, interagir, capturar screenshots
-  e validar visualmente aplicações web no navegador real utilizando o Browser MCP Lite.
+  e validar visualmente aplicações web no navegador real utilizando o browser-mcp-lite.
 ---
 
-# 🌐 Browser Inspection Skill (Browser MCP Lite)
+# 🌐 Browser Inspection Skill (browser-mcp-lite)
 
-Esta skill fornece instruções completas para controlar, inspecionar e testar visualmente aplicações web no navegador real (Google Chrome / Chromium) utilizando a integração **Browser MCP Lite**.
+Controle um Chrome real a partir do agente, via **MCP** ou **CLI**. O servidor
+sobe o Chrome headless num perfil temporário, dirige tudo por CDP e encerra o
+processo junto com a sessão. **Não há extensão de navegador para instalar.**
+
+Implementação: <https://github.com/lu4nn3ry/browser-mcp-lite> (MIT, zero dependências).
 
 ---
 
 ## 📡 Arquitetura & Conexão
 
-O servidor MCP roda localmente e se comunica com a extensão de navegador via WebSocket e expõe uma API JSON-RPC 2.0 via HTTP:
+* **Endpoint MCP HTTP:** `http://127.0.0.1:12307/mcp` (JSON e SSE)
+* **Autenticação:** `Authorization: Bearer <token>`
+* **Token:** `~/.browser-mcp-secrets.json` ou `~/.browser-mcp-secrets.token`, criado na primeira execução
+* **Módulo de token:** `browser-mcp-lite/server/token.js` → `await loadToken()`
+* **Bind:** apenas `127.0.0.1`. `GET /health` é aberto e lista as ferramentas sem tocar no navegador.
 
-* **Endpoint MCP HTTP:** `http://127.0.0.1:12307/mcp`
-* **Endpoint WebSocket:** `ws://127.0.0.1:12307/ws`
-* **Autenticação:** Bearer Token carregado de `~/.browser-mcp-secrets.json` ou `~/.browser-mcp-secrets.token`.
-* **Módulo de Token:** `browser-mcp-lite/server/token.js` (`loadToken()`).
+O Chrome é detectado automaticamente (Chrome, Chromium ou Edge). Para forçar um
+binário, defina `BML_CHROME=/caminho/para/chrome`. `BML_HEADFUL=1` mostra a janela.
+
+```bash
+node bin/bml.mjs doctor    # Node, Chrome e token
+node bin/bml.mjs bridge    # sobe o servidor HTTP
+node bin/bml.mjs mcp       # sobe o servidor MCP em stdio
+```
 
 ---
 
 ## 🛠️ Ferramentas Disponíveis (MCP Tools)
 
+`tabId` é uma **string** (o target id do CDP) vinda de `list_tabs`. Quando omitido, a aba ativa é usada.
+
 | Ferramenta | Parâmetros | Descrição |
 |---|---|---|
-| `list_tabs` | `{}` | Lista todas as abas abertas no navegador com seus IDs, títulos e URLs. |
-| `focus_tab` | `{ tabId: number }` | Traz a aba especificada para o primeiro plano. |
-| `navigate_tab` | `{ tabId: number, url: string }` | Navega a aba para uma URL específica (`http://localhost:8080`, etc.). |
-| `reload_tab` | `{ tabId: number, bypassCache?: boolean }` | Recarrega a aba (com opção de limpar cache). |
-| `open_tab` | `{ url: string, active?: boolean }` | Abre uma nova aba com a URL fornecida. |
-| `screenshot` | `{ tabId?: number }` | Captura uma imagem PNG (Base64) da área visível da aba. |
-| `read_page` | `{ tabId?: number }` | Lê a árvore de acessibilidade / DOM semântico com referências de elementos. |
-| `click` | `{ tabId?: number, ref?: string, selector?: string }` | Clica em um elemento na página. |
-| `type_text` | `{ tabId?: number, text: string, ref?: string, clearFirst?: boolean }` | Digita texto em um campo ou input. |
-| `scroll_page` | `{ tabId?: number, direction: 'up'\|'down', amount?: number }` | Rola a página para cima ou para baixo. |
-| `inject_script` | `{ tabId?: number, code: string }` | Executa código JavaScript na página e retorna o resultado. |
+| `list_tabs` | `{}` | Lista as abas abertas com id, título e URL. |
+| `open_tab` | `{ url }` | Abre uma nova aba e devolve o outline da página. |
+| `navigate_tab` | `{ url, tabId? }` | Navega e espera o `load`. |
+| `reload_tab` | `{ tabId?, ignoreCache? }` | Recarrega, opcionalmente ignorando o cache. |
+| `focus_tab` | `{ tabId }` | Traz a aba para o primeiro plano. |
+| `read_page` | `{ tabId?, maxNodes?, maxDepth?, includeHidden? }` | Outline YAML com `ref=<id>` em cada nó interativo. |
+| `click` | `{ target, tabId?, button? }` | Clica por `ref` ou seletor CSS, com eventos de mouse reais. |
+| `type_text` | `{ target, text?, tabId?, clear?, submit? }` | Digita com eventos de teclado reais (React e afins registram). |
+| `scroll_page` | `{ deltaY?, deltaX?, to?, selector?, tabId? }` | Roda, pula para `top`/`bottom` ou traz um elemento à vista. |
+| `screenshot` | `{ tabId?, fullPage?, selector?, format?, quality?, path? }` | PNG/JPEG; `path` grava em disco. |
+| `inject_script` | `{ script, args?, tabId? }` | Avalia JS e devolve o resultado em JSON. |
+| `audit_page` | `{ tabId?, checks?, selector?, highlight? }` | Overflow horizontal + contraste WCAG AA. |
 
 ---
 
-## 📸 Workflow de Inspeção Visual & Screenshots
+## 🚀 O caminho rápido: CLI
 
-Para tirar screenshots e verificar layout, renderização de fontes e estados responsivos:
+Para capturas e auditorias pontuais, não use JSON-RPC à mão.
 
-### 1. Script Node.js de Automação Rápida
+```bash
+# Screenshot (com o servidor Next já rodando)
+node bin/bml.mjs shot http://localhost:3000 screenshot.png --full --width=390
 
-```javascript
-import { loadToken } from './browser-mcp-lite/server/token.js';
-import fs from 'fs';
+# Tema escuro via media emulation
+node bin/bml.mjs shot http://localhost:3000 dark.png --color-scheme=dark
 
-async function captureTabScreenshot(targetUrlPart = 'localhost:8080', outputPath = 'screenshot.png') {
-  const token = loadToken();
-  const URL = 'http://127.0.0.1:12307/mcp';
-  let sessionId = null;
-
-  async function post(body) {
-    const res = await fetch(URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json, text/event-stream',
-        'Authorization': 'Bearer ' + token,
-        ...(sessionId ? { 'mcp-session-id': sessionId } : {})
-      },
-      body: JSON.stringify(body)
-    });
-    const sid = res.headers.get('mcp-session-id');
-    if (sid) sessionId = sid;
-    const raw = await res.text();
-    const lines = raw.split('\n').filter(l => l.startsWith('data:'));
-    return lines.map(l => { try { return JSON.parse(l.slice(5)); } catch { return null; } }).filter(Boolean);
-  }
-
-  // 1. Inicializa sessão MCP
-  await post({
-    jsonrpc: '2.0', id: 1, method: 'initialize',
-    params: { protocolVersion: '2024-11-05', capabilities: {}, clientInfo: { name: 'agent', version: '1.0' } }
-  });
-  await post({ jsonrpc: '2.0', method: 'notifications/initialized', params: {} });
-
-  // 2. Lista abas e seleciona a correspondente
-  const tabsMsg = await post({ jsonrpc: '2.0', id: 2, method: 'tools/call', params: { name: 'list_tabs', arguments: {} } });
-  const tabs = JSON.parse(tabsMsg.find(m => m.id === 2)?.result?.content?.[0]?.text || '[]');
-  const tab = tabs.find(t => t.url.includes(targetUrlPart)) || tabs[0];
-
-  if (!tab) {
-    console.error('Aba não encontrada.');
-    return;
-  }
-
-  // 3. Foca e recarrega
-  await post({ jsonrpc: '2.0', id: 3, method: 'tools/call', params: { name: 'focus_tab', arguments: { tabId: tab.id } } });
-  await post({ jsonrpc: '2.0', id: 4, method: 'tools/call', params: { name: 'reload_tab', arguments: { tabId: tab.id, bypassCache: true } } });
-  await new Promise(r => setTimeout(r, 2000));
-
-  // 4. Captura screenshot
-  const shotMsg = await post({ jsonrpc: '2.0', id: 5, method: 'tools/call', params: { name: 'screenshot', arguments: { tabId: tab.id } } });
-  const b64 = shotMsg.find(m => m.id === 5)?.result?.content?.[0]?.data || '';
-  
-  if (b64) {
-    fs.writeFileSync(outputPath, Buffer.from(b64.replace(/^data:image\/png;base64,/, ''), 'base64'));
-    console.log(`✅ Screenshot salvo em ${outputPath}`);
-  }
-}
+# Auditoria em múltiplas larguras — sai com código 1 se falhar
+node bin/bml.mjs audit http://localhost:3000/devs --widths=390,768,1440 --json=report.json
 ```
+
+`bml audit` imprime uma linha por URL × largura e distingue três situações de
+overflow, o que evita falso positivo em carrossel:
+
+* **escapa da viewport** → defeito real, cria scroll horizontal
+* **cortado por ancestral** (`overflow-x: hidden|clip`) → conteúdo inalcançável
+* **dentro de container com scroll** (`auto|scroll`) → intencional, não é defeito
 
 ---
 
-## 🔍 Leitura do DOM e Acessibilidade (`read_page`)
+## 📸 Workflow de Inspeção Visual
 
-Para verificar o conteúdo da página, textos renderizados e elementos interativos sem ruído de tags desnecessárias:
+1. Garanta o dev server no ar e **espere o build terminar**. Uma captura durante
+   o compile mostra a tela de erro, não o layout.
+2. `node bin/bml.mjs shot <url> <arquivo>.png --width=390` para cada largura que
+   importa (390, 768, 1440). Meia largura sozinha esconde o bug clássico.
+3. Use a ferramenta de leitura de imagem sobre o PNG para avaliar tipografia,
+   espaçamento e alinhamento.
+4. Rode `bml audit` para overflow e contraste. Não confie no olho para contraste:
+   `#8A93A0` sobre branco dá 3.11:1 e reprova em AA.
+5. Para inspecionar algo que só aparece depois de interação, use as ferramentas
+   MCP interativas (`read_page` → `click` → `screenshot`) em vez da CLI.
 
-```javascript
-const readMsg = await post({
-  jsonrpc: '2.0',
-  id: 6,
-  method: 'tools/call',
-  params: { name: 'read_page', arguments: { tabId: targetTab.id } }
-});
+---
 
-const pageTree = readMsg.find(m => m.id === 6)?.result?.content?.[0]?.text;
-console.log('Árvore de Acessibilidade:', pageTree);
+## 🔍 Leitura do DOM (`read_page`)
+
+`read_page` devolve um outline compacto em vez de HTML bruto:
+
+```yaml
+url: http://localhost:3000/devs
+title: "Diretório da Comunidade"
+lang: pt-BR
+viewport: 390x844
+
+- ref=r1 | role=banner | label="ManausDev"
+  - ref=r2 | role=link | label="Devs" | href=/devs
+- ref=r3 | role=searchbox | label="Buscar" | placeholder=Nome, skill, bio…
+- ref=r4 | role=button | label="Filtrar"
 ```
+
+* `label` é o nome acessível computado; o que vem depois são os atributos reais.
+* Os `ref` são regerados a cada chamada. **Sempre releia após navegar.**
+* `click` e `type_text` aceitam `ref` (`"r4"`) ou seletor CSS (`"#busca"`).
 
 ---
 
 ## 🧭 Boas Práticas ao Testar a UI
 
-1. **Evitar Dependências de Runtime que violam CSP:**
-   * Evite scripts CDN que usem `eval` (ex: Tailwind Play CDN). Prefira **Vanilla CSS puro** com variáveis e classes semânticas.
-2. **Sempre Inspecionar com `view_file`:**
-   * Após salvar a imagem de screenshot em disco (ex: `screenshot.png`), use a ferramenta `view_file` para analisar os elementos visuais, contraste, tipografia e alinhamento.
-3. **Testar Responsividade:**
-   * Use `scroll_page` com `direction: 'down'` e `amount: 800` para capturar seções abaixo da dobra (Hero, Listagens, Rodapé).
-4. **Verificar Estado de Rede e Carregamento:**
-   * Certifique-se de que endpoints de dados ou stores locais (`localStorage`) foram inicializados antes de capturar screenshots de telas dinâmicas.
+1. **Não usar CDN com `eval`.** O projeto usa Tailwind v4 via PostCSS. Play CDN
+   quebra CSP e polui o bundle de produção.
+2. **Contraste é medido, não estimado.** Tokens como `text-faint` precisam de
+   4.5:1 em texto normal e 3:1 em texto grande (≥24px, ou ≥18.66px com peso 700).
+3. **Verificar os três estados de overflow** ao mexer em largura: elemento que
+   escapa, ancestral com `overflow-x: hidden` que corta, e carrossel com
+   `overflow-x: auto` que é intencional.
+4. **Aguardar dados dinâmicos.** Screenshot de tela que depende de Supabase ou
+   de `localStorage` precisa de espera explícita; sem ela a auditoria mede o
+   estado vazio.
+5. **Conferir light e dark.** Tokens semânticos devem manter contraste nos dois
+   modos; emulação é `--color-scheme=dark`.
