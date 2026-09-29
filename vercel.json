@@ -1,5 +1,0 @@
-{
-  "rewrites": [
-    { "source": "/devs/:username", "destination": "/devs/anasilva" }
-  ]
-}
