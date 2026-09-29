@@ -1,0 +1,35 @@
+.container {
+  max-width: 80rem;
+  margin-inline: auto;
+  padding: 3rem 1rem;
+}
+
+@media (min-width: 640px) {
+  .container {
+    padding-inline: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    padding-inline: 2rem;
+  }
+}
+
+.card {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 20px rgba(0, 115, 253, 0.05);
+  padding: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .card {
+    padding: 2.5rem;
+  }
+}
+
+.card > * + * {
+  margin-top: 2rem;
+}
