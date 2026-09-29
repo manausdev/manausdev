@@ -1,0 +1,35 @@
+import { Meta, Controls, Primary, Stories, Subtitle } from '@storybook/blocks';
+import * as ButtonStories from './Button.stories';
+
+<Meta of={ButtonStories.Primary} />
+
+# Button
+
+Botao acional do design system. Substitui as classes globais `.btn-primary`,
+`.btn-secondary` e `.btn-leaf` que ainda estao em `globals.css` durante a
+migracao.
+
+<Subtitle>Quando usar</Subtitle>
+
+- Acao principal da tela: uma por vez, `variant="primary"`.
+- Acao secundaria ou terciaria: `variant="secondary"` ou `variant="ghost"`.
+- **Submit** de formulario: passe `type="submit"` explicitamente. O default e
+  `type="button"` para o botao nao submeter formulario por acidente.
+- Botao que so navega para outra rota da aplicacao deve ser `Link` com as
+  classes do botao, nao um `<button>` com `onClick`.
+
+<Primary />
+
+<Controls />
+
+<Stories of={ButtonStories} />
+
+## Acessibilidade
+
+- Foco visivel via `focus-visible:ring-2`, com offset na cor do canvas para nao
+  se perder sobre surfaces coloridos.
+- `disabled` usa `opacity-50` e `pointer-events-none`; o estado continua exposto
+  ao leitor de tela pelo atributo nativo.
+- Contraste: o auditor do `browser-mcp-lite` exige 4.5:1 para texto normal. Por
+  isso `--accent` e `--accent-text` foram escurecidos para 4.5:1 sobre o canvas.
+  Nao reintroduza um azul mais claro sem revalidar.
