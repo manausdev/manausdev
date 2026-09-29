@@ -1,0 +1,44 @@
+.base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+  border-radius: 9999px;
+  background-color: var(--deep);
+  color: var(--on-dark);
+  font-family: var(--font-display);
+  font-weight: 700;
+}
+
+.base img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ---------- Sizes ---------- */
+
+.sm {
+  width: 2rem;
+  height: 2rem;
+  font-size: 0.75rem;
+}
+
+.md {
+  width: 3rem;
+  height: 3rem;
+  font-size: 1rem;
+}
+
+.lg {
+  width: 4rem;
+  height: 4rem;
+  font-size: 1.25rem;
+}
+
+.xl {
+  width: 6rem;
+  height: 6rem;
+  font-size: 1.75rem;
+}

@@ -1,0 +1,105 @@
+.base {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.5rem;
+  text-decoration: none;
+  font-family: var(--font-body);
+  transition: color 180ms ease, background-color 180ms ease, box-shadow 180ms ease;
+}
+
+/* ---------- Variants ---------- */
+
+.default {
+  color: var(--accent-text);
+}
+
+.default:hover {
+  text-decoration: underline;
+}
+
+.button {
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 0.25rem;
+  background-color: var(--accent);
+  color: var(--on-accent);
+  font-weight: 600;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  padding: 0.625rem 1.25rem;
+  box-shadow: 0 2px 8px rgba(0 115 253 / 0.2);
+}
+
+.button:hover:not(:disabled) {
+  background-color: var(--accent-hover);
+  transform: translateY(-1px);
+}
+
+.buttonSecondary {
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 0.25rem;
+  background-color: transparent;
+  color: var(--accent-text);
+  border: 1px solid var(--accent);
+  font-weight: 600;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  padding: 0.625rem 1.25rem;
+}
+
+.buttonSecondary:hover:not(:disabled) {
+  background-color: var(--accent-soft);
+}
+
+.buttonLeaf {
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 0.25rem;
+  background-color: var(--neon);
+  color: var(--on-neon);
+  font-weight: 600;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  padding: 0.625rem 1.25rem;
+  box-shadow: 0 2px 8px rgba(75 215 109 / 0.25);
+}
+
+.buttonLeaf:hover:not(:disabled) {
+  filter: brightness(0.95);
+  transform: translateY(-1px);
+}
+
+.nav {
+  font-size: 0.875rem;
+  color: var(--muted);
+}
+
+.nav:hover {
+  color: var(--ink);
+}
+
+.footer {
+  font-size: 0.875rem;
+  color: var(--faint);
+}
+
+.footer:hover {
+  color: var(--accent-text);
+}
+
+/* ---------- Acessibilidade ---------- */
+
+/* Substitui o utilitario Tailwind `sr-only`: oculta do visual mas
+   permanece no DOM para leitores de tela. */
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}

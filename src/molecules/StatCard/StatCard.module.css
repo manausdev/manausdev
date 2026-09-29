@@ -1,0 +1,50 @@
+.base {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0.5rem 1rem;
+}
+
+.value {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+}
+
+@media (min-width: 640px) {
+  .value {
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+  }
+}
+
+/* ---------- Tones ---------- */
+
+/* Ambos passam 4.5:1 sobre o canvas; o tom e explicito no consumidor. */
+.toneInk {
+  color: var(--ink);
+}
+
+.toneAccent {
+  color: var(--accent-text);
+}
+
+.label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-top: 0.25rem;
+}
+
+.link {
+  transition: opacity 150ms ease;
+}
+
+.link:hover {
+  opacity: 0.8;
+}

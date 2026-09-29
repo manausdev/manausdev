@@ -1,0 +1,63 @@
+.card {
+  border-radius: 0.75rem;
+  transition: all 250ms ease;
+}
+
+/* ---------- Variants ---------- */
+
+/* Equivale a antiga .manaus-card */
+.default {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 20px rgba(0, 115, 253, 0.06);
+}
+
+.default:hover {
+  border-color: var(--border-strong);
+  box-shadow: 0 12px 30px -5px rgba(0, 115, 253, 0.12);
+}
+
+.glass {
+  background: color-mix(in oklab, var(--surface) 88%, transparent);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 25px rgba(0, 115, 253, 0.06);
+}
+
+.dark {
+  background-color: var(--deep);
+  border: 1px solid color-mix(in oklab, var(--border-strong) 20%, transparent);
+  color: var(--on-dark);
+}
+
+.flush {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+}
+
+/* ---------- Paddings ---------- */
+
+.sm {
+  padding: 1rem;
+}
+
+.md {
+  padding: 1.5rem;
+}
+
+.lg {
+  padding: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .lg {
+    padding: 2.5rem;
+  }
+}
+
+/* ---------- Interactivity ---------- */
+
+/* Aplicada apenas junto da variant default; o TSX garante a combinacao. */
+.interactive:hover {
+  transform: translateY(-2px);
+}

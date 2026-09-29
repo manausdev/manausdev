@@ -1,0 +1,53 @@
+.base {
+  width: 100%;
+  background-color: var(--surface);
+  color: var(--ink);
+  border: 1px solid var(--border);
+  border-radius: 0.25rem;
+  font-family: var(--font-body);
+  transition: all 180ms ease;
+}
+
+.base::placeholder {
+  color: var(--faint);
+}
+
+.base:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--accent) 15%, transparent);
+}
+
+.base:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Estado de erro por atributo, para casar com o que o componente ja emitia.
+   Usar seletor de atributo em vez de uma classe significa que o Input
+   continua estilizando como invalido mesmo quando o consumidor passa
+   `aria-invalid` direto, sem a prop `invalid`. */
+.base[aria-invalid='true'] {
+  border-color: var(--danger);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--danger) 15%, transparent);
+}
+
+/* ---------- Sizes ---------- */
+
+.sm {
+  font-size: 0.75rem;
+  line-height: 1rem;
+  padding: 0.5rem 0.75rem;
+}
+
+.md {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  padding: 0.625rem 0.875rem;
+}
+
+.lg {
+  font-size: 1rem;
+  line-height: 1.5rem;
+  padding: 0.875rem 1rem;
+}

@@ -1,0 +1,51 @@
+.base {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 500;
+  padding: 0.25rem 0.625rem;
+  border: 1px solid;
+  border-radius: 0.25rem;
+  white-space: nowrap;
+}
+
+/* ---------- Variants ---------- */
+
+.leaf {
+  background-color: var(--accent-soft);
+  color: var(--accent-text);
+  border-color: color-mix(in oklab, var(--accent) 25%, transparent);
+}
+
+.river {
+  background-color: var(--surface-2);
+  color: var(--ink);
+  border-color: var(--border);
+}
+
+.neutral {
+  background-color: var(--surface-1);
+  color: var(--muted);
+  border-color: var(--border);
+}
+
+.success {
+  background-color: var(--success-soft);
+  color: var(--success-text);
+  border-color: color-mix(in oklab, var(--success) 30%, transparent);
+}
+
+.danger {
+  background-color: var(--danger-soft);
+  color: var(--danger-text);
+  border-color: color-mix(in oklab, var(--danger) 30%, transparent);
+}
+
+.dark {
+  background-color: var(--deep);
+  color: var(--on-dark);
+  border-color: transparent;
+}
