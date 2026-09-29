@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import { Sun, Moon } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import styles from './ThemeToggle.module.css';
 
 const STORAGE_KEY = 'manausdev-theme';
 
@@ -13,7 +15,7 @@ function applyTheme(theme: Theme) {
   root.style.colorScheme = theme;
 }
 
-export function ThemeToggle({ className = '' }: { className?: string }) {
+export function ThemeToggle({ className }: { className?: string }) {
   const [theme, setTheme] = useState<Theme>('light');
   const [mounted, setMounted] = useState(false);
 
@@ -38,11 +40,9 @@ export function ThemeToggle({ className = '' }: { className?: string }) {
       onClick={toggle}
       aria-label={theme === 'dark' ? 'Ativar tema claro' : 'Ativar tema escuro'}
       title={theme === 'dark' ? 'Tema claro' : 'Tema escuro'}
-      className={`p-2 rounded-lg text-muted hover:text-ink hover:bg-surface-1 transition-colors ${
-        mounted ? '' : 'opacity-0'
-      } ${className}`}
+      className={cn(styles.button, !mounted && styles.hidden, className)}
     >
-      {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+      {theme === 'dark' ? <Sun className={styles.icon} /> : <Moon className={styles.icon} />}
     </button>
   );
 }

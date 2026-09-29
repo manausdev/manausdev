@@ -1,0 +1,382 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  border-bottom: 1px solid var(--border);
+  background: color-mix(in oklab, var(--surface) 90%, transparent);
+  backdrop-filter: blur(12px);
+  transition: all 250ms ease;
+}
+
+.inner {
+  max-width: 80rem;
+  margin-inline: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+}
+
+@media (min-width: 640px) {
+  .inner {
+    padding-inline: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .inner {
+    padding-inline: 2rem;
+  }
+}
+
+/* ---------- Brand ---------- */
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+}
+
+.brandText {
+  display: flex;
+  flex-direction: column;
+}
+
+.logo {
+  height: 2.25rem;
+  width: 2.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5rem;
+  background-image: linear-gradient(135deg, #009bfd 0%, #02b8b5 50%, #4bd76d 100%);
+  color: var(--on-neon);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  transition: opacity 180ms ease;
+}
+
+.logo:hover {
+  opacity: 0.9;
+}
+
+.logoText {
+  font-family: var(--font-mono-theme);
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.brandName {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.125rem;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+}
+
+.brandAccent {
+  color: var(--accent-text);
+}
+
+.brandTag {
+  font-size: 10px;
+  color: var(--accent-text);
+  font-family: var(--font-mono-theme);
+  letter-spacing: 0.1em;
+  margin-top: -0.25rem;
+  font-weight: 600;
+}
+
+/* ---------- Desktop nav ---------- */
+
+.nav {
+  display: none;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+@media (min-width: 1280px) {
+  .nav {
+    display: flex;
+  }
+}
+
+.navLink {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 180ms ease;
+  color: var(--muted);
+}
+
+.navLink:hover {
+  color: var(--ink);
+  background-color: var(--surface-1);
+}
+
+.navLinkActive,
+.navLinkActive:hover {
+  background: color-mix(in oklab, var(--accent) 10%, transparent);
+  color: var(--accent-text);
+  font-weight: 600;
+}
+
+.navIcon {
+  width: 1rem;
+  height: 1rem;
+  opacity: 0.75;
+}
+
+/* ---------- Desktop auth ---------- */
+
+.auth {
+  display: none;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+@media (min-width: 1280px) {
+  .auth {
+    display: flex;
+  }
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.skeleton {
+  height: 2rem;
+  width: 5rem;
+  background-color: var(--surface-2);
+  border-radius: 0.5rem;
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.authUser {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.painelBtn {
+  background-color: var(--neon);
+  color: var(--on-neon);
+  font-weight: 600;
+  font-size: 0.75rem;
+  border-radius: 0.25rem;
+  padding: 0.5rem 0.875rem;
+  box-shadow: 0 2px 8px rgba(75, 215, 109, 0.25);
+  transition: all 180ms ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.375rem;
+}
+
+.painelBtn:hover {
+  filter: brightness(0.95);
+  transform: translateY(-1px);
+}
+
+.signOut {
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  color: var(--faint);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 180ms ease, background-color 180ms ease;
+}
+
+.signOut:hover {
+  color: var(--danger);
+  background-color: var(--danger-soft);
+}
+
+.authGuest {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+}
+
+.loginLink {
+  padding: 0.5rem 0.875rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--ink);
+  transition: background-color 180ms ease;
+}
+
+.loginLink:hover {
+  background-color: var(--surface-1);
+}
+
+.registerBtn {
+  background-color: var(--accent);
+  color: var(--on-accent);
+  font-weight: 600;
+  font-size: 0.75rem;
+  border-radius: 0.25rem;
+  padding: 0.5rem 1rem;
+  box-shadow: 0 2px 8px rgba(0, 115, 253, 0.2);
+  transition: all 180ms ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.registerBtn:hover {
+  background-color: var(--accent-hover);
+  transform: translateY(-1px);
+}
+
+/* ---------- Mobile trigger ---------- */
+
+.mobileTrigger {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+@media (min-width: 1280px) {
+  .mobileTrigger {
+    display: none;
+  }
+}
+
+.menuButton {
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  color: var(--muted);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 180ms ease, background-color 180ms ease;
+}
+
+.menuButton:hover {
+  color: var(--ink);
+  background-color: var(--surface-1);
+}
+
+/* ---------- Mobile menu ---------- */
+
+.mobileMenu {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  border-bottom: 1px solid var(--border);
+  background-color: var(--surface);
+  padding: 1rem;
+}
+
+@media (min-width: 1280px) {
+  .mobileMenu {
+    display: none;
+  }
+}
+
+.mobileLink {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: color 180ms ease, background-color 180ms ease;
+  color: var(--muted);
+}
+
+.mobileLink:hover {
+  color: var(--ink);
+  background-color: var(--surface-1);
+}
+
+.mobileLinkActive,
+.mobileLinkActive:hover {
+  background: color-mix(in oklab, var(--accent) 10%, transparent);
+  color: var(--accent-text);
+  font-weight: 600;
+}
+
+.mobileAuth {
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.mobileBtnLeaf,
+.mobileBtnSecondary,
+.mobileBtnPrimary {
+  width: 100%;
+  justify-content: center;
+  font-weight: 600;
+  border-radius: 0.25rem;
+  padding: 0.625rem 1.25rem;
+  transition: all 180ms ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.mobileBtnLeaf {
+  background-color: var(--neon);
+  color: var(--on-neon);
+  box-shadow: 0 2px 8px rgba(75, 215, 109, 0.25);
+}
+
+.mobileBtnLeaf:hover {
+  filter: brightness(0.95);
+  transform: translateY(-1px);
+}
+
+.mobileBtnSecondary {
+  background-color: transparent;
+  color: var(--accent-text);
+  border: 1px solid var(--accent);
+}
+
+.mobileBtnSecondary:hover {
+  background-color: var(--accent-soft);
+}
+
+.mobileBtnPrimary {
+  background-color: var(--accent);
+  color: var(--on-accent);
+  box-shadow: 0 2px 8px rgba(0, 115, 253, 0.2);
+}
+
+.mobileBtnPrimary:hover {
+  background-color: var(--accent-hover);
+  transform: translateY(-1px);
+}
+
+.mobileSignOut {
+  width: 100%;
+  padding: 0.625rem 0;
+  border-radius: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--danger);
+  background: color-mix(in oklab, var(--danger-soft) 40%, transparent);
+  border: none;
+  cursor: pointer;
+  transition: background-color 180ms ease;
+}
+
+.mobileSignOut:hover {
+  background-color: var(--danger-soft);
+}

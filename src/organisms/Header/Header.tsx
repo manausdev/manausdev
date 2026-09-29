@@ -4,21 +4,22 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { createClient } from '@/lib/supabase/client';
-import { ThemeToggle } from '@/components/theme-toggle';
+import { ThemeToggle } from '@/organisms/ThemeToggle/ThemeToggle';
 import { User } from '@supabase/supabase-js';
-import { 
-  Users, 
-  Code2, 
-  Briefcase, 
-  Sparkles, 
-  Menu, 
-  X, 
-  Calendar, 
-  Building2, 
-  LogIn,
+import {
+  Users,
+  Code2,
+  Briefcase,
+  Sparkles,
+  Menu,
+  X,
+  Calendar,
+  Building2,
   LogOut,
-  LayoutDashboard
+  LayoutDashboard,
 } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import styles from './Header.module.css';
 
 const NAV_LINKS = [
   { href: '/devs', label: 'Desenvolvedores', icon: Users },
@@ -29,7 +30,7 @@ const NAV_LINKS = [
   { href: '/empresas', label: 'Empresas', icon: Building2 },
 ];
 
-export function Navbar() {
+export function Header() {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [user, setUser] = useState<User | null>(null);
@@ -66,100 +67,82 @@ export function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border bg-surface/90 backdrop-blur-md transition-all">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
-        {/* Brand Logo */}
-        <Link href="/" className="flex items-center gap-2.5 group">
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-brand text-on-neon shadow-sm transition-opacity hover:opacity-90">
-            <span className="font-bold text-base font-mono">{'</>'}</span>
+    <header className={styles.header}>
+      <div className={styles.inner}>
+        <Link href="/" className={styles.brand}>
+          <div className={styles.logo}>
+            <span className={styles.logoText}>{'</>'}</span>
           </div>
-          <div className="flex flex-col">
-            <span className="font-display font-bold text-lg tracking-tight text-ink flex items-center">
-              Manaus<span className="text-accent-text">Dev</span>
+          <div className={styles.brandText}>
+            <span className={styles.brandName}>
+              Manaus<span className={styles.brandAccent}>Dev</span>
             </span>
-            <span className="text-[10px] text-accent-text font-mono tracking-widest -mt-1 font-semibold">
-              AMAZONAS • TECH
-            </span>
+            <span className={styles.brandTag}>AMAZONAS • TECH</span>
           </div>
         </Link>
 
-        {/* Desktop Navigation Links */}
-        <nav className="hidden xl:flex items-center gap-1">
+        <nav className={styles.nav}>
           {NAV_LINKS.map(({ href, label, icon: Icon }) => {
             const isActive = pathname.startsWith(href);
             return (
               <Link
                 key={href}
                 href={href}
-                className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-all ${
-                  isActive
-                    ? 'bg-accent/10 text-accent-text font-semibold'
-                    : 'text-muted hover:text-ink hover:bg-surface-1'
-                }`}
+                className={cn(styles.navLink, isActive && styles.navLinkActive)}
               >
-                <Icon className="w-4 h-4 opacity-75" />
+                <Icon className={styles.navIcon} />
                 {label}
               </Link>
             );
           })}
         </nav>
 
-        {/* Desktop Auth */}
-        <div className="hidden xl:flex items-center gap-3">
+        <div className={styles.auth}>
           <ThemeToggle />
           {loading ? (
-            <div className="h-8 w-20 bg-surface-2 animate-pulse rounded-lg" />
+            <div className={styles.skeleton} />
           ) : user ? (
-            <div className="flex items-center gap-2">
-              <Link
-                href="/dashboard"
-                className="btn-leaf text-xs !py-2 !px-3.5"
-              >
+            <div className={styles.authUser}>
+              <Link href="/dashboard" className={styles.painelBtn}>
                 <LayoutDashboard className="w-3.5 h-3.5" />
                 <span>Painel</span>
               </Link>
               <button
                 onClick={handleSignOut}
                 title="Sair da conta"
-                className="p-2 rounded-lg text-faint hover:text-danger hover:bg-danger-soft transition-colors"
+                aria-label="Sair da conta"
+                className={styles.signOut}
               >
                 <LogOut className="w-4 h-4" />
               </button>
             </div>
           ) : (
-            <div className="flex items-center gap-2.5">
-              <Link
-                href="/auth/login"
-                className="px-3.5 py-2 rounded-lg text-sm font-semibold text-ink hover:bg-surface-1 transition-colors"
-              >
+            <div className={styles.authGuest}>
+              <Link href="/auth/login" className={styles.loginLink}>
                 Entrar
               </Link>
-              <Link
-                href="/auth/register"
-                className="btn-primary text-xs !py-2 !px-4"
-              >
+              <Link href="/auth/register" className={styles.registerBtn}>
                 Criar Conta
               </Link>
             </div>
           )}
         </div>
 
-        {/* Mobile trigger */}
-        <div className="flex items-center gap-1 xl:hidden">
+        <div className={styles.mobileTrigger}>
           <ThemeToggle />
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 rounded-lg text-muted hover:text-ink hover:bg-surface-1"
+            className={styles.menuButton}
             aria-label="Abrir menu"
+            aria-expanded={mobileMenuOpen}
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>
       </div>
 
-      {/* Mobile menu */}
       {mobileMenuOpen && (
-        <div className="xl:hidden border-b border-border bg-surface px-4 py-4 space-y-2">
+        <div className={styles.mobileMenu}>
           {NAV_LINKS.map(({ href, label, icon: Icon }) => {
             const isActive = pathname.startsWith(href);
             return (
@@ -167,24 +150,20 @@ export function Navbar() {
                 key={href}
                 href={href}
                 onClick={() => setMobileMenuOpen(false)}
-                className={`flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                  isActive
-                    ? 'bg-accent/10 text-accent-text font-semibold'
-                    : 'text-muted hover:text-ink hover:bg-surface-1'
-                }`}
+                className={cn(styles.mobileLink, isActive && styles.mobileLinkActive)}
               >
                 <Icon className="w-4 h-4" />
                 {label}
               </Link>
             );
           })}
-          <div className="pt-3 border-t border-border flex flex-col gap-2">
+          <div className={styles.mobileAuth}>
             {user ? (
               <>
                 <Link
                   href="/dashboard"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="btn-leaf w-full justify-center"
+                  className={styles.mobileBtnLeaf}
                 >
                   <LayoutDashboard className="w-4 h-4" />
                   Meu Painel
@@ -194,7 +173,7 @@ export function Navbar() {
                     setMobileMenuOpen(false);
                     handleSignOut();
                   }}
-                  className="w-full py-2.5 rounded-lg text-xs font-semibold text-danger bg-danger-soft/40 hover:bg-danger-soft transition-colors"
+                  className={styles.mobileSignOut}
                 >
                   Sair da Conta
                 </button>
@@ -204,14 +183,14 @@ export function Navbar() {
                 <Link
                   href="/auth/login"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="btn-secondary w-full justify-center"
+                  className={styles.mobileBtnSecondary}
                 >
                   Entrar
                 </Link>
                 <Link
                   href="/auth/register"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="btn-primary w-full justify-center"
+                  className={styles.mobileBtnPrimary}
                 >
                   Criar Conta Grátis
                 </Link>

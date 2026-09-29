@@ -1,0 +1,50 @@
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+/* 1 -> 2 (sm) -> 3 (lg): comunidades, empresas, projetos */
+.cards {
+  gap: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .cards {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* 1 -> 2 (md) -> 3 (xl): devs */
+.cardsWide {
+  gap: 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .cardsWide {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1280px) {
+  .cardsWide {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* 1 -> 2 (md): eventos */
+.duo {
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .duo {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

@@ -1,10 +1,8 @@
 import type { Metadata } from 'next';
 import { Inter, Sora, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
-import { Navbar } from '@/components/navbar';
-import { Footer } from '@/components/footer';
-import { CookieConsent } from '@/components/cookie-consent';
-import { themeInitScript } from '@/components/theme-toggle';
+import { Header, Footer, CookieConsent, themeInitScript } from '@/organisms';
+import styles from './layout.module.css';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -48,9 +46,9 @@ export default function RootLayout({
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
-      <body className="min-h-screen flex flex-col bg-canvas text-ink antialiased selection:bg-neon selection:text-ink">
-        <Navbar />
-        <main className="flex-1">
+      <body className={styles.body}>
+        <Header />
+        <main className={styles.main}>
           {children}
         </main>
         <Footer />
