@@ -117,15 +117,33 @@ O Tailwind está sendo removido do projeto. Status atual:
 | `tailwind.config.ts` | — | ⬜ Remover no final |
 | `postcss.config.mjs` | — | ⬜ Remover no final |
 
-**Ordem de migração obrigatória** — do mais estável ao mais volátil:
+**Ordem de migração obrigatória** — do mais seguro ao mais destrutivo:
 
-1. `@theme inline` em `globals.css` para custom properties puras (sem Tailwind).
-2. `src/lib/utils.ts`: remover `clsx` e `tailwind-merge`.
-3. Atoms e molecules: trocar classes utilitárias por CSS Modules.
-4. Organisms e templates.
-5. Páginas, uma de cada vez.
-6. Remover `tailwindcss`, `@tailwindcss/postcss`, `autoprefixer`, `postcss`,
-   `tailwind-merge` e `clsx` do `package.json`.
+1. **Atoms e molecules para CSS Modules.** São 11 componentes pequenos e já
+   testados. Fixam o padrão `X.tsx` + `X.module.css` que o resto vai seguir.
+2. **Organisms e templates**, a partir de `navbar.tsx` e `footer.tsx`.
+3. **Páginas, uma de cada vez**, na ordem: perfil e listagem de devs, home,
+   dashboard, projetos, vagas, empresas, eventos, comunidades, contato, e por
+   último as páginas de texto (privacidade, termos, sobre).
+4. **`src/lib/utils.ts`**: remover `clsx` e `tailwind-merge`.
+   Só depois do passo 3 — ver o alerta abaixo.
+5. **Remover `@theme inline`** de `globals.css`, o `postcss.config.mjs` e as
+   devDeps `tailwindcss`, `@tailwindcss/postcss`, `autoprefixer`, `postcss`,
+   `tailwind-merge` e `clsx`.
+
+> ⚠️ **Não remova `@theme inline` antes do passo 4.** Os tokens já são custom
+> properties puras em `:root` e `.dark` (linhas 14-56 e 62-93). O bloco
+> `@theme` (linha 98) é apenas a ponte que os expõe como utilitários
+> (`--color-accent` → `bg-accent`). Removê-lo enquanto existirem `className` com
+> utilitários quebra a estilização das 48 páginas de uma vez, sem erro de build.
+
+> ⚠️ **`tailwind-merge` só pode sair depois do passo 3.** Hoje ele resolve
+> conflito de classe Tailwind no `cn()`. Sem ele, sobrescrever um variant com
+> `className="text-xs"` deixa de funcionar, porque quem vence o conflito passa
+> a ser a ordem no stylesheet gerado, não a ordem no atributo. Os testes
+> existentes verificam a *presença* da classe, não qual vence — essa regressão
+> passaria pelo CI. Com CSS Modules o problema some, porque a ordem do CSS
+> passa a ser determinística.
 
 **Validação obrigatória por página:** `npm run build`, `npm test` e a auditoria de
 contraste antes de considerar a página migrada:
