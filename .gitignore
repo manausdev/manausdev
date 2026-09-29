@@ -55,3 +55,6 @@ pnpm-debug.log*
 .DS_Store
 Thumbs.db
 .kilo/
+
+.vercel
+.env*
