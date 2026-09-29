@@ -1,0 +1,38 @@
+import { Meta, Controls, Primary, Stories, Subtitle } from '@storybook/blocks';
+import * as FormFieldStories from './FormField.stories';
+
+<Meta of={FormFieldStories.Default} />
+
+# FormField
+
+Rotulo, controle e mensagem em um campo so, com o vinculo de acessibilidade
+resolvido.
+
+<Subtitle>Por que render prop</Subtitle>
+
+O dashboard declarava `<label>` sem `htmlFor` e `<input>` sem `id`. O par
+ficava associado so visualmente: clicar no rotulo nao movia o foco, e leitores
+de tela anunciavam um campo sem nome. Como o mesmo padrao se repetia em input,
+select e textarea, `FormField` gera o `id` com `useId` e entrega `id`,
+`aria-invalid`, `aria-describedby` e `aria-required` via render prop — o
+consumidor nao tem como esquecer de associar.
+
+```tsx
+<FormField label="Cargo" error="Campo obrigatorio">
+  {(field) => <Input {...field} />}
+</FormField>
+```
+
+<Primary />
+
+<Controls />
+
+<Stories of={FormFieldStories} />
+
+## Regras
+
+- `error` tem precedencia sobre `hint` e marca `aria-invalid`; a cor do rotulo
+  tambem muda para `danger-text`.
+- O `id` e unico por instancia. Dois `FormField` no mesmo formulario nao colidem.
+- Passe `hint` em vez de `error` para orientacao. `error` deve ser reservado
+  para validacao que impede o envio.
