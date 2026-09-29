@@ -2,6 +2,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
 import { Button } from './Button';
+import styles from './Button.module.css';
 
 describe('Button', () => {
   it('renderiza com type="button" por padrao para nao submeter formulario inadvertidamente', () => {
@@ -49,22 +50,23 @@ describe('Button', () => {
 
   it('aplica as classes da variant e do size', () => {
     const { rerender } = render(<Button variant="leaf" size="lg">Ok</Button>);
-    expect(screen.getByRole('button').className).toContain('bg-neon');
-    expect(screen.getByRole('button').className).toContain('px-6');
+    expect(screen.getByRole('button').className).toContain(styles.leaf);
+    expect(screen.getByRole('button').className).toContain(styles.lg);
 
     rerender(<Button variant="secondary" size="sm">Ok</Button>);
-    expect(screen.getByRole('button').className).toContain('border-accent');
-    expect(screen.getByRole('button').className).toContain('px-3');
+    expect(screen.getByRole('button').className).toContain(styles.secondary);
+    expect(screen.getByRole('button').className).toContain(styles.sm);
   });
 
   it('permite sobrescrever classes sem perder as do variant', () => {
     render(
-      <Button variant="primary" className="!py-2.5 !px-4 text-xs">
+      <Button variant="primary" className="custom-override">
         GitHub
       </Button>,
     );
     const className = screen.getByRole('button').className;
-    expect(className).toContain('bg-accent');
-    expect(className).toContain('text-xs');
+    expect(className).toContain(styles.primary);
+    expect(className).toContain(styles.base);
+    expect(className).toContain('custom-override');
   });
 });
