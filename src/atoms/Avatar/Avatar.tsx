@@ -1,14 +1,8 @@
 import { forwardRef } from 'react';
 import { cn } from '@/lib/utils';
+import styles from './Avatar.module.css';
 
 export type AvatarSize = 'sm' | 'md' | 'lg' | 'xl';
-
-const sizes: Record<AvatarSize, string> = {
-  sm: 'w-8 h-8 text-xs',
-  md: 'w-12 h-12 text-base',
-  lg: 'w-16 h-16 text-xl',
-  xl: 'w-24 h-24 text-3xl',
-};
 
 export interface AvatarProps extends React.HTMLAttributes<HTMLSpanElement> {
   src?: string | null;
@@ -31,12 +25,7 @@ export const Avatar = forwardRef<HTMLSpanElement, AvatarProps>(function Avatar(
   return (
     <span
       ref={ref}
-      className={cn(
-        'inline-flex items-center justify-center rounded-full overflow-hidden',
-        'bg-deep text-on-dark font-display font-bold shrink-0',
-        sizes[size],
-        className,
-      )}
+      className={cn(styles.base, styles[size], className)}
       {...props}
     >
       {src ? (

@@ -1,5 +1,6 @@
 import { forwardRef } from 'react';
 import { cn } from '@/lib/utils';
+import styles from './Icon.module.css';
 
 export interface IconProps extends React.SVGProps<SVGSVGElement> {
   /**
@@ -9,12 +10,6 @@ export interface IconProps extends React.SVGProps<SVGSVGElement> {
   title?: string;
   size?: 'sm' | 'md' | 'lg';
 }
-
-const sizes = {
-  sm: 'w-4 h-4',
-  md: 'w-5 h-5',
-  lg: 'w-6 h-6',
-} as const;
 
 /**
  * Base para icones SVG do design system. Garante as dimensoes, `currentColor`
@@ -36,7 +31,7 @@ export const Icon = forwardRef<SVGSVGElement, IconProps>(function Icon(
       strokeWidth={2}
       strokeLinecap="round"
       strokeLinejoin="round"
-      className={cn(sizes[size], 'shrink-0', className)}
+      className={cn(styles.base, styles[size], className)}
       role={decorative ? undefined : 'img'}
       aria-hidden={decorative ? true : undefined}
       focusable="false"

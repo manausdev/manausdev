@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 import { Chip } from './Chip';
+import styles from './Chip.module.css';
 
 describe('Chip', () => {
   it('renderiza o conteudo', () => {
@@ -10,12 +11,12 @@ describe('Chip', () => {
 
   it('usa variant river por padrao', () => {
     render(<Chip>React</Chip>);
-    expect(screen.getByText('React').className).toContain('bg-surface-2');
+    expect(screen.getByText('React').className).toContain(styles.river);
   });
 
   it('aplica a variant leaf', () => {
     render(<Chip variant="leaf">Next.js</Chip>);
-    expect(screen.getByText('Next.js').className).toContain('bg-accent-soft');
+    expect(screen.getByText('Next.js').className).toContain(styles.leaf);
   });
 
   it('permite sobrescrever classes preservando a variant', () => {
@@ -25,15 +26,15 @@ describe('Chip', () => {
       </Chip>,
     );
     const className = screen.getByText('TypeScript').className;
-    expect(className).toContain('bg-surface-2');
+    expect(className).toContain(styles.river);
     expect(className).toContain('font-mono');
   });
 
   it('nao usa texto de baixo contraste no variant dark', () => {
     render(<Chip variant="dark">Lead</Chip>);
     const className = screen.getByText('Lead').className;
-    expect(className).toContain('text-on-dark');
-    expect(className).not.toContain('text-faint');
+    expect(className).toContain(styles.dark);
+    expect(className).not.toContain(styles.faint);
   });
 
   it('encaminha o ref', () => {

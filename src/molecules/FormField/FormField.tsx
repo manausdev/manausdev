@@ -1,7 +1,6 @@
-'use client';
-
 import { useId } from 'react';
 import { cn } from '@/lib/utils';
+import styles from './FormField.module.css';
 
 export interface FormFieldProps {
   label: string;
@@ -45,18 +44,14 @@ export function FormField({
   const describedBy = error || hint ? messageId : undefined;
 
   return (
-    <div className={cn('w-full', className)}>
+    <div className={cn(styles.base, className)}>
       <label
         htmlFor={id}
-        className={cn(
-          'block text-xs font-semibold mb-1.5',
-          hasError ? 'text-danger-text' : 'text-ink',
-          labelClassName,
-        )}
+        className={cn(styles.label, hasError ? styles.labelError : undefined, labelClassName)}
       >
         {label}
         {required ? (
-          <span className="text-danger-text ml-0.5" aria-hidden="true">
+          <span className={styles.requiredAsterisk} aria-hidden="true">
             *
           </span>
         ) : null}
@@ -70,7 +65,7 @@ export function FormField({
       })}
 
       {error || hint ? (
-        <p id={messageId} className={cn('text-xs mt-1.5', hasError ? 'text-danger-text' : 'text-faint')}>
+        <p id={messageId} className={cn(styles.message, hasError ? styles.messageError : styles.messageHint)}>
           {error || hint}
         </p>
       ) : null}

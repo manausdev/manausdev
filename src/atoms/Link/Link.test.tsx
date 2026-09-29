@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 import { ExternalLink, Link } from './Link';
+import styles from './Link.module.css';
 
 describe('Link', () => {
   it('navega para rota interna', () => {
@@ -14,7 +15,7 @@ describe('Link', () => {
         Ver devs
       </Link>,
     );
-    expect(screen.getByRole('link').className).toContain('bg-accent');
+    expect(screen.getByRole('link').className).toContain(styles.button);
   });
 
   it('permite sobrescrever classes preservando a variant', () => {
@@ -24,7 +25,7 @@ describe('Link', () => {
       </Link>,
     );
     const className = screen.getByRole('link').className;
-    expect(className).toContain('bg-accent');
+    expect(className).toContain(styles.button);
     expect(className).toContain('text-xs');
   });
 });

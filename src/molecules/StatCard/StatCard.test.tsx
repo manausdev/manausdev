@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 import { StatCard } from './StatCard';
+import styles from './StatCard.module.css';
 
 describe('StatCard', () => {
   it('mostra valor e rotulo', () => {
@@ -32,9 +33,9 @@ describe('StatCard', () => {
 
   it('aceita tom semantico em vez de classe arbitraria', () => {
     const { rerender } = render(<StatCard value={1} label="A" tone="ink" />);
-    expect(screen.getByText(/1/).className).toContain('text-ink');
+    expect(screen.getByText(/1/).className).toContain(styles.toneInk);
 
     rerender(<StatCard value={1} label="A" tone="accent" />);
-    expect(screen.getByText(/1/).className).toContain('text-accent-text');
+    expect(screen.getByText(/1/).className).toContain(styles.toneAccent);
   });
 });

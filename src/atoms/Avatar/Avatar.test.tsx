@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 import { Avatar } from './Avatar';
+import styles from './Avatar.module.css';
 
 describe('Avatar', () => {
   it('mostra as iniciais quando nao ha imagem', () => {
@@ -36,9 +37,9 @@ describe('Avatar', () => {
 
   it('aplica as dimensoes do size', () => {
     const { container, rerender } = render(<Avatar name="Ana" size="sm" />);
-    expect(container.firstElementChild!.className).toContain('w-8');
+    expect(container.firstElementChild!.className).toContain(styles.sm);
 
     rerender(<Avatar name="Ana" size="xl" />);
-    expect(container.firstElementChild!.className).toContain('w-24');
+    expect(container.firstElementChild!.className).toContain(styles.xl);
   });
 });

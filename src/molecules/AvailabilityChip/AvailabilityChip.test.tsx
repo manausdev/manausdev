@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 import { AvailabilityChip } from './AvailabilityChip';
+import styles from './AvailabilityChip.module.css';
 
 describe('AvailabilityChip', () => {
   it('traduz open', () => {
@@ -38,9 +39,19 @@ describe('AvailabilityChip', () => {
     expect(screen.getByText('Disponivel')).toBeInTheDocument();
   });
 
+  it('aplica o tone de cada estado', () => {
+    const { rerender, container } = render(<AvailabilityChip value="open" />);
+    expect(container.firstElementChild!.className).toContain(styles.open);
+
+    rerender(<AvailabilityChip value="offers" />);
+    expect(container.firstElementChild!.className).toContain(styles.offers);
+
+    rerender(<AvailabilityChip value="busy" />);
+    expect(container.firstElementChild!.className).toContain(styles.busy);
+  });
+
   it('busy nao usa texto de baixo contraste', () => {
     const { container } = render(<AvailabilityChip value="busy" />);
-    expect(container.firstElementChild!.className).toContain('text-faint');
-    expect(container.firstElementChild!.className).toContain('bg-surface-1');
+    expect(container.firstElementChild!.className).toContain(styles.busy);
   });
 });

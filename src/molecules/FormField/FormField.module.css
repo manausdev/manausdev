@@ -1,0 +1,33 @@
+.base {
+  width: 100%;
+}
+
+.label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  color: var(--ink);
+}
+
+.labelError {
+  color: var(--danger);
+}
+
+.requiredAsterisk {
+  color: var(--danger);
+  margin-left: 0.3125rem;
+}
+
+.message {
+  font-size: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+.messageError {
+  color: var(--danger);
+}
+
+.messageHint {
+  color: var(--faint);
+}

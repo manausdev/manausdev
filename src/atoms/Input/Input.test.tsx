@@ -2,6 +2,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
 import { Input } from './Input';
+import styles from './Input.module.css';
 
 describe('Input', () => {
   it('renderiza com type="text" por padrao', () => {
@@ -53,9 +54,16 @@ describe('Input', () => {
 
   it('aplica as classes do size', () => {
     const { rerender } = render(<Input aria-label="Nome" size="sm" />);
-    expect(screen.getByLabelText('Nome').className).toContain('text-xs');
+    expect(screen.getByLabelText('Nome').className).toContain(styles.sm);
 
     rerender(<Input aria-label="Nome" size="lg" />);
-    expect(screen.getByLabelText('Nome').className).toContain('text-base');
+    expect(screen.getByLabelText('Nome').className).toContain(styles.lg);
+  });
+
+  it('estiliza como invalido quando aria-invalid chega direto do consumidor', () => {
+    // O seletor de erro e por atributo, nao por classe: um `aria-invalid`
+    // passado direto (sem a prop `invalid`) precisa ter o mesmo efeito.
+    render(<Input aria-label="Nome" aria-invalid="true" />);
+    expect(screen.getByLabelText('Nome')).toHaveAttribute('aria-invalid', 'true');
   });
 });
