@@ -6,23 +6,27 @@
 -- gen_random_uuid() é nativo no Postgres 13+ (sem extensão necessária)
 
 -- 1. Tabela de Perfis de Desenvolvedores / Usuários
+-- Nota LGPD: o e-mail NÃO é coluna de profiles — vive apenas em auth.users.
 create table if not exists public.profiles (
   id uuid references auth.users(id) on delete cascade primary key,
   username text unique not null,
   full_name text not null,
-  email text,
   avatar_url text,
   role text default 'Developer',
   bio text,
   location text default 'Manaus-AM',
+  city text not null default 'Manaus',
+  seniority text, -- junior, pleno, senior, lead
+  availability text not null default 'open', -- open, offers, busy
   skills text[] default '{}',
   github text,
   website text,
   linkedin text,
-  available boolean default true,
   is_admin boolean default false,
   created_at timestamptz default now() not null,
-  updated_at timestamptz default now() not null
+  updated_at timestamptz default now() not null,
+  constraint profiles_availability_check check (availability in ('open', 'offers', 'busy')),
+  constraint profiles_seniority_check check (seniority is null or seniority in ('junior', 'pleno', 'senior', 'lead'))
 );
 
 -- 2. Tabela de Empresas
@@ -194,12 +198,11 @@ begin
   raw_username := coalesce(new.raw_user_meta_data->>'user_name', split_part(new.email, '@', 1));
   raw_name := coalesce(new.raw_user_meta_data->>'full_name', new.raw_user_meta_data->>'name', raw_username);
 
-  insert into public.profiles (id, username, full_name, email, avatar_url)
+  insert into public.profiles (id, username, full_name, avatar_url)
   values (
     new.id,
     raw_username,
     raw_name,
-    new.email,
     coalesce(new.raw_user_meta_data->>'avatar_url', null)
   )
   on conflict (id) do nothing;
@@ -210,4 +213,13 @@ $$;
 create or replace trigger on_auth_user_created
   after insert on auth.users
   for each row execute procedure public.handle_new_user();
+
+-- ==============================================================================
+-- 🗂️ Índices para o diretório de devs (filtros: cidade × stack × disponibilidade)
+-- ==============================================================================
+
+create index if not exists profiles_city_idx on public.profiles (city);
+create index if not exists profiles_availability_idx on public.profiles (availability);
+create index if not exists profiles_seniority_idx on public.profiles (seniority);
+create index if not exists profiles_skills_idx on public.profiles using gin (skills);
 

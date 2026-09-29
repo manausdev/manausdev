@@ -1,13 +1,13 @@
 import type { Profile, Project, Company, Community, EventItem, Job } from '@/types/database';
 
 export const MOCK_DEVS: Profile[] = [
-  { id: '1', username: 'anasilva', full_name: 'Ana Silva', email: 'ana.silva@example.com', role: 'Frontend Engineer', skills: ['React', 'TypeScript', 'Tailwind', 'Next.js'], location: 'Manaus-AM', bio: 'Apaixonada por interfaces acessíveis e performance web no coração da Amazônia.', github: 'https://github.com/anasilva', available: true, is_admin: false, created_at: new Date().toISOString(), updated_at: new Date().toISOString() },
-  { id: '2', username: 'brunocosta', full_name: 'Bruno Costa', email: 'bruno.costa@example.com', role: 'Backend Developer', skills: ['Node.js', 'Go', 'Redis', 'PostgreSQL'], location: 'Manaus-AM', bio: 'Arquitetura de microsserviços e sistemas distribuídos de alta vazão.', github: 'https://github.com/brunocosta', available: true, is_admin: false, created_at: new Date().toISOString(), updated_at: new Date().toISOString() },
-  { id: '3', username: 'carloslima', full_name: 'Carlos Lima', email: 'carlos.lima@example.com', role: 'Fullstack Developer', skills: ['Python', 'Django', 'AWS', 'React'], location: 'Manaus-AM', bio: 'Desenvolvedor fullstack com foco em soluções cloud e bioeconomia.', github: 'https://github.com/carloslima', available: false, is_admin: false, created_at: new Date().toISOString(), updated_at: new Date().toISOString() },
-  { id: '4', username: 'fernandaoliveira', full_name: 'Fernanda Oliveira', email: 'fernanda.oliveira@example.com', role: 'Mobile Developer', skills: ['React Native', 'Flutter', 'Firebase'], location: 'Manaus-AM', bio: 'Apps mobile performáticos e soluções offline-first para o interior do AM.', github: 'https://github.com/fernandaoliveira', available: true, is_admin: false, created_at: new Date().toISOString(), updated_at: new Date().toISOString() },
-  { id: '5', username: 'gabrielsantos', full_name: 'Gabriel Santos', email: 'gabriel.santos@example.com', role: 'DevOps Engineer', skills: ['Docker', 'Kubernetes', 'Terraform', 'CI/CD'], location: 'Manaus-AM', bio: 'CI/CD, infraestrutura como código e observabilidade.', github: 'https://github.com/gabrielsantos', available: true, is_admin: false, created_at: new Date().toISOString(), updated_at: new Date().toISOString() },
-  { id: '6', username: 'julianapereira', full_name: 'Juliana Pereira', email: 'juliana.pereira@example.com', role: 'Data Engineer', skills: ['Python', 'Spark', 'SQL', 'GCP'], location: 'Manaus-AM', bio: 'Pipelines de dados e analytics para preservação florestal e indústria 4.0.', github: 'https://github.com/julianapereira', available: false, is_admin: false, created_at: new Date().toISOString(), updated_at: new Date().toISOString() },
-  { id: '7', username: 'rafaelnascimento', full_name: 'Rafael Nascimento', email: 'rafael.nascimento@example.com', role: 'Fullstack Developer', skills: ['Next.js', 'Supabase', 'TypeScript', 'Node.js'], location: 'Manaus-AM', bio: 'Criando produtos digitais escaláveis e open-source para a comunidade amazonense.', github: 'https://github.com/rafaelnascimento', available: true, is_admin: true, created_at: new Date().toISOString(), updated_at: new Date().toISOString() },
+  { id: '1', username: 'anasilva', full_name: 'Ana Silva', role: 'Frontend Engineer', skills: ['React', 'TypeScript', 'Tailwind', 'Next.js'], location: 'Manaus-AM', city: 'Manaus', seniority: 'senior', availability: 'open', bio: 'Apaixonada por interfaces acessíveis e performance web no coração da Amazônia.', github: 'https://github.com/anasilva', is_admin: false, created_at: '2024-03-15T12:00:00.000Z', updated_at: '2026-09-01T12:00:00.000Z' },
+  { id: '2', username: 'brunocosta', full_name: 'Bruno Costa', role: 'Backend Developer', skills: ['Node.js', 'Go', 'Redis', 'PostgreSQL'], location: 'Manaus-AM', city: 'Manaus', seniority: 'pleno', availability: 'offers', bio: 'Arquitetura de microsserviços e sistemas distribuídos de alta vazão.', github: 'https://github.com/brunocosta', is_admin: false, created_at: '2023-08-20T12:00:00.000Z', updated_at: '2026-08-15T12:00:00.000Z' },
+  { id: '3', username: 'carloslima', full_name: 'Carlos Lima', role: 'Fullstack Developer', skills: ['Python', 'Django', 'AWS', 'React'], location: 'Manaus-AM', city: 'Manaus', seniority: 'pleno', availability: 'busy', bio: 'Desenvolvedor fullstack com foco em soluções cloud e bioeconomia.', github: 'https://github.com/carloslima', is_admin: false, created_at: '2025-01-10T12:00:00.000Z', updated_at: '2026-07-20T12:00:00.000Z' },
+  { id: '4', username: 'fernandaoliveira', full_name: 'Fernanda Oliveira', role: 'Mobile Developer', skills: ['React Native', 'Flutter', 'Firebase'], location: 'Manaus-AM', city: 'Manaus', seniority: 'senior', availability: 'open', bio: 'Apps mobile performáticos e soluções offline-first para o interior do AM.', github: 'https://github.com/fernandaoliveira', is_admin: false, created_at: '2024-11-05T12:00:00.000Z', updated_at: '2026-09-10T12:00:00.000Z' },
+  { id: '5', username: 'gabrielsantos', full_name: 'Gabriel Santos', role: 'DevOps Engineer', skills: ['Docker', 'Kubernetes', 'Terraform', 'CI/CD'], location: 'Manaus-AM', city: 'Manaus', seniority: 'senior', availability: 'offers', bio: 'CI/CD, infraestrutura como código e observabilidade.', github: 'https://github.com/gabrielsantos', is_admin: false, created_at: '2023-05-02T12:00:00.000Z', updated_at: '2026-06-30T12:00:00.000Z' },
+  { id: '6', username: 'julianapereira', full_name: 'Juliana Pereira', role: 'Data Engineer', skills: ['Python', 'Spark', 'SQL', 'GCP'], location: 'Manaus-AM', city: 'Manaus', seniority: 'lead', availability: 'busy', bio: 'Pipelines de dados e analytics para preservação florestal e indústria 4.0.', github: 'https://github.com/julianapereira', is_admin: false, created_at: '2022-09-18T12:00:00.000Z', updated_at: '2026-05-12T12:00:00.000Z' },
+  { id: '7', username: 'rafaelnascimento', full_name: 'Rafael Nascimento', role: 'Fullstack Developer', skills: ['Next.js', 'Supabase', 'TypeScript', 'Node.js'], location: 'Manaus-AM', city: 'Manaus', seniority: 'pleno', availability: 'open', bio: 'Criando produtos digitais escaláveis e open-source para a comunidade amazonense.', github: 'https://github.com/rafaelnascimento', is_admin: true, created_at: '2026-01-25T12:00:00.000Z', updated_at: '2026-09-20T12:00:00.000Z' },
 ];
 
 export const MOCK_PROJECTS: Project[] = [
@@ -19,6 +19,7 @@ export const MOCK_PROJECTS: Project[] = [
     links: { github: 'https://github.com/manausdev/manaus-hub', demo: 'https://manaushub.dev' },
     image_url: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=800&q=80',
     featured: true,
+    author_id: '7',
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
   },
@@ -30,6 +31,7 @@ export const MOCK_PROJECTS: Project[] = [
     links: { github: 'https://github.com/manausdev/riotech-maps' },
     image_url: 'https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=800&q=80',
     featured: true,
+    author_id: '1',
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
   },
@@ -41,6 +43,7 @@ export const MOCK_PROJECTS: Project[] = [
     links: { github: 'https://github.com/manausdev/amazonia-tur' },
     image_url: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80',
     featured: false,
+    author_id: '4',
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
   },
@@ -52,6 +55,7 @@ export const MOCK_PROJECTS: Project[] = [
     links: { github: 'https://github.com/manausdev/greencheck' },
     image_url: 'https://images.unsplash.com/photo-1508873696983-2df5293cb32f?auto=format&fit=crop&w=800&q=80',
     featured: true,
+    author_id: '6',
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
   },
@@ -161,6 +165,7 @@ export const MOCK_EVENTS: EventItem[] = [
     type: 'meetup', 
     link: 'https://meetup.com/manausdev', 
     image_url: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=800&q=80',
+    organizer_id: '7',
     created_at: new Date().toISOString() 
   },
   { 
@@ -172,6 +177,7 @@ export const MOCK_EVENTS: EventItem[] = [
     type: 'hackathon', 
     link: 'https://hackathon.manaus.dev', 
     image_url: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=800&q=80',
+    organizer_id: '5',
     created_at: new Date().toISOString() 
   },
   { 
@@ -183,6 +189,7 @@ export const MOCK_EVENTS: EventItem[] = [
     type: 'conference', 
     link: 'https://python.manaus.dev', 
     image_url: 'https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=800&q=80',
+    organizer_id: '3',
     created_at: new Date().toISOString() 
   },
 ];

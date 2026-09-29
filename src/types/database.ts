@@ -10,16 +10,17 @@ export interface Profile {
   id: string;
   username: string;
   full_name: string;
-  email?: string | null;
   avatar_url?: string | null;
   role?: string | null;
   bio?: string | null;
   location?: string | null;
+  city?: string | null;
+  seniority?: string | null;
+  availability?: string | null;
   skills?: string[] | null;
   github?: string | null;
   website?: string | null;
   linkedin?: string | null;
-  available?: boolean | null;
   is_admin?: boolean | null;
   created_at?: string;
   updated_at?: string;
@@ -118,16 +119,17 @@ export interface Database {
           id: string;
           username: string;
           full_name: string;
-          email?: string | null;
           avatar_url?: string | null;
           role?: string | null;
           bio?: string | null;
           location?: string | null;
+          city?: string | null;
+          seniority?: string | null;
+          availability?: string | null;
           skills?: string[] | null;
           github?: string | null;
           website?: string | null;
           linkedin?: string | null;
-          available?: boolean | null;
           is_admin?: boolean | null;
           created_at?: string;
           updated_at?: string;
@@ -136,27 +138,30 @@ export interface Database {
           id?: string;
           username?: string;
           full_name?: string;
-          email?: string | null;
           avatar_url?: string | null;
           role?: string | null;
           bio?: string | null;
           location?: string | null;
+          city?: string | null;
+          seniority?: string | null;
+          availability?: string | null;
           skills?: string[] | null;
           github?: string | null;
           website?: string | null;
           linkedin?: string | null;
-          available?: boolean | null;
           is_admin?: boolean | null;
           created_at?: string;
           updated_at?: string;
         };
-        Relationships: {
-          foreignKeyName: string;
-          columns: string[];
-          isOneToOne?: boolean;
-          referencedRelation: string;
-          referencedColumns: string[];
-        }[];
+        Relationships: [
+          {
+            foreignKeyName: 'profiles_id_fkey';
+            columns: ['id'];
+            isOneToOne: true;
+            referencedRelation: 'users';
+            referencedColumns: ['id'];
+          },
+        ];
       };
       projects: {
         Row: Project;
@@ -184,13 +189,15 @@ export interface Database {
           created_at?: string;
           updated_at?: string;
         };
-        Relationships: {
-          foreignKeyName: string;
-          columns: string[];
-          isOneToOne?: boolean;
-          referencedRelation: string;
-          referencedColumns: string[];
-        }[];
+        Relationships: [
+          {
+            foreignKeyName: 'projects_author_id_fkey';
+            columns: ['author_id'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+        ];
       };
       companies: {
         Row: Company;
@@ -220,13 +227,15 @@ export interface Database {
           created_by?: string | null;
           created_at?: string;
         };
-        Relationships: {
-          foreignKeyName: string;
-          columns: string[];
-          isOneToOne?: boolean;
-          referencedRelation: string;
-          referencedColumns: string[];
-        }[];
+        Relationships: [
+          {
+            foreignKeyName: 'companies_created_by_fkey';
+            columns: ['created_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+        ];
       };
       communities: {
         Row: Community;
@@ -286,13 +295,15 @@ export interface Database {
           organizer_id?: string | null;
           created_at?: string;
         };
-        Relationships: {
-          foreignKeyName: string;
-          columns: string[];
-          isOneToOne?: boolean;
-          referencedRelation: string;
-          referencedColumns: string[];
-        }[];
+        Relationships: [
+          {
+            foreignKeyName: 'events_organizer_id_fkey';
+            columns: ['organizer_id'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+        ];
       };
       jobs: {
         Row: Job;
@@ -326,13 +337,22 @@ export interface Database {
           posted_by?: string | null;
           created_at?: string;
         };
-        Relationships: {
-          foreignKeyName: string;
-          columns: string[];
-          isOneToOne?: boolean;
-          referencedRelation: string;
-          referencedColumns: string[];
-        }[];
+        Relationships: [
+          {
+            foreignKeyName: 'jobs_company_id_fkey';
+            columns: ['company_id'];
+            isOneToOne: false;
+            referencedRelation: 'companies';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'jobs_posted_by_fkey';
+            columns: ['posted_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+        ];
       };
       contacts: {
         Row: {
