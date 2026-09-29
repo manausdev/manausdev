@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
+import { AVAILABILITY_FILTERS } from '@/lib/devs-meta';
 import { User } from '@supabase/supabase-js';
 import { 
   UserCircle2, 
@@ -63,13 +64,14 @@ export default function DashboardPage() {
         } else {
           setProfile({
             id: currentUser.id,
-            email: currentUser.email,
             full_name: currentUser.user_metadata?.full_name || '',
             username: currentUser.user_metadata?.user_name || currentUser.email?.split('@')[0] || '',
             role: 'Developer',
             location: 'Manaus-AM',
+            city: 'Manaus',
+            seniority: null,
             skills: ['React', 'TypeScript', 'Next.js'],
-            available: true,
+            availability: 'open',
           });
         }
 
@@ -110,13 +112,15 @@ export default function DashboardPage() {
         id: user.id,
         username: profile.username || user.email?.split('@')[0] || 'user',
         full_name: profile.full_name || '',
-        email: user.email,
         role: profile.role || 'Developer',
         bio: profile.bio || null,
         location: profile.location || 'Manaus-AM',
+        city: profile.city || 'Manaus',
+        seniority: profile.seniority || null,
         github: profile.github || null,
         website: profile.website || null,
-        available: profile.available ?? true,
+        linkedin: profile.linkedin || null,
+        availability: profile.availability || 'open',
         skills: skillsArray,
         updated_at: new Date().toISOString(),
       };
@@ -347,7 +351,34 @@ export default function DashboardPage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-ink mb-1.5">Localização</label>
+                  <label className="block text-xs font-semibold text-ink mb-1.5">Senioridade</label>
+                  <select
+                    value={profile.seniority || ''}
+                    onChange={(e) => setProfile({ ...profile, seniority: e.target.value || null })}
+                    className="manaus-input w-full"
+                  >
+                    <option value="">Selecione...</option>
+                    <option value="junior">Júnior</option>
+                    <option value="pleno">Pleno</option>
+                    <option value="senior">Sênior</option>
+                    <option value="lead">Lead</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-semibold text-ink mb-1.5">Cidade (usada nos filtros do diretório)</label>
+                  <input
+                    type="text"
+                    placeholder="Manaus"
+                    value={profile.city || ''}
+                    onChange={(e) => setProfile({ ...profile, city: e.target.value })}
+                    className="manaus-input w-full"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-ink mb-1.5">Localização (texto livre de exibição)</label>
                   <input
                     type="text"
                     placeholder="Manaus-AM"
@@ -405,17 +436,22 @@ export default function DashboardPage() {
                 </div>
               </div>
 
-              <div className="flex items-center gap-3 pt-2">
-                <input
-                  type="checkbox"
-                  id="available"
-                  checked={profile.available ?? true}
-                  onChange={(e) => setProfile({ ...profile, available: e.target.checked })}
-                  className="h-4 w-4 rounded border-border-strong text-accent-text focus:ring-accent"
-                />
-                <label htmlFor="available" className="text-xs text-muted font-medium">
-                  Estou disponível para novas oportunidades profissionais ou consultoria
+              <div className="pt-2">
+                <label htmlFor="availability" className="text-xs text-muted font-medium block mb-1.5">
+                  Disponibilidade para novos projetos
                 </label>
+                <select
+                  id="availability"
+                  value={profile.availability || 'open'}
+                  onChange={(e) => setProfile({ ...profile, availability: e.target.value })}
+                  className="manaus-input w-full"
+                >
+                  {AVAILABILITY_FILTERS.map((option) => (
+                    <option key={option.param} value={option.db}>
+                      {option.label}
+                    </option>
+                  ))}
+                </select>
               </div>
 
               <div className="pt-4 border-t border-border flex justify-end">

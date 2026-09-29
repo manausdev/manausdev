@@ -4,16 +4,27 @@ import {
   MapPin, 
   Globe, 
   ArrowLeft, 
-  CheckCircle2, 
   Briefcase, 
   Code2, 
-  Mail,
-  Share2
+  CalendarDays,
+  Clock
 } from 'lucide-react';
-import { GithubIcon } from '@/components/icons';
+import { GithubIcon, LinkedinIcon } from '@/components/icons';
 import { createClient } from '@/lib/supabase/server';
-import { MOCK_DEVS, MOCK_PROJECTS } from '@/lib/data/mock-data';
-import type { Profile, Project } from '@/types/database';
+import { MOCK_DEVS, MOCK_PROJECTS, MOCK_EVENTS } from '@/lib/data/mock-data';
+import { availabilityMeta, seniorityLabel } from '@/lib/devs-meta';
+import type { Profile, Project, EventItem } from '@/types/database';
+
+function formatMemberSince(iso?: string): string {
+  if (!iso) return 'recentemente';
+  try {
+    return new Intl.DateTimeFormat('pt-BR', { month: 'long', year: 'numeric' })
+      .format(new Date(iso))
+      .replace('.', '');
+  } catch {
+    return 'recentemente';
+  }
+}
 
 export async function generateStaticParams() {
   return MOCK_DEVS.map((dev) => ({
@@ -31,12 +42,15 @@ export default async function DevDetailPage({ params }: DevDetailPageProps) {
   const { username } = await params;
   let dev: Profile | undefined = MOCK_DEVS.find((d) => d.username.toLowerCase() === username.toLowerCase());
   let devProjects: Project[] = [];
+  let devEvents: EventItem[] = [];
 
   try {
     const supabase = await createClient();
     const { data: profileData } = await supabase
       .from('profiles')
-      .select('*')
+      .select(
+        'id, username, full_name, avatar_url, role, bio, city, location, seniority, availability, skills, github, website, linkedin, is_admin, created_at, updated_at'
+      )
       .eq('username', username)
       .single();
 
@@ -45,17 +59,31 @@ export default async function DevDetailPage({ params }: DevDetailPageProps) {
     }
 
     if (dev) {
-      const { data: projectsData } = await supabase
-        .from('projects')
-        .select('*')
-        .eq('author_id', dev.id);
+      const [{ data: projectsData }, { data: eventsData }] = await Promise.all([
+        supabase
+          .from('projects')
+          .select('id, title, description, stack')
+          .eq('author_id', dev.id),
+        supabase
+          .from('events')
+          .select('id, title, description, date, location')
+          .eq('organizer_id', dev.id)
+          .order('date', { ascending: false }),
+      ]);
 
       if (projectsData && projectsData.length > 0) {
         devProjects = projectsData;
       }
+      if (eventsData && eventsData.length > 0) {
+        devEvents = eventsData;
+      }
     }
   } catch {
     // Fallback to mock dev
+    if (dev) {
+      devProjects = MOCK_PROJECTS.filter((p) => p.author_id === dev!.id);
+      devEvents = MOCK_EVENTS.filter((e) => e.organizer_id === dev!.id);
+    }
   }
 
   if (!dev) {
@@ -94,19 +122,21 @@ export default async function DevDetailPage({ params }: DevDetailPageProps) {
                 <h1 className="font-display font-bold text-2xl sm:text-3xl text-ink">
                   {dev.full_name}
                 </h1>
-                {dev.available ? (
-                  <span className="chip-leaf text-xs font-mono font-semibold">
-                    <span className="w-1.5 h-1.5 rounded-full bg-accent" />
-                    Disponível
-                  </span>
-                ) : (
-                  <span className="text-[11px] font-mono px-2 py-0.5 rounded-full bg-surface-1 text-faint">
-                    Ocupado
-                  </span>
-                )}
+                {(() => {
+                  const meta = availabilityMeta(dev.availability);
+                  return (
+                    <span className={`${meta.className} !text-xs flex items-center gap-1.5`}>
+                      <span className={`w-1.5 h-1.5 rounded-full ${meta.dot}`} />
+                      {meta.label}
+                    </span>
+                  );
+                })()}
               </div>
               <p className="text-sm font-semibold text-accent-text mt-0.5">@{dev.username}</p>
-              <p className="text-xs sm:text-sm text-muted mt-1 font-medium">{dev.role || 'Software Engineer'}</p>
+              <p className="text-xs sm:text-sm text-muted mt-1 font-medium">
+                {dev.role || 'Software Engineer'}
+                {seniorityLabel(dev.seniority) ? ` · ${seniorityLabel(dev.seniority)}` : ''}
+              </p>
             </div>
           </div>
 
@@ -131,6 +161,18 @@ export default async function DevDetailPage({ params }: DevDetailPageProps) {
               >
                 <Globe className="w-4 h-4" />
                 <span>Website</span>
+              </a>
+            )}
+            {dev.linkedin && (
+              <a
+                href={dev.linkedin}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={`LinkedIn de ${dev.full_name}`}
+                className="btn-secondary !py-2.5 !px-4 text-xs flex-1 sm:flex-initial justify-center"
+              >
+                <LinkedinIcon className="w-4 h-4" />
+                <span>LinkedIn</span>
               </a>
             )}
           </div>
@@ -163,11 +205,23 @@ export default async function DevDetailPage({ params }: DevDetailPageProps) {
           <div className="flex flex-wrap gap-6 pt-4 border-t border-border text-xs text-faint">
             <span className="flex items-center gap-1.5 font-mono">
               <MapPin className="w-4 h-4 text-accent-text" />
-              {dev.location || 'Manaus-AM'}
+              {dev.city || dev.location || 'Manaus-AM'}
             </span>
             <span className="flex items-center gap-1.5 font-mono">
               <Briefcase className="w-4 h-4 text-accent-text" />
               {dev.role || 'Engenheiro de Software'}
+            </span>
+            <span className="flex items-center gap-1.5 font-mono">
+              <Code2 className="w-4 h-4 text-accent-text" />
+              {devProjects.length} {devProjects.length === 1 ? 'projeto' : 'projetos'}
+            </span>
+            <span className="flex items-center gap-1.5 font-mono">
+              <CalendarDays className="w-4 h-4 text-accent-text" />
+              {devEvents.length} {devEvents.length === 1 ? 'evento organizado' : 'eventos organizados'}
+            </span>
+            <span className="flex items-center gap-1.5 font-mono">
+              <Clock className="w-4 h-4 text-accent-text" />
+              Membro desde {formatMemberSince(dev.created_at)}
             </span>
           </div>
         </div>
@@ -201,6 +255,35 @@ export default async function DevDetailPage({ params }: DevDetailPageProps) {
                 >
                   Ver detalhes do projeto →
                 </Link>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Organized Events Section */}
+      {devEvents.length > 0 && (
+        <div className="mt-10">
+          <div className="flex items-center gap-2 mb-6">
+            <CalendarDays className="w-5 h-5 text-accent-text" />
+            <h2 className="font-display font-bold text-xl text-ink">Eventos Organizados</h2>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            {devEvents.map((event) => (
+              <div key={event.id} className="manaus-card p-6 border border-border">
+                <h3 className="font-display font-bold text-base text-ink">{event.title}</h3>
+                <p className="text-xs text-muted line-clamp-2 mt-1.5 mb-3">{event.description}</p>
+                <div className="flex flex-wrap gap-4 text-[11px] font-mono text-faint">
+                  <span>
+                    {new Date(event.date).toLocaleDateString('pt-BR', {
+                      day: '2-digit',
+                      month: 'short',
+                      year: 'numeric',
+                    })}
+                  </span>
+                  <span>{event.location}</span>
+                </div>
               </div>
             ))}
           </div>
