@@ -43,6 +43,103 @@ node scripts/deploy-hosting-rest.js
 
 ---
 
+## 🚫 REGRA CRÍTICA: ZERO DEPENDÊNCIAS
+
+> **O projeto é `zero deps`.** Nenhuma biblioteca de terceiros é permitida em
+> `dependencies` nem em `devDependencies`, com exceção de `next`, `react` e
+> `react-dom`.
+>
+> **NÃO ADICIONE NOVAS DEPENDÊNCIAS** sem aprovação explícita do responsável pelo
+> repositório. Isso vale para libraries, frameworks e ferramentas de build.
+
+### O que isso proíbe
+
+| Categoria | Proibido | Motivo |
+|---|---|---|
+| CSS utilitário | Tailwind, UnoCSS, Windi | A regra é remover o Tailwind (ver migração abaixo) |
+| CSS-in-JS | styled-components, Emotion, vanilla-extract | Todos exigem runtime ou plugin de build |
+| Runtime de UI | Radix, shadcn, Chakra, MUI, Headless UI | Cada um traz dozens de pacotes transitivos |
+| Helpers de classe | `clsx`, `tailwind-merge` | São ~15 linhas; reimplementar localmente |
+| Qualquer outra |lodash, date-fns, zod, axios… | Resolver no idioma ou no módulo local |
+
+### O que é permitido
+
+* **CSS Modules** — recurso nativo do Next.js, zero dependência.
+* **CSS puro** em `globals.css` e em `*.module.css`.
+* **Custom properties** (`--token`) para os design tokens.
+* **`next/font`** para tipografia.
+* APIs nativas da plataforma (fetch, Intl, Web APIs).
+
+### Como estilizar
+
+O padrão do projeto é **CSS Modules por componente**, com os tokens consumidos
+via `var(--token)`. Exemplo de um componente do design system:
+
+```
+src/atoms/Button/
+├── Button.tsx          → importa styles from './Button.module.css'
+├── Button.module.css    → .base, .primary, .secondary, .focusRing
+├── Button.test.tsx
+└── index.ts
+```
+
+**Não escreva utilitários no JSX.** Nada de `className="flex items-center gap-2
+text-xs"`. A composição acontece dentro do CSS do componente. O único lugar
+aceitável para utilitários soltos é o layout de uma página, e mesmo assim
+preferindo um `Page.module.css`.
+
+### Helper de classe
+
+`cn()` em `src/lib/utils.ts` usa `clsx` + `tailwind-merge`, que serão removidos
+com o Tailwind. Substitua por uma implementação local que apenas concatena
+strings e descarta valores falsy:
+
+```ts
+export function cn(...parts: Array<string | false | null | undefined>): string {
+  return parts.filter(Boolean).join(' ');
+}
+```
+
+Sem semântica de conflito de classe: o CSS Module passa a ser a única fonte de
+verdade de quais regras vencem.
+
+---
+
+## 🎨 Migração: remoção do Tailwind (em andamento)
+
+O Tailwind está sendo removido do projeto. Status atual:
+
+| Item | Quantidade | Status |
+|---|---|---|
+| Ocorrências de `className` | 989 em 48 arquivos | ⬜ Pendente |
+| Classes utilitárias distintas | 448 | ⬜ Pendente |
+| Componentes do design system usando tokens do Tailwind | 11 (atoms + molecules) | ⬜ Pendente |
+| `tailwind.config.ts` | — | ⬜ Remover no final |
+| `postcss.config.mjs` | — | ⬜ Remover no final |
+
+**Ordem de migração obrigatória** — do mais estável ao mais volátil:
+
+1. `@theme inline` em `globals.css` para custom properties puras (sem Tailwind).
+2. `src/lib/utils.ts`: remover `clsx` e `tailwind-merge`.
+3. Atoms e molecules: trocar classes utilitárias por CSS Modules.
+4. Organisms e templates.
+5. Páginas, uma de cada vez.
+6. Remover `tailwindcss`, `@tailwindcss/postcss`, `autoprefixer`, `postcss`,
+   `tailwind-merge` e `clsx` do `package.json`.
+
+**Validação obrigatória por página:** `npm run build`, `npm test` e a auditoria de
+contraste antes de considerar a página migrada:
+
+```bash
+node C:\Users\luann\.copilot\repos\browser-mcp-lite\bin\bml.mjs audit http://localhost:3000/<rota> --widths=390,768,1440
+```
+
+> **Não remova uma regra de `globals.css` enquanto `rg "<classe>" src` ainda
+> encontrar uso.** A auditoria de contraste é o que garante que a remoção de
+> `.chip-*` e `.manaus-*` não introduziu texto abaixo de 4.5:1.
+
+---
+
 ## 🛠️ Futuro: Implementação do `appcli`
 
 No roadmap futuro, estes scripts serão empacotados e expandidos em uma ferramenta CLI completa (`appcli`):
