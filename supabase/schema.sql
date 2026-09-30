@@ -184,8 +184,7 @@ create trigger on_profile_privileges_guard
 --   dev     → projetos, eventos, notícias, canais de comunidade
 --   empresa → própria empresa, vagas, eventos, notícias, canais de comunidade
 --   admin   → CRUD em tudo
--- `news` e `community_channels` ainda não são tabelas; a policy delas entra
--- junto com a criação das respectivas tabelas.
+-- `news` e `community_channels` são criadas em 20260929150000, mais abaixo.
 
 -- Perfis: leitura pública, edição pelo próprio usuário
 create policy "Perfis visíveis publicamente" on public.profiles
@@ -193,6 +192,12 @@ create policy "Perfis visíveis publicamente" on public.profiles
 
 create policy "Usuários podem editar seu próprio perfil" on public.profiles
   for update using (auth.uid() = id);
+
+-- Curadoria: o admin edita qualquer perfil. O trigger guard_profile_privileges
+-- continua decidindo se profile_type/is_admin podem mudar; esta policy só abre
+-- o alcance, senão o admin não conseguiria editar ninguém além de si mesmo.
+create policy "Admins podem editar qualquer perfil" on public.profiles
+  for update using (public.is_admin()) with check (public.is_admin());
 
 create policy "Usuários podem inserir seu próprio perfil" on public.profiles
   for insert with check (auth.uid() = id);
@@ -274,6 +279,88 @@ create policy "Apenas administradores podem ler mensagens" on public.contacts
 
 create policy "Apenas administradores podem tratar mensagens" on public.contacts
   for update using (public.is_admin());
+
+-- ==============================================================================
+-- 📰 Notícias (20260929150000)
+-- ==============================================================================
+
+create table if not exists public.news (
+  id uuid default gen_random_uuid() primary key,
+  title text not null,
+  excerpt text,
+  content text,
+  image_url text,
+  category text default 'geral', -- geral, evento, vaga, lancamento, analise
+  published boolean default false,
+  published_at timestamptz,
+  author_id uuid references public.profiles(id) on delete set null,
+  created_at timestamptz default now() not null,
+  updated_at timestamptz default now() not null,
+  constraint news_category_check check (category in ('geral', 'evento', 'vaga', 'lancamento', 'analise'))
+);
+
+create index if not exists news_published_idx on public.news (published, published_at desc);
+
+alter table public.news enable row level security;
+
+-- Rascunhos ficam privados: só o autor e admins enxergam o que não foi publicado.
+create policy "Notícias publicadas são visíveis publicamente" on public.news
+  for select using (published = true or auth.uid() = author_id or public.is_admin());
+
+create policy "Devs, empresas e admins podem criar notícias" on public.news
+  for insert with check (
+    auth.uid() = author_id
+    and public.has_profile_type(array['dev', 'empresa', 'admin'])
+  );
+
+create policy "Autores e admins podem editar notícias" on public.news
+  for update using (auth.uid() = author_id or public.is_admin());
+
+create policy "Autores e admins podem remover notícias" on public.news
+  for delete using (auth.uid() = author_id or public.is_admin());
+
+-- ==============================================================================
+-- 💬 Canais de comunidade (20260929150000)
+--
+-- `communities.links` continua guardando links externos soltos; aqui o canal é
+-- uma entidade com dono, para que a escrita possa ser atribuída.
+-- ==============================================================================
+
+create table if not exists public.community_channels (
+  id uuid default gen_random_uuid() primary key,
+  community_id uuid references public.communities(id) on delete cascade not null,
+  name text not null,
+  description text,
+  platform text not null default 'discord', -- discord, telegram, whatsapp, matrix
+  url text,
+  members_count integer not null default 0,
+  created_by uuid references public.profiles(id) on delete set null,
+  created_at timestamptz default now() not null,
+  updated_at timestamptz default now() not null,
+  constraint community_channels_platform_check check (platform in ('discord', 'telegram', 'whatsapp', 'matrix')),
+  constraint community_channels_url_check check (url is null or url ~ '^https?://')
+);
+
+create index if not exists community_channels_community_idx on public.community_channels (community_id);
+
+alter table public.community_channels enable row level security;
+
+create policy "Canais visíveis publicamente" on public.community_channels
+  for select using (true);
+
+-- `auth.uid() = created_by` veio em 20260929160000: sem ele qualquer dev criava
+-- canais em nome de outra pessoa e perdia o controle do próprio registro.
+create policy "Devs, empresas e admins podem criar canais" on public.community_channels
+  for insert with check (
+    auth.uid() = created_by
+    and public.has_profile_type(array['dev', 'empresa', 'admin'])
+  );
+
+create policy "Criadores e admins podem editar canais" on public.community_channels
+  for update using (auth.uid() = created_by or public.is_admin());
+
+create policy "Criadores e admins podem remover canais" on public.community_channels
+  for delete using (auth.uid() = created_by or public.is_admin());
 
 -- ==============================================================================
 -- ⚡ Trigger para criação automática de perfil ao registrar usuário

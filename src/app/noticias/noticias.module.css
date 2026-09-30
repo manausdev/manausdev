@@ -1,0 +1,340 @@
+/* ============================================================================
+   NoticiasPage.module.css — CSS Module for /noticias listing
+   ========================================================================== */
+
+.container {
+  max-width: 80rem;
+  margin-inline: auto;
+  padding: 3rem 1rem;
+}
+
+@media (min-width: 640px) {
+  .container {
+    padding-inline: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    padding-inline: 2rem;
+  }
+}
+
+/* ===== Hero ===== */
+.hero {
+  margin-bottom: 2.5rem;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .hero {
+    text-align: left;
+  }
+}
+
+.heroBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  background-color: color-mix(in oklab, var(--deep) 10%, transparent);
+  color: var(--accent-text);
+  border: 1px solid color-mix(in oklab, var(--deep) 20%, transparent);
+  padding: 0.375rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  font-family: var(--font-mono-theme);
+  width: fit-content;
+  margin-inline: auto;
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
+  .heroBadge {
+    margin-inline: 0;
+  }
+}
+
+.badgeIcon {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+
+.heroTitle {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+  color: var(--ink);
+}
+
+@media (min-width: 640px) {
+  .heroTitle {
+    font-size: 3rem;
+  }
+}
+
+.heroTitleAccent {
+  color: var(--accent-text);
+}
+
+.heroSubtitle {
+  font-size: 0.875rem;
+  color: var(--muted);
+  margin-top: 0.5rem;
+  max-width: 42rem;
+  margin-inline: auto;
+}
+
+@media (min-width: 768px) {
+  .heroSubtitle {
+    margin-inline: 0;
+  }
+}
+
+/* ===== Filters ===== */
+.filters {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  padding: 1rem;
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+@media (min-width: 640px) {
+  .filters {
+    padding: 1.25rem;
+  }
+}
+
+.searchWrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 0.875rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1rem;
+  height: 1rem;
+  color: var(--faint);
+  pointer-events: none;
+}
+
+.searchInput {
+  width: 100%;
+  padding-left: 2.5rem;
+}
+
+.categoryFilters {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding-bottom: 0.25rem;
+}
+
+.categoryLabel {
+  font-size: 0.625rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--faint);
+  font-family: var(--font-mono-theme);
+  flex-shrink: 0;
+}
+
+.categoryBtn {
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  transition: all 180ms ease;
+  white-space: nowrap;
+}
+
+.categoryBtnInactive {
+  background-color: var(--surface-1);
+  color: var(--muted);
+  border: 1px solid transparent;
+}
+
+.categoryBtnInactive:hover {
+  background-color: var(--surface-2);
+  border-color: color-mix(in oklab, var(--accent) 40%, transparent);
+}
+
+.categoryBtnActive {
+  background-color: var(--deep);
+  color: white;
+  font-weight: 600;
+}
+
+/* ===== News list ===== */
+.list {
+  display: grid;
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.card {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: all 300ms ease;
+}
+
+.card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+}
+
+.cardMedia {
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background-color: var(--surface-1);
+}
+
+.cardImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.cardBody {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.cardBadges {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.categoryBadge {
+  font-size: 0.625rem;
+  font-family: var(--font-mono-theme);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.25rem 0.625rem;
+  border-radius: 9999px;
+  background-color: color-mix(in oklab, var(--accent) 12%, transparent);
+  color: var(--accent-text);
+  border: 1px solid color-mix(in oklab, var(--accent) 30%, transparent);
+}
+
+.dateBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: 0.75rem;
+  font-family: var(--font-mono-theme);
+  color: var(--faint);
+}
+
+.dateIcon {
+  width: 0.75rem;
+  height: 0.75rem;
+}
+
+.cardTitle {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.125rem;
+  line-height: 1.5rem;
+  color: var(--ink);
+  transition: color 180ms ease;
+  margin-bottom: 0.5rem;
+}
+
+.card:hover .cardTitle {
+  color: var(--accent-text);
+}
+
+.cardExcerpt {
+  font-size: 0.875rem;
+  color: var(--muted);
+  line-height: 1.625;
+  margin-bottom: 1.25rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.cardLink {
+  margin-top: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--accent-text);
+  text-decoration: none;
+  transition: gap 180ms ease;
+}
+
+.cardLink:hover {
+  gap: 0.625rem;
+}
+
+.linkIcon {
+  width: 1rem;
+  height: 1rem;
+}
+
+/* ===== Loading / Empty ===== */
+.loading {
+  display: grid;
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .loading {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.loadingItem {
+  height: 14rem;
+  background-color: var(--surface-1);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.55; }
+}
+
+.empty {
+  text-align: center;
+  padding: 4rem 1rem;
+}
+
+.emptyText {
+  font-size: 0.875rem;
+  color: var(--muted);
+}

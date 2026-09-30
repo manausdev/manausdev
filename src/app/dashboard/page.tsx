@@ -17,6 +17,7 @@ import {
   ExternalLinkIcon
 } from '@/components/icons';
 import type { Profile, Project, Database, ProjectLinks } from '@/types/database';
+import { AdminProfileTypes } from '@/organisms/AdminProfileTypes/AdminProfileTypes';
 import styles from './dashboard.module.css';
 
 export default function DashboardPage() {
@@ -543,6 +544,8 @@ export default function DashboardPage() {
           </div>
         </div>
       </div>
+
+      <AdminProfileTypes viewer={profile} />
 
       {/* Project Modal (Add or Edit) */}
       {isProjectModalOpen && (
