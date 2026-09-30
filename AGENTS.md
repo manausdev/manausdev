@@ -17,22 +17,8 @@ Este documento contém diretrizes arquiteturais e regras estritas para qualquer 
 
 | Arquivo | Descrição |
 |---|---|
-| [`scripts/firebase-auth.js`](file:///C:/Users/luann/Documents/GitHub/manausdev/scripts/firebase-auth.js) | Gerador de Access Token OAuth2 via JWT assinado com a Service Account (`*admin.json`). Sem dependência de login no browser. |
-| [`scripts/deploy-hosting-rest.js`](file:///C:/Users/luann/Documents/GitHub/manausdev/scripts/deploy-hosting-rest.js) | Deploy automatizado no **Firebase Hosting** consumindo diretamente a Firebase Hosting REST API v1beta1. |
-| [`scripts/firestore-rest.js`](file:///C:/Users/luann/Documents/GitHub/manausdev/scripts/firestore-rest.js) | Cliente REST para operações de banco de dados no **Firestore** com a chave admin. |
-
----
-
-## 🚀 Como Executar o Deploy via REST
-
-Para rodar o build e publicar no Firebase Hosting usando a REST API:
-
-```bash
-npm run deploy
-# ou diretamente:
-node build.js
-node scripts/deploy-hosting-rest.js
-```
+| [`scripts/firebase-auth.js`](file:///C:/Users/luann/.copilot/repos/manausdev/scripts/firebase-auth.js) | Gerador de Access Token OAuth2 via JWT assinado com a Service Account (`*admin.json`). Sem dependência de login no browser. |
+| [`scripts/firestore-rest.js`](file:///C:/Users/luann/.copilot/repos/manausdev/scripts/firestore-rest.js) | Cliente REST para operações de banco de dados no **Firestore** com a chave admin. |
 
 ---
 
@@ -162,7 +148,6 @@ node C:\Users\luann\.copilot\repos\browser-mcp-lite\bin\bml.mjs audit http://loc
 
 No roadmap futuro, estes scripts serão empacotados e expandidos em uma ferramenta CLI completa (`appcli`):
 * Comandos planejados:
-  * `appcli deploy` — Build e deploy no hosting via REST.
   * `appcli db:sync` — Sincronização e backup de dados Firestore via REST.
   * `appcli db:seed` — Carga inicial de dados mock no Firestore.
   * `appcli dev` — Servidor de desenvolvimento com integração REST.

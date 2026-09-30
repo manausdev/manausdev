@@ -24,17 +24,13 @@ legacy_pages/
 .env.test.local
 .env.production.local
 
-# Firebase Credentials & Service Accounts (CRITICAL: DO NOT COMMIT)
+# Service Account Credentials (CRITICAL: DO NOT COMMIT)
 *admin.json
 *firebase-adminsdk*.json
 serviceAccountKey*.json
 *.pem
 *.key
 *.cert
-.firebase/
-firebase-debug.log*
-firestore-debug.log*
-ui-debug.log*
 
 # Temporary screenshots & MCP dumps
 screenshot*.png

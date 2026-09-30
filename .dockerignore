@@ -21,7 +21,7 @@ yarn-error.log*
 !.env.example
 *.json.key
 
-# Firebase / Supabase service-account credentials — NEVER ship in the image
+# Service account credentials — NEVER ship in the image
 *admin*.json
 *firebase-adminsdk*.json
 *service-account*.json
