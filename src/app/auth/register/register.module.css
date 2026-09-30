@@ -1,0 +1,315 @@
+/* ============================================================================
+   RegisterPage.module.css — CSS Module for Register page
+   ============================================================================ */
+
+.wrapper {
+  min-height: 85vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1rem;
+  background-color: var(--canvas);
+}
+
+@media (min-width: 640px) {
+  .container {
+    padding-inline: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    padding-inline: 2rem;
+  }
+}
+
+.card {
+  width: 100%;
+  max-width: 28rem;
+  padding: 2rem 2.5rem;
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  box-shadow: 0 4px 20px rgba(0, 115, 253, 0.05);
+  position: relative;
+  overflow: hidden.
+}
+
+.logoWrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 1.25rem;
+  background-color: var(--deep);
+  color: white;
+  margin-bottom: 1rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05).
+}
+
+.logoEmoji {
+  font-size: 1.5rem.
+}
+
+.title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: var(--ink);
+  margin-bottom: 0.5rem.
+}
+
+.subtitle {
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin-bottom: 0.5rem.
+}
+
+.errorBanner {
+  margin-bottom: 1.5rem;
+  padding: 0.875rem;
+  border-radius: 0.75rem;
+  background-color: var(--danger-soft);
+  border: 1px solid color-mix(in oklab, var(--danger) 30%, transparent);
+  color: var(--danger-text);
+  font-size: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem.
+}
+
+.errorIcon {
+  width: 1rem;
+  height: 1rem;
+  color: var(--danger);
+  flex-shrink: 0.
+}
+
+.successBanner {
+  margin-bottom: 1.5rem;
+  padding: 0.875rem;
+  border-radius: 0.75rem;
+  background-color: var(--success-soft);
+  border: 1px solid color-mix(in oklab, var(--success) 30%, transparent);
+  color: var(--success-text);
+  font-size: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500.
+}
+
+.successIcon {
+  width: 1rem;
+  height: 1rem;
+  color: var(--accent-text);
+  flex-shrink: 0.
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem.
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem.
+}
+
+.label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--ink).
+}
+
+.inputWrap {
+  position: relative.
+}
+
+.inputIcon {
+  position: absolute;
+  left: 0.875rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1rem;
+  height: 1rem;
+  color: var(--faint);
+  pointer-events: none.
+}
+
+.usernameIcon {
+  position: absolute;
+  left: 0.875rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-mono-theme);
+  font-size: 0.75rem;
+  color: var(--faint);
+  pointer-events: none.
+}
+
+.input {
+  width: 100%;
+  padding: 0.625rem 0.875rem;
+  padding-left: 2.75rem;
+  font-size: 0.875rem;
+  color: var(--ink);
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 0.375rem;
+  transition: all 180ms ease.
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--accent) 15%, transparent).
+}
+
+.input::placeholder {
+  color: var(--faint).
+}
+
+.usernameInput {
+  padding-left: 2.25rem.
+}
+
+.usernamePrefix {
+  position: absolute;
+  left: 0.875rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-mono-theme);
+  font-size: 0.75rem;
+  color: var(--faint);
+  pointer-events: none.
+}
+
+.termsRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.625rem;
+  padding-top: 0.25rem.
+}
+
+.checkbox {
+  margin-top: 0.125rem;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 0.25rem;
+  border: 1px solid var(--border-strong);
+  accent-color: var(--accent);
+  cursor: pointer.
+}
+
+.termsLabel {
+  font-size: 0.75rem;
+  color: var(--muted);
+  line-height: 1.5.
+}
+
+.termsLink {
+  color: var(--accent-text);
+  text-decoration: underline.
+}
+
+.termsLink:hover {
+  color: var(--ink).
+}
+
+.submitBtn {
+  width: 100%;
+  background-color: var(--neon);
+  color: var(--on-neon);
+  font-weight: 600;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  padding: 0.75rem;
+  transition: all 180ms ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 0.25rem;
+  border: none;
+  cursor: pointer;
+  margin-top: 0.5rem.
+}
+
+.submitBtn:hover:not(:disabled) {
+  filter: brightness(0.95);
+  transform: translateY(-1px).
+}
+
+.submitBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed.
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 1.5rem 0.
+}
+
+.dividerLine {
+  flex: 1;
+  border-top: 1px solid var(--border).
+}
+
+.dividerText {
+  font-size: 0.6875rem;
+  font-family: var(--font-mono-theme);
+  color: var(--faint);
+  font-weight: 500.
+  padding: 0 0.75rem.
+  background-color: var(--surface).
+}
+
+.oauthBtn {
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625rem;
+  padding: 0.625rem;
+  border-radius: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--ink);
+  background-color: var(--surface-1);
+  border: 1px solid var(--border);
+  cursor: pointer.
+  transition: all 180ms ease.
+}
+
+.oauthBtn:hover {
+  background-color: var(--surface-2);
+  border-color: var(--accent).
+}
+
+.oauthIcon {
+  width: 1rem;
+  height: 1rem.
+}
+
+.footerText {
+  margin-top: 2rem;
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--muted).
+}
+
+.footerLink {
+  color: var(--accent-text).
+  font-weight: 700.
+  text-decoration: none.
+}
+
+.footerLink:hover {
+  text-decoration: underline.
+}

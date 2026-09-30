@@ -6,8 +6,7 @@ import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 import { MailIcon, LockIcon, UserIcon, AlertCircleIcon, ArrowRightIcon, CheckCircle2Icon } from '@/components/icons';
 import { GithubIcon } from '@/components/icons';
-import { AuthTemplate } from '@/routes';
-import styles from '../auth.module.css';
+import styles from './register.module.css';
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -82,134 +81,146 @@ export default function RegisterPage() {
   };
 
   return (
-    <AuthTemplate
-      icon={<span>🌿</span>}
-      title="Junte-se à ManausDev"
-      subtitle="Crie seu perfil profissional e conecte-se com o ecossistema"
-    >
-      {errorMsg && (
-        <div className={styles.errorBanner}>
-          <AlertCircleIcon className={`${styles.bannerIcon} ${styles.bannerIconDanger}`} />
-          <span>{errorMsg}</span>
-        </div>
-      )}
-
-      {successMsg && (
-        <div className={styles.successBanner}>
-          <CheckCircle2Icon className={`${styles.bannerIcon} ${styles.bannerIconSuccess}`} />
-          <span>{successMsg}</span>
-        </div>
-      )}
-
-      <form onSubmit={handleRegister} className={styles.form}>
-        <div>
-          <label className={styles.label}>Nome Completo</label>
-          <div className={styles.inputWrap}>
-            <UserIcon className={styles.fieldIcon} />
-            <input
-              type="text"
-              required
-              placeholder="Seu Nome Completo"
-              value={fullName}
-              onChange={(e) => setFullName(e.target.value)}
-              className={styles.input}
-            />
+    <div className={styles.wrapper}>
+      <div className={styles.card}>
+        <div className={styles.header}>
+          <div className={styles.iconBox}>
+            <span>🌿</span>
           </div>
+          <h1 className={styles.title}>Junte-se à ManausDev</h1>
+          <p className={styles.subtitle}>
+            Crie seu perfil profissional e conecte-se com o ecossistema
+          </p>
         </div>
 
-        <div>
-          <label className={styles.label}>Username (@)</label>
-          <div className={styles.inputWrap}>
-            <span className={styles.fieldPrefix}>@</span>
-            <input
-              type="text"
-              required
-              placeholder="seunome"
-              value={username}
-              onChange={(e) => setUsername(e.target.value.toLowerCase().replace(/[^a-z0-9_-]/g, ''))}
-              className={styles.input}
-            />
+        {errorMsg && (
+          <div className={styles.errorBanner}>
+            <AlertCircleIcon className={styles.bannerIconError} />
+            <span>{errorMsg}</span>
           </div>
-        </div>
+        )}
 
-        <div>
-          <label className={styles.label}>Email</label>
-          <div className={styles.inputWrap}>
-            <MailIcon className={styles.fieldIcon} />
-            <input
-              type="email"
-              required
-              placeholder="seu.email@exemplo.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className={styles.input}
-            />
+        {successMsg && (
+          <div className={styles.successBanner}>
+            <CheckCircle2Icon className={styles.bannerIconSuccess} />
+            <span>{successMsg}</span>
           </div>
-        </div>
+        )}
 
-        <div>
-          <label className={styles.label}>Senha (mínimo 6 caracteres)</label>
-          <div className={styles.inputWrap}>
-            <LockIcon className={styles.fieldIcon} />
-            <input
-              type="password"
-              required
-              minLength={6}
-              placeholder="••••••••"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className={styles.input}
-            />
+        <form onSubmit={handleRegister} className={styles.form}>
+          <div className={styles.field}>
+            <label className={styles.label}>Nome Completo</label>
+            <div className={styles.inputWrap}>
+              <UserIcon className={styles.fieldIcon} />
+              <input
+                type="text"
+                required
+                placeholder="Seu Nome Completo"
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+                className={styles.input}
+              />
+            </div>
           </div>
+
+          <div className={styles.field}>
+            <label className={styles.label}>Username (@)</label>
+            <div className={styles.inputWrap}>
+              <span className={styles.fieldPrefix}>@</span>
+              <input
+                type="text"
+                required
+                placeholder="seunome"
+                value={username}
+                onChange={(e) => setUsername(e.target.value.toLowerCase().replace(/[^a-z0-9_-]/g, ''))}
+                className={styles.usernameInput}
+              />
+            </div>
+          </div>
+
+          <div className={styles.field}>
+            <label className={styles.label}>Email</label>
+            <div className={styles.inputWrap}>
+              <MailIcon className={styles.fieldIcon} />
+              <input
+                type="email"
+                required
+                placeholder="seu.email@exemplo.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className={styles.input}
+              />
+            </div>
+          </div>
+
+          <div className={styles.field}>
+            <label className={styles.label}>Senha (mínimo 6 caracteres)</label>
+            <div className={styles.inputWrap}>
+              <LockIcon className={styles.fieldIcon} />
+              <input
+                type="password"
+                required
+                minLength={6}
+                placeholder="••••••••"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className={styles.input}
+              />
+            </div>
+          </div>
+
+          <div className={styles.termsRow}>
+            <input
+              type="checkbox"
+              id="terms"
+              checked={acceptTerms}
+              onChange={(e) => setAcceptTerms(e.target.checked)}
+              className={styles.checkbox}
+            />
+            <label htmlFor="terms" className={styles.termsLabel}>
+              Concordo com os{' '}
+              <Link href="/termos" target="_blank" className={styles.termsLink}>
+                Termos de Uso
+              </Link>{' '}
+              e a{' '}
+              <Link href="/privacidade" target="_blank" className={styles.termsLink}>
+                Política de Privacidade
+              </Link>
+              .
+            </label>
+          </div>
+
+          <button
+            type="submit"
+            disabled={loading}
+            className={styles.submitBtn}
+          >
+            {loading ? 'Criando conta...' : 'Criar meu Cadastro'}
+            <ArrowRightIcon className={styles.btnIcon} />
+          </button>
+        </form>
+
+        <div className={styles.divider}>
+          <div className={styles.dividerLine} />
+          <span className={styles.dividerText}>OU CADASTRE COM</span>
         </div>
 
-        <div className={styles.termsRow}>
-          <input
-            type="checkbox"
-            id="terms"
-            checked={acceptTerms}
-            onChange={(e) => setAcceptTerms(e.target.checked)}
-            className={styles.checkbox}
-          />
-          <label htmlFor="terms" className={styles.termsLabel}>
-            Concordo com os{' '}
-            <Link href="/termos" target="_blank" className={styles.termsLink}>
-              Termos de Uso
-            </Link>{' '}
-            e a{' '}
-            <Link href="/privacidade" target="_blank" className={styles.termsLink}>
-              Política de Privacidade
-            </Link>
-            .
-          </label>
-        </div>
-
-        <button type="submit" disabled={loading} className={styles.btnLeaf}>
-          {loading ? 'Criando conta...' : 'Criar meu Cadastro'}
-          <ArrowRightIcon className={styles.btnIcon} />
+        <button
+          onClick={() => handleOAuthLogin('github')}
+          type="button"
+          className={styles.oauthBtn}
+        >
+          <GithubIcon className={styles.oauthIcon} />
+          Cadastrar com GitHub
         </button>
-      </form>
 
-      <div className={styles.divider}>
-        <div className={styles.dividerLine} />
-        <span className={styles.dividerText}>OU CADASTRE COM</span>
+        <p className={styles.footer}>
+          Já tem uma conta?{' '}
+          <Link href="/auth/login" className={styles.footerLink}>
+            Entrar aqui
+          </Link>
+        </p>
       </div>
-
-      <button
-        onClick={() => handleOAuthLogin('github')}
-        type="button"
-        className={styles.oauthBtn}
-      >
-        <GithubIcon className={styles.btnIcon} />
-        Cadastrar com GitHub
-      </button>
-
-      <p className={styles.footer}>
-        Já tem uma conta?{' '}
-        <Link href="/auth/login" className={styles.footerLink}>
-          Entrar aqui
-        </Link>
-      </p>
-    </AuthTemplate>
+    </div>
   );
 }

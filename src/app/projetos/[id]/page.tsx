@@ -11,6 +11,7 @@ import { GithubIcon } from '@/components/icons';
 import { MOCK_PROJECTS } from '@/lib/data/mock';
 import { fetchById, fetchIdsForStaticParams } from '@/lib/data/source';
 import type { Project } from '@/types/database';
+import styles from './detail.module.css';
 
 export async function generateStaticParams() {
   return fetchIdsForStaticParams(
@@ -47,49 +48,46 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
   };
 
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div className={styles.container}>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <Link
-        href="/projetos"
-        className="inline-flex items-center gap-2 text-xs font-semibold text-accent-text hover:text-ink transition-colors mb-8"
-      >
-        <ArrowLeftIcon className="w-4 h-4" />
+      <Link href="/projetos" className={styles.backLink}>
+        <ArrowLeftIcon className={styles.iconSm} />
         Voltar para o mural de projetos
       </Link>
 
-      <div className="manaus-card p-6 sm:p-10 border border-border space-y-8">
-        <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-6 pb-6 border-b border-border">
-          <div className="space-y-3">
-            <div className="flex flex-wrap items-center gap-2">
+      <div className={styles.card}>
+        <div className={styles.header}>
+          <div className={styles.titleWrap}>
+            <div className={styles.chips}>
               {project.featured && (
-                <span className="chip-leaf text-xs font-mono font-semibold flex items-center gap-1">
-                  <StarIcon className="w-3 h-3" />
+                <span className={styles.chipLeaf}>
+                  <StarIcon className={styles.chipIcon} />
                   Destaque
                 </span>
               )}
-              <span className="chip-river text-xs font-mono font-semibold">
+              <span className={styles.chipRiver}>
                 🌿 Manaus Tech
               </span>
             </div>
 
-            <h1 className="font-display font-bold text-2xl sm:text-4xl text-ink">
+            <h1 className={styles.title}>
               {project.title}
             </h1>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-2 flex-shrink-0">
+          <div className={styles.actions}>
             {project.links?.github && (
               <a
                 href={project.links.github}
                 target="_blank"
                 rel="noreferrer"
-                className="btn-secondary !py-3 !px-6 text-xs flex items-center gap-2 w-full sm:w-auto justify-center"
+                className={styles.btnSecondary}
               >
-                <GithubIcon className="w-4 h-4" />
+                <GithubIcon className={styles.iconSm} />
                 <span>Repositório</span>
               </a>
             )}
@@ -98,46 +96,43 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
                 href={project.links.demo}
                 target="_blank"
                 rel="noreferrer"
-                className="btn-primary !py-3 !px-6 text-xs flex items-center gap-2 shadow-md w-full sm:w-auto justify-center"
+                className={styles.btnPrimary}
               >
                 <span>Ver Demo</span>
-                <ExternalLinkIcon className="w-4 h-4" />
+                <ExternalLinkIcon className={styles.iconSm} />
               </a>
             )}
           </div>
         </div>
 
         {project.image_url && (
-          <div className="relative h-56 sm:h-72 w-full rounded-xl overflow-hidden border border-border bg-deep">
+          <div className={styles.imageWrap}>
             <img
               src={project.image_url}
               alt={project.title}
-              className="w-full h-full object-cover"
+              className={styles.image}
             />
           </div>
         )}
 
         <div>
-          <h2 className="text-xs font-mono uppercase tracking-wider text-faint font-semibold mb-3">
+          <h2 className={styles.sectionLabel}>
             Sobre o Projeto
           </h2>
-          <p className="text-sm sm:text-base text-ink leading-relaxed whitespace-pre-line">
+          <p className={styles.description}>
             {project.description}
           </p>
         </div>
 
         {project.stack && project.stack.length > 0 && (
           <div>
-            <h2 className="text-xs font-mono uppercase tracking-wider text-faint font-semibold mb-3">
+            <h2 className={styles.sectionLabel}>
               Stack & Tecnologias
             </h2>
-            <div className="flex flex-wrap gap-2">
+            <div className={styles.stackWrap}>
               {project.stack.map((tech, i) => (
-                <span
-                  key={i}
-                  className="chip-river text-xs !py-1 !px-3 font-mono font-semibold"
-                >
-                  <Code2Icon className="w-3 h-3 inline-block mr-1" />
+                <span key={i} className={styles.stackChip}>
+                  <Code2Icon className={styles.stackChipIcon} />
                   {tech}
                 </span>
               ))}
@@ -145,9 +140,9 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
           </div>
         )}
 
-        <div className="pt-6 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-faint">
-          <span className="flex items-center gap-1.5">
-            <ClockIcon className="w-4 h-4 text-accent-text" />
+        <div className={styles.footer}>
+          <span className={styles.footerMeta}>
+            <ClockIcon className={styles.footerIcon} />
             Projeto em destaque na comunidade ManausDev
           </span>
           {project.links?.github && (
@@ -155,7 +150,7 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
               href={project.links.github}
               target="_blank"
               rel="noreferrer"
-              className="text-accent-text font-bold hover:underline"
+              className={styles.footerLink}
             >
               Contribuir no GitHub →
             </a>

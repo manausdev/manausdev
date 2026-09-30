@@ -6,8 +6,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 import { MailIcon, LockIcon, AlertCircleIcon, ArrowRightIcon } from '@/components/icons';
 import { GithubIcon } from '@/components/icons';
-import { AuthTemplate } from '@/routes';
-import styles from '../auth.module.css';
+import styles from './login.module.css';
 
 function LoginForm() {
   const router = useRouter();
@@ -69,92 +68,117 @@ function LoginForm() {
   };
 
   return (
-    <AuthTemplate
-      icon={<span>🌿</span>}
-      title="Bem-vindo de volta"
-      subtitle="Acesse sua conta ManausDev e gerencie seu perfil profissional"
-    >
-      {errorMsg && (
-        <div className={styles.errorBanner}>
-          <AlertCircleIcon className={`${styles.bannerIcon} ${styles.bannerIconDanger}`} />
-          <span>{errorMsg}</span>
-        </div>
-      )}
-
-      <form onSubmit={handleEmailLogin} className={styles.form}>
-        <div>
-          <label className={styles.label}>Email</label>
-          <div className={styles.inputWrap}>
-            <MailIcon className={styles.fieldIcon} />
-            <input
-              type="email"
-              required
-              placeholder="seu.email@exemplo.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className={styles.input}
-            />
+    <div className={styles.wrapper}>
+      <div className={styles.card}>
+        <div className={styles.header}>
+          <div className={styles.iconBox}>
+            <span>🌿</span>
           </div>
+          <h1 className={styles.title}>Bem-vindo de volta</h1>
+          <p className={styles.subtitle}>
+            Acesse sua conta ManausDev e gerencie seu perfil profissional
+          </p>
         </div>
 
-        <div>
-          <label className={styles.label}>Senha</label>
-          <div className={styles.inputWrap}>
-            <LockIcon className={styles.fieldIcon} />
-            <input
-              type="password"
-              required
-              placeholder="••••••••"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className={styles.input}
-            />
+        {errorMsg && (
+          <div className={styles.errorBanner}>
+            <AlertCircleIcon className={styles.bannerIconError} />
+            <span>{errorMsg}</span>
           </div>
+        )}
+
+        <form onSubmit={handleEmailLogin} className={styles.form}>
+          <div>
+            <label className={styles.label}>Email</label>
+            <div className={styles.inputWrap}>
+              <MailIcon className={styles.fieldIcon} />
+              <input
+                type="email"
+                required
+                placeholder="seu.email@exemplo.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className={styles.input}
+              />
+            </div>
+          </div>
+
+          <div>
+            <label className={styles.label}>Senha</label>
+            <div className={styles.inputWrap}>
+              <LockIcon className={styles.fieldIcon} />
+              <input
+                type="password"
+                required
+                placeholder="••••••••"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className={styles.input}
+              />
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            disabled={loading}
+            className={styles.btnPrimary}
+          >
+            {loading ? 'Entrando...' : 'Entrar na Plataforma'}
+            <ArrowRightIcon className={styles.btnIcon} />
+          </button>
+        </form>
+
+        <div className={styles.divider}>
+          <div className={styles.dividerLine} />
+          <span className={styles.dividerText}>OU ENTRE COM</span>
         </div>
 
-        <button type="submit" disabled={loading} className={styles.btnPrimary}>
-          {loading ? 'Entrando...' : 'Entrar na Plataforma'}
-          <ArrowRightIcon className={styles.btnIcon} />
+        <button
+          onClick={() => handleOAuthLogin('github')}
+          type="button"
+          className={styles.oauthBtn}
+        >
+          <GithubIcon className={styles.oauthIcon} />
+          Continuar com GitHub
         </button>
-      </form>
 
-      <div className={styles.divider}>
-        <div className={styles.dividerLine} />
-        <span className={styles.dividerText}>OU ENTRE COM</span>
+        <p className={styles.footer}>
+          Ainda não possui uma conta?{' '}
+          <Link href="/auth/register" className={styles.footerLink}>
+            Cadastre-se grátis
+          </Link>
+        </p>
       </div>
-
-      <button
-        onClick={() => handleOAuthLogin('github')}
-        type="button"
-        className={styles.oauthBtn}
-      >
-        <GithubIcon className={styles.btnIcon} />
-        Continuar com GitHub
-      </button>
-
-      <p className={styles.footer}>
-        Ainda não possui uma conta?{' '}
-        <Link href="/auth/register" className={styles.footerLink}>
-          Cadastre-se grátis
-        </Link>
-      </p>
-    </AuthTemplate>
+    </div>
   );
 }
 
 export default function LoginPage() {
   return (
-    <Suspense
-      fallback={
-        <div className={styles.fallbackPage}>
-          <div className={styles.fallback}>
-            <div className={styles.fallbackDot} />
-            <div className={styles.fallbackBar} />
+    <div className={styles.wrapper}>
+      <div className={styles.card}>
+        <div className={styles.header}>
+          <div className={styles.iconBox}>
+            <span>🌿</span>
           </div>
+          <h1 className={styles.title}>Bem-vindo de volta</h1>
+          <p className={styles.subtitle}>
+            Acesse sua conta ManausDev e gerencie seu perfil profissional
+          </p>
         </div>
-      }
-    >
-      <LoginForm />
-    </Suspense>
+        <Suspense
+          fallback={
+            <div className={styles.fallbackPage}>
+              <div className={styles.fallback}>
+                <div className={styles.fallbackDot} />
+                <div className={styles.fallbackBar} />
+              </div>
+            </div>
+          }
+        >
+          <LoginForm />
+        </Suspense>
+      </div>
+    </div>
   );
 }
