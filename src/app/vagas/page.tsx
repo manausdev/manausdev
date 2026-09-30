@@ -7,6 +7,7 @@ import { BriefcaseIcon, MapPinIcon, SearchIcon, DollarSignIcon, ExternalLinkIcon
 import { MOCK_JOBS } from '@/lib/data/mock';
 import { createClient } from '@/lib/supabase/client';
 import type { Job } from '@/types/database';
+import styles from './vagas.module.css';
 
 function VagasContent() {
   const router = useRouter();
@@ -79,60 +80,51 @@ function VagasContent() {
   }, [jobs, searchTerm, selectedType, onlyRemote]);
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <div className="mb-10 text-center sm:text-left">
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-deep/10 text-accent-text border border-deep/20 text-xs font-semibold mb-3">
+    <div className={styles.container}>
+      <div className={styles.hero}>
+        <div className={styles.heroBadge}>
           <BriefcaseIcon className="w-3.5 h-3.5" />
           <span>Mural de Carreiras</span>
         </div>
-        <h1 className="font-display font-bold text-3xl sm:text-5xl text-ink tracking-tight">
+        <h1 className={styles.heroTitle}>
           Vagas de Tecnologia em <span className="text-accent-text">Manaus</span>
         </h1>
-        <p className="text-muted text-sm sm:text-base mt-2 max-w-2xl">
+        <p className={styles.heroSubtitle}>
           Encontre posições presenciais no Polo Industrial e oportunidades remotas com contratação para talentos da região.
         </p>
       </div>
 
-      {/* Filters */}
-      <div className="manaus-card p-5 sm:p-6 mb-8 space-y-4">
-        <div className="flex flex-col sm:flex-row gap-4">
-          <div className="relative flex-1 flex items-center">
-            <SearchIcon className="w-4 h-4 absolute left-3.5 text-faint pointer-events-none z-10" />
+      <div className={styles.filters}>
+        <div className={styles.filterRow}>
+          <div className={styles.searchWrap}>
+            <SearchIcon className={styles.searchIcon} />
             <input
               type="text"
               placeholder="Buscar por cargo, especialidade ou empresa..."
               value={searchTerm}
               onChange={(e) => handleSearchChange(e.target.value)}
-              className="manaus-input w-full !pl-10"
+              className={`manaus-input ${styles.searchInput}`}
             />
           </div>
 
           <button
             onClick={handleRemoteToggle}
-            className={`px-4 py-2.5 rounded-lg text-xs font-semibold border flex items-center justify-center gap-2 transition-all ${
-              onlyRemote
-                ? 'bg-accent/10 text-accent-text border-accent'
-                : 'bg-surface text-muted border-border hover:bg-surface-1'
-            }`}
+            className={`${styles.remoteToggle} ${onlyRemote ? styles.remoteToggleActive : styles.remoteToggleInactive}`}
           >
-            <span className={`w-2 h-2 rounded-full ${onlyRemote ? 'bg-accent' : 'bg-faint'}`} />
+            <span className={`${styles.remoteDot} ${onlyRemote ? styles.remoteDotActive : styles.remoteDotInactive}`} />
             Apenas Remoto
           </button>
         </div>
 
-        <div className="flex items-center gap-2 overflow-x-auto pb-1">
-          <span className="text-xs text-faint font-medium flex-shrink-0">Contrato:</span>
+        <div className={styles.typeFilters}>
+          <span className={styles.typeFilterLabel}>Contrato:</span>
           {['Todos', 'CLT', 'PJ', 'Estágio'].map((type) => {
             const isSelected = type === 'Todos' ? selectedType === null : selectedType === type;
             return (
               <button
                 key={type}
                 onClick={() => handleTypeChange(type === 'Todos' ? null : type)}
-                className={`px-3 py-1 rounded-full text-xs font-medium transition-colors ${
-                  isSelected
-                    ? 'bg-deep text-white font-semibold'
-                    : 'bg-surface-1 text-muted hover:bg-surface-2'
-                }`}
+                className={`${styles.typeFilterBtn} ${isSelected ? styles.typeFilterBtnActive : styles.typeFilterBtnInactive}`}
               >
                 {type}
               </button>
@@ -141,66 +133,55 @@ function VagasContent() {
         </div>
       </div>
 
-      {/* Jobs List */}
       {loading ? (
-        <div className="space-y-4">
+        <div className={styles.loading}>
           {[1, 2, 3].map((i) => (
-            <div key={i} className="manaus-card p-6 h-32 animate-pulse bg-surface-1" />
+            <div key={i} className={styles.loadingItem} />
           ))}
         </div>
       ) : filteredJobs.length === 0 ? (
-        <div className="text-center py-16 manaus-card">
-          <p className="text-faint text-sm">Nenhuma vaga encontrada para os filtros selecionados.</p>
+        <div className={styles.empty}>
+          <p className={styles.emptyText}>Nenhuma vaga encontrada para os filtros selecionados.</p>
         </div>
       ) : (
-        <div className="space-y-4">
+        <div className={styles.list}>
           {filteredJobs.map((job) => (
-            <div key={job.id} className="manaus-card p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-6 hover:border-l-4 hover:border-l-accent transition-all">
-              <div className="space-y-2">
-                <div className="flex flex-wrap items-center gap-2">
-                  <span className="chip-leaf text-xs font-mono font-semibold">
-                    {job.type}
-                  </span>
-                  {job.remote && (
-                    <span className="chip-river text-xs font-mono font-semibold">
-                      100% Remoto
-                    </span>
-                  )}
+            <div key={job.id} className={styles.jobCard}>
+              <div className={styles.jobMain}>
+                <div className={styles.jobBadges}>
+                  <span className={styles.jobTypeBadge}>{job.type}</span>
+                  {job.remote && <span className={styles.remoteBadge}>100% Remoto</span>}
                 </div>
 
                 <Link href={`/vagas/${job.id}`}>
-                  <h2 className="font-display font-bold text-lg text-ink hover:text-accent-text transition-colors">
-                    {job.title}
-                  </h2>
+                  <h2 className={styles.jobTitle}>{job.title}</h2>
                 </Link>
 
-                <div className="flex flex-wrap items-center gap-4 text-xs text-faint">
-                  <span className="flex items-center gap-1.5 font-medium">
-                    <BuildingIcon className="w-3.5 h-3.5 text-accent-text" />
-                    {job.company_name || 'Empresa Parceira'}
+                <div className={styles.jobMeta}>
+                  <span className={styles.metaItem}>
+                    <BuildingIcon className={styles.metaIcon} />
+                    <strong>{job.company_name || 'Empresa Parceira'}</strong>
                   </span>
-                  <span className="flex items-center gap-1.5">
-                    <MapPinIcon className="w-3.5 h-3.5 text-accent-text" />
+                  <span className={styles.metaItem}>
+                    <MapPinIcon className={styles.metaIcon} />
                     {job.location || 'Manaus-AM'}
                   </span>
                   {job.salary && (
-                    <span className="flex items-center gap-1.5 font-semibold text-accent-text">
-                      <DollarSignIcon className="w-3.5 h-3.5" />
+                    <span className={styles.salaryBadge}>
+                      <DollarSignIcon className={styles.metaIcon} />
                       {job.salary}
                     </span>
                   )}
                 </div>
 
                 {job.description && (
-                  <p className="text-xs text-muted max-w-2xl leading-relaxed pt-1 line-clamp-2">
-                    {job.description}
-                  </p>
+                  <p className={styles.jobDescription}>{job.description}</p>
                 )}
 
                 {job.skills && job.skills.length > 0 && (
-                  <div className="flex flex-wrap gap-1.5 pt-2">
+                  <div className={styles.jobSkills}>
                     {job.skills.map((s, i) => (
-                      <span key={i} className="chip-river text-[10px] font-mono">
+                      <span key={i} className={styles.skillTag}>
                         {s}
                       </span>
                     ))}
@@ -208,11 +189,8 @@ function VagasContent() {
                 )}
               </div>
 
-              <div className="flex sm:flex-col items-center sm:items-end gap-2 flex-shrink-0">
-                <Link
-                  href={`/vagas/${job.id}`}
-                  className="btn-leaf text-xs !py-2 !px-4 flex items-center gap-1"
-                >
+              <div className={styles.jobActions}>
+                <Link href={`/vagas/${job.id}`} className={styles.btnLeaf}>
                   <span>Ver Detalhes</span>
                   <ArrowRightIcon className="w-3.5 h-3.5" />
                 </Link>
@@ -221,7 +199,7 @@ function VagasContent() {
                     href={job.link}
                     target="_blank"
                     rel="noreferrer"
-                    className="btn-primary text-xs !py-2 !px-4 flex items-center gap-1"
+                    className={styles.btnPrimary}
                   >
                     <span>Candidatar</span>
                     <ExternalLinkIcon className="w-3.5 h-3.5" />
@@ -238,18 +216,18 @@ function VagasContent() {
 
 export default function VagasPage() {
   return (
-    <Suspense fallback={
-      <div className="max-w-7xl mx-auto px-4 py-12">
-        <div className="h-10 bg-surface-2 w-64 rounded-lg animate-pulse mb-8" />
-        <div className="space-y-4">
-          {[1, 2, 3].map((i) => (
-            <div key={i} className="manaus-card p-6 h-32 animate-pulse bg-surface-1" />
-          ))}
+    <Suspense
+      fallback={
+        <div className={styles.container}>
+          <div className={styles.loading}>
+            {[1, 2, 3].map((i) => (
+              <div key={i} className={styles.loadingItem} />
+            ))}
+          </div>
         </div>
-      </div>
-    }>
+      }
+    >
       <VagasContent />
     </Suspense>
   );
 }
-

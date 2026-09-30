@@ -377,7 +377,7 @@
   width: 1rem;
   height: 1rem;
   color: var(--accent-text);
-  flex-shrink: 0.
+;
 }
 
 .salaryBadge {

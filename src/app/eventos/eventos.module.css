@@ -435,6 +435,19 @@
   flex-shrink: 0;
 }
 
+.eventLink {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--accent-text);
+  text-decoration: none;
+  transition: color 180ms ease;
+}
+
+.eventLink:hover {
+  text-decoration: underline;
+  color: var(--ink);
+}
+
 .eventLink:hover .chevronIcon {
   color: var(--accent-text);
   transform: translateX(0.25rem);
@@ -605,6 +618,19 @@
   color: var(--faint);
   transition: color 180ms ease, transform 180ms ease;
   flex-shrink: 0;
+}
+
+.eventLink {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--accent-text);
+  text-decoration: none;
+  transition: color 180ms ease;
+}
+
+.eventLink:hover {
+  text-decoration: underline;
+  color: var(--ink);
 }
 
 .eventLink:hover .chevronIcon {
