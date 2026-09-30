@@ -25,6 +25,7 @@
 | [ADR 0015](0015-rebrand-blue-tech-palette-and-dark-mode.md) | 2026-09-29 | UI / Design System | Rebrand para a paleta Blue-Tech com modo claro/escuro | **Aceito** |
 | [ADR 0016](0016-profile-types-and-permission-matrix.md) | 2026-09-29 | Auth / RLS | Tipos de perfil e matriz de permissões por tipo de conta | **Aceito** |
 | [ADR 0019](0019-favicon-from-brand-symbol.md) | 2026-09-30 | UI / Identidade Visual | Favicon a partir do símbolo da marca | **Aceito** |
+| [ADR 0020](0020-todo-reflects-verified-state.md) | 2026-09-30 | Documentação / Roadmap | TODO.md reflete o estado verificado do código | **Aceito** |
 
 ---
 
@@ -58,6 +59,10 @@
   * Headers visuais com screenshots, fallback temático com padrão geométrico e suporte a preview no Dashboard.
 * [`ADR 0011: Previews e Logotipos para Comunidades, Eventos e Empresas`](0011-previews-and-branding-for-communities-events-companies.md)
   * Capas fotográficas para meetups/hackathons, contadores de comunidade e logotipos dedicados para empresas locais.
+
+### 4. Documentação & Processo
+* [`ADR 0020: TODO.md reflete o estado verificado do código`](0020-todo-reflects-verified-state.md)
+  * Checkbox `[x]` só com evidência no código, no banco ou no GitHub; itens sem evidência desmarcados, seções de stack e MVP atualizadas para Next.js + Supabase.
 
 ---
 
