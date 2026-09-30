@@ -19,6 +19,7 @@ import {
   LogOutIcon,
   LayoutDashboardIcon,
   MessageSquareIcon,
+  LogoIcon,
 } from '@/components/icons';
 import { cn } from '@/lib/utils';
 import styles from './Header.module.css';
@@ -74,9 +75,7 @@ export function Header() {
     <header className={styles.header}>
       <div className={styles.inner}>
         <Link href="/" className={styles.brand}>
-          <div className={styles.logo}>
-            <span className={styles.logoText}>{'</>'}</span>
-          </div>
+          <LogoIcon size={36} className={styles.logo} />
           <div className={styles.brandText}>
             <span className={styles.brandName}>
               Manaus<span className={styles.brandAccent}>Dev</span>

@@ -439,3 +439,127 @@ export function LogOutIcon({ className, size }: IconProps) {
     </SvgIcon>
   );
 }
+
+export type LogoIconProps = {
+  /** px size of the rendered square. Default: 36 */
+  size?: number;
+  className?: string;
+  /**
+   * 'dark'  — deep navy bg (#0c1f2e), brackets in navy  — for dark surfaces
+   * 'light' — Pantone 2026 C warm-white bg (#F5F0E8), brackets in warm-white — for light surfaces
+   * 'auto'  — (default) switches via CSS: light theme uses the light variant,
+   *            dark theme uses the dark variant. Requires the parent page to
+   *            toggle a `.dark` class on <html> (the project standard).
+   */
+  variant?: 'dark' | 'light' | 'auto';
+};
+
+const BRAND_BG_DARK  = '#0c1f2e';
+const BRAND_BG_LIGHT = '#F5F0E8'; // Pantone 2026 C warm white
+
+/**
+ * ManausDev brand mark — inline SVG that mirrors the favicon:
+ * rounded square → gradient diamond → </> code brackets.
+ *
+ * Use variant="auto" (default) in the Header so the logo adapts to
+ * the active color scheme without any JS re-render.
+ */
+export function LogoIcon({ size = 36, className, variant = 'auto' }: LogoIconProps) {
+  // Stable gradient IDs — suffixed by variant to avoid collisions when
+  // both variants are rendered on the same page (e.g., in Storybook).
+  const gradId = `md-diamond-${variant}`;
+
+  if (variant === 'auto') {
+    // Render both rects and switch via CSS `display`. The gradient itself is
+    // shared — only the background rect and bracket stroke color differ.
+    return (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 36 36"
+        width={size}
+        height={size}
+        className={className}
+        role="img"
+        aria-label="ManausDev logo"
+      >
+        <defs>
+          <linearGradient id="md-diamond-auto" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%"   stopColor="#009BFD" />
+            <stop offset="50%"  stopColor="#02B8B5" />
+            <stop offset="100%" stopColor="#4BD76D" />
+          </linearGradient>
+        </defs>
+
+        {/* Light theme layer — hidden in dark mode via CSS */}
+        <g className="logo-layer-light">
+          <rect width="36" height="36" rx="8" fill={BRAND_BG_LIGHT} />
+          <rect x="9" y="9" width="18" height="18" rx="2"
+            fill="url(#md-diamond-auto)" transform="rotate(45 18 18)" />
+          <path d="M14 15.5 L11 18 L14 20.5"
+            stroke={BRAND_BG_LIGHT} strokeWidth="2"
+            strokeLinecap="round" strokeLinejoin="round" fill="none" />
+          <path d="M22 15.5 L25 18 L22 20.5"
+            stroke={BRAND_BG_LIGHT} strokeWidth="2"
+            strokeLinecap="round" strokeLinejoin="round" fill="none" />
+          <path d="M17.5 21.5 L18.5 14.5"
+            stroke={BRAND_BG_LIGHT} strokeWidth="2"
+            strokeLinecap="round" fill="none" />
+        </g>
+
+        {/* Dark theme layer — hidden in light mode via CSS */}
+        <g className="logo-layer-dark">
+          <rect width="36" height="36" rx="8" fill={BRAND_BG_DARK} />
+          <rect x="9" y="9" width="18" height="18" rx="2"
+            fill="url(#md-diamond-auto)" transform="rotate(45 18 18)" />
+          <path d="M14 15.5 L11 18 L14 20.5"
+            stroke={BRAND_BG_DARK} strokeWidth="2"
+            strokeLinecap="round" strokeLinejoin="round" fill="none" />
+          <path d="M22 15.5 L25 18 L22 20.5"
+            stroke={BRAND_BG_DARK} strokeWidth="2"
+            strokeLinecap="round" strokeLinejoin="round" fill="none" />
+          <path d="M17.5 21.5 L18.5 14.5"
+            stroke={BRAND_BG_DARK} strokeWidth="2"
+            strokeLinecap="round" fill="none" />
+        </g>
+      </svg>
+    );
+  }
+
+  const bg      = variant === 'dark' ? BRAND_BG_DARK : BRAND_BG_LIGHT;
+  const brackets = bg; // bracket stroke matches bg so they read as cut-outs
+
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 36 36"
+      width={size}
+      height={size}
+      className={className}
+      role="img"
+      aria-label="ManausDev logo"
+    >
+      <defs>
+        <linearGradient id={gradId} x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%"   stopColor="#009BFD" />
+          <stop offset="50%"  stopColor="#02B8B5" />
+          <stop offset="100%" stopColor="#4BD76D" />
+        </linearGradient>
+      </defs>
+
+      <rect width="36" height="36" rx="8" fill={bg} />
+
+      <rect x="9" y="9" width="18" height="18" rx="2"
+        fill={`url(#${gradId})`} transform="rotate(45 18 18)" />
+
+      <path d="M14 15.5 L11 18 L14 20.5"
+        stroke={brackets} strokeWidth="2"
+        strokeLinecap="round" strokeLinejoin="round" fill="none" />
+      <path d="M22 15.5 L25 18 L22 20.5"
+        stroke={brackets} strokeWidth="2"
+        strokeLinecap="round" strokeLinejoin="round" fill="none" />
+      <path d="M17.5 21.5 L18.5 14.5"
+        stroke={brackets} strokeWidth="2"
+        strokeLinecap="round" fill="none" />
+    </svg>
+  );
+}

@@ -25,6 +25,7 @@
 | [ADR 0015](0015-rebrand-blue-tech-palette-and-dark-mode.md) | 2026-09-29 | UI / Design System | Rebrand para a paleta Blue-Tech com modo claro/escuro | **Aceito** |
 | [ADR 0016](0016-profile-types-and-permission-matrix.md) | 2026-09-29 | Auth / RLS | Tipos de perfil e matriz de permissões por tipo de conta | **Aceito** |
 | [ADR 0019](0019-favicon-from-brand-symbol.md) | 2026-09-30 | UI / Identidade Visual | Favicon a partir do símbolo da marca | **Aceito** |
+| [ADR 0020](0020-svg-logo-header-light-dark-variants.md) | 2026-09-30 | UI / Identidade Visual | SVG Logo no Header com variante clara (Pantone 2026 C) | **Aceito** |
 
 ---
 
@@ -46,6 +47,8 @@
 ### 2. 🎨 Design System & Identidade Visual
 * [`ADR 0019: Favicon a partir do símbolo da marca`](0019-favicon-from-brand-symbol.md)
   * `src/app/favicon.ico` (16, 32 e 48 px) só com o símbolo do M, PNGs internos em RGBA (em RGB a home responde 500) e fonte em `public/assets/icone-manausdev.png`.
+* [`ADR 0020: SVG Logo no Header com variante clara (Pantone 2026 C)`](0020-svg-logo-header-light-dark-variants.md)
+  * `LogoIcon` inline SVG com variantes `dark` (`#0c1f2e`), `light` (Pantone 2026 C `#F5F0E8`) e `auto` (alterna via CSS `.dark`). Header usa `auto`; SVGs estáticos mantidos em `public/assets/`.
 * [`ADR 0015: Rebrand para a paleta Blue-Tech com modo claro/escuro`](0015-rebrand-blue-tech-palette-and-dark-mode.md)
   * Paleta oficial extraída do logo (`#0073FD`, `#009BFD`, `#02B8B5`, `#4BD76D`), tokens CSS semânticos, dark mode via classe `.dark` + `ThemeToggle` e gradiente da marca como utility.
 * [`ADR 0009: Design System Green-Tech (Corporate Modern & Bio-Organic)`](0009-corporate-modern-green-tech-design-system.md)

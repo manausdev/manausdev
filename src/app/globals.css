@@ -1,5 +1,17 @@
 @import "tailwindcss";
 
+/* ============================================================
+   LogoIcon auto-variant — light/dark layer switching
+   The inline SVG in LogoIcon variant="auto" renders two <g>
+   layers. Only one is visible at a time based on the active
+   color scheme (toggled via .dark on <html>).
+   ============================================================ */
+.logo-layer-dark  { display: none; }
+.logo-layer-light { display: block; }
+
+.dark .logo-layer-dark  { display: block; }
+.dark .logo-layer-light { display: none; }
+
 @custom-variant dark (&:where(.dark, .dark *));
 
 /* ============================================================
