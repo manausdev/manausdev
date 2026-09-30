@@ -24,8 +24,11 @@
 | [ADR 0014](0014-fix-critical-nextjs-rce-and-remove-dead-middleware.md) | 2026-09-25 | DevOps / Segurança | Correção de RCE crítico no Next.js e remoção de Middleware morto | **Aceito** |
 | [ADR 0015](0015-rebrand-blue-tech-palette-and-dark-mode.md) | 2026-09-29 | UI / Design System | Rebrand para a paleta Blue-Tech com modo claro/escuro | **Aceito** |
 | [ADR 0016](0016-profile-types-and-permission-matrix.md) | 2026-09-29 | Auth / RLS | Tipos de perfil e matriz de permissões por tipo de conta | **Aceito** |
+| [ADR 0017](0017-css-modules-migration-icons-and-audit-findings.md) | 2026-09-29 | UI / Design System | Migração para CSS Modules — ícones com `size`, chip de disponibilidade único e limites da auditoria | **Aceito** |
+| [ADR 0018](0018-public-supabase-client-for-static-detail-routes.md) | 2026-09-30 | Core / Backend | Cliente Supabase público para rotas de detalhe estáticas | **Aceito** |
 | [ADR 0019](0019-favicon-from-brand-symbol.md) | 2026-09-30 | UI / Identidade Visual | Favicon a partir do símbolo da marca | **Aceito** |
 | [ADR 0020](0020-svg-logo-header-light-dark-variants.md) | 2026-09-30 | UI / Identidade Visual | SVG Logo no Header com variante clara (Pantone 2026 C) | **Aceito** |
+| [ADR 0021](0021-community-os-domain-architecture-and-roadmap.md) | 2026-09-30 | Arquitetura / Produto | Community OS — arquitetura orientada a domínios e roadmap | **Aceito** |
 
 ---
 
@@ -61,6 +64,10 @@
   * Headers visuais com screenshots, fallback temático com padrão geométrico e suporte a preview no Dashboard.
 * [`ADR 0011: Previews e Logotipos para Comunidades, Eventos e Empresas`](0011-previews-and-branding-for-communities-events-companies.md)
   * Capas fotográficas para meetups/hackathons, contadores de comunidade e logotipos dedicados para empresas locais.
+
+### 4. 🧭 Produto & Roadmap
+* [`ADR 0021: Community OS — arquitetura orientada a domínios e roadmap`](0021-community-os-domain-architecture-and-roadmap.md)
+  * Posicionamento como infraestrutura digital da comunidade tech do Amazonas (não LinkedIn regional); arquitetura alvo `domains/` + `infrastructure/`; modelo Person com papéis por escopo; grafo como feature central; roadmap em 7 fases com a Fase 0 (fechamento zero-deps) como pré-requisito.
 
 ---
 
