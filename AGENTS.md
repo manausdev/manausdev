@@ -91,56 +91,29 @@ verdade de quais regras vencem.
 
 ---
 
-## 🎨 Migração: remoção do Tailwind (em andamento)
+## 🎨 Migração: remoção do Tailwind (concluída)
 
-O Tailwind está sendo removido do projeto. Status atual:
+O Tailwind foi totalmente removido do projeto. Estado final:
 
-| Item | Quantidade | Status |
-|---|---|---|
-| Ocorrências de `className` | 989 em 48 arquivos | ⬜ Pendente |
-| Classes utilitárias distintas | 448 | ⬜ Pendente |
-| Componentes do design system usando tokens do Tailwind | 11 (atoms + molecules) | ⬜ Pendente |
-| `tailwind.config.ts` | — | ⬜ Remover no final |
-| `postcss.config.mjs` | — | ⬜ Remover no final |
+| Item | Status |
+|---|---|
+| `className` utilitário em produção | ✅ Zero (sobram apenas strings pass-through em testes) |
+| Tokens `@theme` de `globals.css` | ✅ Shadows movidas para `:root`; `--color-*`, `--font-sans`, `--font-mono` e `@utility` removidos (sem uso) |
+| `cn()` em `src/lib/utils.ts` | ✅ Implementação local (`parts.filter(Boolean).join(' ')`) |
+| `tailwind.config.ts`, `postcss.config.mjs` | ✅ Removidos |
+| devDeps `tailwindcss`, `@tailwindcss/postcss`, `autoprefixer`, `postcss`, `tailwind-merge`, `clsx` | ✅ Removidas |
 
-**Ordem de migração obrigatória** — do mais seguro ao mais destrutivo:
+**Regras que permanecem valendo:**
 
-1. **Atoms e molecules para CSS Modules.** São 11 componentes pequenos e já
-   testados. Fixam o padrão `X.tsx` + `X.module.css` que o resto vai seguir.
-2. **Organisms e templates**, a partir de `navbar.tsx` e `footer.tsx`.
-3. **Páginas, uma de cada vez**, na ordem: perfil e listagem de devs, home,
-   dashboard, projetos, vagas, empresas, eventos, comunidades, contato, e por
-   último as páginas de texto (privacidade, termos, sobre).
-4. **`src/lib/utils.ts`**: remover `clsx` e `tailwind-merge`.
-   Só depois do passo 3 — ver o alerta abaixo.
-5. **Remover `@theme inline`** de `globals.css`, o `postcss.config.mjs` e as
-   devDeps `tailwindcss`, `@tailwindcss/postcss`, `autoprefixer`, `postcss`,
-   `tailwind-merge` e `clsx`.
-
-> ⚠️ **Não remova `@theme inline` antes do passo 4.** Os tokens já são custom
-> properties puras em `:root` e `.dark` (linhas 14-56 e 62-93). O bloco
-> `@theme` (linha 98) é apenas a ponte que os expõe como utilitários
-> (`--color-accent` → `bg-accent`). Removê-lo enquanto existirem `className` com
-> utilitários quebra a estilização das 48 páginas de uma vez, sem erro de build.
-
-> ⚠️ **`tailwind-merge` só pode sair depois do passo 3.** Hoje ele resolve
-> conflito de classe Tailwind no `cn()`. Sem ele, sobrescrever um variant com
-> `className="text-xs"` deixa de funcionar, porque quem vence o conflito passa
-> a ser a ordem no stylesheet gerado, não a ordem no atributo. Os testes
-> existentes verificam a *presença* da classe, não qual vence — essa regressão
-> passaria pelo CI. Com CSS Modules o problema some, porque a ordem do CSS
-> passa a ser determinística.
-
-**Validação obrigatória por página:** `npm run build`, `npm test` e a auditoria de
-contraste antes de considerar a página migrada:
+- O padrão de estilização é **CSS Modules por componente**, com tokens consumidos
+  via `var(--token)`. Não reintroduza utilitários no JSX nem bibliotecas de CSS
+  (ver regra zero-deps acima).
+- Valide mudanças visuais com `npm run build`, `npm test` e a auditoria de
+  contraste:
 
 ```bash
 node C:\Users\luann\.copilot\repos\browser-mcp-lite\bin\bml.mjs audit http://localhost:3000/<rota> --widths=390,768,1440
 ```
-
-> **Não remova uma regra de `globals.css` enquanto `rg "<classe>" src` ainda
-> encontrar uso.** A auditoria de contraste é o que garante que a remoção de
-> `.chip-*` e `.manaus-*` não introduziu texto abaixo de 4.5:1.
 
 ---
 

@@ -16,7 +16,7 @@ export const Default: Story = {};
 
 export const Sizes: Story = {
   render: (args) => (
-    <div className="flex flex-col gap-4 max-w-xl">
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 16, maxWidth: 576 }}>
       <SearchInput {...args} size="sm" />
       <SearchInput {...args} size="md" />
       <SearchInput {...args} size="lg" />
@@ -28,7 +28,7 @@ export const WithClear: Story = {
   render: function Render(args) {
     const [value, setValue] = useState('ana');
     return (
-      <div className="max-w-xl">
+      <div style={{ maxWidth: 576 }}>
         <SearchInput {...args} value={value} onChange={(e) => setValue(e.target.value)} onClear={() => setValue('')} />
       </div>
     );

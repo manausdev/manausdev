@@ -59,7 +59,16 @@ export const WithSelect: Story = {
       {(field) => (
         <select
           {...field}
-          className="w-full bg-surface text-ink border border-border rounded py-2.5 px-3.5 text-sm focus:outline-none focus:border-accent"
+          style={{
+            width: '100%',
+            background: 'var(--surface)',
+            color: 'var(--ink)',
+            border: '1px solid var(--border)',
+            borderRadius: 8,
+            padding: '10px 14px',
+            fontSize: 14,
+            outline: 'none',
+          }}
         >
           <option value="">Selecione...</option>
           <option value="junior">Júnior</option>
@@ -75,7 +84,7 @@ export const WithSelect: Story = {
 export const Group: Story = {
   args: { label: 'Nome completo' },
   render: () => (
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl">
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: 16, maxWidth: 672 }}>
       <FormField label="Nome completo" required>
         {(field) => <Input placeholder="Ana Silva" {...field} />}
       </FormField>

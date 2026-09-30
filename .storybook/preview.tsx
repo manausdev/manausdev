@@ -15,7 +15,14 @@ const preview: Preview = {
   },
   decorators: [
     (Story) => (
-      <div className="p-6 bg-canvas text-ink min-h-full">
+      <div
+        style={{
+          padding: 24,
+          background: 'var(--canvas)',
+          color: 'var(--ink)',
+          minHeight: '100%',
+        }}
+      >
         <Story />
       </div>
     ),

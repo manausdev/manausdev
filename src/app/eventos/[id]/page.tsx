@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { 
@@ -26,6 +27,15 @@ interface EventDetailPageProps {
   params: Promise<{
     id: string;
   }>;
+}
+
+export async function generateMetadata({ params }: EventDetailPageProps): Promise<Metadata> {
+  const { id } = await params;
+  return {
+    alternates: {
+      canonical: `/eventos/${id}`,
+    },
+  };
 }
 
 export default async function EventDetailPage({ params }: EventDetailPageProps) {

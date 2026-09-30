@@ -18,7 +18,7 @@ import {
   CompassIcon,
   LogOutIcon,
   LayoutDashboardIcon,
-  MessageSquareIcon,
+  LogoIcon,
 } from '@/components/icons';
 import { cn } from '@/lib/utils';
 import styles from './Header.module.css';
@@ -28,7 +28,6 @@ const NAV_LINKS = [
   { href: '/projetos', label: 'Projetos', icon: Code2Icon },
   { href: '/vagas', label: 'Vagas', icon: BriefcaseIcon },
   { href: '/comunidades', label: 'Comunidades', icon: SparklesIcon },
-  { href: '/canais', label: 'Canais', icon: MessageSquareIcon },
   { href: '/noticias', label: 'Notícias', icon: CompassIcon },
   { href: '/eventos', label: 'Eventos', icon: CalendarDaysIcon },
   { href: '/empresas', label: 'Empresas', icon: Building2Icon },
@@ -74,9 +73,7 @@ export function Header() {
     <header className={styles.header}>
       <div className={styles.inner}>
         <Link href="/" className={styles.brand}>
-          <div className={styles.logo}>
-            <span className={styles.logoText}>{'</>'}</span>
-          </div>
+          <LogoIcon size={36} className={styles.logo} />
           <div className={styles.brandText}>
             <span className={styles.brandName}>
               Manaus<span className={styles.brandAccent}>Dev</span>

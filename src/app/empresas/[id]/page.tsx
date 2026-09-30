@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { 
@@ -26,6 +27,15 @@ interface CompanyDetailPageProps {
   params: Promise<{
     id: string;
   }>;
+}
+
+export async function generateMetadata({ params }: CompanyDetailPageProps): Promise<Metadata> {
+  const { id } = await params;
+  return {
+    alternates: {
+      canonical: `/empresas/${id}`,
+    },
+  };
 }
 
 export default async function CompanyDetailPage({ params }: CompanyDetailPageProps) {

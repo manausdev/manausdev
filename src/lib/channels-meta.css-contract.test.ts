@@ -6,19 +6,18 @@ import { PLATFORM_META } from './channels-meta';
 const SRC = join(process.cwd(), 'src');
 
 /**
- * `channels-meta` carrega `badgeClass` como string e a pagina resolve em
+ * `channels-meta` carrega `badgeClass` como string e o componente resolve em
  * `styles[meta.badgeClass]`. O CSS Module hasheia os nomes no build, entao uma
  * classe que exista no meta mas nao no CSS nao gera erro nenhum: o browser
  * descarta a regra e o badge fica sem a cor da plataforma. Foi o que aconteceu
  * com 'badgeDiscord' quando a pagina usava a string crua em vez de `styles[]`.
  *
- * Este teste amarra os dois lados: todo badgeClass precisa existir de fato nos
- * dois CSS Modules que consomem a lista.
+ * Este teste amarra os dois lados: todo badgeClass precisa existir de fato no
+ * CSS Module que consome a lista.
  */
 
 const MODULES_CONSUNTORES = [
-  join(SRC, 'app', 'canais', 'canais.module.css'),
-  join(SRC, 'app', 'canais', '[id]', 'detail.module.css'),
+  join(SRC, 'app', 'comunidades', 'ChannelList.module.css'),
 ];
 
 function classNames(css: string): Set<string> {

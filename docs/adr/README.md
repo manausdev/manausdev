@@ -24,8 +24,12 @@
 | [ADR 0014](0014-fix-critical-nextjs-rce-and-remove-dead-middleware.md) | 2026-09-25 | DevOps / Segurança | Correção de RCE crítico no Next.js e remoção de Middleware morto | **Aceito** |
 | [ADR 0015](0015-rebrand-blue-tech-palette-and-dark-mode.md) | 2026-09-29 | UI / Design System | Rebrand para a paleta Blue-Tech com modo claro/escuro | **Aceito** |
 | [ADR 0016](0016-profile-types-and-permission-matrix.md) | 2026-09-29 | Auth / RLS | Tipos de perfil e matriz de permissões por tipo de conta | **Aceito** |
+| [ADR 0017](0017-css-modules-migration-icons-and-audit-findings.md) | 2026-09-29 | UI / Design System | Migração para CSS Modules — ícones com `size`, chip de disponibilidade único e limites da auditoria | **Aceito** |
+| [ADR 0018](0018-public-supabase-client-for-static-detail-routes.md) | 2026-09-30 | Core / Backend | Cliente Supabase público para rotas de detalhe estáticas | **Aceito** |
 | [ADR 0019](0019-favicon-from-brand-symbol.md) | 2026-09-30 | UI / Identidade Visual | Favicon a partir do símbolo da marca | **Aceito** |
 | [ADR 0020](0020-todo-reflects-verified-state.md) | 2026-09-30 | Documentação / Roadmap | TODO.md reflete o estado verificado do código | **Aceito** |
+| [ADR 0021](0021-community-os-domain-architecture-and-roadmap.md) | 2026-09-30 | Arquitetura / Produto | Community OS — arquitetura orientada a domínios e roadmap | **Aceito** |
+| [ADR 0022](0022-svg-logo-header-light-dark-variants.md) | 2026-09-30 | UI / Identidade Visual | SVG Logo no Header com variante clara (Pantone 2026 C) | **Aceito** |
 
 ---
 
@@ -47,6 +51,8 @@
 ### 2. 🎨 Design System & Identidade Visual
 * [`ADR 0019: Favicon a partir do símbolo da marca`](0019-favicon-from-brand-symbol.md)
   * `src/app/favicon.ico` (16, 32 e 48 px) só com o símbolo do M, PNGs internos em RGBA (em RGB a home responde 500) e fonte em `public/assets/icone-manausdev.png`.
+* [`ADR 0022: SVG Logo no Header com variante clara (Pantone 2026 C)`](0022-svg-logo-header-light-dark-variants.md)
+  * `LogoIcon` inline SVG com variantes `dark` (`#0c1f2e`), `light` (Pantone 2026 C `#F5F0E8`) e `auto` (alterna via CSS `.dark`). Header usa `auto`; SVGs estáticos mantidos em `public/assets/`.
 * [`ADR 0015: Rebrand para a paleta Blue-Tech com modo claro/escuro`](0015-rebrand-blue-tech-palette-and-dark-mode.md)
   * Paleta oficial extraída do logo (`#0073FD`, `#009BFD`, `#02B8B5`, `#4BD76D`), tokens CSS semânticos, dark mode via classe `.dark` + `ThemeToggle` e gradiente da marca como utility.
 * [`ADR 0009: Design System Green-Tech (Corporate Modern & Bio-Organic)`](0009-corporate-modern-green-tech-design-system.md)
@@ -63,6 +69,10 @@
 ### 4. Documentação & Processo
 * [`ADR 0020: TODO.md reflete o estado verificado do código`](0020-todo-reflects-verified-state.md)
   * Checkbox `[x]` só com evidência no código, no banco ou no GitHub; itens sem evidência desmarcados, seções de stack e MVP atualizadas para Next.js + Supabase.
+
+### 5. 🧭 Produto & Roadmap
+* [`ADR 0021: Community OS — arquitetura orientada a domínios e roadmap`](0021-community-os-domain-architecture-and-roadmap.md)
+  * Posicionamento como infraestrutura digital da comunidade tech do Amazonas (não LinkedIn regional); arquitetura alvo `domains/` + `infrastructure/`; modelo Person com papéis por escopo; grafo como feature central; roadmap em 7 fases com a Fase 0 (fechamento zero-deps) como pré-requisito.
 
 ---
 

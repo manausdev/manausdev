@@ -473,6 +473,12 @@
   z-index: 10;
 }
 
+.devAvatarImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .devName {
   font-family: var(--font-display);
   font-weight: 700;
@@ -548,9 +554,19 @@
   grid-column: span 1;
 }
 
+/* Sem canais laterais para preencher a coluna de span 4, o card principal
+   ocupa a linha inteira. Sem isso sobram 8 colunas vazias na direita. */
+.projectFeatureFull {
+  grid-column: span 1;
+}
+
 @media (min-width: 768px) {
   .projectFeature {
     grid-column: span 8;
+  }
+
+  .projectFeatureFull {
+    grid-column: span 12;
   }
 }
 
@@ -766,140 +782,10 @@
   border-left-color: var(--accent);
 }
 
-/* ===== Events & Jobs Side by Side ===== */
-.sideBySide {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 2.5rem;
-}
-
-@media (min-width: 1024px) {
-  .sideBySide {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-.sideSection {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.sideHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid color-mix(in oklab, var(--border-strong) 30%, transparent);
-  margin-bottom: 0.5rem;
-}
-
-.sideTitle {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 1.125rem;
-  color: var(--ink);
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-@media (min-width: 640px) {
-  .sideTitle {
-    font-size: 1.25rem;
-  }
-}
-
 .sideTitleIcon {
   width: 1.25rem;
   height: 1.25rem;
   color: var(--accent-text);
-}
-
-.viewAllSide {
-  font-size: 0.75rem;
-  color: var(--accent-text);
-  font-weight: 600;
-  text-decoration: none;
-  transition: text-decoration 180ms ease;
-}
-
-.viewAllSide:hover {
-  text-decoration: underline;
-}
-
-.eventsList {
-  display: flex;
-  flex-direction: column;
-  gap: 0.875rem;
-}
-
-.eventItem {
-  background-color: var(--surface-1);
-  transition: background-color 180ms ease;
-  padding: 1rem;
-  border-radius: 0.5rem;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  transition: all 300ms ease;
-  border: 1px solid var(--border);
-  text-decoration: none;
-}
-
-.eventItem:hover {
-  background-color: var(--surface-2);
-  transform: translateX(0.25rem);
-}
-
-.eventDate {
-  background-color: color-mix(in oklab, var(--accent) 10%, transparent);
-  color: var(--ink);
-  padding: 0.75rem;
-  border-radius: 0.375rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-width: 3.5rem;
-}
-
-.eventMonth {
-  font-size: 0.625rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  font-family: var(--font-mono-theme);
-}
-
-.eventDay {
-  font-family: var(--font-display);
-  font-weight: 900;
-  font-size: 1.125rem;
-}
-
-.eventInfo {
-  flex: 1;
-}
-
-.eventTitle {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 0.875rem;
-  color: var(--ink);
-  transition: color 180ms ease;
-}
-
-.eventItem:hover .eventTitle {
-  color: var(--accent-text);
-}
-
-.eventLocation {
-  font-size: 0.75rem;
-  color: var(--muted);
-  margin-top: 0.125rem;
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
 }
 
 .chevronIcon {
@@ -910,16 +796,137 @@
   flex-shrink: 0;
 }
 
-.eventItem:hover .chevronIcon {
+.agendaItem:hover .chevronIcon {
   color: var(--accent-text);
   transform: translateX(0.25rem);
 }
 
-/* Jobs */
-.jobsList {
+/* ===== Agenda: notícias e eventos em uma lista só ===== */
+.agendaLinks {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-shrink: 0;
+}
+
+.agendaList {
   display: flex;
   flex-direction: column;
+  gap: 0.75rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.agendaItem {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 4px solid;
+  border-left-color: var(--accent);
+  border-radius: 0.5rem;
+  padding: 0.875rem 1rem;
+  text-decoration: none;
+  transition: border-color 180ms ease, transform 180ms ease, box-shadow 180ms ease;
+}
+
+.agendaItem:hover {
+  border-left-color: var(--cyan);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  transform: translateX(0.125rem);
+}
+
+.agendaDate {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 3.75rem;
+  flex-shrink: 0;
+  font-family: var(--font-mono-theme);
+  font-size: 0.6875rem;
+  color: var(--muted);
+  border-right: 1px solid var(--border);
+  align-self: stretch;
+}
+
+.agendaDay {
+  white-space: nowrap;
+}
+
+.agendaBody {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.agendaBadges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+}
+
+.agendaKind {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-family: var(--font-mono-theme);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  padding: 0.125rem 0.5rem;
+  border-radius: 0.25rem;
+  background-color: var(--surface-1);
+  color: var(--muted);
+}
+
+.agendaKindEvent {
+  color: var(--accent-text);
+  background-color: color-mix(in oklab, var(--accent) 12%, transparent);
+}
+
+.agendaKindNews {
+  color: var(--on-neon);
+  background-color: var(--neon);
+}
+
+.agendaTitle {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.9375rem;
+  line-height: 1.375;
+  color: var(--ink);
+}
+
+.agendaItem:hover .agendaTitle {
+  color: var(--accent-text);
+}
+
+.agendaMeta {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.75rem;
+  color: var(--muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Jobs */
+.jobsList {
+  display: grid;
+  grid-template-columns: 1fr;
   gap: 0.875rem;
+}
+
+@media (min-width: 768px) {
+  .jobsList {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 .jobItem {
