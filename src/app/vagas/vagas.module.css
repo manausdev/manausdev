@@ -81,6 +81,12 @@
   margin-inline: auto;
 }
 
+@media (min-width: 768px) {
+  .heroSubtitle {
+    margin-inline: 0;
+  }
+}
+
 /* ===== Filters ===== */
 .filters {
   background-color: var(--surface);
@@ -131,8 +137,25 @@
 }
 
 .searchInput {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 0.25rem;
+  padding: 0.625rem 0.875rem;
+  font-size: 0.875rem;
+  color: var(--ink);
+  transition: all 180ms ease;
   width: 100%;
   padding-left: 2.5rem;
+}
+
+.searchInput::placeholder {
+  color: var(--faint);
+}
+
+.searchInput:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--accent) 15%, transparent);
 }
 
 .remoteToggle {
@@ -381,7 +404,6 @@
   width: 1rem;
   height: 1rem;
   color: var(--accent-text);
-;
 }
 
 .salaryBadge {

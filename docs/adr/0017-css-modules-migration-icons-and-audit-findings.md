@@ -87,6 +87,38 @@ tela** (`bml shot`), e a ausência de alerta não substitui a inspeção visual 
 Os dados de demonstração para a auditoria local exigem `NEXT_PUBLIC_USE_MOCK=true`, que
 nunca deve ser habilitado em produção (`src/lib/env.ts`).
 
+## Módulos CSS corrompidos pela migração automática
+
+Ao conferir as capturas de tela de `/empresas`, a grade, o filtro de porte e os cards estavam
+sem estilo. A investigação mostrou defeitos que **nenhum teste, typecheck ou build detectava**:
+
+| Defeito | Onde | Efeito |
+|---|---|---|
+| Declarações apagadas: 270 linhas `;` soltas (`.grid { ; ; ; }`) | `empresas.module.css` desde o commit `f57432a` | Listagem de empresas praticamente sem estilo |
+| Declarações terminadas em `.` em vez de `;` (`display: grid.`) | versão anterior do mesmo arquivo (`807e884`) | Regras inteiras ignoradas pelo navegador |
+| 32 classes usadas no JSX sem regra no CSS (`sobre` 16, `contato` 9, `register` 7) | JSX e CSS divergiram | `sobre`, `contato` e `register` renderizavam sem layout |
+| `space-y` como propriedade | `contato.module.css` | Inválido: é um utilitário do Tailwind |
+| Subtítulo do hero centralizado num hero alinhado à esquerda | 5 listagens | Subtítulo deslocado no desktop |
+| Divisor com uma linha só, campo de username sem base, textarea sem `.textarea` | `register`, `login`, `contato` | Formulários visivelmente quebrados |
+
+Correção: as declarações de `empresas` foram recuperadas do commit `807e884` convertendo o
+`.` final em `;` (271 linhas, mesmo número de linhas apagadas); nas demais páginas o JSX foi
+alinhado às classes que o CSS já definia, que traziam o desenho pretendido. As classes globais
+legadas (`manaus-card`, `manaus-input`, `chip-*`, `btn-*`) foram incorporadas aos módulos de
+cada página e removidas de `globals.css`, sem `composes` entre arquivos, porque a ordem entre
+folhas de estilo diferentes não é garantida.
+
+### Guarda automatizado
+
+`src/lib/css-modules.test.ts` roda com `npm test` e falha se algum módulo tiver linha `;`
+solta, declaração terminada em ponto, valor da escala do Tailwind (`max-width: 4xl`),
+`space-y`/`divide-*` como propriedade, ou se algum `styles.x` do código não existir no módulo
+importado. Foi verificado com um módulo deliberadamente quebrado: os quatro primeiros casos
+falham como esperado.
+
+Comportamento que mudou: `filters`, `skeletonCard` e `emptyCard` em `/devs` não sobem mais no
+`hover`, que vinha de `.manaus-card` e só faz sentido nos cards clicáveis.
+
 ## Consequências
 
 - **Positivas:** ícones, chips e páginas migradas deixam de depender do Tailwind;
@@ -96,8 +128,7 @@ nunca deve ser habilitado em produção (`src/lib/env.ts`).
   de devs mostra "Ocupado" para perfis sem disponibilidade, o que muda o que
   visitantes veem.
 - **Pendente antes de remover o Tailwind:**
-  - classes globais legadas `manaus-card`, `manaus-input`, `chip-river` e `btn-*` em
-    `devs`, `empresas`, `eventos`, `projetos`, `vagas` e `Card.tsx`;
+  - `.glass-card` e `.bio-texture` em `globals.css` (a primeira ainda é usada por uma story);
   - 7 arquivos `*.stories.tsx` com utilitários;
   - `cn()` ainda usa `clsx` + `tailwind-merge`;
   - remoção de `@theme inline`, `postcss.config.mjs`, `tailwind.config.ts` e devDeps,

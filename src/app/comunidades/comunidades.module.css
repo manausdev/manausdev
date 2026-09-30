@@ -81,6 +81,12 @@
   margin-inline: auto;
 }
 
+@media (min-width: 768px) {
+  .heroSubtitle {
+    margin-inline: 0;
+  }
+}
+
 /* ===== Loading / Empty ===== */
 .skeleton {
   background-color: var(--surface-1);

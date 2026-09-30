@@ -313,7 +313,7 @@ function DevsDirectory() {
       <div className={styles.header}>
         <div className={styles.titleRow}>
           <h1 className={styles.title}>Diretório de Devs</h1>
-          <span className={cn('chip-river', styles.countChip)}>
+          <span className={styles.countChip}>
             <UsersIcon />
             {total} {total === 1 ? 'desenvolvedor' : 'desenvolvedores'}
           </span>
@@ -324,7 +324,7 @@ function DevsDirectory() {
         </p>
       </div>
 
-      <div className={cn('manaus-card', styles.filters)}>
+      <div className={styles.filters}>
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -339,14 +339,14 @@ function DevsDirectory() {
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               placeholder="Buscar por nome, @username, cargo ou bio..."
-              className={cn('manaus-input', styles.searchInput)}
+              className={styles.searchInput}
             />
           </div>
           <div className={styles.selectsGrid}>
             <select
               value={cityFilter}
               onChange={(e) => updateFilters({ cidade: e.target.value })}
-              className={cn('manaus-input', styles.select)}
+              className={styles.select}
               aria-label="Filtrar por cidade"
             >
               <option value="">Todas as cidades</option>
@@ -359,7 +359,7 @@ function DevsDirectory() {
             <select
               value={availabilityParam}
               onChange={(e) => updateFilters({ disponibilidade: e.target.value })}
-              className={cn('manaus-input', styles.select)}
+              className={styles.select}
               aria-label="Filtrar por disponibilidade"
             >
               <option value="">Disponibilidade</option>
@@ -372,7 +372,7 @@ function DevsDirectory() {
             <select
               value={seniorityFilter}
               onChange={(e) => updateFilters({ senioridade: e.target.value })}
-              className={cn('manaus-input', styles.select)}
+              className={styles.select}
               aria-label="Filtrar por senioridade"
             >
               <option value="">Senioridade</option>
@@ -385,7 +385,7 @@ function DevsDirectory() {
             <select
               value={sortOption}
               onChange={(e) => updateFilters({ sort: e.target.value })}
-              className={cn('manaus-input', styles.select)}
+              className={styles.select}
               aria-label="Ordenar resultados"
             >
               {SORT_OPTIONS.map((s) => (
@@ -436,7 +436,7 @@ function DevsDirectory() {
       {loading ? (
         <ListingGrid variant="cardsWide">
           {Array.from({ length: 6 }).map((_, i) => (
-            <div key={i} className={cn('manaus-card', styles.skeletonCard)}>
+            <div key={i} className={styles.skeletonCard}>
               <div className={styles.skelRow}>
                 <div className={styles.skelAvatar} />
                 <div className={styles.skelLines}>
@@ -455,7 +455,7 @@ function DevsDirectory() {
           ))}
         </ListingGrid>
       ) : devs.length === 0 ? (
-        <div className={cn('manaus-card', styles.emptyCard)}>
+        <div className={styles.emptyCard}>
           <UsersIcon className={styles.emptyIcon} />
           <h3 className={styles.emptyTitle}>Nenhum dev encontrado</h3>
           <p className={styles.emptyText}>
@@ -464,7 +464,7 @@ function DevsDirectory() {
           <button
             type="button"
             onClick={() => router.replace('/devs', { scroll: false })}
-            className={cn('btn-primary', styles.emptyBtn)}
+            className={styles.emptyBtn}
           >
             Limpar filtros
           </button>
@@ -479,7 +479,7 @@ function DevsDirectory() {
                 <Link
                   key={dev.id}
                   href={`/devs/${dev.username}`}
-                  className={cn('manaus-card', styles.card)}
+                  className={styles.card}
                 >
                   <div className={styles.cardTop}>
                     <div className={styles.cardIdRow}>
@@ -511,7 +511,7 @@ function DevsDirectory() {
 
                   <div className={styles.skills}>
                     {skills.slice(0, 3).map((skill) => (
-                      <span key={skill} className={cn('chip-river', styles.skillChip)}>
+                      <span key={skill} className={styles.skillChip}>
                         {skill}
                       </span>
                     ))}
@@ -570,7 +570,7 @@ function DevsDirectory() {
                 type="button"
                 disabled={page <= 1}
                 onClick={() => goToPage(page - 1)}
-                className={cn('btn-secondary', styles.pageBtn)}
+                className={styles.pageBtn}
                 aria-label="Página anterior"
               >
                 <ChevronLeftIcon />
@@ -582,7 +582,7 @@ function DevsDirectory() {
                 type="button"
                 disabled={page >= totalPages}
                 onClick={() => goToPage(page + 1)}
-                className={cn('btn-secondary', styles.pageBtn)}
+                className={styles.pageBtn}
                 aria-label="Próxima página"
               >
                 <ChevronRightIcon />
@@ -603,7 +603,7 @@ export default function DevsPage() {
           <div className={styles.fallbackTitle} />
           <ListingGrid variant="cardsWide">
             {Array.from({ length: 6 }).map((_, i) => (
-              <div key={i} className={cn('manaus-card', styles.skeletonCard)} />
+              <div key={i} className={styles.skeletonCard} />
             ))}
           </ListingGrid>
         </div>

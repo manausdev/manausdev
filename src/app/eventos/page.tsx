@@ -100,7 +100,7 @@ function EventosContent() {
             placeholder="Buscar por título, assunto ou local..."
             value={searchTerm}
             onChange={(e) => handleSearchChange(e.target.value)}
-            className={`manaus-input ${styles.searchInput}`}
+            className={styles.searchInput}
           />
         </div>
 

@@ -131,6 +131,7 @@ function LoginForm() {
         <div className={styles.divider}>
           <div className={styles.dividerLine} />
           <span className={styles.dividerText}>OU ENTRE COM</span>
+          <div className={styles.dividerLine} />
         </div>
 
         <button

@@ -105,7 +105,7 @@ function ProjetosContent() {
             placeholder="Buscar projetos por título ou descrição..."
             value={searchTerm}
             onChange={(e) => handleSearchChange(e.target.value)}
-            className={`manaus-input ${styles.searchInput}`}
+            className={styles.searchInput}
           />
         </div>
 

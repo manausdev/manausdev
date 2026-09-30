@@ -55,7 +55,7 @@ export default function ContatoPage() {
     <div className={styles.container}>
       <div className={styles.hero}>
         <div className={styles.heroBadge}>
-          <MessageSquareIcon className={styles.badgeIcon} />
+          <MessageSquareIcon />
           <span>Fale Conosco</span>
         </div>
         <h1 className={styles.heroTitle}>Contato & Parcerias</h1>
@@ -67,8 +67,8 @@ export default function ContatoPage() {
       <div className={styles.card}>
         {sent ? (
           <div className={styles.success}>
-            <div className={styles.successIconWrap}>
-              <CheckCircle2Icon className={styles.successIcon} />
+            <div className={styles.successIcon}>
+              <CheckCircle2Icon size="lg" />
             </div>
             <h2 className={styles.successTitle}>Mensagem Recebida!</h2>
             <p className={styles.successText}>
@@ -84,7 +84,7 @@ export default function ContatoPage() {
                 setSubject('');
                 setMessage('');
               }}
-              className={styles.btnSecondary}
+              className={styles.successBtn}
             >
               Enviar outra mensagem
             </button>
@@ -92,13 +92,13 @@ export default function ContatoPage() {
         ) : (
           <form onSubmit={handleSubmit} className={styles.form}>
             {errorMsg && (
-              <div className={styles.errorBanner}>
+              <div className={styles.error}>
                 <AlertCircleIcon className={styles.errorIcon} />
                 <span>{errorMsg}</span>
               </div>
             )}
 
-            <div className={styles.row2}>
+            <div className={styles.formRow}>
               <div>
                 <label className={styles.label}>Seu Nome</label>
                 <input
@@ -143,12 +143,12 @@ export default function ContatoPage() {
                 placeholder="Escreva sua mensagem detalhada..."
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
-                className={styles.input}
+                className={styles.textarea}
               />
             </div>
 
-            <button type="submit" disabled={loading} className={styles.btnPrimary}>
-              <SendIcon className={styles.btnIcon} />
+            <button type="submit" disabled={loading} className={styles.submitBtn}>
+              <SendIcon />
               <span>{loading ? 'Enviando...' : 'Enviar Mensagem'}</span>
             </button>
           </form>
