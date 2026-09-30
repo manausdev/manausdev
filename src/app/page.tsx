@@ -91,7 +91,7 @@ export default async function HomePage() {
                 </span>
               </div>
 
-              <h1 className={styles.heroTitle}>
+              <h1 className={styles.heroTitle} style={{ color: '#ffffff' }}>
                 A maior comunidade de tecnologia do Amazonas
               </h1>
 

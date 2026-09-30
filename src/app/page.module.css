@@ -39,16 +39,18 @@
   background-position: center;
   position: absolute;
   inset: 0;
+  z-index: 1;
 }
 
 .heroOverlay {
   position: absolute;
   inset: 0;
+  z-index: 2;
   background: linear-gradient(
     to right,
-    color-mix(in oklab, var(--deep) 95%, transparent),
-    color-mix(in oklab, var(--deep) 85%, transparent),
-    color-mix(in oklab, var(--deep) 60%, transparent)
+    rgba(12, 34, 51, 0.95),
+    rgba(12, 34, 51, 0.85),
+    rgba(12, 34, 51, 0.6)
   );
   backdrop-filter: blur(2px);
 }
@@ -90,7 +92,7 @@
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  color: white;
+  color: var(--on-dark);
 }
 
 @media (min-width: 1024px) {
@@ -141,8 +143,8 @@
   font-size: 1.875rem;
   line-height: 1.15;
   letter-spacing: -0.025em;
-  color: white;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  color: #ffffff !important;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 }
 
 @media (min-width: 640px) {
