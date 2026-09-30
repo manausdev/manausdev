@@ -17,8 +17,10 @@ import { GithubIcon, LinkedinIcon } from '@/components/icons';
 import { createClient } from '@/lib/supabase/client';
 import { MOCK_DEVS, MOCK_PROJECTS, MOCK_EVENTS } from '@/lib/data/mock';
 import { useMockData } from '@/lib/env';
-import { availabilityMeta, seniorityLabel } from '@/lib/devs-meta';
+import { seniorityLabel } from '@/lib/devs-meta';
+import { AvailabilityChip } from '@/molecules/AvailabilityChip';
 import type { Profile, Project, EventItem } from '@/types/database';
+import styles from './dev-profile.module.css';
 
 function formatMemberSince(iso?: string): string {
   if (!iso) return 'recentemente';
@@ -110,20 +112,20 @@ export default function DevProfileClient() {
 
   if (loading && !dev) {
     return (
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="manaus-card p-6 sm:p-10 border border-border animate-pulse">
-          <div className="flex items-center gap-5 pb-8 border-b border-border">
-            <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-surface-2" />
-            <div className="space-y-3">
-              <div className="h-6 w-48 bg-surface-2 rounded" />
-              <div className="h-3 w-32 bg-surface-2 rounded" />
-              <div className="h-3 w-40 bg-surface-2 rounded" />
+      <div className={styles.container}>
+        <div className={`${styles.card} ${styles.skeletonCard}`}>
+          <div className={styles.skeletonHead}>
+            <div className={styles.skeletonAvatar} />
+            <div className={styles.skeletonLines}>
+              <div className={`${styles.skelLine} ${styles.skelName}`} />
+              <div className={`${styles.skelLine} ${styles.skelW32}`} />
+              <div className={`${styles.skelLine} ${styles.skelW40}`} />
             </div>
           </div>
-          <div className="pt-6 space-y-4">
-            <div className="h-3 w-24 bg-surface-2 rounded" />
-            <div className="h-4 w-full max-w-2xl bg-surface-2 rounded" />
-            <div className="h-4 w-full max-w-xl bg-surface-2 rounded" />
+          <div className={styles.skeletonBody}>
+            <div className={`${styles.skelLine} ${styles.skelW24}`} />
+            <div className={`${styles.skelLine} ${styles.skelText} ${styles.skelTextLg}`} />
+            <div className={`${styles.skelLine} ${styles.skelText} ${styles.skelTextMd}`} />
           </div>
         </div>
       </div>
@@ -132,16 +134,16 @@ export default function DevProfileClient() {
 
   if (missing || !dev) {
     return (
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="manaus-card p-10 border border-border text-center">
-          <UserXIcon className="w-10 h-10 text-faint mx-auto mb-4" />
-          <h1 className="font-display font-bold text-xl text-ink">Dev não encontrado</h1>
-          <p className="text-sm text-muted mt-2">
-            O perfil <span className="font-mono text-accent-text">@{username}</span> não existe ou
+      <div className={styles.container}>
+        <div className={`${styles.card} ${styles.missingCard}`}>
+          <UserXIcon size="xl" className={styles.missingIcon} />
+          <h1 className={styles.missingTitle}>Dev não encontrado</h1>
+          <p className={styles.missingText}>
+            O perfil <span className={styles.username}>@{username}</span> não existe ou
             foi removido do diretório.
           </p>
-          <Link href="/devs" className="btn-primary inline-flex items-center gap-2 text-xs !py-2.5 !px-5 mt-6">
-            <ArrowLeftIcon className="w-4 h-4" />
+          <Link href="/devs" className={`${styles.btn} ${styles.btnPrimary} ${styles.btnBack}`}>
+            <ArrowLeftIcon />
             Voltar para o diretório
           </Link>
         </div>
@@ -149,65 +151,51 @@ export default function DevProfileClient() {
     );
   }
 
+  const displayName = dev.full_name || dev.username;
+  const seniority = seniorityLabel(dev.seniority);
+
   return (
-    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div className={styles.container}>
       {/* Back button */}
-      <Link
-        href="/devs"
-        className="inline-flex items-center gap-2 text-xs font-semibold text-accent-text hover:text-ink transition-colors mb-8"
-      >
-        <ArrowLeftIcon className="w-4 h-4" />
+      <Link href="/devs" className={styles.backLink}>
+        <ArrowLeftIcon />
         Voltar para o diretório de desenvolvedores
       </Link>
 
       {/* Main Profile Card */}
-      <div className="manaus-card p-6 sm:p-10 mb-8 border border-border relative overflow-hidden">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 pb-8 border-b border-border">
-          <div className="flex items-center gap-5">
-            <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-deep text-white flex items-center justify-center font-display font-bold text-3xl border-4 border-border shadow-md flex-shrink-0 overflow-hidden">
+      <div className={`${styles.card} ${styles.profileCard}`}>
+        <div className={styles.head}>
+          <div className={styles.identity}>
+            <div className={styles.avatar}>
               {dev.avatar_url ? (
-                <img
-                  src={dev.avatar_url}
-                  alt={dev.full_name || dev.username}
-                  className="w-full h-full rounded-full object-cover"
-                />
+                <img src={dev.avatar_url} alt={displayName} className={styles.avatarImg} />
               ) : (
-                (dev.full_name || dev.username).charAt(0)
+                displayName.charAt(0)
               )}
             </div>
 
             <div>
-              <div className="flex flex-wrap items-center gap-2.5">
-                <h1 className="font-display font-bold text-2xl sm:text-3xl text-ink">
-                  {dev.full_name || dev.username}
-                </h1>
-                {(() => {
-                  const meta = availabilityMeta(dev.availability);
-                  return (
-                    <span className={`${meta.className} !text-xs flex items-center gap-1.5`}>
-                      <span className={`w-1.5 h-1.5 rounded-full ${meta.dot}`} />
-                      {meta.label}
-                    </span>
-                  );
-                })()}
+              <div className={styles.nameRow}>
+                <h1 className={styles.name}>{displayName}</h1>
+                <AvailabilityChip value={dev.availability} size="md" />
               </div>
-              <p className="text-sm font-semibold text-accent-text mt-0.5">@{dev.username}</p>
-              <p className="text-xs sm:text-sm text-muted mt-1 font-medium">
+              <p className={styles.handle}>@{dev.username}</p>
+              <p className={styles.role}>
                 {dev.role || 'Software Engineer'}
-                {seniorityLabel(dev.seniority) ? ` · ${seniorityLabel(dev.seniority)}` : ''}
+                {seniority ? ` · ${seniority}` : ''}
               </p>
             </div>
           </div>
 
-          <div className="flex items-center gap-3 w-full sm:w-auto">
+          <div className={styles.actions}>
             {dev.github && (
               <a
                 href={dev.github}
                 target="_blank"
                 rel="noreferrer"
-                className="btn-secondary !py-2.5 !px-4 text-xs flex-1 sm:flex-initial justify-center"
+                className={`${styles.btn} ${styles.btnSecondary}`}
               >
-                <GithubIcon className="w-4 h-4" />
+                <GithubIcon />
                 <span>GitHub</span>
               </a>
             )}
@@ -216,9 +204,9 @@ export default function DevProfileClient() {
                 href={dev.website}
                 target="_blank"
                 rel="noreferrer"
-                className="btn-primary !py-2.5 !px-4 text-xs flex-1 sm:flex-initial justify-center"
+                className={`${styles.btn} ${styles.btnPrimary}`}
               >
-                <GlobeIcon className="w-4 h-4" />
+                <GlobeIcon />
                 <span>Website</span>
               </a>
             )}
@@ -227,10 +215,10 @@ export default function DevProfileClient() {
                 href={dev.linkedin}
                 target="_blank"
                 rel="noreferrer"
-                aria-label={`LinkedIn de ${dev.full_name || dev.username}`}
-                className="btn-secondary !py-2.5 !px-4 text-xs flex-1 sm:flex-initial justify-center"
+                aria-label={`LinkedIn de ${displayName}`}
+                className={`${styles.btn} ${styles.btnSecondary}`}
               >
-                <LinkedinIcon className="w-4 h-4" />
+                <LinkedinIcon />
                 <span>LinkedIn</span>
               </a>
             )}
@@ -238,48 +226,44 @@ export default function DevProfileClient() {
         </div>
 
         {/* Bio and Info */}
-        <div className="py-6 space-y-6">
+        <div className={styles.bioSection}>
           <div>
-            <h2 className="text-xs font-mono uppercase tracking-wider text-faint font-semibold mb-2">
-              Sobre o Profissional
-            </h2>
-            <p className="text-sm sm:text-base text-ink leading-relaxed max-w-3xl">
+            <h2 className={styles.label}>Sobre o Profissional</h2>
+            <p className={styles.bio}>
               {dev.bio || 'Membro da comunidade ManausDev construindo soluções no ecossistema tech do Amazonas.'}
             </p>
           </div>
 
           <div>
-            <h2 className="text-xs font-mono uppercase tracking-wider text-faint font-semibold mb-3">
-              Tecnologias & Especialidades
-            </h2>
-            <div className="flex flex-wrap gap-2">
+            <h2 className={`${styles.label} ${styles.labelLoose}`}>Tecnologias & Especialidades</h2>
+            <div className={styles.tags}>
               {(dev.skills || []).map((skill, i) => (
-                <span key={i} className="chip-leaf text-xs !py-1 !px-3 font-semibold">
+                <span key={i} className={styles.skill}>
                   {skill}
                 </span>
               ))}
             </div>
           </div>
 
-          <div className="flex flex-wrap gap-6 pt-4 border-t border-border text-xs text-faint">
-            <span className="flex items-center gap-1.5 font-mono">
-              <MapPinIcon className="w-4 h-4 text-accent-text" />
+          <div className={styles.meta}>
+            <span className={styles.metaItem}>
+              <MapPinIcon className={styles.metaIcon} />
               {dev.city || dev.location || 'Manaus-AM'}
             </span>
-            <span className="flex items-center gap-1.5 font-mono">
-              <BriefcaseIcon className="w-4 h-4 text-accent-text" />
+            <span className={styles.metaItem}>
+              <BriefcaseIcon className={styles.metaIcon} />
               {dev.role || 'Engenheiro de Software'}
             </span>
-            <span className="flex items-center gap-1.5 font-mono">
-              <Code2Icon className="w-4 h-4 text-accent-text" />
+            <span className={styles.metaItem}>
+              <Code2Icon className={styles.metaIcon} />
               {devProjects.length} {devProjects.length === 1 ? 'projeto' : 'projetos'}
             </span>
-            <span className="flex items-center gap-1.5 font-mono">
-              <CalendarDaysIcon className="w-4 h-4 text-accent-text" />
+            <span className={styles.metaItem}>
+              <CalendarDaysIcon className={styles.metaIcon} />
               {devEvents.length} {devEvents.length === 1 ? 'evento organizado' : 'eventos organizados'}
             </span>
-            <span className="flex items-center gap-1.5 font-mono">
-              <ClockIcon className="w-4 h-4 text-accent-text" />
+            <span className={styles.metaItem}>
+              <ClockIcon className={styles.metaIcon} />
               Membro desde {formatMemberSince(dev.created_at)}
             </span>
           </div>
@@ -288,30 +272,27 @@ export default function DevProfileClient() {
 
       {/* Projects Section */}
       {devProjects.length > 0 && (
-        <div className="mt-10">
-          <div className="flex items-center gap-2 mb-6">
-            <Code2Icon className="w-5 h-5 text-accent-text" />
-            <h2 className="font-display font-bold text-xl text-ink">Projetos Publicados</h2>
+        <div className={styles.section}>
+          <div className={styles.sectionHead}>
+            <Code2Icon size="md" className={styles.metaIcon} />
+            <h2 className={styles.sectionTitle}>Projetos Publicados</h2>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div className={styles.grid}>
             {devProjects.map((proj) => (
-              <div key={proj.id} className="manaus-card p-6 border border-border flex flex-col justify-between">
+              <div key={proj.id} className={`${styles.card} ${styles.itemCard} ${styles.projectCard}`}>
                 <div>
-                  <h3 className="font-display font-bold text-base text-ink">{proj.title}</h3>
-                  <p className="text-xs text-muted line-clamp-2 mt-1.5 mb-4">{proj.description}</p>
-                  <div className="flex flex-wrap gap-1.5 mb-4">
+                  <h3 className={styles.itemTitle}>{proj.title}</h3>
+                  <p className={styles.itemText}>{proj.description}</p>
+                  <div className={styles.stack}>
                     {proj.stack?.map((s, i) => (
-                      <span key={i} className="chip-river text-[10px] font-mono">
+                      <span key={i} className={styles.stackTag}>
                         {s}
                       </span>
                     ))}
                   </div>
                 </div>
-                <Link
-                  href={`/projetos/${proj.id}`}
-                  className="text-xs font-semibold text-accent-text hover:underline flex items-center gap-1 mt-2"
-                >
+                <Link href={`/projetos/${proj.id}`} className={styles.detailLink}>
                   Ver detalhes do projeto →
                 </Link>
               </div>
@@ -322,18 +303,18 @@ export default function DevProfileClient() {
 
       {/* Organized Events Section */}
       {devEvents.length > 0 && (
-        <div className="mt-10">
-          <div className="flex items-center gap-2 mb-6">
-            <CalendarDaysIcon className="w-5 h-5 text-accent-text" />
-            <h2 className="font-display font-bold text-xl text-ink">Eventos Organizados</h2>
+        <div className={styles.section}>
+          <div className={styles.sectionHead}>
+            <CalendarDaysIcon size="md" className={styles.metaIcon} />
+            <h2 className={styles.sectionTitle}>Eventos Organizados</h2>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div className={styles.grid}>
             {devEvents.map((event) => (
-              <div key={event.id} className="manaus-card p-6 border border-border">
-                <h3 className="font-display font-bold text-base text-ink">{event.title}</h3>
-                <p className="text-xs text-muted line-clamp-2 mt-1.5 mb-3">{event.description}</p>
-                <div className="flex flex-wrap gap-4 text-[11px] font-mono text-faint">
+              <div key={event.id} className={`${styles.card} ${styles.itemCard}`}>
+                <h3 className={styles.itemTitle}>{event.title}</h3>
+                <p className={`${styles.itemText} ${styles.eventText}`}>{event.description}</p>
+                <div className={styles.eventMeta}>
                   <span>
                     {new Date(event.date).toLocaleDateString('pt-BR', {
                       day: '2-digit',

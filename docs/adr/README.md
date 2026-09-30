@@ -44,6 +44,8 @@
   * Paleta oficial extraída do logo (`#0073FD`, `#009BFD`, `#02B8B5`, `#4BD76D`), tokens CSS semânticos, dark mode via classe `.dark` + `ThemeToggle` e gradiente da marca como utility.
 * [`ADR 0009: Design System Green-Tech (Corporate Modern & Bio-Organic)`](0009-corporate-modern-green-tech-design-system.md)
   * *Superado pelo ADR 0015.* Paleta semântica com Deep Amazon Green (`#003527`), Leaf Green (`#006c49`), River Blue (`#00314a`), tipografia Sora + Inter e texturas bio-orgânicas.
+* [`ADR 0017: Migração para CSS Modules — ícones com size, chip de disponibilidade único e limites da auditoria`](0017-css-modules-migration-icons-and-audit-findings.md)
+  * Prop `size` nos ícones, `AvailabilityChip` como fonte única, correções de layout (hero, empresas) e o que o `bml audit` não enxerga.
 
 ### 3. 🚀 Vitrines & Módulos Visuais
 * [`ADR 0010: Previews Visuais em Projetos`](0010-project-visual-previews-and-showcase.md)

@@ -90,11 +90,11 @@ function VagasContent() {
     <div className={styles.container}>
       <div className={styles.hero}>
         <div className={styles.heroBadge}>
-          <BriefcaseIcon className="w-3.5 h-3.5" />
+          <BriefcaseIcon size="xs" />
           <span>Mural de Carreiras</span>
         </div>
         <h1 className={styles.heroTitle}>
-          Vagas de Tecnologia em <span className="text-accent-text">Manaus</span>
+          Vagas de Tecnologia em <span className={styles.heroAccent}>Manaus</span>
         </h1>
         <p className={styles.heroSubtitle}>
           Encontre posições presenciais no Polo Industrial e oportunidades remotas com contratação para talentos da região.
@@ -199,7 +199,7 @@ function VagasContent() {
               <div className={styles.jobActions}>
                 <Link href={`/vagas/${job.id}`} className={styles.btnLeaf}>
                   <span>Ver Detalhes</span>
-                  <ArrowRightIcon className="w-3.5 h-3.5" />
+                  <ArrowRightIcon size="xs" />
                 </Link>
                 {job.link && (
                   <a
@@ -209,7 +209,7 @@ function VagasContent() {
                     className={styles.btnPrimary}
                   >
                     <span>Candidatar</span>
-                    <ExternalLinkIcon className="w-3.5 h-3.5" />
+                    <ExternalLinkIcon size="xs" />
                   </a>
                 )}
               </div>

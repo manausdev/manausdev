@@ -69,6 +69,10 @@
   }
 }
 
+.heroAccent {
+  color: var(--accent-text);
+}
+
 .heroSubtitle {
   font-size: 0.875rem;
   color: var(--muted);
@@ -198,6 +202,22 @@
   color: white;
 }
 
+.placeholderIcon {
+  margin-bottom: 0.5rem;
+  color: color-mix(in oklab, var(--neon) 60%, transparent);
+}
+
+.placeholderName {
+  font-family: var(--font-display);
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: color-mix(in oklab, var(--on-dark) 90%, transparent);
+}
+
+.membersIcon {
+  color: var(--neon);
+}
+
 .cardMembersBadge {
   position: absolute;
   top: 0.75rem;
@@ -320,9 +340,11 @@
 }
 
 .externalLinkIcon {
-  width: 1rem;
-  height: 1rem;
   color: var(--accent-text);
+}
+
+.externalLinkArrow {
+  opacity: 0.6;
 }
 
 /* ===== Loading ===== */

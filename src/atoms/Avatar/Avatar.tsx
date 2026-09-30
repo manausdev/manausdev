@@ -32,7 +32,7 @@ export const Avatar = forwardRef<HTMLSpanElement, AvatarProps>(function Avatar(
         // next/image nao e usado aqui: a fonte vem de avatar_url gravada pelo
         // usuario e o host varia, o que exigiria remotePatterns por perfil.
         // eslint-disable-next-line @next/next/no-img-element
-        <img src={src} alt={name} className="w-full h-full object-cover" loading="lazy" />
+        <img src={src} alt={name} loading="lazy" />
       ) : (
         <span aria-hidden="true">{initials(name)}</span>
       )}

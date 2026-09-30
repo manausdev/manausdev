@@ -388,16 +388,7 @@
 }
 
 .availability {
-  display: flex;
-  align-items: center;
-  gap: 0.375rem;
   flex-shrink: 0;
-}
-
-.dot {
-  width: 0.375rem;
-  height: 0.375rem;
-  border-radius: 9999px;
 }
 
 .devRole {

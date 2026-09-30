@@ -105,7 +105,7 @@ export default async function HomePage() {
                   className={styles.heroPrimaryBtn}
                 >
                   Explorar Desenvolvedores
-                  <ArrowRightIcon className="w-4 h-4" />
+                  <ArrowRightIcon />
                 </Link>
                 <Link
                   href="/projetos"
@@ -116,27 +116,27 @@ export default async function HomePage() {
               </div>
             </div>
           </div>
+        </div>
 
-          {/* Stats Bar floating below hero */}
-          <div className={styles.statsBar}>
-            <div className={styles.statsGrid}>
-              <Link href="/devs" className={styles.statItem}>
-                <span className={styles.statValue}>{devsCount}+</span>
-                <span className={styles.statLabel}>Devs Cadastrados</span>
-              </Link>
-              <Link href="/projetos" className={styles.statItem}>
-                <span className={styles.statValue}>{projectsCount}+</span>
-                <span className={styles.statLabel}>Projetos Tech</span>
-              </Link>
-              <Link href="/comunidades" className={styles.statItem}>
-                <span className={styles.statValue}>{communitiesCount}+</span>
-                <span className={styles.statLabel}>Comunidades Ativas</span>
-              </Link>
-              <Link href="/vagas" className={styles.statItem}>
-                <span className={styles.statValue}>{jobsCount}+</span>
-                <span className={styles.statLabel}>Vagas no Amazonas</span>
-              </Link>
-            </div>
+        {/* Stats Bar floating below hero */}
+        <div className={styles.statsBar}>
+          <div className={styles.statsGrid}>
+            <Link href="/devs" className={styles.statItem}>
+              <span className={styles.statValue}>{devsCount}+</span>
+              <span className={styles.statLabel}>Devs Cadastrados</span>
+            </Link>
+            <Link href="/projetos" className={styles.statItem}>
+              <span className={styles.statValue}>{projectsCount}+</span>
+              <span className={styles.statLabel}>Projetos Tech</span>
+            </Link>
+            <Link href="/comunidades" className={styles.statItem}>
+              <span className={styles.statValue}>{communitiesCount}+</span>
+              <span className={styles.statLabel}>Comunidades Ativas</span>
+            </Link>
+            <Link href="/vagas" className={styles.statItem}>
+              <span className={styles.statValue}>{jobsCount}+</span>
+              <span className={styles.statLabel}>Vagas no Amazonas</span>
+            </Link>
           </div>
         </div>
       </section>
@@ -156,7 +156,7 @@ export default async function HomePage() {
               href="/devs"
               className={styles.viewAllLink}
             >
-              Ver todos os devs <ArrowRightIcon className="w-3.5 h-3.5" />
+              Ver todos os devs <ArrowRightIcon size="xs" />
             </Link>
           </div>
 
@@ -177,7 +177,7 @@ export default async function HomePage() {
                     {dev.full_name.charAt(0)}
                   </div>
 
-                  <div className="z-10">
+                  <div className={styles.devInfo}>
                     <h3 className={styles.devName}>{dev.full_name}</h3>
                     <p className={styles.devRole}>{dev.role || 'Software Engineer'}</p>
                   </div>
@@ -197,76 +197,79 @@ export default async function HomePage() {
       </section>
 
       {/* Regional Projects (Bento Grid Style) */}
-      <section className={`${styles.section} ${styles.projectsSection}`}>
-        <div className={styles.sectionInner}>
-          <div className="text-center max-w-2xl mx-auto">
-            <h2 className={styles.sectionTitle}>Bioeconomia & Tech: Projetos Feitos no Amazonas</h2>
-            <p className={styles.sectionSubtitle}>
-              Soluções inovadoras desenvolvidas localmente com impacto global.
-            </p>
-          </div>
+      {/* Sem projetos reais, a seção some: nunca inventamos conteúdo em produção. */}
+      {projects.length > 0 && (
+        <section className={`${styles.section} ${styles.projectsSection}`}>
+          <div className={styles.sectionInner}>
+            <div className={styles.sectionIntro}>
+              <h2 className={styles.sectionTitle}>Bioeconomia & Tech: Projetos Feitos no Amazonas</h2>
+              <p className={styles.sectionSubtitle}>
+                Soluções inovadoras desenvolvidas localmente com impacto global.
+              </p>
+            </div>
 
-          <div className={styles.projectsBento}>
-            {/* Feature Large */}
-            <Link
-              href={`/projetos/${projects[0]?.id || '1'}`}
-              className={styles.projectFeatureLink}
-            >
-              <div 
-                className={styles.projectFeatureBg}
-                style={{
-                  backgroundImage: `url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop')`
-                }}
-              />
-              <div className={styles.projectFeatureOverlay} />
-              
-              <div className={styles.projectFeatureContent}>
-                <div className={styles.projectFeatureBadge}>
-                  <span className={styles.projectFeatureBadgeInner}>
-                    <Flower2Icon className="w-3.5 h-3.5" /> Feito em Manaus
-                  </span>
-                </div>
-                <h3 className={styles.projectFeatureTitle}>{projects[0]?.title || 'ManausHub'}</h3>
-                <p className={styles.projectFeatureDesc}>
-                  {projects[0]?.description || 'Plataforma open-source para mapeamento de startups e talentos do ecossistema local.'}
-                </p>
-                <div className={styles.projectFeatureStack}>
-                  {projects[0]?.stack?.map((st, i) => (
-                    <span key={i} className={styles.projectStackChip}>
-                      {st}
+            <div className={styles.projectsBento}>
+              {/* Feature Large */}
+              <Link
+                href={`/projetos/${projects[0].id}`}
+                className={styles.projectFeatureLink}
+              >
+                <div 
+                  className={styles.projectFeatureBg}
+                  style={{
+                    backgroundImage: `url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop')`
+                  }}
+                />
+                <div className={styles.projectFeatureOverlay} />
+                
+                <div className={styles.projectFeatureContent}>
+                  <div className={styles.projectFeatureBadge}>
+                    <span className={styles.projectFeatureBadgeInner}>
+                      <Flower2Icon size="xs" /> Feito em Manaus
                     </span>
-                  ))}
+                  </div>
+                  <h3 className={styles.projectFeatureTitle}>{projects[0].title}</h3>
+                  <p className={styles.projectFeatureDesc}>
+                    {projects[0].description}
+                  </p>
+                  <div className={styles.projectFeatureStack}>
+                    {projects[0].stack?.map((st, i) => (
+                      <span key={i} className={styles.projectStackChip}>
+                        {st}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            </Link>
+              </Link>
 
-            {/* Side Features */}
-            <div className={styles.projectsSide}>
-              {projects.slice(1, 3).map((proj, idx) => (
-                <Link
-                  key={proj.id}
-                  href={`/projetos/${proj.id}`}
-                  className={`${styles.projectSideLink} ${idx === 0 ? styles.borderCyan : styles.borderAccent}`}
-                >
-                  <div>
-                    <div className={styles.projectSideHeader}>
-                      <h3 className={styles.projectSideTitle}>{proj.title}</h3>
-                      {idx === 0 ? <MapIcon className={`${styles.projectSideIcon} ${styles.sideTitleIcon}`} /> : <CompassIcon className={`${styles.projectSideIcon} ${styles.sideTitleIcon}`} />}
+              {/* Side Features */}
+              <div className={styles.projectsSide}>
+                {projects.slice(1, 3).map((proj, idx) => (
+                  <Link
+                    key={proj.id}
+                    href={`/projetos/${proj.id}`}
+                    className={`${styles.projectSideLink} ${idx === 0 ? styles.borderCyan : styles.borderAccent}`}
+                  >
+                    <div>
+                      <div className={styles.projectSideHeader}>
+                        <h3 className={styles.projectSideTitle}>{proj.title}</h3>
+                        {idx === 0 ? <MapIcon className={`${styles.projectSideIcon} ${styles.sideTitleIcon}`} /> : <CompassIcon className={`${styles.projectSideIcon} ${styles.sideTitleIcon}`} />}
+                      </div>
+                      <p className={styles.projectSideDesc}>
+                        {proj.description}
+                      </p>
                     </div>
-                    <p className={styles.projectSideDesc}>
-                      {proj.description}
-                    </p>
-                  </div>
-                  <div className={styles.projectSideFooter}>
-                    <span className={`${styles.chipLeaf} ${styles.projectSideChip}`}>{proj.stack?.[0] || 'Tech'}</span>
-                    <span className={`${styles.projectSideNote} ${styles.sideNote}`}>Feito em Manaus</span>
-                  </div>
-                </Link>
-              ))}
+                    <div className={styles.projectSideFooter}>
+                      <span className={`${styles.chipLeaf} ${styles.projectSideChip}`}>{proj.stack?.[0] || 'Tech'}</span>
+                      <span className={`${styles.projectSideNote} ${styles.sideNote}`}>Feito em Manaus</span>
+                    </div>
+                  </Link>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* Events and Jobs (Side by Side) */}
       <section className={styles.section}>
