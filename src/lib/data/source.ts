@@ -1,4 +1,4 @@
-import { createClient } from '@/lib/supabase/server';
+import { createPublicClient } from '@/lib/supabase/public';
 import { useMockData } from '@/lib/env';
 
 /**
@@ -35,7 +35,7 @@ export async function fetchIdsForStaticParams(
   }
 
   try {
-    const supabase = await createClient();
+    const supabase = createPublicClient();
     const { data, error } = await supabase.from(table).select('id');
     if (error || !data) return [];
     return (data as unknown as { id: string }[]).map((row) => ({ id: row.id }));
@@ -59,7 +59,7 @@ export async function fetchById<T>(
   }
 
   try {
-    const supabase = await createClient();
+    const supabase = createPublicClient();
     const { data, error } = await supabase.from(table).select('*').eq('id', id).single();
     if (error || !data) return null;
     return data as unknown as T;

@@ -8,7 +8,7 @@ import {
   UsersIcon, 
   BriefcaseIcon 
 } from '@/components/icons';
-import { createClient } from '@/lib/supabase/server';
+import { createPublicClient } from '@/lib/supabase/public';
 import { MOCK_COMPANIES, MOCK_JOBS } from '@/lib/data/mock';
 import { fetchById, fetchIdsForStaticParams } from '@/lib/data/source';
 import { useMockData } from '@/lib/env';
@@ -46,7 +46,7 @@ export default async function CompanyDetailPage({ params }: CompanyDetailPagePro
     );
   } else {
     try {
-      const supabase = await createClient();
+      const supabase = createPublicClient();
       const { data: jobsData } = await supabase
         .from('jobs')
         .select('*')
