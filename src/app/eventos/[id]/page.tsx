@@ -13,6 +13,7 @@ import { MOCK_EVENTS } from '@/lib/data/mock';
 import { fetchById, fetchIdsForStaticParams } from '@/lib/data/source';
 import { formatDate } from '@/lib/utils';
 import type { EventItem } from '@/types/database';
+import styles from './detail.module.css';
 
 export async function generateStaticParams() {
   return fetchIdsForStaticParams(
@@ -38,87 +39,62 @@ export default async function EventDetailPage({ params }: EventDetailPageProps) 
   }
 
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <Link
-        href="/eventos"
-        className="inline-flex items-center gap-2 text-xs font-semibold text-accent-text hover:text-ink transition-colors mb-8"
-      >
-        <ArrowLeftIcon className="w-4 h-4" />
+    <div className={styles.container}>
+      <Link href="/eventos" className={styles.backLink}>
+        <ArrowLeftIcon />
         Voltar para a agenda de eventos
       </Link>
 
-      <div className="manaus-card overflow-hidden border border-border mb-8">
-        <div className="relative h-60 sm:h-72 w-full bg-deep overflow-hidden border-b border-border">
+      <div className={styles.card}>
+        <div className={styles.cover}>
           {event.image_url ? (
-            <img
-              src={event.image_url}
-              alt={event.title}
-              className="w-full h-full object-cover opacity-90"
-            />
+            <img src={event.image_url} alt={event.title} className={styles.coverImg} />
           ) : (
-            <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-brand p-4 text-center">
-              <CalendarDaysIcon className="w-16 h-16 text-neon/60 mb-2" />
+            <div className={styles.coverFallback}>
+              <CalendarDaysIcon size="xxl" className={styles.coverFallbackIcon} />
             </div>
           )}
-          <div className="absolute top-4 left-4 z-10">
-            <span className="bg-deep/90 backdrop-blur-md text-neon text-xs font-mono px-3 py-1.5 rounded-full border border-neon/30 font-bold uppercase tracking-wider shadow-md">
-              {event.type}
-            </span>
+          <div className={styles.typeBadgeWrap}>
+            <span className={styles.typeBadge}>{event.type}</span>
           </div>
         </div>
 
-        <div className="p-6 sm:p-10 space-y-8">
-          <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-6 pb-6 border-b border-border">
+        <div className={styles.body}>
+          <div className={styles.header}>
             <div>
-              <span className="text-xs font-mono text-accent-text font-semibold uppercase tracking-wider">
-                📅 {formatDate(event.date)}
-              </span>
-              <h1 className="font-display font-bold text-2xl sm:text-4xl text-ink mt-1.5">
-                {event.title}
-              </h1>
-              <div className="flex items-center gap-1.5 text-xs sm:text-sm text-muted mt-2">
-                <MapPinIcon className="w-4 h-4 text-accent-text flex-shrink-0" />
+              <span className={styles.date}>📅 {formatDate(event.date)}</span>
+              <h1 className={styles.title}>{event.title}</h1>
+              <div className={styles.location}>
+                <MapPinIcon className={styles.locationIcon} />
                 <span>{event.location}</span>
               </div>
             </div>
 
             {event.link && (
-              <div className="flex-shrink-0">
-                <a
-                  href={event.link}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="btn-leaf !py-3 !px-6 text-xs flex items-center gap-2 shadow-md w-full sm:w-auto justify-center"
-                >
-                  <span>Garantir Inscrição</span>
-                  <ExternalLinkIcon className="w-4 h-4" />
-                </a>
-              </div>
+              <a href={event.link} target="_blank" rel="noreferrer" className={styles.cta}>
+                <span>Garantir Inscrição</span>
+                <ExternalLinkIcon />
+              </a>
             )}
           </div>
 
           <div>
-            <h2 className="text-xs font-mono uppercase tracking-wider text-faint font-semibold mb-3 flex items-center gap-2">
-              <SparklesIcon className="w-4 h-4 text-accent-text" />
+            <h2 className={styles.sectionTitle}>
+              <SparklesIcon className={styles.sectionIcon} />
               Sobre o Evento
             </h2>
-            <p className="text-sm sm:text-base text-ink leading-relaxed whitespace-pre-line max-w-3xl">
+            <p className={styles.description}>
               {event.description || 'Participe deste encontro e conecte-se com a comunidade tech de Manaus.'}
             </p>
           </div>
 
-          <div className="p-4 rounded-xl bg-surface-1 border border-border flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className={styles.venue}>
             <div>
-              <h3 className="font-bold text-sm text-ink">Localização do Encontro</h3>
-              <p className="text-xs text-faint mt-0.5">{event.location}</p>
+              <h3 className={styles.venueTitle}>Localização do Encontro</h3>
+              <p className={styles.venueText}>{event.location}</p>
             </div>
             {event.link && (
-              <a
-                href={event.link}
-                target="_blank"
-                rel="noreferrer"
-                className="btn-secondary !py-2 !px-4 text-xs"
-              >
+              <a href={event.link} target="_blank" rel="noreferrer" className={styles.secondaryBtn}>
                 Página Oficial do Evento
               </a>
             )}

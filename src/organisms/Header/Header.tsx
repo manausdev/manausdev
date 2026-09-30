@@ -104,7 +104,7 @@ export function Header() {
           ) : user ? (
             <div className={styles.authUser}>
               <Link href="/dashboard" className={styles.painelBtn}>
-                <LayoutDashboardIcon className="w-3.5 h-3.5" />
+                <LayoutDashboardIcon size="xs" />
                 <span>Painel</span>
               </Link>
               <button
@@ -113,7 +113,7 @@ export function Header() {
                 aria-label="Sair da conta"
                 className={styles.signOut}
               >
-                <LogOutIcon className="w-4 h-4" />
+                <LogOutIcon />
               </button>
             </div>
           ) : (
@@ -136,7 +136,7 @@ export function Header() {
             aria-label="Abrir menu"
             aria-expanded={mobileMenuOpen}
           >
-            {mobileMenuOpen ? <XIcon className="w-6 h-6" /> : <MenuIcon className="w-6 h-6" />}
+            {mobileMenuOpen ? <XIcon size="lg" /> : <MenuIcon size="lg" />}
           </button>
         </div>
       </div>
@@ -152,7 +152,7 @@ export function Header() {
                 onClick={() => setMobileMenuOpen(false)}
                 className={cn(styles.mobileLink, isActive && styles.mobileLinkActive)}
               >
-                <Icon className="w-4 h-4" />
+                <Icon />
                 {label}
               </Link>
             );
@@ -165,7 +165,7 @@ export function Header() {
                   onClick={() => setMobileMenuOpen(false)}
                   className={styles.mobileBtnLeaf}
                 >
-                  <LayoutDashboardIcon className="w-4 h-4" />
+                  <LayoutDashboardIcon />
                   Meu Painel
                 </Link>
                 <button

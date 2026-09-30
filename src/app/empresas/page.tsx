@@ -80,11 +80,11 @@ function EmpresasContent() {
     <div className={styles.container}>
       <div className={styles.hero}>
         <div className={styles.heroBadge}>
-          <Building2Icon className="w-3.5 h-3.5" />
+          <Building2Icon size="xs" />
           <span>Polo Tecnológico & Institutos</span>
         </div>
         <h1 className={styles.heroTitle}>
-          Empresas & Institutos em <span className="text-accent-text">Manaus</span>
+          Empresas & Institutos em <span className={styles.heroAccent}>Manaus</span>
         </h1>
         <p className={styles.heroSubtitle}>
           Conheça empresas de software, institutos de P&D e startups que impulsionam a economia digital no Amazonas.
@@ -139,13 +139,13 @@ function EmpresasContent() {
                   <img src={comp.image_url} alt={comp.name} />
                 ) : (
                   <div className={styles.cardImagePlaceholder}>
-                    <Building2Icon className="w-10 h-10" />
+                    <Building2Icon size="xl" />
                     <span>{comp.name}</span>
                   </div>
                 )}
                 {comp.size && (
                   <div className={styles.cardSizeBadge}>
-                    <UsersIcon className="w-3 h-3" />
+                    <UsersIcon size="xxs" />
                     {comp.size}
                   </div>
                 )}
@@ -188,7 +188,7 @@ function EmpresasContent() {
                   <div className={styles.cardActions}>
                     <Link href={`/empresas/${comp.id}`} className={styles.btnLeaf}>
                       <span>Ver Perfil</span>
-                      <ArrowRightIcon className="w-3.5 h-3.5" />
+                      <ArrowRightIcon size="xs" />
                     </Link>
                   </div>
                 </div>

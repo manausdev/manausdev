@@ -25,11 +25,11 @@ import {
 } from '@/lib/data/mock';
 import {
   AVAILABILITY_FILTERS,
-  AVAILABILITY_META,
   SENIORITY_LABELS,
   SORT_OPTIONS,
 } from '@/lib/devs-meta';
 import { useMockData } from '@/lib/env';
+import { AvailabilityChip } from '@/molecules/AvailabilityChip';
 import type { Profile } from '@/types/database';
 import styles from './devs.module.css';
 
@@ -473,7 +473,6 @@ function DevsDirectory() {
         <>
           <ListingGrid variant="cardsWide">
             {devs.map((dev) => {
-              const availability = AVAILABILITY_META[dev.availability ?? 'open'] ?? AVAILABILITY_META.open;
               const skills = dev.skills ?? [];
               const extraSkills = Math.max(0, skills.length - 3);
               return (
@@ -500,10 +499,7 @@ function DevsDirectory() {
                         <p className={styles.devUsername}>@{dev.username}</p>
                       </div>
                     </div>
-                    <span className={cn(availability.className, styles.availability)}>
-                      <span className={cn(availability.dot, styles.dot)} />
-                      {availability.label}
-                    </span>
+                    <AvailabilityChip value={dev.availability} className={styles.availability} />
                   </div>
 
                   <p className={styles.devRole}>

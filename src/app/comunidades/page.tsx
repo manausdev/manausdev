@@ -40,11 +40,11 @@ export default function ComunidadesPage() {
     <div className={styles.container}>
       <div className={styles.hero}>
         <div className={styles.heroBadge}>
-          <SparklesIcon className="w-3.5 h-3.5" />
+          <SparklesIcon size="xs" />
           <span>Rede Colaborativa</span>
         </div>
         <h1 className={styles.heroTitle}>
-          Comunidades em <span className="text-accent-text">Manaus</span>
+          Comunidades em <span className={styles.heroAccent}>Manaus</span>
         </h1>
         <p className={styles.heroSubtitle}>
           Grupos de estudos, meetups periódicos, comunidades técnicas e espaços de troca aberta de conhecimento.
@@ -66,19 +66,18 @@ export default function ComunidadesPage() {
                   <img
                     src={comm.image_url}
                     alt={comm.name}
-                    className={`${styles.cardImageImg}`}
+                    className={styles.cardImageImg}
                   />
                 ) : (
                   <div className={styles.cardImagePlaceholder}>
-                    <div className="absolute inset-0 opacity-20" />
-                    <SparklesIcon className="w-10 h-10 text-neon/60 mb-2 relative z-10" />
-                    <span className="font-display font-bold text-sm text-on-dark/90 relative z-10">
+                    <SparklesIcon size="xl" className={styles.placeholderIcon} />
+                    <span className={styles.placeholderName}>
                       {comm.name}
                     </span>
                   </div>
                 )}
                 <div className={styles.cardMembersBadge}>
-                  <UsersIcon className="w-3 h-3 text-neon" />
+                  <UsersIcon size="xxs" className={styles.membersIcon} />
                   {comm.members_count}+ membros
                 </div>
               </Link>
@@ -96,7 +95,7 @@ export default function ComunidadesPage() {
                 <div className={styles.cardFooter}>
                   <Link href={`/comunidades/${comm.id}`} className={styles.cardLink}>
                     <span>Página da Comunidade</span>
-                    <ArrowRightIcon className="w-3.5 h-3.5" />
+                    <ArrowRightIcon size="xs" />
                   </Link>
 
                   <div className={styles.cardLinks}>
@@ -108,9 +107,9 @@ export default function ComunidadesPage() {
                         rel="noreferrer"
                         className={styles.externalLink}
                       >
-                        <MessageSquareIcon className="w-4 h-4 text-accent-text" />
+                        <MessageSquareIcon className={styles.externalLinkIcon} />
                         <span>Entrar no {key}</span>
-                        <ExternalLinkIcon className="w-3.5 h-3.5 opacity-60" />
+                        <ExternalLinkIcon size="xs" className={styles.externalLinkArrow} />
                       </a>
                     ))}
                   </div>

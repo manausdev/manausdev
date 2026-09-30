@@ -86,11 +86,11 @@ function ProjetosContent() {
     <div className={styles.container}>
       <div className={styles.hero}>
         <div className={styles.heroBadge}>
-          <Code2Icon className="w-3.5 h-3.5" />
+          <Code2Icon size="xs" />
           <span>Inovação & Bioeconomia</span>
         </div>
         <h1 className={styles.heroTitle}>
-          Projetos Feitos no <span className="text-accent-text">Amazonas</span>
+          Projetos Feitos no <span className={styles.heroAccent}>Amazonas</span>
         </h1>
         <p className={styles.heroSubtitle}>
           Aplicações web, bibliotecas open-source, inteligência de dados e plataformas construídas para impulsionar a região.
@@ -150,7 +150,7 @@ function ProjetosContent() {
                   <img src={proj.image_url} alt={proj.title} />
                 ) : (
                   <div className={styles.cardImagePlaceholder}>
-                    <Code2Icon className="w-10 h-10" />
+                    <Code2Icon size="xl" />
                     <span>{proj.title}</span>
                   </div>
                 )}
@@ -183,7 +183,7 @@ function ProjetosContent() {
                 <div className={styles.cardFooter}>
                   <Link href={`/projetos/${proj.id}`} className={styles.cardFooterLink}>
                     <span>Detalhes</span>
-                    <ArrowRightIcon className="w-3.5 h-3.5" />
+                    <ArrowRightIcon size="xs" />
                   </Link>
 
                   <div className={styles.cardFooterIcons}>
@@ -195,7 +195,7 @@ function ProjetosContent() {
                         className={styles.cardFooterIcon}
                         title="Repositório"
                       >
-                        <GithubIcon className="w-4 h-4" />
+                        <GithubIcon />
                       </a>
                     )}
                     {proj.links?.demo && (
@@ -206,7 +206,7 @@ function ProjetosContent() {
                         className={styles.cardFooterIcon}
                         title="Demo"
                       >
-                        <ExternalLinkIcon className="w-4 h-4" />
+                        <ExternalLinkIcon />
                       </a>
                     )}
                   </div>

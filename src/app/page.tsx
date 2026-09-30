@@ -105,7 +105,7 @@ export default async function HomePage() {
                   className={styles.heroPrimaryBtn}
                 >
                   Explorar Desenvolvedores
-                  <ArrowRightIcon className="w-4 h-4" />
+                  <ArrowRightIcon />
                 </Link>
                 <Link
                   href="/projetos"
@@ -116,27 +116,27 @@ export default async function HomePage() {
               </div>
             </div>
           </div>
+        </div>
 
-          {/* Stats Bar floating below hero */}
-          <div className={styles.statsBar}>
-            <div className={styles.statsGrid}>
-              <Link href="/devs" className={styles.statItem}>
-                <span className={styles.statValue}>{devsCount}+</span>
-                <span className={styles.statLabel}>Devs Cadastrados</span>
-              </Link>
-              <Link href="/projetos" className={styles.statItem}>
-                <span className={styles.statValue}>{projectsCount}+</span>
-                <span className={styles.statLabel}>Projetos Tech</span>
-              </Link>
-              <Link href="/comunidades" className={styles.statItem}>
-                <span className={styles.statValue}>{communitiesCount}+</span>
-                <span className={styles.statLabel}>Comunidades Ativas</span>
-              </Link>
-              <Link href="/vagas" className={styles.statItem}>
-                <span className={styles.statValue}>{jobsCount}+</span>
-                <span className={styles.statLabel}>Vagas no Amazonas</span>
-              </Link>
-            </div>
+        {/* Stats Bar floating below hero */}
+        <div className={styles.statsBar}>
+          <div className={styles.statsGrid}>
+            <Link href="/devs" className={styles.statItem}>
+              <span className={styles.statValue}>{devsCount}+</span>
+              <span className={styles.statLabel}>Devs Cadastrados</span>
+            </Link>
+            <Link href="/projetos" className={styles.statItem}>
+              <span className={styles.statValue}>{projectsCount}+</span>
+              <span className={styles.statLabel}>Projetos Tech</span>
+            </Link>
+            <Link href="/comunidades" className={styles.statItem}>
+              <span className={styles.statValue}>{communitiesCount}+</span>
+              <span className={styles.statLabel}>Comunidades Ativas</span>
+            </Link>
+            <Link href="/vagas" className={styles.statItem}>
+              <span className={styles.statValue}>{jobsCount}+</span>
+              <span className={styles.statLabel}>Vagas no Amazonas</span>
+            </Link>
           </div>
         </div>
       </section>
@@ -156,7 +156,7 @@ export default async function HomePage() {
               href="/devs"
               className={styles.viewAllLink}
             >
-              Ver todos os devs <ArrowRightIcon className="w-3.5 h-3.5" />
+              Ver todos os devs <ArrowRightIcon size="xs" />
             </Link>
           </div>
 
@@ -177,7 +177,7 @@ export default async function HomePage() {
                     {dev.full_name.charAt(0)}
                   </div>
 
-                  <div className="z-10">
+                  <div className={styles.devInfo}>
                     <h3 className={styles.devName}>{dev.full_name}</h3>
                     <p className={styles.devRole}>{dev.role || 'Software Engineer'}</p>
                   </div>
@@ -199,7 +199,7 @@ export default async function HomePage() {
       {/* Regional Projects (Bento Grid Style) */}
       <section className={`${styles.section} ${styles.projectsSection}`}>
         <div className={styles.sectionInner}>
-          <div className="text-center max-w-2xl mx-auto">
+          <div className={styles.sectionIntro}>
             <h2 className={styles.sectionTitle}>Bioeconomia & Tech: Projetos Feitos no Amazonas</h2>
             <p className={styles.sectionSubtitle}>
               Soluções inovadoras desenvolvidas localmente com impacto global.
@@ -223,7 +223,7 @@ export default async function HomePage() {
               <div className={styles.projectFeatureContent}>
                 <div className={styles.projectFeatureBadge}>
                   <span className={styles.projectFeatureBadgeInner}>
-                    <Flower2Icon className="w-3.5 h-3.5" /> Feito em Manaus
+                    <Flower2Icon size="xs" /> Feito em Manaus
                   </span>
                 </div>
                 <h3 className={styles.projectFeatureTitle}>{projects[0]?.title || 'ManausHub'}</h3>

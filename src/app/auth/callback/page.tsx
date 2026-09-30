@@ -3,6 +3,7 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
+import styles from './callback.module.css';
 
 export default function AuthCallbackPage() {
   const router = useRouter();
@@ -28,9 +29,9 @@ export default function AuthCallbackPage() {
   }, [router]);
 
   return (
-    <div className="min-h-[70vh] flex flex-col items-center justify-center">
-      <div className="h-8 w-8 animate-spin rounded-full border-4 border-solid border-cyan border-r-transparent mb-4" />
-      <p className="text-xs font-mono text-slate-400">Autenticando na ManausDev...</p>
+    <div className={styles.container}>
+      <div className={styles.spinner} />
+      <p className={styles.message}>Autenticando na ManausDev...</p>
     </div>
   );
 }

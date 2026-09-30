@@ -81,11 +81,11 @@ function EventosContent() {
     <div className={styles.container}>
       <div className={styles.hero}>
         <div className={styles.heroBadge}>
-          <CalendarDaysIcon className="w-3.5 h-3.5" />
+          <CalendarDaysIcon size="xs" />
           <span>Agenda & Hackathons</span>
         </div>
         <h1 className={styles.heroTitle}>
-          Eventos de Tecnologia em <span className="text-accent-text">Manaus</span>
+          Eventos de Tecnologia em <span className={styles.heroAccent}>Manaus</span>
         </h1>
         <p className={styles.heroSubtitle}>
           Fique por dentro de meetups, conferências, hackathons de sustentabilidade e workshops no Amazonas.
@@ -143,7 +143,7 @@ function EventosContent() {
                   <img src={ev.image_url} alt={ev.title} />
                 ) : (
                   <div className={styles.cardImagePlaceholder}>
-                    <CalendarDaysIcon className="w-10 h-10" />
+                    <CalendarDaysIcon size="xl" />
                     <span>{ev.title}</span>
                   </div>
                 )}
@@ -167,7 +167,7 @@ function EventosContent() {
                 <div className={styles.cardFooter}>
                   <Link href={`/eventos/${ev.id}`} className={styles.btnLeaf}>
                     <span>Ver Detalhes</span>
-                    <ArrowRightIcon className="w-3.5 h-3.5" />
+                    <ArrowRightIcon size="xs" />
                   </Link>
 
                   {ev.link && (
