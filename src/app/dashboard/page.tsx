@@ -17,6 +17,8 @@ import {
   ExternalLinkIcon
 } from '@/components/icons';
 import type { Profile, Project, Database, ProjectLinks } from '@/types/database';
+import styles from './dashboard.module.css';
+import { cn } from '@/lib/utils';
 
 export default function DashboardPage() {
   const router = useRouter();
@@ -261,33 +263,32 @@ export default function DashboardPage() {
       setSubmittingProj(false);
     }
   };
-
   if (loading) {
     return (
-      <div className="max-w-7xl mx-auto px-4 py-20 text-center">
-        <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-accent border-r-transparent" />
-        <p className="mt-4 text-xs font-mono text-faint">Carregando dados do perfil...</p>
+      <div className={styles.loadingWrap}>
+        <div className={styles.spinner} />
+        <p className={styles.loadingText}>Carregando dados do perfil...</p>
       </div>
     );
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 bg-canvas">
+    <div className={styles.container}>
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+      <div className={styles.header}>
         <div>
-          <span className="text-xs font-mono text-accent-text uppercase tracking-wider font-semibold">Painel do Membro</span>
-          <h1 className="font-display font-bold text-2xl sm:text-4xl text-ink">
+          <span className={styles.kicker}>Painel do Membro</span>
+          <h1 className={styles.title}>
             Olá, {profile.full_name || 'Desenvolvedor'} 🌿
           </h1>
-          <p className="text-xs text-muted mt-1">
+          <p className={styles.subtitle}>
             Gerencie seu perfil visível na comunidade e seus projetos submetidos.
           </p>
         </div>
 
         <button
           onClick={openAddProjectModal}
-          className="btn-leaf text-xs"
+          className={cn('btn-leaf', styles.publishBtn)}
         >
           <PlusIcon className="w-4 h-4" />
           Publicar Projeto
@@ -295,67 +296,67 @@ export default function DashboardPage() {
       </div>
 
       {successMsg && (
-        <div className="mb-6 p-4 rounded-xl bg-success-soft border border-success/30 text-success-text text-xs flex items-center gap-2 font-medium">
-          <CheckCircle2Icon className="w-4 h-4 flex-shrink-0 text-accent-text" />
+        <div className={styles.successBanner}>
+          <CheckCircle2Icon className={cn('w-4 h-4', styles.bannerIconSuccess)} />
           <span>{successMsg}</span>
         </div>
       )}
 
       {errorMsg && (
-        <div className="mb-6 p-4 rounded-xl bg-danger-soft border border-danger/30 text-danger-text text-xs flex items-center gap-2">
-          <AlertCircleIcon className="w-4 h-4 flex-shrink-0 text-danger" />
+        <div className={styles.errorBanner}>
+          <AlertCircleIcon className={cn('w-4 h-4', styles.bannerIconError)} />
           <span>{errorMsg}</span>
         </div>
       )}
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className={styles.layout}>
         {/* Profile Settings Form */}
-        <div className="lg:col-span-2">
-          <div className="manaus-card p-6 sm:p-8">
-            <div className="flex items-center gap-2.5 mb-6 pb-4 border-b border-border">
-              <UserCircle2Icon className="w-5 h-5 text-accent-text" />
-              <h2 className="font-display font-bold text-lg text-ink">Dados do Perfil</h2>
+        <div>
+          <div className={cn('manaus-card', styles.card)}>
+            <div className={styles.cardHeader}>
+              <UserCircle2Icon className={cn('w-5 h-5', styles.cardHeaderIcon)} />
+              <h2 className={styles.cardTitle}>Dados do Perfil</h2>
             </div>
 
-            <form onSubmit={handleSaveProfile} className="space-y-4">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <form onSubmit={handleSaveProfile} className={styles.form}>
+              <div className={styles.row2}>
                 <div>
-                  <label className="block text-xs font-semibold text-ink mb-1.5">Nome Completo</label>
+                  <label className={styles.label}>Nome Completo</label>
                   <input
                     type="text"
                     value={profile.full_name || ''}
                     onChange={(e) => setProfile({ ...profile, full_name: e.target.value })}
-                    className="manaus-input w-full"
+                    className={cn('manaus-input', styles.input)}
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-ink mb-1.5">Username (@)</label>
+                  <label className={styles.label}>Username (@)</label>
                   <input
                     type="text"
                     value={profile.username || ''}
                     onChange={(e) => setProfile({ ...profile, username: e.target.value })}
-                    className="manaus-input w-full"
+                    className={cn('manaus-input', styles.input)}
                   />
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className={styles.row2}>
                 <div>
-                  <label className="block text-xs font-semibold text-ink mb-1.5">Cargo / Especialidade</label>
+                  <label className={styles.label}>Cargo / Especialidade</label>
                   <input
                     type="text"
                     placeholder="Ex: Fullstack Engineer"
                     value={profile.role || ''}
                     onChange={(e) => setProfile({ ...profile, role: e.target.value })}
-                    className="manaus-input w-full"
+                    className={cn('manaus-input', styles.input)}
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-ink mb-1.5">Senioridade</label>
+                  <label className={styles.label}>Senioridade</label>
                   <select
                     value={profile.seniority || ''}
                     onChange={(e) => setProfile({ ...profile, seniority: e.target.value || null })}
-                    className="manaus-input w-full"
+                    className={cn('manaus-input', styles.input)}
                   >
                     <option value="">Selecione...</option>
                     <option value="junior">Júnior</option>
@@ -366,42 +367,42 @@ export default function DashboardPage() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className={styles.row2}>
                 <div>
-                  <label className="block text-xs font-semibold text-ink mb-1.5">Cidade (usada nos filtros do diretório)</label>
+                  <label className={styles.label}>Cidade (usada nos filtros do diretório)</label>
                   <input
                     type="text"
                     placeholder="Manaus"
                     value={profile.city || ''}
                     onChange={(e) => setProfile({ ...profile, city: e.target.value })}
-                    className="manaus-input w-full"
+                    className={cn('manaus-input', styles.input)}
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-ink mb-1.5">Localização (texto livre de exibição)</label>
+                  <label className={styles.label}>Localização (texto livre de exibição)</label>
                   <input
                     type="text"
                     placeholder="Manaus-AM"
                     value={profile.location || ''}
                     onChange={(e) => setProfile({ ...profile, location: e.target.value })}
-                    className="manaus-input w-full"
+                    className={cn('manaus-input', styles.input)}
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-ink mb-1.5">Bio / Apresentação</label>
+                <label className={styles.label}>Bio / Apresentação</label>
                 <textarea
                   rows={3}
                   placeholder="Fale brevemente sobre sua experiência e interesses no ecossistema..."
                   value={profile.bio || ''}
                   onChange={(e) => setProfile({ ...profile, bio: e.target.value })}
-                  className="manaus-input w-full"
+                  className={cn('manaus-input', styles.input)}
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-ink mb-1.5">
+                <label className={styles.label}>
                   Habilidades / Tecnologias (separadas por vírgula)
                 </label>
                 <input
@@ -409,42 +410,42 @@ export default function DashboardPage() {
                   placeholder="React, Next.js, Node.js, Supabase, Tailwind, Python"
                   value={Array.isArray(profile.skills) ? profile.skills.join(', ') : profile.skills || ''}
                   onChange={(e) => setProfile({ ...profile, skills: e.target.value.split(',').map(s => s.trim()) })}
-                  className="manaus-input w-full"
+                  className={cn('manaus-input', styles.input)}
                 />
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className={styles.row2}>
                 <div>
-                  <label className="block text-xs font-semibold text-ink mb-1.5">GitHub URL</label>
+                  <label className={styles.label}>GitHub URL</label>
                   <input
                     type="url"
                     placeholder="https://github.com/usuario"
                     value={profile.github || ''}
                     onChange={(e) => setProfile({ ...profile, github: e.target.value })}
-                    className="manaus-input w-full"
+                    className={cn('manaus-input', styles.input)}
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-ink mb-1.5">Portfólio / Site Pessoal</label>
+                  <label className={styles.label}>Portfólio / Site Pessoal</label>
                   <input
                     type="url"
                     placeholder="https://meusite.dev"
                     value={profile.website || ''}
                     onChange={(e) => setProfile({ ...profile, website: e.target.value })}
-                    className="manaus-input w-full"
+                    className={cn('manaus-input', styles.input)}
                   />
                 </div>
               </div>
 
-              <div className="pt-2">
-                <label htmlFor="availability" className="text-xs text-muted font-medium block mb-1.5">
+              <div>
+                <label htmlFor="availability" className={styles.labelMuted}>
                   Disponibilidade para novos projetos
                 </label>
                 <select
                   id="availability"
                   value={profile.availability || 'open'}
                   onChange={(e) => setProfile({ ...profile, availability: e.target.value })}
-                  className="manaus-input w-full"
+                  className={cn('manaus-input', styles.input)}
                 >
                   {AVAILABILITY_FILTERS.map((option) => (
                     <option key={option.param} value={option.db}>
@@ -454,11 +455,11 @@ export default function DashboardPage() {
                 </select>
               </div>
 
-              <div className="pt-4 border-t border-border flex justify-end">
+              <div className={styles.actionsRow}>
                 <button
                   type="submit"
                   disabled={saving}
-                  className="btn-primary text-xs !py-2.5 !px-6 disabled:opacity-50"
+                  className={cn('btn-primary', styles.saveBtn)}
                 >
                   <SaveIcon className="w-4 h-4" />
                   {saving ? 'Salvando...' : 'Salvar Alterações'}
@@ -469,57 +470,57 @@ export default function DashboardPage() {
         </div>
 
         {/* User Projects Sidebar */}
-        <div className="space-y-6">
-          <div className="manaus-card p-6">
-            <div className="flex items-center justify-between mb-4 pb-3 border-b border-border">
-              <div className="flex items-center gap-2">
-                <Code2Icon className="w-5 h-5 text-accent-text" />
-                <h3 className="font-display font-bold text-base text-ink">Meus Projetos</h3>
+        <div>
+          <div className={cn('manaus-card', styles.sideCard)}>
+            <div className={styles.sideHeader}>
+              <div className={styles.sideTitleRow}>
+                <Code2Icon className={cn('w-5 h-5', styles.sideTitleIcon)} />
+                <h3 className={styles.sideTitle}>Meus Projetos</h3>
               </div>
-              <span className="chip-leaf text-[10px] font-mono">{projects.length} projeto(s)</span>
+              <span className={cn('chip-leaf', styles.countChip)}>{projects.length} projeto(s)</span>
             </div>
 
             {projects.length === 0 ? (
-              <div className="text-center py-8">
-                <p className="text-xs text-faint mb-3">Você ainda não cadastrou projetos.</p>
+              <div className={styles.emptyProjects}>
+                <p className={styles.emptyText}>Você ainda não cadastrou projetos.</p>
                 <button
                   onClick={openAddProjectModal}
-                  className="text-xs text-accent-text font-bold hover:underline"
+                  className={styles.emptyLink}
                 >
                   + Publicar primeiro projeto
                 </button>
               </div>
             ) : (
-              <div className="space-y-3">
+              <div className={styles.projList}>
                 {projects.map((proj) => (
-                  <div key={proj.id} className="p-4 rounded-xl bg-surface-1 border border-border flex flex-col justify-between gap-3">
+                  <div key={proj.id} className={styles.projCard}>
                     <div>
-                      <div className="flex items-start justify-between gap-2">
-                        <h4 className="font-display font-bold text-sm text-ink">{proj.title}</h4>
-                        <div className="flex items-center gap-1.5">
+                      <div className={styles.projTop}>
+                        <h4 className={styles.projTitle}>{proj.title}</h4>
+                        <div className={styles.projActions}>
                           <button
                             onClick={() => openEditProjectModal(proj)}
-                            className="p-1 text-muted hover:text-accent-text rounded hover:bg-surface-1 transition-colors"
+                            className={styles.iconBtn}
                             title="Editar Projeto"
                           >
                             <Edit3Icon className="w-3.5 h-3.5" />
                           </button>
                           <button
                             onClick={() => handleDeleteProject(proj.id)}
-                            className="p-1 text-faint hover:text-danger rounded hover:bg-danger-soft transition-colors"
+                            className={styles.iconBtnDanger}
                             title="Excluir Projeto"
                           >
                             <Trash2Icon className="w-3.5 h-3.5" />
                           </button>
                         </div>
                       </div>
-                      <p className="text-xs text-muted line-clamp-2 mt-1">{proj.description}</p>
+                      <p className={styles.projDesc}>{proj.description}</p>
                     </div>
 
-                    <div className="flex items-center justify-between pt-2 border-t border-border">
-                      <div className="flex flex-wrap gap-1">
+                    <div className={styles.projFooter}>
+                      <div className={styles.stackWrap}>
                         {proj.stack?.slice(0, 2).map((s, i) => (
-                          <span key={i} className="chip-river text-[10px] font-mono !py-0.5 !px-1.5">
+                          <span key={i} className={cn('chip-river', styles.stackChip)}>
                             {s}
                           </span>
                         ))}
@@ -529,7 +530,7 @@ export default function DashboardPage() {
                           href={proj.links.demo || proj.links.github}
                           target="_blank"
                           rel="noreferrer"
-                          className="text-[11px] font-semibold text-accent-text hover:underline flex items-center gap-1"
+                          className={styles.projLink}
                         >
                           <span>Ver</span>
                           <ExternalLinkIcon className="w-3 h-3" />
@@ -546,93 +547,93 @@ export default function DashboardPage() {
 
       {/* Project Modal (Add or Edit) */}
       {isProjectModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
-          <div className="manaus-card w-full max-w-lg p-6 sm:p-8 relative shadow-elevated">
-            <h3 className="font-display font-bold text-xl text-ink mb-4">
+        <div className={styles.modalOverlay}>
+          <div className={cn('manaus-card', styles.modalCard)}>
+            <h3 className={styles.modalTitle}>
               {editingProjectId ? 'Editar Projeto' : 'Publicar Novo Projeto'}
             </h3>
-            <form onSubmit={handleSaveProject} className="space-y-4">
+            <form onSubmit={handleSaveProject} className={styles.modalForm}>
               <div>
-                <label className="block text-xs font-semibold text-ink mb-1.5">Título do Projeto</label>
+                <label className={styles.label}>Título do Projeto</label>
                 <input
                   type="text"
                   required
                   placeholder="Ex: RioTech Maps"
                   value={formTitle}
                   onChange={(e) => setFormTitle(e.target.value)}
-                  className="manaus-input w-full"
+                  className={cn('manaus-input', styles.input)}
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-ink mb-1.5">Descrição</label>
+                <label className={styles.label}>Descrição</label>
                 <textarea
                   rows={3}
                   required
                   placeholder="Descreva o propósito do projeto e impacto regional..."
                   value={formDesc}
                   onChange={(e) => setFormDesc(e.target.value)}
-                  className="manaus-input w-full"
+                  className={cn('manaus-input', styles.input)}
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-ink mb-1.5">Stack (separadas por vírgula)</label>
+                <label className={styles.label}>Stack (separadas por vírgula)</label>
                 <input
                   type="text"
                   placeholder="Next.js, Supabase, Tailwind, TypeScript"
                   value={formStack}
                   onChange={(e) => setFormStack(e.target.value)}
-                  className="manaus-input w-full"
+                  className={cn('manaus-input', styles.input)}
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-ink mb-1.5">URL da Imagem / Screenshot (Preview)</label>
+                <label className={styles.label}>URL da Imagem / Screenshot (Preview)</label>
                 <input
                   type="url"
                   placeholder="https://exemplo.com/preview.png"
                   value={formImageUrl}
                   onChange={(e) => setFormImageUrl(e.target.value)}
-                  className="manaus-input w-full"
+                  className={cn('manaus-input', styles.input)}
                 />
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className={styles.row2}>
                 <div>
-                  <label className="block text-xs font-semibold text-ink mb-1.5">Link GitHub</label>
+                  <label className={styles.label}>Link GitHub</label>
                   <input
                     type="url"
                     placeholder="https://github.com/..."
                     value={formGithub}
                     onChange={(e) => setFormGithub(e.target.value)}
-                    className="manaus-input w-full"
+                    className={cn('manaus-input', styles.input)}
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-ink mb-1.5">Demo / Site</label>
+                  <label className={styles.label}>Demo / Site</label>
                   <input
                     type="url"
                     placeholder="https://..."
                     value={formDemo}
                     onChange={(e) => setFormDemo(e.target.value)}
-                    className="manaus-input w-full"
+                    className={cn('manaus-input', styles.input)}
                   />
                 </div>
               </div>
 
-              <div className="flex items-center justify-end gap-3 pt-4 border-t border-border">
+              <div className={styles.modalActions}>
                 <button
                   type="button"
                   onClick={() => setIsProjectModalOpen(false)}
-                  className="px-4 py-2 rounded-lg text-xs font-semibold text-faint hover:text-ink"
+                  className={styles.cancelBtn}
                 >
                   Cancelar
                 </button>
                 <button
                   type="submit"
                   disabled={submittingProj}
-                  className="btn-leaf text-xs !py-2 !px-5 disabled:opacity-50"
+                  className={cn('btn-leaf', styles.modalSubmit)}
                 >
                   {submittingProj ? 'Salvando...' : editingProjectId ? 'Salvar Alterações' : 'Publicar'}
                 </button>
@@ -644,4 +645,3 @@ export default function DashboardPage() {
     </div>
   );
 }
-
