@@ -23,6 +23,7 @@
 | [ADR 0013](0013-dynamic-routes-filter-sync-and-screen-gaps-resolution.md) | 2026-08-23 | Navegação & Fullstack | Resolução de Gaps de Tela, Rotas Dinâmicas com SSG e Sincronização via URL | **Aceito** |
 | [ADR 0014](0014-fix-critical-nextjs-rce-and-remove-dead-middleware.md) | 2026-09-25 | DevOps / Segurança | Correção de RCE crítico no Next.js e remoção de Middleware morto | **Aceito** |
 | [ADR 0015](0015-rebrand-blue-tech-palette-and-dark-mode.md) | 2026-09-29 | UI / Design System | Rebrand para a paleta Blue-Tech com modo claro/escuro | **Aceito** |
+| [ADR 0016](0016-profile-types-and-permission-matrix.md) | 2026-09-29 | Auth / RLS | Tipos de perfil e matriz de permissões por tipo de conta | **Aceito** |
 
 ---
 
@@ -35,6 +36,8 @@
   * Scripts REST em `scripts/` sem dependência de login interativo.
 * [`ADR 0013: Resolução de Gaps de Tela, Rotas Dinâmicas com SSG e Sincronização via URL`](0013-dynamic-routes-filter-sync-and-screen-gaps-resolution.md)
   * Implementação de rotas dinâmicas SSG, sincronização de URL search params, persistência de contatos e CRUD completo no dashboard.
+* [`ADR 0016: Tipos de perfil e matriz de permissões por tipo de conta`](0016-profile-types-and-permission-matrix.md)
+  * Coluna `profile_type` (`dev` | `empresa` | `admin`) separada do cargo textual `role`, RLS por tipo com helpers `security definer`, escrita exigindo autoria (`auth.uid()`), e trigger anti-escalação de `profile_type`/`is_admin`.
 
 ### 2. 🎨 Design System & Identidade Visual
 * [`ADR 0015: Rebrand para a paleta Blue-Tech com modo claro/escuro`](0015-rebrand-blue-tech-palette-and-dark-mode.md)

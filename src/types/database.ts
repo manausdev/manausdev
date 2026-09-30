@@ -6,12 +6,15 @@ export type Json =
   | { [key: string]: Json | undefined }
   | Json[];
 
+export type ProfileType = 'dev' | 'empresa' | 'admin';
+
 export interface Profile {
   id: string;
   username: string;
   full_name: string;
   avatar_url?: string | null;
   role?: string | null;
+  profile_type?: ProfileType | null;
   bio?: string | null;
   location?: string | null;
   city?: string | null;
@@ -121,6 +124,7 @@ export interface Database {
           full_name: string;
           avatar_url?: string | null;
           role?: string | null;
+          profile_type?: ProfileType | null;
           bio?: string | null;
           location?: string | null;
           city?: string | null;
@@ -140,6 +144,7 @@ export interface Database {
           full_name?: string;
           avatar_url?: string | null;
           role?: string | null;
+          profile_type?: ProfileType | null;
           bio?: string | null;
           location?: string | null;
           city?: string | null;

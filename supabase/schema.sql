@@ -7,12 +7,15 @@
 
 -- 1. Tabela de Perfis de Desenvolvedores / Usuários
 -- Nota LGPD: o e-mail NÃO é coluna de profiles — vive apenas em auth.users.
+-- `role` é o cargo textual ('Frontend Engineer'); `profile_type` é o tipo de
+-- conta ('dev' | 'empresa' | 'admin') e dirige as permissões.
 create table if not exists public.profiles (
   id uuid references auth.users(id) on delete cascade primary key,
   username text unique not null,
   full_name text not null,
   avatar_url text,
   role text default 'Developer',
+  profile_type text not null default 'dev',
   bio text,
   location text default 'Manaus-AM',
   city text not null default 'Manaus',
@@ -26,7 +29,8 @@ create table if not exists public.profiles (
   created_at timestamptz default now() not null,
   updated_at timestamptz default now() not null,
   constraint profiles_availability_check check (availability in ('open', 'offers', 'busy')),
-  constraint profiles_seniority_check check (seniority is null or seniority in ('junior', 'pleno', 'senior', 'lead'))
+  constraint profiles_seniority_check check (seniority is null or seniority in ('junior', 'pleno', 'senior', 'lead')),
+  constraint profiles_profile_type_check check (profile_type in ('dev', 'empresa', 'admin'))
 );
 
 -- 2. Tabela de Empresas
@@ -122,7 +126,68 @@ alter table public.events enable row level security;
 alter table public.jobs enable row level security;
 alter table public.contacts enable row level security;
 
--- Perfis: Leitura pública, edição pelo próprio usuário
+-- ------------------------------------------------------------------------------
+-- Helpers de autorização (security definer evita recursão em profiles)
+-- ------------------------------------------------------------------------------
+create or replace function public.current_profile_type()
+returns text
+language sql stable security definer set search_path = public
+as $$
+  select coalesce(
+    (select profile_type from public.profiles where id = auth.uid()),
+    'anon'
+  );
+$$;
+
+create or replace function public.is_admin()
+returns boolean
+language sql stable security definer set search_path = public
+as $$
+  select exists (
+    select 1 from public.profiles
+    where id = auth.uid() and (profile_type = 'admin' or is_admin = true)
+  );
+$$;
+
+create or replace function public.has_profile_type(allowed text[])
+returns boolean
+language sql stable security definer set search_path = public
+as $$
+  select coalesce(
+    (select profile_type = any(allowed) from public.profiles where id = auth.uid()),
+    false
+  );
+$$;
+
+-- Anti-escalação: sem este trigger, `update profiles set profile_type = 'admin'`
+-- passaria na policy de edição do próprio perfil e viraria admin.
+create or replace function public.guard_profile_privileges()
+returns trigger
+language plpgsql security definer set search_path = public
+as $$
+begin
+  if new.profile_type is distinct from old.profile_type and not public.is_admin() then
+    raise exception 'profile_type só pode ser alterado por administradores' using errcode = '42501';
+  end if;
+  if new.is_admin is distinct from old.is_admin and not public.is_admin() then
+    raise exception 'is_admin só pode ser alterado por administradores' using errcode = '42501';
+  end if;
+  return new;
+end;
+$$;
+
+create trigger on_profile_privileges_guard
+  before update on public.profiles
+  for each row execute function public.guard_profile_privileges();
+
+-- Matriz de permissões (fonte: src/lib/profile-types.ts)
+--   dev     → projetos, eventos, notícias, canais de comunidade
+--   empresa → própria empresa, vagas, eventos, notícias, canais de comunidade
+--   admin   → CRUD em tudo
+-- `news` e `community_channels` ainda não são tabelas; a policy delas entra
+-- junto com a criação das respectivas tabelas.
+
+-- Perfis: leitura pública, edição pelo próprio usuário
 create policy "Perfis visíveis publicamente" on public.profiles
   for select using (true);
 
@@ -132,55 +197,83 @@ create policy "Usuários podem editar seu próprio perfil" on public.profiles
 create policy "Usuários podem inserir seu próprio perfil" on public.profiles
   for insert with check (auth.uid() = id);
 
--- Projetos: Leitura pública, criação/edição pelo autor
+-- Projetos: escrita para dev e admin
 create policy "Projetos visíveis publicamente" on public.projects
   for select using (true);
 
-create policy "Usuários autenticados podem criar projetos" on public.projects
-  for insert with check (auth.role() = 'authenticated');
+create policy "Devs e admins podem criar projetos" on public.projects
+  for insert with check (
+    auth.uid() = author_id
+    and public.has_profile_type(array['dev', 'admin'])
+  );
 
-create policy "Autores podem editar seus próprios projetos" on public.projects
-  for update using (auth.uid() = author_id);
+create policy "Autores e admins podem editar projetos" on public.projects
+  for update using (auth.uid() = author_id or public.is_admin());
 
-create policy "Autores podem remover seus próprios projetos" on public.projects
-  for delete using (auth.uid() = author_id);
+create policy "Autores e admins podem remover projetos" on public.projects
+  for delete using (auth.uid() = author_id or public.is_admin());
 
--- Empresas: Leitura pública, criação por autenticados
+-- Empresas: leitura pública, escrita da própria empresa e admin
 create policy "Empresas visíveis publicamente" on public.companies
   for select using (true);
 
-create policy "Usuários autenticados podem cadastrar empresas" on public.companies
-  for insert with check (auth.role() = 'authenticated');
+create policy "Empresas e admins podem cadastrar empresas" on public.companies
+  for insert with check (
+    auth.uid() = created_by
+    and public.has_profile_type(array['empresa', 'admin'])
+  );
 
--- Comunidades: Leitura pública
+create policy "Donos e admins podem editar empresas" on public.companies
+  for update using (auth.uid() = created_by or public.is_admin());
+
+create policy "Donos e admins podem remover empresas" on public.companies
+  for delete using (auth.uid() = created_by or public.is_admin());
+
+-- Comunidades: leitura pública (escrita entra com community_channels)
 create policy "Comunidades visíveis publicamente" on public.communities
   for select using (true);
 
--- Eventos: Leitura pública, criação por autenticados
+-- Eventos: escrita para dev, empresa e admin
 create policy "Eventos visíveis publicamente" on public.events
   for select using (true);
 
-create policy "Usuários autenticados podem criar eventos" on public.events
-  for insert with check (auth.role() = 'authenticated');
+create policy "Devs, empresas e admins podem criar eventos" on public.events
+  for insert with check (
+    auth.uid() = organizer_id
+    and public.has_profile_type(array['dev', 'empresa', 'admin'])
+  );
 
--- Vagas: Leitura pública, criação por autenticados
+create policy "Organizadores e admins podem editar eventos" on public.events
+  for update using (auth.uid() = organizer_id or public.is_admin());
+
+create policy "Organizadores e admins podem remover eventos" on public.events
+  for delete using (auth.uid() = organizer_id or public.is_admin());
+
+-- Vagas: escrita para empresa e admin
 create policy "Vagas visíveis publicamente" on public.jobs
   for select using (true);
 
-create policy "Usuários autenticados podem publicar vagas" on public.jobs
-  for insert with check (auth.role() = 'authenticated');
+create policy "Empresas e admins podem publicar vagas" on public.jobs
+  for insert with check (
+    auth.uid() = posted_by
+    and public.has_profile_type(array['empresa', 'admin'])
+  );
 
--- Contatos: Inserção pública, leitura apenas por admins
+create policy "Publicadores e admins podem editar vagas" on public.jobs
+  for update using (auth.uid() = posted_by or public.is_admin());
+
+create policy "Publicadores e admins podem remover vagas" on public.jobs
+  for delete using (auth.uid() = posted_by or public.is_admin());
+
+-- Contatos: inserção pública, leitura e triagem apenas por admins
 create policy "Qualquer pessoa pode enviar mensagem de contato" on public.contacts
   for insert with check (true);
 
 create policy "Apenas administradores podem ler mensagens" on public.contacts
-  for select using (
-    exists (
-      select 1 from public.profiles
-      where profiles.id = auth.uid() and profiles.is_admin = true
-    )
-  );
+  for select using (public.is_admin());
+
+create policy "Apenas administradores podem tratar mensagens" on public.contacts
+  for update using (public.is_admin());
 
 -- ==============================================================================
 -- ⚡ Trigger para criação automática de perfil ao registrar usuário
@@ -221,5 +314,6 @@ create or replace trigger on_auth_user_created
 create index if not exists profiles_city_idx on public.profiles (city);
 create index if not exists profiles_availability_idx on public.profiles (availability);
 create index if not exists profiles_seniority_idx on public.profiles (seniority);
+create index if not exists profiles_profile_type_idx on public.profiles (profile_type);
 create index if not exists profiles_skills_idx on public.profiles using gin (skills);
 
