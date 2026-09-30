@@ -8,14 +8,15 @@ import {
   ClockIcon,
 } from '@/components/icons';
 import { GithubIcon } from '@/components/icons';
-import { createClient } from '@/lib/supabase/server';
 import { MOCK_PROJECTS } from '@/lib/data/mock';
+import { fetchById, fetchIdsForStaticParams } from '@/lib/data/source';
 import type { Project } from '@/types/database';
 
 export async function generateStaticParams() {
-  return MOCK_PROJECTS.map((project) => ({
-    id: project.id,
-  }));
+  return fetchIdsForStaticParams(
+    'projects',
+    MOCK_PROJECTS.map((p) => p.id)
+  );
 }
 
 interface ProjectDetailPageProps {
@@ -26,22 +27,9 @@ interface ProjectDetailPageProps {
 
 export default async function ProjectDetailPage({ params }: ProjectDetailPageProps) {
   const { id } = await params;
-  let project: Project | undefined = MOCK_PROJECTS.find((p) => p.id === id);
-
-  try {
-    const supabase = await createClient();
-    const { data: projectData } = await supabase
-      .from('projects')
-      .select('*')
-      .eq('id', id)
-      .single();
-
-    if (projectData) {
-      project = projectData;
-    }
-  } catch {
-    // Fallback to mock
-  }
+  const project = await fetchById<Project>('projects', id, () =>
+    MOCK_PROJECTS.find((p) => p.id === id)
+  );
 
   if (!project) {
     notFound();

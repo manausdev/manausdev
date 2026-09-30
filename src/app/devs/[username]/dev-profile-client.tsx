@@ -16,6 +16,7 @@ import {
 import { GithubIcon, LinkedinIcon } from '@/components/icons';
 import { createClient } from '@/lib/supabase/client';
 import { MOCK_DEVS, MOCK_PROJECTS, MOCK_EVENTS } from '@/lib/data/mock';
+import { useMockData } from '@/lib/env';
 import { availabilityMeta, seniorityLabel } from '@/lib/devs-meta';
 import type { Profile, Project, EventItem } from '@/types/database';
 
@@ -43,13 +44,20 @@ export default function DevProfileClient() {
   useEffect(() => {
     if (!username) return;
     let cancelled = false;
+    const useMock = useMockData();
 
-    const mock = MOCK_DEVS.find((d) => d.username.toLowerCase() === username.toLowerCase());
-    if (mock) {
-      setDev(mock);
-      setDevProjects(MOCK_PROJECTS.filter((p) => p.author_id === mock.id));
-      setDevEvents(MOCK_EVENTS.filter((e) => e.organizer_id === mock.id));
+    if (useMock) {
+      const mock = MOCK_DEVS.find((d) => d.username.toLowerCase() === username.toLowerCase());
+      if (mock) {
+        setDev(mock);
+        setDevProjects(MOCK_PROJECTS.filter((p) => p.author_id === mock.id));
+        setDevEvents(MOCK_EVENTS.filter((e) => e.organizer_id === mock.id));
+        setMissing(false);
+      } else {
+        setMissing(true);
+      }
       setLoading(false);
+      return;
     }
 
     (async () => {
@@ -83,13 +91,13 @@ export default function DevProfileClient() {
           ]);
 
           if (cancelled) return;
-          if (projectsData && projectsData.length > 0) setDevProjects(projectsData);
-          if (eventsData && eventsData.length > 0) setDevEvents(eventsData);
-        } else if (!mock) {
+          setDevProjects(projectsData ?? []);
+          setDevEvents(eventsData ?? []);
+        } else {
           setMissing(true);
         }
       } catch {
-        if (!mock && !cancelled) setMissing(true);
+        if (!cancelled) setMissing(true);
       } finally {
         if (!cancelled) setLoading(false);
       }

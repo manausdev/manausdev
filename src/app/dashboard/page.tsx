@@ -18,7 +18,6 @@ import {
 } from '@/components/icons';
 import type { Profile, Project, Database, ProjectLinks } from '@/types/database';
 import styles from './dashboard.module.css';
-import { cn } from '@/lib/utils';
 
 export default function DashboardPage() {
   const router = useRouter();
@@ -68,11 +67,11 @@ export default function DashboardPage() {
             id: currentUser.id,
             full_name: currentUser.user_metadata?.full_name || '',
             username: currentUser.user_metadata?.user_name || currentUser.email?.split('@')[0] || '',
-            role: 'Developer',
-            location: 'Manaus-AM',
-            city: 'Manaus',
+            role: '',
+            location: '',
+            city: '',
             seniority: null,
-            skills: ['React', 'TypeScript', 'Next.js'],
+            skills: [],
             availability: 'open',
           });
         }
@@ -114,10 +113,10 @@ export default function DashboardPage() {
         id: user.id,
         username: profile.username || user.email?.split('@')[0] || 'user',
         full_name: profile.full_name || '',
-        role: profile.role || 'Developer',
+        role: profile.role || null,
         bio: profile.bio || null,
-        location: profile.location || 'Manaus-AM',
-        city: profile.city || 'Manaus',
+        location: profile.location || null,
+        city: profile.city || null,
         seniority: profile.seniority || null,
         github: profile.github || null,
         website: profile.website || null,
@@ -288,23 +287,23 @@ export default function DashboardPage() {
 
         <button
           onClick={openAddProjectModal}
-          className={cn('btn-leaf', styles.publishBtn)}
+          className={`${styles.btnLeaf} ${styles.publishBtn}`}
         >
-          <PlusIcon className="w-4 h-4" />
+          <PlusIcon className={styles.iconSm} />
           Publicar Projeto
         </button>
       </div>
 
       {successMsg && (
         <div className={styles.successBanner}>
-          <CheckCircle2Icon className={cn('w-4 h-4', styles.bannerIconSuccess)} />
+          <CheckCircle2Icon className={styles.bannerIconSuccess} />
           <span>{successMsg}</span>
         </div>
       )}
 
       {errorMsg && (
         <div className={styles.errorBanner}>
-          <AlertCircleIcon className={cn('w-4 h-4', styles.bannerIconError)} />
+          <AlertCircleIcon className={styles.bannerIconError} />
           <span>{errorMsg}</span>
         </div>
       )}
@@ -312,9 +311,9 @@ export default function DashboardPage() {
       <div className={styles.layout}>
         {/* Profile Settings Form */}
         <div>
-          <div className={cn('manaus-card', styles.card)}>
+          <div className={styles.card}>
             <div className={styles.cardHeader}>
-              <UserCircle2Icon className={cn('w-5 h-5', styles.cardHeaderIcon)} />
+              <UserCircle2Icon className={styles.cardHeaderIcon} />
               <h2 className={styles.cardTitle}>Dados do Perfil</h2>
             </div>
 
@@ -326,7 +325,7 @@ export default function DashboardPage() {
                     type="text"
                     value={profile.full_name || ''}
                     onChange={(e) => setProfile({ ...profile, full_name: e.target.value })}
-                    className={cn('manaus-input', styles.input)}
+                    className={styles.input}
                   />
                 </div>
                 <div>
@@ -335,7 +334,7 @@ export default function DashboardPage() {
                     type="text"
                     value={profile.username || ''}
                     onChange={(e) => setProfile({ ...profile, username: e.target.value })}
-                    className={cn('manaus-input', styles.input)}
+                    className={styles.input}
                   />
                 </div>
               </div>
@@ -348,7 +347,7 @@ export default function DashboardPage() {
                     placeholder="Ex: Fullstack Engineer"
                     value={profile.role || ''}
                     onChange={(e) => setProfile({ ...profile, role: e.target.value })}
-                    className={cn('manaus-input', styles.input)}
+                    className={styles.input}
                   />
                 </div>
                 <div>
@@ -356,7 +355,7 @@ export default function DashboardPage() {
                   <select
                     value={profile.seniority || ''}
                     onChange={(e) => setProfile({ ...profile, seniority: e.target.value || null })}
-                    className={cn('manaus-input', styles.input)}
+                    className={styles.input}
                   >
                     <option value="">Selecione...</option>
                     <option value="junior">Júnior</option>
@@ -375,7 +374,7 @@ export default function DashboardPage() {
                     placeholder="Manaus"
                     value={profile.city || ''}
                     onChange={(e) => setProfile({ ...profile, city: e.target.value })}
-                    className={cn('manaus-input', styles.input)}
+                    className={styles.input}
                   />
                 </div>
                 <div>
@@ -385,7 +384,7 @@ export default function DashboardPage() {
                     placeholder="Manaus-AM"
                     value={profile.location || ''}
                     onChange={(e) => setProfile({ ...profile, location: e.target.value })}
-                    className={cn('manaus-input', styles.input)}
+                    className={styles.input}
                   />
                 </div>
               </div>
@@ -397,7 +396,7 @@ export default function DashboardPage() {
                   placeholder="Fale brevemente sobre sua experiência e interesses no ecossistema..."
                   value={profile.bio || ''}
                   onChange={(e) => setProfile({ ...profile, bio: e.target.value })}
-                  className={cn('manaus-input', styles.input)}
+                  className={styles.input}
                 />
               </div>
 
@@ -410,7 +409,7 @@ export default function DashboardPage() {
                   placeholder="React, Next.js, Node.js, Supabase, Tailwind, Python"
                   value={Array.isArray(profile.skills) ? profile.skills.join(', ') : profile.skills || ''}
                   onChange={(e) => setProfile({ ...profile, skills: e.target.value.split(',').map(s => s.trim()) })}
-                  className={cn('manaus-input', styles.input)}
+                  className={styles.input}
                 />
               </div>
 
@@ -422,7 +421,7 @@ export default function DashboardPage() {
                     placeholder="https://github.com/usuario"
                     value={profile.github || ''}
                     onChange={(e) => setProfile({ ...profile, github: e.target.value })}
-                    className={cn('manaus-input', styles.input)}
+                    className={styles.input}
                   />
                 </div>
                 <div>
@@ -432,7 +431,7 @@ export default function DashboardPage() {
                     placeholder="https://meusite.dev"
                     value={profile.website || ''}
                     onChange={(e) => setProfile({ ...profile, website: e.target.value })}
-                    className={cn('manaus-input', styles.input)}
+                    className={styles.input}
                   />
                 </div>
               </div>
@@ -445,7 +444,7 @@ export default function DashboardPage() {
                   id="availability"
                   value={profile.availability || 'open'}
                   onChange={(e) => setProfile({ ...profile, availability: e.target.value })}
-                  className={cn('manaus-input', styles.input)}
+                  className={styles.input}
                 >
                   {AVAILABILITY_FILTERS.map((option) => (
                     <option key={option.param} value={option.db}>
@@ -459,9 +458,9 @@ export default function DashboardPage() {
                 <button
                   type="submit"
                   disabled={saving}
-                  className={cn('btn-primary', styles.saveBtn)}
+                  className={`${styles.btnPrimary} ${styles.saveBtn}`}
                 >
-                  <SaveIcon className="w-4 h-4" />
+                  <SaveIcon className={styles.iconSm} />
                   {saving ? 'Salvando...' : 'Salvar Alterações'}
                 </button>
               </div>
@@ -471,13 +470,13 @@ export default function DashboardPage() {
 
         {/* User Projects Sidebar */}
         <div>
-          <div className={cn('manaus-card', styles.sideCard)}>
+          <div className={styles.sideCard}>
             <div className={styles.sideHeader}>
               <div className={styles.sideTitleRow}>
-                <Code2Icon className={cn('w-5 h-5', styles.sideTitleIcon)} />
+                <Code2Icon className={styles.sideTitleIcon} />
                 <h3 className={styles.sideTitle}>Meus Projetos</h3>
               </div>
-              <span className={cn('chip-leaf', styles.countChip)}>{projects.length} projeto(s)</span>
+              <span className={`${styles.chipLeaf} ${styles.countChip}`}>{projects.length} projeto(s)</span>
             </div>
 
             {projects.length === 0 ? (
@@ -503,14 +502,14 @@ export default function DashboardPage() {
                             className={styles.iconBtn}
                             title="Editar Projeto"
                           >
-                            <Edit3Icon className="w-3.5 h-3.5" />
+                            <Edit3Icon className={styles.iconSm} />
                           </button>
                           <button
                             onClick={() => handleDeleteProject(proj.id)}
                             className={styles.iconBtnDanger}
                             title="Excluir Projeto"
                           >
-                            <Trash2Icon className="w-3.5 h-3.5" />
+                            <Trash2Icon className={styles.iconSm} />
                           </button>
                         </div>
                       </div>
@@ -520,7 +519,7 @@ export default function DashboardPage() {
                     <div className={styles.projFooter}>
                       <div className={styles.stackWrap}>
                         {proj.stack?.slice(0, 2).map((s, i) => (
-                          <span key={i} className={cn('chip-river', styles.stackChip)}>
+                          <span key={i} className={`${styles.chipRiver} ${styles.stackChip}`}>
                             {s}
                           </span>
                         ))}
@@ -533,7 +532,7 @@ export default function DashboardPage() {
                           className={styles.projLink}
                         >
                           <span>Ver</span>
-                          <ExternalLinkIcon className="w-3 h-3" />
+                          <ExternalLinkIcon className={styles.iconSm} />
                         </a>
                       ) : null}
                     </div>
@@ -548,7 +547,7 @@ export default function DashboardPage() {
       {/* Project Modal (Add or Edit) */}
       {isProjectModalOpen && (
         <div className={styles.modalOverlay}>
-          <div className={cn('manaus-card', styles.modalCard)}>
+          <div className={styles.modalCard}>
             <h3 className={styles.modalTitle}>
               {editingProjectId ? 'Editar Projeto' : 'Publicar Novo Projeto'}
             </h3>
@@ -561,7 +560,7 @@ export default function DashboardPage() {
                   placeholder="Ex: RioTech Maps"
                   value={formTitle}
                   onChange={(e) => setFormTitle(e.target.value)}
-                  className={cn('manaus-input', styles.input)}
+                  className={styles.input}
                 />
               </div>
 
@@ -573,7 +572,7 @@ export default function DashboardPage() {
                   placeholder="Descreva o propósito do projeto e impacto regional..."
                   value={formDesc}
                   onChange={(e) => setFormDesc(e.target.value)}
-                  className={cn('manaus-input', styles.input)}
+                  className={styles.input}
                 />
               </div>
 
@@ -584,7 +583,7 @@ export default function DashboardPage() {
                   placeholder="Next.js, Supabase, Tailwind, TypeScript"
                   value={formStack}
                   onChange={(e) => setFormStack(e.target.value)}
-                  className={cn('manaus-input', styles.input)}
+                  className={styles.input}
                 />
               </div>
 
@@ -595,7 +594,7 @@ export default function DashboardPage() {
                   placeholder="https://exemplo.com/preview.png"
                   value={formImageUrl}
                   onChange={(e) => setFormImageUrl(e.target.value)}
-                  className={cn('manaus-input', styles.input)}
+                  className={styles.input}
                 />
               </div>
 
@@ -607,7 +606,7 @@ export default function DashboardPage() {
                     placeholder="https://github.com/..."
                     value={formGithub}
                     onChange={(e) => setFormGithub(e.target.value)}
-                    className={cn('manaus-input', styles.input)}
+                    className={styles.input}
                   />
                 </div>
                 <div>
@@ -617,7 +616,7 @@ export default function DashboardPage() {
                     placeholder="https://..."
                     value={formDemo}
                     onChange={(e) => setFormDemo(e.target.value)}
-                    className={cn('manaus-input', styles.input)}
+                    className={styles.input}
                   />
                 </div>
               </div>
@@ -633,7 +632,7 @@ export default function DashboardPage() {
                 <button
                   type="submit"
                   disabled={submittingProj}
-                  className={cn('btn-leaf', styles.modalSubmit)}
+                  className={`${styles.btnLeaf} ${styles.modalSubmit}`}
                 >
                   {submittingProj ? 'Salvando...' : editingProjectId ? 'Salvar Alterações' : 'Publicar'}
                 </button>

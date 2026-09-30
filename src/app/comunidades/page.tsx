@@ -5,29 +5,36 @@ import Link from 'next/link';
 import { SparklesIcon, UsersIcon, ExternalLinkIcon, MessageSquareIcon, ArrowRightIcon } from '@/components/icons';
 import { MOCK_COMMUNITIES } from '@/lib/data/mock';
 import { createClient } from '@/lib/supabase/client';
+import { useMockData } from '@/lib/env';
 import type { Community } from '@/types/database';
 import styles from './comunidades.module.css';
 
 export default function ComunidadesPage() {
-  const [communities, setCommunities] = useState<Community[]>(MOCK_COMMUNITIES);
-  const [loading, setLoading] = useState(true);
+  const useMock = useMockData();
+  const [communities, setCommunities] = useState<Community[]>(() => (useMock ? MOCK_COMMUNITIES : []));
+  const [loading, setLoading] = useState(!useMock);
 
   useEffect(() => {
+    if (useMock) {
+      setCommunities(MOCK_COMMUNITIES);
+      setLoading(false);
+      return;
+    }
+
     async function loadCommunities() {
       try {
         const supabase = createClient();
         const { data, error } = await supabase.from('communities').select('*');
-        if (data && data.length > 0 && !error) {
-          setCommunities(data);
-        }
+        if (error) throw error;
+        setCommunities(data ?? []);
       } catch {
-        // mock fallback
+        setCommunities([]);
       } finally {
         setLoading(false);
       }
     }
     loadCommunities();
-  }, []);
+  }, [useMock]);
 
   return (
     <div className={styles.container}>

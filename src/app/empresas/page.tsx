@@ -6,37 +6,44 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { Building2Icon, MapPinIcon, UsersIcon, SearchIcon, ArrowRightIcon } from '@/components/icons';
 import { MOCK_COMPANIES } from '@/lib/data/mock';
 import { createClient } from '@/lib/supabase/client';
+import { useMockData } from '@/lib/env';
 import type { Company } from '@/types/database';
 import styles from './empresas.module.css';
 
 function EmpresasContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const useMock = useMockData();
 
   const initialSearch = searchParams.get('q') || '';
   const initialSize = searchParams.get('size');
 
-  const [companies, setCompanies] = useState<Company[]>(MOCK_COMPANIES);
+  const [companies, setCompanies] = useState<Company[]>(() => (useMock ? MOCK_COMPANIES : []));
   const [searchTerm, setSearchTerm] = useState(initialSearch);
   const [selectedSize, setSelectedSize] = useState<string | null>(initialSize);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(!useMock);
 
   useEffect(() => {
+    if (useMock) {
+      setCompanies(MOCK_COMPANIES);
+      setLoading(false);
+      return;
+    }
+
     async function loadCompanies() {
       try {
         const supabase = createClient();
         const { data, error } = await supabase.from('companies').select('*');
-        if (data && data.length > 0 && !error) {
-          setCompanies(data);
-        }
+        if (error) throw error;
+        setCompanies(data ?? []);
       } catch {
-        // mock fallback
+        setCompanies([]);
       } finally {
         setLoading(false);
       }
     }
     loadCompanies();
-  }, []);
+  }, [useMock]);
 
   const updateFilters = (newSearch: string, newSize: string | null) => {
     const params = new URLSearchParams();
@@ -163,20 +170,20 @@ function EmpresasContent() {
                         <h2 className={styles.cardTitle}>{comp.name}</h2>
                       </Link>
                       <span className={styles.cardIndustry}>
-                        {comp.industry || 'Tecnologia'}
+                        {comp.industry || 'Setor não informado'}
                       </span>
                     </div>
                   </div>
 
                   <p className={styles.cardDescription}>
-                    {comp.description || 'Empresa atuante no ecossistema de tecnologia e inovação de Manaus.'}
+                    {comp.description || 'Sem descrição cadastrada.'}
                   </p>
                 </div>
 
                 <div className={styles.cardFooter}>
                   <span className={styles.cardLocation}>
                     <MapPinIcon className={styles.cardLocationIcon} />
-                    {comp.location || 'Manaus-AM'}
+                    {comp.location || 'Local não informado'}
                   </span>
                   <div className={styles.cardActions}>
                     <Link href={`/empresas/${comp.id}`} className={styles.btnLeaf}>

@@ -9,15 +9,16 @@ import {
   Share2Icon, 
   SparklesIcon 
 } from '@/components/icons';
-import { createClient } from '@/lib/supabase/server';
 import { MOCK_EVENTS } from '@/lib/data/mock';
+import { fetchById, fetchIdsForStaticParams } from '@/lib/data/source';
 import { formatDate } from '@/lib/utils';
 import type { EventItem } from '@/types/database';
 
 export async function generateStaticParams() {
-  return MOCK_EVENTS.map((ev) => ({
-    id: ev.id,
-  }));
+  return fetchIdsForStaticParams(
+    'events',
+    MOCK_EVENTS.map((e) => e.id)
+  );
 }
 
 interface EventDetailPageProps {
@@ -28,22 +29,9 @@ interface EventDetailPageProps {
 
 export default async function EventDetailPage({ params }: EventDetailPageProps) {
   const { id } = await params;
-  let event: EventItem | undefined = MOCK_EVENTS.find((e) => e.id === id);
-
-  try {
-    const supabase = await createClient();
-    const { data: eventData } = await supabase
-      .from('events')
-      .select('*')
-      .eq('id', id)
-      .single();
-
-    if (eventData) {
-      event = eventData;
-    }
-  } catch {
-    // Fallback to mock
-  }
+  const event = await fetchById<EventItem>('events', id, () =>
+    MOCK_EVENTS.find((e) => e.id === id)
+  );
 
   if (!event) {
     notFound();

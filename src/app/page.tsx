@@ -13,52 +13,58 @@ import {
 } from '@/components/icons';
 import { createClient } from '@/lib/supabase/server';
 import { MOCK_DEVS, MOCK_PROJECTS, MOCK_EVENTS, MOCK_JOBS, MOCK_COMMUNITIES } from '@/lib/data/mock';
+import { resolveList } from '@/lib/data/source';
+import { useMockData } from '@/lib/env';
 import styles from './page.module.css';
 
 export default async function HomePage() {
-  let devs = MOCK_DEVS;
-  let projects = MOCK_PROJECTS;
-  let events = MOCK_EVENTS;
-  let jobs = MOCK_JOBS;
+  const useMock = useMockData();
 
-  let devsCount = MOCK_DEVS.length;
-  let projectsCount = MOCK_PROJECTS.length;
-  let communitiesCount = MOCK_COMMUNITIES.length;
-  let jobsCount = MOCK_JOBS.length;
+  let devs = useMock ? MOCK_DEVS.slice(0, 4) : [];
+  let projects = useMock ? MOCK_PROJECTS.slice(0, 3) : [];
+  let events = useMock ? MOCK_EVENTS.slice(0, 3) : [];
+  let jobs = useMock ? MOCK_JOBS.slice(0, 3) : [];
 
-  try {
-    const supabase = await createClient();
-    const [
-      devsRes, 
-      projectsRes, 
-      eventsRes, 
-      jobsRes,
-      devsCountRes,
-      projectsCountRes,
-      communitiesCountRes,
-      jobsCountRes
-    ] = await Promise.all([
-      supabase.from('profiles').select('id, username, full_name, role, skills').limit(4),
-      supabase.from('projects').select('*').limit(3),
-      supabase.from('events').select('*').order('date', { ascending: true }).limit(3),
-      supabase.from('jobs').select('*').limit(3),
-      supabase.from('profiles').select('*', { count: 'exact', head: true }),
-      supabase.from('projects').select('*', { count: 'exact', head: true }),
-      supabase.from('communities').select('*', { count: 'exact', head: true }),
-      supabase.from('jobs').select('*', { count: 'exact', head: true }),
-    ]);
+  let devsCount = useMock ? MOCK_DEVS.length : 0;
+  let projectsCount = useMock ? MOCK_PROJECTS.length : 0;
+  let communitiesCount = useMock ? MOCK_COMMUNITIES.length : 0;
+  let jobsCount = useMock ? MOCK_JOBS.length : 0;
 
-    if (devsRes.data && devsRes.data.length > 0) devs = devsRes.data;
-    if (projectsRes.data && projectsRes.data.length > 0) projects = projectsRes.data;
-    if (eventsRes.data && eventsRes.data.length > 0) events = eventsRes.data;
-    if (jobsRes.data && jobsRes.data.length > 0) jobs = jobsRes.data;
+  if (!useMock) {
+    try {
+      const supabase = await createClient();
+      const [
+        devsRes,
+        projectsRes,
+        eventsRes,
+        jobsRes,
+        devsCountRes,
+        projectsCountRes,
+        communitiesCountRes,
+        jobsCountRes,
+      ] = await Promise.all([
+        supabase.from('profiles').select('id, username, full_name, role, skills').limit(4),
+        supabase.from('projects').select('*').limit(3),
+        supabase.from('events').select('*').order('date', { ascending: true }).limit(3),
+        supabase.from('jobs').select('*').limit(3),
+        supabase.from('profiles').select('*', { count: 'exact', head: true }),
+        supabase.from('projects').select('*', { count: 'exact', head: true }),
+        supabase.from('communities').select('*', { count: 'exact', head: true }),
+        supabase.from('jobs').select('*', { count: 'exact', head: true }),
+      ]);
 
-    if (devsCountRes.count) devsCount = devsCountRes.count;
-    if (projectsCountRes.count) projectsCount = projectsCountRes.count;
-    if (communitiesCountRes.count) communitiesCount = communitiesCountRes.count;
-    if (jobsCountRes.count) jobsCount = jobsCountRes.count;
-  } catch {
-    // Fallback to mock data
+      devs = resolveList([], devsRes.data);
+      projects = resolveList([], projectsRes.data);
+      events = resolveList([], eventsRes.data);
+      jobs = resolveList([], jobsRes.data);
+
+      devsCount = devsCountRes.count ?? 0;
+      projectsCount = projectsCountRes.count ?? 0;
+      communitiesCount = communitiesCountRes.count ?? 0;
+      jobsCount = jobsCountRes.count ?? 0;
+    } catch {
+      // Keep empty lists — never invent production content
+    }
   }
 
   return (

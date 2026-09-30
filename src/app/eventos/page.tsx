@@ -7,37 +7,44 @@ import { CalendarDaysIcon, MapPinIcon, SearchIcon, ArrowRightIcon } from '@/comp
 import { MOCK_EVENTS } from '@/lib/data/mock';
 import { createClient } from '@/lib/supabase/client';
 import { formatDate } from '@/lib/utils';
+import { useMockData } from '@/lib/env';
 import type { EventItem } from '@/types/database';
 import styles from './eventos.module.css';
 
 function EventosContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const useMock = useMockData();
 
   const initialSearch = searchParams.get('q') || '';
   const initialType = searchParams.get('type');
 
-  const [events, setEvents] = useState<EventItem[]>(MOCK_EVENTS);
+  const [events, setEvents] = useState<EventItem[]>(() => (useMock ? MOCK_EVENTS : []));
   const [searchTerm, setSearchTerm] = useState(initialSearch);
   const [selectedType, setSelectedType] = useState<string | null>(initialType);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(!useMock);
 
   useEffect(() => {
+    if (useMock) {
+      setEvents(MOCK_EVENTS);
+      setLoading(false);
+      return;
+    }
+
     async function loadEvents() {
       try {
         const supabase = createClient();
         const { data, error } = await supabase.from('events').select('*').order('date', { ascending: true });
-        if (data && data.length > 0 && !error) {
-          setEvents(data);
-        }
+        if (error) throw error;
+        setEvents(data ?? []);
       } catch {
-        // mock fallback
+        setEvents([]);
       } finally {
         setLoading(false);
       }
     }
     loadEvents();
-  }, []);
+  }, [useMock]);
 
   const updateFilters = (newSearch: string, newType: string | null) => {
     const params = new URLSearchParams();

@@ -7,14 +7,15 @@ import {
   MessageSquareIcon, 
   ExternalLinkIcon 
 } from '@/components/icons';
-import { createClient } from '@/lib/supabase/server';
 import { MOCK_COMMUNITIES } from '@/lib/data/mock';
+import { fetchById, fetchIdsForStaticParams } from '@/lib/data/source';
 import type { Community } from '@/types/database';
 
 export async function generateStaticParams() {
-  return MOCK_COMMUNITIES.map((comm) => ({
-    id: comm.id,
-  }));
+  return fetchIdsForStaticParams(
+    'communities',
+    MOCK_COMMUNITIES.map((c) => c.id)
+  );
 }
 
 interface CommunityDetailPageProps {
@@ -25,22 +26,9 @@ interface CommunityDetailPageProps {
 
 export default async function CommunityDetailPage({ params }: CommunityDetailPageProps) {
   const { id } = await params;
-  let community: Community | undefined = MOCK_COMMUNITIES.find((c) => c.id === id);
-
-  try {
-    const supabase = await createClient();
-    const { data: commData } = await supabase
-      .from('communities')
-      .select('*')
-      .eq('id', id)
-      .single();
-
-    if (commData) {
-      community = commData;
-    }
-  } catch {
-    // Fallback to mock
-  }
+  const community = await fetchById<Community>('communities', id, () =>
+    MOCK_COMMUNITIES.find((c) => c.id === id)
+  );
 
   if (!community) {
     notFound();

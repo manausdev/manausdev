@@ -11,12 +11,15 @@ import {
 } from '@/components/icons';
 import { createClient } from '@/lib/supabase/server';
 import { MOCK_COMPANIES, MOCK_JOBS } from '@/lib/data/mock';
+import { fetchById, fetchIdsForStaticParams } from '@/lib/data/source';
+import { useMockData } from '@/lib/env';
 import type { Company, Job } from '@/types/database';
 
 export async function generateStaticParams() {
-  return MOCK_COMPANIES.map((comp) => ({
-    id: comp.id,
-  }));
+  return fetchIdsForStaticParams(
+    'companies',
+    MOCK_COMPANIES.map((c) => c.id)
+  );
 }
 
 interface CompanyDetailPageProps {
@@ -27,40 +30,31 @@ interface CompanyDetailPageProps {
 
 export default async function CompanyDetailPage({ params }: CompanyDetailPageProps) {
   const { id } = await params;
-  let company: Company | undefined = MOCK_COMPANIES.find((c) => c.id === id);
+  const company = await fetchById<Company>('companies', id, () =>
+    MOCK_COMPANIES.find((c) => c.id === id)
+  );
+
+  if (!company) {
+    notFound();
+  }
+
   let companyJobs: Job[] = [];
 
-  try {
-    const supabase = await createClient();
-    const { data: compData } = await supabase
-      .from('companies')
-      .select('*')
-      .eq('id', id)
-      .single();
-
-    if (compData) {
-      company = compData;
-    }
-
-    if (company) {
+  if (useMockData()) {
+    companyJobs = MOCK_JOBS.filter(
+      (j) => j.company_name?.toLowerCase() === company.name.toLowerCase()
+    );
+  } else {
+    try {
+      const supabase = await createClient();
       const { data: jobsData } = await supabase
         .from('jobs')
         .select('*')
         .eq('company_id', company.id);
-
-      if (jobsData && jobsData.length > 0) {
-        companyJobs = jobsData;
-      } else {
-        // Fallback filter mock jobs by name
-        companyJobs = MOCK_JOBS.filter(j => j.company_name?.toLowerCase() === company?.name.toLowerCase());
-      }
+      companyJobs = jobsData ?? [];
+    } catch {
+      companyJobs = [];
     }
-  } catch {
-    // Fallback to mock
-  }
-
-  if (!company) {
-    notFound();
   }
 
   return (
@@ -138,18 +132,18 @@ export default async function CompanyDetailPage({ params }: CompanyDetailPagePro
               Sobre a Empresa / Instituto
             </h2>
             <p className="text-sm sm:text-base text-ink leading-relaxed max-w-4xl">
-              {company.description || 'Empresa participante do ecossistema de tecnologia de Manaus.'}
+              {company.description || 'Sem descrição cadastrada.'}
             </p>
           </div>
 
           <div className="flex flex-wrap gap-6 pt-4 border-t border-border text-xs text-faint">
             <span className="flex items-center gap-1.5 font-mono">
               <MapPinIcon className="w-4 h-4 text-accent-text" />
-              {company.location || 'Manaus-AM'}
+              {company.location || 'Local não informado'}
             </span>
             <span className="flex items-center gap-1.5 font-mono">
               <Building2Icon className="w-4 h-4 text-accent-text" />
-              {company.industry || 'Tecnologia'}
+              {company.industry || 'Setor não informado'}
             </span>
           </div>
         </div>

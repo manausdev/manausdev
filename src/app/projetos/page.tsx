@@ -7,37 +7,44 @@ import { SearchIcon, Code2Icon, ExternalLinkIcon, ArrowRightIcon } from '@/compo
 import { GithubIcon } from '@/components/icons';
 import { MOCK_PROJECTS } from '@/lib/data/mock';
 import { createClient } from '@/lib/supabase/client';
+import { useMockData } from '@/lib/env';
 import type { Project } from '@/types/database';
 import styles from './projetos.module.css';
 
 function ProjetosContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const useMock = useMockData();
 
   const initialSearch = searchParams.get('q') || '';
   const initialStack = searchParams.get('stack');
 
-  const [projects, setProjects] = useState<Project[]>(MOCK_PROJECTS);
+  const [projects, setProjects] = useState<Project[]>(() => (useMock ? MOCK_PROJECTS : []));
   const [searchTerm, setSearchTerm] = useState(initialSearch);
   const [selectedTech, setSelectedTech] = useState<string | null>(initialStack);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(!useMock);
 
   useEffect(() => {
+    if (useMock) {
+      setProjects(MOCK_PROJECTS);
+      setLoading(false);
+      return;
+    }
+
     async function loadProjects() {
       try {
         const supabase = createClient();
         const { data, error } = await supabase.from('projects').select('*');
-        if (data && data.length > 0 && !error) {
-          setProjects(data);
-        }
+        if (error) throw error;
+        setProjects(data ?? []);
       } catch {
-        // mock fallback
+        setProjects([]);
       } finally {
         setLoading(false);
       }
     }
     loadProjects();
-  }, []);
+  }, [useMock]);
 
   const updateFilters = (newSearch: string, newStack: string | null) => {
     const params = new URLSearchParams();

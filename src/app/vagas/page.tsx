@@ -6,39 +6,46 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { BriefcaseIcon, MapPinIcon, SearchIcon, DollarSignIcon, ExternalLinkIcon, BuildingIcon, ArrowRightIcon } from '@/components/icons';
 import { MOCK_JOBS } from '@/lib/data/mock';
 import { createClient } from '@/lib/supabase/client';
+import { useMockData } from '@/lib/env';
 import type { Job } from '@/types/database';
 import styles from './vagas.module.css';
 
 function VagasContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const useMock = useMockData();
 
   const initialSearch = searchParams.get('q') || '';
   const initialType = searchParams.get('type');
   const initialRemote = searchParams.get('remote') === 'true';
 
-  const [jobs, setJobs] = useState<Job[]>(MOCK_JOBS);
+  const [jobs, setJobs] = useState<Job[]>(() => (useMock ? MOCK_JOBS : []));
   const [searchTerm, setSearchTerm] = useState(initialSearch);
   const [selectedType, setSelectedType] = useState<string | null>(initialType);
   const [onlyRemote, setOnlyRemote] = useState(initialRemote);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(!useMock);
 
   useEffect(() => {
+    if (useMock) {
+      setJobs(MOCK_JOBS);
+      setLoading(false);
+      return;
+    }
+
     async function loadJobs() {
       try {
         const supabase = createClient();
         const { data, error } = await supabase.from('jobs').select('*');
-        if (data && data.length > 0 && !error) {
-          setJobs(data);
-        }
+        if (error) throw error;
+        setJobs(data ?? []);
       } catch {
-        // mock fallback
+        setJobs([]);
       } finally {
         setLoading(false);
       }
     }
     loadJobs();
-  }, []);
+  }, [useMock]);
 
   const updateFilters = (newSearch: string, newType: string | null, newRemote: boolean) => {
     const params = new URLSearchParams();
@@ -160,11 +167,11 @@ function VagasContent() {
                 <div className={styles.jobMeta}>
                   <span className={styles.metaItem}>
                     <BuildingIcon className={styles.metaIcon} />
-                    <strong>{job.company_name || 'Empresa Parceira'}</strong>
+                    <strong>{job.company_name || 'Empresa não informada'}</strong>
                   </span>
                   <span className={styles.metaItem}>
                     <MapPinIcon className={styles.metaIcon} />
-                    {job.location || 'Manaus-AM'}
+                    {job.location || 'Local não informado'}
                   </span>
                   {job.salary && (
                     <span className={styles.salaryBadge}>

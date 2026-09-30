@@ -10,14 +10,15 @@ import {
   CheckCircle2Icon, 
   ClockIcon 
 } from '@/components/icons';
-import { createClient } from '@/lib/supabase/server';
 import { MOCK_JOBS } from '@/lib/data/mock';
+import { fetchById, fetchIdsForStaticParams } from '@/lib/data/source';
 import type { Job } from '@/types/database';
 
 export async function generateStaticParams() {
-  return MOCK_JOBS.map((job) => ({
-    id: job.id,
-  }));
+  return fetchIdsForStaticParams(
+    'jobs',
+    MOCK_JOBS.map((j) => j.id)
+  );
 }
 
 interface JobDetailPageProps {
@@ -28,22 +29,7 @@ interface JobDetailPageProps {
 
 export default async function JobDetailPage({ params }: JobDetailPageProps) {
   const { id } = await params;
-  let job: Job | undefined = MOCK_JOBS.find((j) => j.id === id);
-
-  try {
-    const supabase = await createClient();
-    const { data: jobData } = await supabase
-      .from('jobs')
-      .select('*')
-      .eq('id', id)
-      .single();
-
-    if (jobData) {
-      job = jobData;
-    }
-  } catch {
-    // Fallback to mock
-  }
+  const job = await fetchById<Job>('jobs', id, () => MOCK_JOBS.find((j) => j.id === id));
 
   if (!job) {
     notFound();
@@ -58,13 +44,13 @@ export default async function JobDetailPage({ params }: JobDetailPageProps) {
     employmentType: job.type === 'CLT' ? 'FULL_TIME' : job.type === 'PJ' ? 'CONTRACTOR' : 'OTHER',
     hiringOrganization: {
       '@type': 'Organization',
-      name: job.company_name || 'Empresa Parceira ManausDev',
+      name: job.company_name || 'Não informado',
     },
     jobLocation: {
       '@type': 'Place',
       address: {
         '@type': 'PostalAddress',
-        addressLocality: 'Manaus',
+        addressLocality: job.location || 'Não informado',
         addressRegion: 'AM',
         addressCountry: 'BR',
       },
@@ -107,11 +93,11 @@ export default async function JobDetailPage({ params }: JobDetailPageProps) {
             <div className="flex flex-wrap items-center gap-4 text-xs sm:text-sm text-faint">
               <span className="flex items-center gap-1.5 font-medium text-ink">
                 <BuildingIcon className="w-4 h-4 text-accent-text" />
-                {job.company_name || 'Empresa Parceira'}
+                {job.company_name || 'Empresa não informada'}
               </span>
               <span className="flex items-center gap-1.5 font-mono">
                 <MapPinIcon className="w-4 h-4 text-accent-text" />
-                {job.location || 'Manaus-AM'}
+                {job.location || 'Local não informado'}
               </span>
               {job.salary && (
                 <span className="flex items-center gap-1.5 font-semibold text-accent-text font-mono">
