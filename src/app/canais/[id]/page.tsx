@@ -9,7 +9,7 @@ import {
 import { MOCK_CHANNELS, MOCK_COMMUNITIES } from '@/lib/data/mock';
 import { fetchById, fetchIdsForStaticParams } from '@/lib/data/source';
 import { platformMeta } from '@/lib/channels-meta';
-import type { CommunityChannel } from '@/types/database';
+import type { CommunityChannel, Community } from '@/types/database';
 import styles from './detail.module.css';
 
 export async function generateStaticParams() {
@@ -36,7 +36,9 @@ export default async function ChannelDetailPage({ params }: ChannelDetailPagePro
   }
 
   const meta = platformMeta(channel.platform);
-  const community = MOCK_COMMUNITIES.find((c) => c.id === channel.community_id);
+  const community = await fetchById<Community>('communities', channel.community_id, () =>
+    MOCK_COMMUNITIES.find((c) => c.id === channel.community_id)
+  );
 
   return (
     <div className={styles.container}>
