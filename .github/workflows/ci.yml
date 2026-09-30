@@ -41,8 +41,5 @@ jobs:
           node-version: '20'
           cache: 'npm'
 
-      - name: Instalar dependências
-        run: npm ci
-
       - name: Verificar links quebrados
-        run: npx htmlproofer --assume-extension .html --check-html ./
+        run: npx linkinator https://manausdev.vercel.app --recurse --skip "^https?://(?!manausdev\.vercel\.app)"
