@@ -2,21 +2,26 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { SparklesIcon, UsersIcon, ExternalLinkIcon, MessageSquareIcon, ArrowRightIcon } from '@/components/icons';
+import { SparklesIcon, UsersIcon, ArrowRightIcon } from '@/components/icons';
 import { MOCK_COMMUNITIES } from '@/lib/data/mock';
 import { createClient } from '@/lib/supabase/client';
 import { useMockData } from '@/lib/env';
-import type { Community } from '@/types/database';
+import type { Community, CommunityChannel } from '@/types/database';
+import ChannelList, { mockChannelsOf } from './ChannelList';
 import styles from './comunidades.module.css';
 
 export default function ComunidadesPage() {
   const useMock = useMockData();
   const [communities, setCommunities] = useState<Community[]>(() => (useMock ? MOCK_COMMUNITIES : []));
+  const [channels, setChannels] = useState<Record<string, CommunityChannel[]>>({});
   const [loading, setLoading] = useState(!useMock);
 
   useEffect(() => {
     if (useMock) {
       setCommunities(MOCK_COMMUNITIES);
+      setChannels(
+        Object.fromEntries(MOCK_COMMUNITIES.map((c) => [c.id, mockChannelsOf(c.id)])),
+      );
       setLoading(false);
       return;
     }
@@ -27,6 +32,21 @@ export default function ComunidadesPage() {
         const { data, error } = await supabase.from('communities').select('*');
         if (error) throw error;
         setCommunities(data ?? []);
+
+        const { data: channelRows } = await supabase
+          .from('community_channels')
+          .select('*')
+          .order('members_count', { ascending: false });
+
+        // O client do browser resolve as rows como `never[]` — mesmo quirque
+        // contornado com cast em devs/page.tsx e no antigo /canais.
+        const rows = (channelRows ?? []) as unknown as CommunityChannel[];
+
+        const grouped: Record<string, CommunityChannel[]> = {};
+        for (const row of rows) {
+          (grouped[row.community_id] ??= []).push(row);
+        }
+        setChannels(grouped);
       } catch {
         setCommunities([]);
       } finally {
@@ -91,27 +111,13 @@ export default function ComunidadesPage() {
                   {comm.description}
                 </p>
 
+                <ChannelList channels={channels[comm.id] ?? []} />
+
                 <div className={styles.cardFooter}>
                   <Link href={`/comunidades/${comm.id}`} className={styles.cardLink}>
                     <span>Página da Comunidade</span>
                     <ArrowRightIcon size="xs" />
                   </Link>
-
-                  <div className={styles.cardLinks}>
-                    {Object.entries(comm.links || {}).slice(0, 1).map(([key, url]) => (
-                      <a
-                        key={key}
-                        href={url}
-                        target="_blank"
-                        rel="noreferrer"
-                        className={styles.externalLink}
-                      >
-                        <MessageSquareIcon className={styles.externalLinkIcon} />
-                        <span>Entrar no {key}</span>
-                        <ExternalLinkIcon size="xs" className={styles.externalLinkArrow} />
-                      </a>
-                    ))}
-                  </div>
                 </div>
               </div>
             </div>

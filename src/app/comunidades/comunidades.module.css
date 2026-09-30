@@ -318,41 +318,6 @@
   color: var(--ink);
 }
 
-.cardLinks {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-}
-
-.externalLink {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.625rem 1rem;
-  border-radius: 0.75rem;
-  background-color: var(--surface-1);
-  color: var(--ink);
-  border: 1px solid var(--border);
-  transition: all 180ms ease;
-  font-weight: 600;
-  font-size: 0.75rem;
-  text-decoration: none;
-}
-
-.externalLink:hover {
-  background-color: color-mix(in oklab, var(--accent) 10%, transparent);
-  color: var(--accent-text);
-  border-color: color-mix(in oklab, var(--accent) 30%, transparent);
-}
-
-.externalLinkIcon {
-  color: var(--accent-text);
-}
-
-.externalLinkArrow {
-  opacity: 0.6;
-}
-
 /* ===== Loading ===== */
 .skeleton {
   background-color: var(--surface-1);

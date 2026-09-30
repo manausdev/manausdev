@@ -8,7 +8,6 @@ const NAV_LINKS = [
   { href: '/projetos', label: 'Projetos' },
   { href: '/vagas', label: 'Vagas' },
   { href: '/comunidades', label: 'Comunidades' },
-  { href: '/canais', label: 'Canais' },
   { href: '/noticias', label: 'Notícias' },
   { href: '/eventos', label: 'Eventos' },
   { href: '/empresas', label: 'Empresas' },
@@ -31,7 +30,9 @@ describe('Header', () => {
   it('renderiza a marca e os links da navegacao', async () => {
     render(<Header />);
     const brand = document.querySelector(`.${styles.brand}`)!;
-    expect(brand.textContent).toBe('</>ManausDevAMAZONAS • TECH');
+    // O logo `</>` agora e um SVG sem texto — so o nome escrito permanece.
+    expect(brand.textContent).toBe('ManausDevAMAZONAS • TECH');
+    expect(document.querySelector(`.${styles.logo}`)).not.toBeNull();
     expect(screen.getByRole('link', { name: 'Projetos' })).toHaveAttribute('href', '/projetos');
     expect(screen.getByRole('link', { name: 'Vagas' })).toHaveAttribute('href', '/vagas');
     expect(screen.getByRole('link', { name: 'Comunidades' })).toHaveAttribute('href', '/comunidades');
@@ -47,6 +48,12 @@ describe('Header', () => {
       expect(link).toHaveAttribute('href', href);
     }
 
+    await waitFor(() => screen.getByRole('link', { name: 'Entrar' }));
+  });
+
+  it('nao expoe mais /canais no menu', async () => {
+    render(<Header />);
+    expect(screen.queryByRole('link', { name: 'Canais' })).toBeNull();
     await waitFor(() => screen.getByRole('link', { name: 'Entrar' }));
   });
 

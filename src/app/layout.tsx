@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Inter, Sora, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
 import { Header, Footer, CookieConsent, themeInitScript } from '@/organisms';
+import { SITE_URL } from '@/lib/site';
 import styles from './layout.module.css';
 
 const inter = Inter({
@@ -24,15 +25,26 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: 'ManausDev — Ecossistema de Tecnologia do Amazonas',
   description: 'Quem constrói tecnologia e inovação sustentável em Manaus está conectado aqui. Desenvolvedores, projetos, vagas e comunidades.',
   keywords: ['Manaus', 'Amazonas', 'Desenvolvedores', 'Tech', 'Next.js', 'Supabase', 'Projetos', 'Vagas', 'GreenTech'],
   authors: [{ name: 'ManausDev Community' }],
+  alternates: {
+    canonical: '/',
+  },
   openGraph: {
     title: 'ManausDev — Ecossistema de Tecnologia do Amazonas',
     description: 'Quem constrói tecnologia em Manaus está aqui.',
     type: 'website',
     locale: 'pt_BR',
+    url: '/',
+    siteName: 'ManausDev',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'ManausDev — Ecossistema de Tecnologia do Amazonas',
+    description: 'Quem constrói tecnologia em Manaus está aqui.',
   },
 };
 

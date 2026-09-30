@@ -1,9 +1,11 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ArrowLeftIcon, ClockIcon, UserIcon, MessageSquareIcon } from '@/components/icons';
 import { MOCK_NEWS } from '@/lib/data/mock';
 import { fetchById, fetchIdsForStaticParams } from '@/lib/data/source';
 import { categoryLabel, formatDate } from '@/lib/news-meta';
+import { siteUrl } from '@/lib/site';
 import type { NewsItem } from '@/types/database';
 import styles from './detail.module.css';
 
@@ -20,6 +22,15 @@ interface NewsDetailPageProps {
   }>;
 }
 
+export async function generateMetadata({ params }: NewsDetailPageProps): Promise<Metadata> {
+  const { id } = await params;
+  return {
+    alternates: {
+      canonical: `/noticias/${id}`,
+    },
+  };
+}
+
 export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
   const { id } = await params;
   const item = await fetchById<NewsItem>('news', id, () => MOCK_NEWS.find((n) => n.id === id));
@@ -33,16 +44,20 @@ export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
     '@type': 'NewsArticle',
     headline: item.title,
     description: item.excerpt || item.title,
+    url: siteUrl(`/noticias/${item.id}`),
+    mainEntityOfPage: siteUrl(`/noticias/${item.id}`),
     datePublished: item.published_at ?? item.created_at,
     dateModified: item.updated_at ?? item.created_at,
     image: item.image_url ?? undefined,
     author: {
       '@type': 'Organization',
       name: 'ManausDev',
+      url: siteUrl('/'),
     },
     publisher: {
       '@type': 'Organization',
       name: 'ManausDev',
+      url: siteUrl('/'),
     },
   };
 

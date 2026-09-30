@@ -18,7 +18,6 @@ import {
   CompassIcon,
   LogOutIcon,
   LayoutDashboardIcon,
-  MessageSquareIcon,
   LogoIcon,
 } from '@/components/icons';
 import { cn } from '@/lib/utils';
@@ -29,7 +28,6 @@ const NAV_LINKS = [
   { href: '/projetos', label: 'Projetos', icon: Code2Icon },
   { href: '/vagas', label: 'Vagas', icon: BriefcaseIcon },
   { href: '/comunidades', label: 'Comunidades', icon: SparklesIcon },
-  { href: '/canais', label: 'Canais', icon: MessageSquareIcon },
   { href: '/noticias', label: 'Notícias', icon: CompassIcon },
   { href: '/eventos', label: 'Eventos', icon: CalendarDaysIcon },
   { href: '/empresas', label: 'Empresas', icon: Building2Icon },

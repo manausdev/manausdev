@@ -6,14 +6,15 @@ import {
   BriefcaseIcon, 
   SparklesIcon, 
   ChevronRightIcon,
-  Code2Icon, 
   CompassIcon, 
   MapIcon, 
   Flower2Icon 
 } from '@/components/icons';
 import { createClient } from '@/lib/supabase/server';
-import { MOCK_DEVS, MOCK_PROJECTS, MOCK_EVENTS, MOCK_JOBS, MOCK_COMMUNITIES } from '@/lib/data/mock';
+import { MOCK_DEVS, MOCK_PROJECTS, MOCK_EVENTS, MOCK_NEWS, MOCK_JOBS, MOCK_COMMUNITIES } from '@/lib/data/mock';
 import { resolveList } from '@/lib/data/source';
+import { buildAgenda, agendaDay } from '@/lib/agenda';
+import { categoryLabel } from '@/lib/news-meta';
 import { useMockData } from '@/lib/env';
 import styles from './page.module.css';
 
@@ -22,7 +23,8 @@ export default async function HomePage() {
 
   let devs = useMock ? MOCK_DEVS.slice(0, 4) : [];
   let projects = useMock ? MOCK_PROJECTS.slice(0, 3) : [];
-  let events = useMock ? MOCK_EVENTS.slice(0, 3) : [];
+  let events = useMock ? MOCK_EVENTS : [];
+  let news = useMock ? MOCK_NEWS : [];
   let jobs = useMock ? MOCK_JOBS.slice(0, 3) : [];
 
   let devsCount = useMock ? MOCK_DEVS.length : 0;
@@ -37,15 +39,22 @@ export default async function HomePage() {
         devsRes,
         projectsRes,
         eventsRes,
+        newsRes,
         jobsRes,
         devsCountRes,
         projectsCountRes,
         communitiesCountRes,
         jobsCountRes,
       ] = await Promise.all([
-        supabase.from('profiles').select('id, username, full_name, role, skills').limit(4),
+        supabase.from('profiles').select('id, username, full_name, avatar_url, role, skills').limit(4),
         supabase.from('projects').select('*').limit(3),
-        supabase.from('events').select('*').order('date', { ascending: true }).limit(3),
+        supabase.from('events').select('*').order('date', { ascending: true }).limit(6),
+        supabase
+          .from('news')
+          .select('*')
+          .eq('published', true)
+          .order('published_at', { ascending: false })
+          .limit(6),
         supabase.from('jobs').select('*').limit(3),
         supabase.from('profiles').select('*', { count: 'exact', head: true }),
         supabase.from('projects').select('*', { count: 'exact', head: true }),
@@ -56,6 +65,7 @@ export default async function HomePage() {
       devs = resolveList([], devsRes.data);
       projects = resolveList([], projectsRes.data);
       events = resolveList([], eventsRes.data);
+      news = resolveList([], newsRes.data);
       jobs = resolveList([], jobsRes.data);
 
       devsCount = devsCountRes.count ?? 0;
@@ -66,6 +76,8 @@ export default async function HomePage() {
       // Keep empty lists — never invent production content
     }
   }
+
+  const agenda = buildAgenda(news, events, (item) => categoryLabel(item.category), 6);
 
   return (
     <div className={styles.container}>
@@ -171,10 +183,16 @@ export default async function HomePage() {
                   key={dev.id}
                   className={`${styles.devCard} ${borderClass}`}
                 >
-                  <div className={`${styles.devCard}::before`} />
-                  
-                  <div className={styles.devAvatar} aria-hidden="true">
-                    {dev.full_name.charAt(0)}
+                  <div className={styles.devAvatar}>
+                    {dev.avatar_url ? (
+                      <img
+                        src={dev.avatar_url}
+                        alt=""
+                        className={styles.devAvatarImg}
+                      />
+                    ) : (
+                      dev.full_name.charAt(0)
+                    )}
                   </div>
 
                   <div className={styles.devInfo}>
@@ -212,7 +230,9 @@ export default async function HomePage() {
               {/* Feature Large */}
               <Link
                 href={`/projetos/${projects[0].id}`}
-                className={styles.projectFeatureLink}
+                className={`${styles.projectFeatureLink} ${
+                  projects.length > 1 ? styles.projectFeature : styles.projectFeatureFull
+                }`}
               >
                 <div 
                   className={styles.projectFeatureBg}
@@ -242,9 +262,11 @@ export default async function HomePage() {
                 </div>
               </Link>
 
-              {/* Side Features */}
-              <div className={styles.projectsSide}>
-                {projects.slice(1, 3).map((proj, idx) => (
+              {/* Side Features: sem projetos laterais, o div fica vazio e ainda
+                  reserva a coluna de span 4, criando uma faixa em branco. */}
+              {projects.length > 1 && (
+                <div className={styles.projectsSide}>
+                  {projects.slice(1, 3).map((proj, idx) => (
                   <Link
                     key={proj.id}
                     href={`/projetos/${proj.id}`}
@@ -264,107 +286,122 @@ export default async function HomePage() {
                       <span className={styles.projectSideNote}>Feito em Manaus</span>
                     </div>
                   </Link>
-                ))}
-              </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </section>
       )}
 
-      {/* Events and Jobs (Side by Side) */}
-      <section className={styles.section}>
-        <div className={styles.sideBySide}>
-          {/* Events */}
-          <div className={styles.sideSection}>
-            <div className={styles.sideHeader}>
-              <h2 className={styles.sideTitle}>
-                <CalendarDaysIcon className={styles.sideTitleIcon} />
-                Próximos Eventos
-              </h2>
-              <Link href="/eventos" className={styles.viewAllSide}>
-                Ver calendário
-              </Link>
+      {/* Notícias e Eventos: uma agenda só, em ordem cronológica */}
+      {agenda.length > 0 && (
+        <section className={styles.section}>
+          <div className={styles.sectionInner}>
+            <div className={styles.sectionHeader}>
+              <div>
+                <h2 className={styles.sectionTitle}>Notícias e Eventos</h2>
+                <p className={styles.sectionSubtitle}>
+                  O que está acontecendo no ecossistema de tecnologia do Amazonas.
+                </p>
+              </div>
+              <div className={styles.agendaLinks}>
+                <Link href="/noticias" className={styles.viewAllLink}>
+                  Notícias <ArrowRightIcon size="xs" />
+                </Link>
+                <Link href="/eventos" className={styles.viewAllLink}>
+                  Eventos <ArrowRightIcon size="xs" />
+                </Link>
+              </div>
             </div>
 
-            <ul className={styles.eventsList}>
-              {events.slice(0, 3).map((ev) => {
-                const dateParts = ev.date ? ev.date.split('-') : ['2026', '12', '15'];
-                const months = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
-                const monthName = months[parseInt(dateParts[1] || '1', 10) - 1] || 'Dez';
-                const dayNum = dateParts[2]?.slice(0, 2) || '15';
+            <ul className={styles.agendaList}>
+              {agenda.map((item) => (
+                <li key={`${item.kind}-${item.id}`}>
+                  <Link href={item.href} className={styles.agendaItem}>
+                    <div className={styles.agendaDate}>
+                      <span className={styles.agendaDay}>{agendaDay(item.date)}</span>
+                    </div>
 
-                return (
-                  <li key={ev.id}>
-                    <Link
-                      href={`/eventos/${ev.id}`}
-                      className={styles.eventItem}
-                    >
-                      <div className={styles.eventDate}>
-                        <span className={styles.eventMonth}>{monthName}</span>
-                        <span className={styles.eventDay}>{dayNum}</span>
+                    <div className={styles.agendaBody}>
+                      <div className={styles.agendaBadges}>
+                        <span
+                          className={`${styles.agendaKind} ${
+                            item.kind === 'evento' ? styles.agendaKindEvent : styles.agendaKindNews
+                          }`}
+                        >
+                          {item.kind === 'evento' ? <CalendarDaysIcon size="xxs" /> : <SparklesIcon size="xxs" />}
+                          {item.label}
+                        </span>
                       </div>
-                      <div className={styles.eventInfo}>
-                        <h4 className={styles.eventTitle}>{ev.title}</h4>
-                        <p className={styles.eventLocation}>
-                          <MapPinIcon size="xxs" /> {ev.location}
+                      <h3 className={styles.agendaTitle}>{item.title}</h3>
+                      {item.meta && (
+                        <p className={styles.agendaMeta}>
+                          {item.kind === 'evento' && <MapPinIcon size="xxs" />}
+                          {item.meta}
                         </p>
-                      </div>
-                      <ChevronRightIcon className={styles.chevronIcon} />
-                    </Link>
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
-
-          {/* Jobs */}
-          <div className={styles.sideSection}>
-            <div className={styles.sideHeader}>
-              <h2 className={styles.sideTitle}>
-                <BriefcaseIcon className={styles.sideTitleIcon} />
-                Vagas Recentes
-              </h2>
-              <Link href="/vagas" className={styles.viewAllSide}>
-                Ver painel de vagas
-              </Link>
-            </div>
-
-            <ul className={styles.jobsList}>
-              {jobs.slice(0, 3).map((job) => (
-                <li key={job.id}>
-                  <Link
-                    href={`/vagas/${job.id}`}
-                    className={styles.jobItem}
-                  >
-                    <div className={styles.jobHeader}>
-                      <h4 className={styles.jobTitle}>{job.title}</h4>
-                      {job.remote && <span className={styles.jobRemote}>Remoto</span>}
+                      )}
                     </div>
 
-                    <div className={styles.jobCompany}>
-                      <div className={styles.jobCompanyAvatar}>
-                        {(job.company_name || 'T').charAt(0)}
-                      </div>
-                      <span className={styles.jobCompanyName}>{job.company_name || 'TechNorte'}</span>
-                    </div>
-
-                    <div className={styles.jobDescription}>
-                      {job.description}
-                    </div>
-
-                    {job.skills && job.skills.length > 0 && (
-                      <div className={styles.jobSkills}>
-                        {job.skills.map((s, i) => (
-                          <span key={i} className={`${styles.jobSkillChip} ${styles.chipRiver}`}>
-                            {s}
-                          </span>
-                        ))}
-                      </div>
-                    )}
+                    <ChevronRightIcon className={styles.chevronIcon} />
                   </Link>
                 </li>
               ))}
             </ul>
+          </div>
+        </section>
+      )}
+
+      {/* Jobs */}
+      <section className={styles.section}>
+        <div className={styles.sectionInner}>
+          <div className={styles.sectionHeader}>
+            <div>
+              <h2 className={styles.sectionTitle}>
+                <BriefcaseIcon className={styles.sideTitleIcon} />
+                Vagas Recentes
+              </h2>
+              <p className={styles.sectionSubtitle}>
+                Oportunidades abertas para profissionais da região.
+              </p>
+            </div>
+            <Link href="/vagas" className={styles.viewAllLink}>
+              Ver painel de vagas <ArrowRightIcon size="xs" />
+            </Link>
+          </div>
+
+          <div className={styles.jobsList}>
+            {jobs.slice(0, 3).map((job) => (
+              <div key={job.id}>
+                <Link href={`/vagas/${job.id}`} className={styles.jobItem}>
+                  <div className={styles.jobHeader}>
+                    <h4 className={styles.jobTitle}>{job.title}</h4>
+                    {job.remote && <span className={styles.jobRemote}>Remoto</span>}
+                  </div>
+
+                  <div className={styles.jobCompany}>
+                    <div className={styles.jobCompanyAvatar}>
+                      {(job.company_name || 'T').charAt(0)}
+                    </div>
+                    <span className={styles.jobCompanyName}>{job.company_name || 'TechNorte'}</span>
+                  </div>
+
+                  <div className={styles.jobDescription}>
+                    {job.description}
+                  </div>
+
+                  {job.skills && job.skills.length > 0 && (
+                    <div className={styles.jobSkills}>
+                      {job.skills.map((s, i) => (
+                        <span key={i} className={`${styles.jobSkillChip} ${styles.chipRiver}`}>
+                          {s}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </Link>
+              </div>
+            ))}
           </div>
         </div>
       </section>

@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { 
@@ -24,6 +25,15 @@ interface JobDetailPageProps {
   params: Promise<{
     id: string;
   }>;
+}
+
+export async function generateMetadata({ params }: JobDetailPageProps): Promise<Metadata> {
+  const { id } = await params;
+  return {
+    alternates: {
+      canonical: `/vagas/${id}`,
+    },
+  };
 }
 
 export default async function JobDetailPage({ params }: JobDetailPageProps) {
