@@ -20,6 +20,21 @@ interface AdminProfile {
   is_admin?: boolean | null;
 }
 
+/**
+ * O postgrest-js lanca um `PostgrestError`, que e um objeto simples e nao uma
+ * instancia de Error. Cair num `instanceof Error` trocaria a causa real — que
+ * aqui quase sempre e RLS recusando a mudanca — por um texto generico, tirando
+ * do admin justamente a informacao que ele precisa para agir.
+ */
+function errorText(err: unknown, fallback: string): string {
+  if (err && typeof err === 'object' && 'message' in err) {
+    const { message } = err as { message?: unknown };
+    if (typeof message === 'string' && message.trim()) return message;
+  }
+  if (err instanceof Error && err.message) return err.message;
+  return fallback;
+}
+
 export function AdminProfileTypes({ viewer }: AdminProfileTypesProps) {
   const [rows, setRows] = useState<AdminProfile[]>([]);
   const [pending, setPending] = useState<Record<string, ProfileType>>({});
@@ -46,6 +61,10 @@ export function AdminProfileTypes({ viewer }: AdminProfileTypesProps) {
         setRows((data ?? []) as AdminProfile[]);
       } catch {
         setRows([]);
+        setMessage({
+          tone: 'error',
+          text: 'Nao foi possivel carregar os perfis. Verifique as policies de leitura.',
+        });
       } finally {
         setLoading(false);
       }
@@ -80,10 +99,7 @@ export function AdminProfileTypes({ viewer }: AdminProfileTypesProps) {
       });
       setMessage({ tone: 'ok', text: `${target.full_name || target.username} agora é ${next}.` });
     } catch (err: unknown) {
-      setMessage({
-        tone: 'error',
-        text: err instanceof Error ? err.message : 'Falha ao alterar o tipo de perfil.',
-      });
+      setMessage({ tone: 'error', text: errorText(err, 'Falha ao alterar o tipo de perfil.') });
     } finally {
       setSavingId(null);
     }
