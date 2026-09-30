@@ -39,6 +39,9 @@
 * [`ADR 0016: Tipos de perfil e matriz de permissões por tipo de conta`](0016-profile-types-and-permission-matrix.md)
   * Coluna `profile_type` (`dev` | `empresa` | `admin`) separada do cargo textual `role`, RLS por tipo com helpers `security definer`, escrita exigindo autoria (`auth.uid()`), e trigger anti-escalação de `profile_type`/`is_admin`.
 
+* [`ADR 0018: Cliente Supabase público para rotas de detalhe estáticas`](0018-public-supabase-client-for-static-detail-routes.md)
+  * `createPublicClient` (anônimo, sem cookies) para leituras públicas em rotas com `generateStaticParams`, corrigindo os 500 nos detalhes e o link `/projetos/1` inventado na home.
+
 ### 2. 🎨 Design System & Identidade Visual
 * [`ADR 0015: Rebrand para a paleta Blue-Tech com modo claro/escuro`](0015-rebrand-blue-tech-palette-and-dark-mode.md)
   * Paleta oficial extraída do logo (`#0073FD`, `#009BFD`, `#02B8B5`, `#4BD76D`), tokens CSS semânticos, dark mode via classe `.dark` + `ThemeToggle` e gradiente da marca como utility.
