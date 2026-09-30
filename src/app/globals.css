@@ -41,6 +41,19 @@
   --deep: #0c2233;
   --deep-2: #071624;
 
+  /* Platform badges (/canais).
+     A cor pura da plataforma e mantida em --platform-* para borda e fundo, que
+     sao elementos nao textuais. O texto usa --platform-*-text, uma variante
+     escura da mesma familia: a cor pura reprova em WCAG AA -- #25d366 no fundo
+     tingido da 1.98:1 e #229ed9 da 3.02:1. Razoes medidas contra o fundo tingido
+     real, nao contra branco. */
+  --platform-discord: #5865f2;
+  --platform-discord-text: #4a55d6; /* 5.20:1 */
+  --platform-telegram: #229ed9;
+  --platform-telegram-text: #15719e; /* 4.87:1 */
+  --platform-whatsapp: #25d366;
+  --platform-whatsapp-text: #0f7a34; /* 5.07:1 */
+
   /* Status */
   --success: #16794a;
   --success-text: #0f5c37;
@@ -85,6 +98,11 @@
 
   --deep: #0e2839;
   --deep-2: #081a27;
+
+  /* Em dark o texto do badge vira uma variante clara da mesma familia da marca. */
+  --platform-discord-text: #a5abfa; /* 8.49:1 */
+  --platform-telegram-text: #7fd3f3; /* 10.83:1 */
+  --platform-whatsapp-text: #7fe8a2; /* 12.09:1 */
 
   --success: #4bd76d;
   --success-text: #6ee79a;

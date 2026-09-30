@@ -27,7 +27,9 @@ export async function fetchIdsForStaticParams(
     | 'jobs'
     | 'companies'
     | 'events'
-    | 'communities',
+    | 'communities'
+    | 'news'
+    | 'community_channels',
   mockIds: string[]
 ): Promise<{ id: string }[]> {
   if (useMockData()) {
@@ -50,7 +52,9 @@ export async function fetchById<T>(
     | 'jobs'
     | 'companies'
     | 'events'
-    | 'communities',
+    | 'communities'
+    | 'news'
+    | 'community_channels',
   id: string,
   mockFind: () => T | undefined
 ): Promise<T | null> {

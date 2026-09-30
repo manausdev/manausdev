@@ -4,7 +4,9 @@ import type {
   EventItem,
   Company,
   Community,
+  CommunityChannel,
   Job,
+  NewsItem,
 } from '@/types/database';
 
 export const MOCK_COMPANIES: Company[] = [
@@ -392,6 +394,140 @@ created_at: '2025-08-01T12:00:00.000Z',
   created_at: '2025-11-01T10:00:00.000Z',
 },
 ];
+
+export const MOCK_NEWS: NewsItem[] = [
+  {
+    id: '1',
+    title: 'ManausDev Meetup #12 reúne a comunidade em torno de Next.js e Supabase',
+    excerpt:
+      'Imersão presencial sobre arquiteturas fullstack modernas, banco vetorial e deployment regional na UFAM.',
+    content:
+      'A doze edição do meetup do ManausDev acontece no Auditório da UFAM e reúne desenvolvedores de toda a região para uma imersão em arquiteturas fullstack modernas. A talk de abertura cobre Next.js com App Router e Supabase em produção, incluindo o custo real de operar na Amazônia: latência, regiões e caching.\n\nO encontro é aberto a toda a comunidade e termina com uma sessão de mentoria coletiva entre participantes.',
+    image_url:
+      'https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=800&q=80',
+    category: 'evento',
+    published: true,
+    published_at: '2026-09-15T19:00:00Z',
+    author_id: '7',
+    created_at: '2026-09-10T12:00:00.000Z',
+    updated_at: '2026-09-15T19:00:00.000Z',
+  },
+  {
+    id: '2',
+    title: 'Hackathon Amazônia Tech abre inscrições para 48 horas de construção',
+    excerpt:
+      'Times de até cinco pessoas competem por soluções sustentável e de bioeconomia amazônica.',
+    content:
+      'O Hackathon Amazônia Tech 2026 abre inscrições para times de até cinco pessoas. A proposta é construir, em 48 horas, soluções tecnológicas voltadas à sustentabilidade e à bioeconomia da região.\n\nAs inscrições são gratuitas e o evento é híbrido, com etapas online e uma fase presencial no Hub de Inovação.',
+    image_url:
+      'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=800&q=80',
+    category: 'evento',
+    published: true,
+    published_at: '2026-09-20T12:00:00.000Z',
+    author_id: '5',
+    created_at: '2026-09-18T12:00:00.000Z',
+    updated_at: '2026-09-20T12:00:00.000Z',
+  },
+  {
+    id: '3',
+    title: 'Análise: por que o custo de nuvem ainda trava projetos no Amazonas',
+    excerpt:
+      'Latência, largura de banda e tributação de ICMS sobre importação de dados pesam na conta final.',
+    content:
+      'A região Norte historicamente ficou de fora das zonas de baixa latência das nuvens globais. Isso significa que um backend hospedado fora de Manaus transforma cada requisição em uma ida e volta longa, e isso aparece na sensação de uso tanto quanto na fatura.\n\nSomam-se a isso a largura de banda disponível e a tributação de ICMS sobre a importação de dados, que em alguns casos chega a dobrar o custo efetivo da infraestrutura.',
+    image_url:
+      'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80',
+    category: 'analise',
+    published: true,
+    published_at: '2026-09-05T12:00:00.000Z',
+    author_id: '6',
+    created_at: '2026-09-03T12:00:00.000Z',
+    updated_at: '2026-09-05T12:00:00.000Z',
+  },
+  {
+    id: '4',
+    title: 'TechNorte anuncia oito vagas backend e abre programa de apprenticeship',
+    excerpt:
+      'Posições abertas para engenheiros em Go e PostgreSQL, com trilha estruturada de mentoria.',
+    content:
+      'A TechNorte abriu oito vagas para engenharia backend com foco em Go e PostgreSQL, além de um programa de apprenticeship para pessoas em início de carreira.\n\nAs posições são abertas para trabalho híbrido no Polo Industrial de Manaus. A trilha de apprenticeship combina estudo dirigido, revisão de código e mentoria individual.',
+    image_url:
+      'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80',
+    category: 'vaga',
+    published: false,
+    published_at: null,
+    author_id: '3',
+    created_at: '2026-09-22T12:00:00.000Z',
+    updated_at: '2026-09-22T12:00:00.000Z',
+  },
+];
+
+export const MOCK_CHANNELS: CommunityChannel[] = [
+  {
+    id: '1',
+    community_id: '1',
+    name: 'Geral',
+    description: 'Conversa aberta da comunidade, avisos e apresentações de novos membros.',
+    platform: 'discord',
+    url: 'https://discord.gg/manausdev',
+    members_count: 1180,
+    created_by: '7',
+    created_at: '2026-01-10T12:00:00.000Z',
+    updated_at: '2026-09-01T12:00:00.000Z',
+  },
+  {
+    id: '2',
+    community_id: '1',
+    name: 'Vagas e Oportunidades',
+    description: 'Compartilhamento de vagas, projetos freelance e chamadas de contratação.',
+    platform: 'discord',
+    url: 'https://discord.gg/manausdev-vagas',
+    members_count: 640,
+    created_by: '3',
+    created_at: '2026-02-02T12:00:00.000Z',
+    updated_at: '2026-09-02T12:00:00.000Z',
+  },
+  {
+    id: '3',
+    community_id: '2',
+    name: 'Devs do Norte',
+    description: 'Canal principal da rede de desenvolvedores que conecta talentos da Amazônia.',
+    platform: 'telegram',
+    url: 'https://t.me/devsdonorte',
+    members_count: 890,
+    created_by: '5',
+    created_at: '2026-01-18T12:00:00.000Z',
+    updated_at: '2026-08-28T12:00:00.000Z',
+  },
+  {
+    id: '4',
+    community_id: '3',
+    name: 'Python Manaus',
+    description: 'Canal do grupo de Python: eventos, bibliotecas e ajuda técnica entre membros.',
+    platform: 'discord',
+    url: 'https://discord.gg/pythonmanaus',
+    members_count: 430,
+    created_by: '4',
+    created_at: '2026-03-05T12:00:00.000Z',
+    updated_at: '2026-08-14T12:00:00.000Z',
+  },
+  {
+    id: '5',
+    community_id: '4',
+    name: 'Mulheres na Tech AM',
+    description: 'Canal de mentoria, networking e capacição da comunidade.',
+    platform: 'whatsapp',
+    url: 'https://chat.whatsapp.com/mulheresnatech',
+    members_count: 310,
+    created_by: '2',
+    created_at: '2026-04-11T12:00:00.000Z',
+    updated_at: '2026-08-30T12:00:00.000Z',
+  },
+];
+
+export function getMockChannelsByCommunity(communityId: string): CommunityChannel[] {
+  return MOCK_CHANNELS.filter((c) => c.community_id === communityId);
+}
 
 export const MOCK_STATS = {
   devs: MOCK_DEVS.length,

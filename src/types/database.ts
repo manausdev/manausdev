@@ -103,6 +103,37 @@ export interface Job {
   created_at?: string;
 }
 
+export type NewsCategory = 'geral' | 'evento' | 'vaga' | 'lancamento' | 'analise';
+
+export interface NewsItem {
+  id: string;
+  title: string;
+  excerpt?: string | null;
+  content?: string | null;
+  image_url?: string | null;
+  category?: NewsCategory | null;
+  published?: boolean | null;
+  published_at?: string | null;
+  author_id?: string | null;
+  created_at?: string;
+  updated_at?: string;
+}
+
+export type ChannelPlatform = 'discord' | 'telegram' | 'whatsapp' | 'matrix';
+
+export interface CommunityChannel {
+  id: string;
+  community_id: string;
+  name: string;
+  description?: string | null;
+  platform?: ChannelPlatform | null;
+  url?: string | null;
+  members_count?: number | null;
+  created_by?: string | null;
+  created_at?: string;
+  updated_at?: string;
+}
+
 export interface ContactMessage {
   id?: string;
   name: string;
@@ -353,6 +384,87 @@ export interface Database {
           {
             foreignKeyName: 'jobs_posted_by_fkey';
             columns: ['posted_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      news: {
+        Row: NewsItem;
+        Insert: {
+          id?: string;
+          title: string;
+          excerpt?: string | null;
+          content?: string | null;
+          image_url?: string | null;
+          category?: NewsCategory | null;
+          published?: boolean | null;
+          published_at?: string | null;
+          author_id?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          title?: string;
+          excerpt?: string | null;
+          content?: string | null;
+          image_url?: string | null;
+          category?: NewsCategory | null;
+          published?: boolean | null;
+          published_at?: string | null;
+          author_id?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'news_author_id_fkey';
+            columns: ['author_id'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      community_channels: {
+        Row: CommunityChannel;
+        Insert: {
+          id?: string;
+          community_id: string;
+          name: string;
+          description?: string | null;
+          platform?: ChannelPlatform | null;
+          url?: string | null;
+          members_count?: number | null;
+          created_by?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          community_id?: string;
+          name?: string;
+          description?: string | null;
+          platform?: ChannelPlatform | null;
+          url?: string | null;
+          members_count?: number | null;
+          created_by?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'community_channels_community_id_fkey';
+            columns: ['community_id'];
+            isOneToOne: false;
+            referencedRelation: 'communities';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'community_channels_created_by_fkey';
+            columns: ['created_by'];
             isOneToOne: false;
             referencedRelation: 'profiles';
             referencedColumns: ['id'];
