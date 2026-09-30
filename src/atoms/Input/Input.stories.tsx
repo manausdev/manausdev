@@ -19,7 +19,7 @@ export const Default: Story = {};
 
 export const Sizes: Story = {
   render: (args) => (
-    <div className="flex flex-col gap-4 max-w-sm">
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 16, maxWidth: 384 }}>
       <Input {...args} size="sm" />
       <Input {...args} size="md" />
       <Input {...args} size="lg" />
@@ -30,9 +30,9 @@ export const Sizes: Story = {
 export const Invalid: Story = {
   args: { invalid: true, value: 'ana@' },
   render: (args) => (
-    <div className="max-w-sm">
+    <div style={{ maxWidth: 384 }}>
       <Input {...args} />
-      <p className="text-xs text-danger-text mt-1.5">Informe um e-mail valido</p>
+      <p style={{ fontSize: 12, color: 'var(--danger-text)', marginTop: 6 }}>Informe um e-mail valido</p>
     </div>
   ),
 };

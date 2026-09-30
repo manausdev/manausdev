@@ -29,7 +29,7 @@ export const Danger: Story = { args: { variant: 'danger' } };
 
 export const Sizes: Story = {
   render: (args) => (
-    <div className="flex items-center gap-4">
+    <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
       <Button {...args} size="sm">
         Pequeno
       </Button>

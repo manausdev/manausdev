@@ -19,10 +19,10 @@ export const Default: Story = {};
 
 export const Variants: Story = {
   render: (args) => (
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: 16 }}>
       {(['default', 'glass', 'dark', 'flush'] as const).map((variant) => (
         <Card key={variant} {...args} variant={variant}>
-          <h3 className="font-display font-bold text-base">variant={variant}</h3>
+          <h3 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 16 }}>variant={variant}</h3>
         </Card>
       ))}
     </div>
@@ -31,10 +31,10 @@ export const Variants: Story = {
 
 export const Paddings: Story = {
   render: (args) => (
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: 16 }}>
       {(['none', 'sm', 'md', 'lg'] as const).map((padding) => (
         <Card key={padding} {...args} padding={padding}>
-          <h3 className="font-display font-bold text-base">padding={padding}</h3>
+          <h3 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 16 }}>padding={padding}</h3>
         </Card>
       ))}
     </div>

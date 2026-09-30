@@ -16,7 +16,7 @@ export const Default: Story = {};
 
 export const AllStates: Story = {
   render: (args) => (
-    <div className="flex flex-wrap items-center gap-3">
+    <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 12 }}>
       {AVAILABILITY_FILTERS.map((option) => (
         <AvailabilityChip key={option.param} {...args} value={option.db} />
       ))}
@@ -26,7 +26,7 @@ export const AllStates: Story = {
 
 export const Fallbacks: Story = {
   render: (args) => (
-    <div className="flex flex-wrap items-center gap-3">
+    <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 12 }}>
       <AvailabilityChip {...args} value="open" />
       <AvailabilityChip {...args} value={null} />
       <AvailabilityChip {...args} value="valor-invalido" />

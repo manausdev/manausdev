@@ -1,5 +1,3 @@
-@import "tailwindcss";
-
 /* ============================================================
    LogoIcon auto-variant — light/dark layer switching
    The inline SVG in LogoIcon variant="auto" renders two <g>
@@ -11,8 +9,6 @@
 
 .dark .logo-layer-dark  { display: block; }
 .dark .logo-layer-light { display: none; }
-
-@custom-variant dark (&:where(.dark, .dark *));
 
 /* ============================================================
    ManausDev — Design Tokens
@@ -79,6 +75,12 @@
   --font-display: var(--font-sora), system-ui, sans-serif;
   --font-body: var(--font-inter), system-ui, sans-serif;
   --font-mono-theme: var(--font-jetbrains-mono), monospace;
+
+  /* Elevation (consumed via var() by CSS Modules) */
+  --shadow-card-ambient: 0 4px 20px rgba(0, 115, 253, 0.06);
+  --shadow-card-hover: 0 12px 30px -5px rgba(0, 115, 253, 0.12);
+  --shadow-elevated: 0 20px 30px -10px rgba(7, 22, 36, 0.18);
+  --shadow-glow-accent: 0 0 0 3px rgba(0, 115, 253, 0.15);
 }
 
 .dark {
@@ -123,60 +125,6 @@
   --danger-text: #ff9b93;
   --danger-soft: rgba(255, 122, 112, 0.14);
   --on-dark: #ffffff;
-}
-
-@theme inline {
-  --color-canvas: var(--canvas);
-  --color-surface: var(--surface);
-  --color-surface-1: var(--surface-1);
-  --color-surface-2: var(--surface-2);
-  --color-surface-3: var(--surface-3);
-  --color-border: var(--border);
-  --color-border-strong: var(--border-strong);
-
-  --color-ink: var(--ink);
-  --color-body: var(--body);
-  --color-muted: var(--muted);
-  --color-faint: var(--faint);
-
-  --color-accent: var(--accent);
-  --color-accent-hover: var(--accent-hover);
-  --color-accent-text: var(--accent-text);
-  --color-accent-soft: var(--accent-soft);
-  --color-on-accent: var(--on-accent);
-  --color-brand-blue: var(--brand-blue);
-  --color-cyan: var(--cyan);
-  --color-neon: var(--neon);
-  --color-neon-text: var(--neon-text);
-  --color-on-neon: var(--on-neon);
-
-  --color-deep: var(--deep);
-  --color-deep-2: var(--deep-2);
-  --color-on-dark: var(--on-dark);
-
-  --color-success: var(--success);
-  --color-success-text: var(--success-text);
-  --color-success-soft: var(--success-soft);
-  --color-danger: var(--danger);
-  --color-danger-text: var(--danger-text);
-  --color-danger-soft: var(--danger-soft);
-
-  --font-sans: var(--font-body);
-  --font-display: var(--font-display);
-  --font-mono: var(--font-mono-theme);
-
-  --shadow-card-ambient: 0 4px 20px rgba(0, 115, 253, 0.06);
-  --shadow-card-hover: 0 12px 30px -5px rgba(0, 115, 253, 0.12);
-  --shadow-elevated: 0 20px 30px -10px rgba(7, 22, 36, 0.18);
-  --shadow-glow-accent: 0 0 0 3px rgba(0, 115, 253, 0.15);
-}
-
-@utility bg-gradient-brand {
-  background-image: linear-gradient(135deg, #009bfd 0%, #02b8b5 50%, #4bd76d 100%);
-}
-
-@utility bg-gradient-brand-soft {
-  background-image: linear-gradient(135deg, rgba(0, 155, 253, 0.12) 0%, rgba(2, 184, 181, 0.12) 50%, rgba(75, 215, 109, 0.12) 100%);
 }
 
 body {

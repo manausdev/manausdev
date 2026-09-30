@@ -20,13 +20,13 @@ describe('Link', () => {
 
   it('permite sobrescrever classes preservando a variant', () => {
     render(
-      <Link href="/devs" variant="button" className="!py-2.5 !px-4 text-xs">
+      <Link href="/devs" variant="button" className="custom-link compact">
         GitHub
       </Link>,
     );
     const className = screen.getByRole('link').className;
     expect(className).toContain(styles.button);
-    expect(className).toContain('text-xs');
+    expect(className).toContain('custom-link');
   });
 });
 

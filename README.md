@@ -33,7 +33,7 @@ Plataforma fullstack que conecta **pessoas, projetos, empresas, vagas, eventos e
 
 - **Framework:** [Next.js 16](https://nextjs.org/) (App Router, React 19, Server & Client Components)
 - **Linguagem:** [TypeScript](https://www.typescriptlang.org/)
-- **Estilização:** **CSS Modules + design tokens** (custom properties) — zero bibliotecas de UI; o Tailwind está em remoção ([ADR 0017](docs/adr/0017-css-modules-migration-icons-and-audit-findings.md))
+- **Estilização:** **CSS Modules + design tokens** (custom properties) — zero bibliotecas de UI; Tailwind totalmente removido ([ADR 0017](docs/adr/0017-css-modules-migration-icons-and-audit-findings.md))
 - **BaaS & Backend:** [Supabase](https://supabase.com/) (`@supabase/ssr`) — PostgreSQL com Row Level Security (RLS), triggers e migrations versionadas
 - **Autenticação:** Supabase Auth (Email/Senha + OAuth GitHub) com sessão SSR via cookies
 - **Testes & Design system:** Vitest + Testing Library · Storybook
@@ -141,7 +141,7 @@ A direção de longo prazo está consolidada no [ADR 0021](docs/adr/0021-communi
 
 | Fase | Escopo | Status |
 |:---:|---|:---:|
-| 0 | Fechar o zero-deps: tokens `@theme` → `:root`, `cn()` local, remoção do Tailwind | 🔶 Em andamento |
+| 0 | Fechar o zero-deps: tokens `@theme` → `:root`, `cn()` local, remoção do Tailwind | ✅ Concluída |
 | 1 | GitHub como produto (labels, discussions, issues do roadmap) | ⬜ |
 | 2 | Extração incremental de `domains/` (developers primeiro) | ⬜ |
 | 3 | Person & Identity — papéis com escopo, skills, experiências | ⬜ |

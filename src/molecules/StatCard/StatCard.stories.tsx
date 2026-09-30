@@ -15,7 +15,10 @@ export const Default: Story = {};
 
 export const Bar: Story = {
   render: (args) => (
-    <div className="glass-card rounded-xl p-6 grid grid-cols-2 md:grid-cols-4 gap-4 divide-y md:divide-y-0 md:divide-x divide-border-strong/30">
+    <div
+      className="glass-card"
+      style={{ borderRadius: 12, padding: 24, display: 'grid', gridTemplateColumns: 'repeat(4, minmax(0, 1fr))', gap: 16 }}
+    >
       <StatCard {...args} />
       <StatCard {...args} value={42} label="Projetos Tech" tone="accent" href="/projetos" />
       <StatCard {...args} value={7} label="Comunidades Ativas" tone="accent" href="/comunidades" />

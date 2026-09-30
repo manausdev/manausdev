@@ -21,13 +21,13 @@ describe('Chip', () => {
 
   it('permite sobrescrever classes preservando a variant', () => {
     render(
-      <Chip variant="river" className="!text-[11px] font-mono font-semibold">
+      <Chip variant="river" className="custom-chip font-semibold">
         TypeScript
       </Chip>,
     );
     const className = screen.getByText('TypeScript').className;
     expect(className).toContain(styles.river);
-    expect(className).toContain('font-mono');
+    expect(className).toContain('custom-chip');
   });
 
   it('nao usa texto de baixo contraste no variant dark', () => {
