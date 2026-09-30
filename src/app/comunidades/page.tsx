@@ -66,7 +66,6 @@ export default function ComunidadesPage() {
                   <img
                     src={comm.image_url}
                     alt={comm.name}
-                    className={styles.cardImageImg}
                   />
                 ) : (
                   <div className={styles.cardImagePlaceholder}>

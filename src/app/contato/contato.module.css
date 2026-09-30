@@ -72,7 +72,6 @@
 .success {
   text-align: center;
   padding: 2.5rem 1rem;
-  space-y: 0.75rem;
 }
 
 .successIcon {
@@ -97,6 +96,16 @@
   color: var(--muted);
   max-width: 28rem;
   margin-inline: auto;
+}
+
+.successName {
+  color: var(--ink);
+}
+
+.successEmail {
+  font-family: var(--font-mono-theme);
+  font-weight: 600;
+  color: var(--accent-text);
 }
 
 .successBtn {
@@ -164,7 +173,6 @@
 .input {
   width: 100%;
   padding: 0.625rem 0.875rem;
-  padding-left: 2.75rem;
   font-size: 0.875rem;
   color: var(--ink);
   background-color: var(--surface);

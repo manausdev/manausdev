@@ -99,7 +99,7 @@ function EmpresasContent() {
             placeholder="Buscar por nome, setor ou descrição..."
             value={searchTerm}
             onChange={(e) => handleSearchChange(e.target.value)}
-            className={`manaus-input ${styles.searchInput}`}
+            className={styles.searchInput}
           />
         </div>
 

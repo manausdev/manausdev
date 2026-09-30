@@ -84,8 +84,8 @@ export default function RegisterPage() {
     <div className={styles.wrapper}>
       <div className={styles.card}>
         <div className={styles.header}>
-          <div className={styles.iconBox}>
-            <span>🌿</span>
+          <div className={styles.logoWrap}>
+            <span className={styles.logoEmoji}>🌿</span>
           </div>
           <h1 className={styles.title}>Junte-se à ManausDev</h1>
           <p className={styles.subtitle}>
@@ -95,14 +95,14 @@ export default function RegisterPage() {
 
         {errorMsg && (
           <div className={styles.errorBanner}>
-            <AlertCircleIcon className={styles.bannerIconError} />
+            <AlertCircleIcon className={styles.errorIcon} />
             <span>{errorMsg}</span>
           </div>
         )}
 
         {successMsg && (
           <div className={styles.successBanner}>
-            <CheckCircle2Icon className={styles.bannerIconSuccess} />
+            <CheckCircle2Icon className={styles.successIcon} />
             <span>{successMsg}</span>
           </div>
         )}
@@ -111,7 +111,7 @@ export default function RegisterPage() {
           <div className={styles.field}>
             <label className={styles.label}>Nome Completo</label>
             <div className={styles.inputWrap}>
-              <UserIcon className={styles.fieldIcon} />
+              <UserIcon className={styles.inputIcon} />
               <input
                 type="text"
                 required
@@ -126,14 +126,14 @@ export default function RegisterPage() {
           <div className={styles.field}>
             <label className={styles.label}>Username (@)</label>
             <div className={styles.inputWrap}>
-              <span className={styles.fieldPrefix}>@</span>
+              <span className={styles.usernamePrefix}>@</span>
               <input
                 type="text"
                 required
                 placeholder="seunome"
                 value={username}
                 onChange={(e) => setUsername(e.target.value.toLowerCase().replace(/[^a-z0-9_-]/g, ''))}
-                className={styles.usernameInput}
+                className={`${styles.input} ${styles.usernameInput}`}
               />
             </div>
           </div>
@@ -141,7 +141,7 @@ export default function RegisterPage() {
           <div className={styles.field}>
             <label className={styles.label}>Email</label>
             <div className={styles.inputWrap}>
-              <MailIcon className={styles.fieldIcon} />
+              <MailIcon className={styles.inputIcon} />
               <input
                 type="email"
                 required
@@ -156,7 +156,7 @@ export default function RegisterPage() {
           <div className={styles.field}>
             <label className={styles.label}>Senha (mínimo 6 caracteres)</label>
             <div className={styles.inputWrap}>
-              <LockIcon className={styles.fieldIcon} />
+              <LockIcon className={styles.inputIcon} />
               <input
                 type="password"
                 required
@@ -203,6 +203,7 @@ export default function RegisterPage() {
         <div className={styles.divider}>
           <div className={styles.dividerLine} />
           <span className={styles.dividerText}>OU CADASTRE COM</span>
+          <div className={styles.dividerLine} />
         </div>
 
         <button
@@ -214,7 +215,7 @@ export default function RegisterPage() {
           Cadastrar com GitHub
         </button>
 
-        <p className={styles.footer}>
+        <p className={styles.footerText}>
           Já tem uma conta?{' '}
           <Link href="/auth/login" className={styles.footerLink}>
             Entrar aqui

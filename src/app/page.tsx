@@ -261,7 +261,7 @@ export default async function HomePage() {
                     </div>
                     <div className={styles.projectSideFooter}>
                       <span className={`${styles.chipLeaf} ${styles.projectSideChip}`}>{proj.stack?.[0] || 'Tech'}</span>
-                      <span className={`${styles.projectSideNote} ${styles.sideNote}`}>Feito em Manaus</span>
+                      <span className={styles.projectSideNote}>Feito em Manaus</span>
                     </div>
                   </Link>
                 ))}
@@ -278,7 +278,7 @@ export default async function HomePage() {
           <div className={styles.sideSection}>
             <div className={styles.sideHeader}>
               <h2 className={styles.sideTitle}>
-                <CalendarDaysIcon className={`${styles.sideTitleIcon} ${styles.calendarIcon}`} />
+                <CalendarDaysIcon className={styles.sideTitleIcon} />
                 Próximos Eventos
               </h2>
               <Link href="/eventos" className={styles.viewAllSide}>
@@ -306,10 +306,10 @@ export default async function HomePage() {
                       <div className={styles.eventInfo}>
                         <h4 className={styles.eventTitle}>{ev.title}</h4>
                         <p className={styles.eventLocation}>
-                          <MapPinIcon className={`${styles.mapPinIcon} ${styles.eventLocationIcon}`} /> {ev.location}
+                          <MapPinIcon size="xxs" /> {ev.location}
                         </p>
                       </div>
-                      <ChevronRightIcon className={`${styles.chevronIcon} ${styles.chevronRight}`} />
+                      <ChevronRightIcon className={styles.chevronIcon} />
                     </Link>
                   </li>
                 );

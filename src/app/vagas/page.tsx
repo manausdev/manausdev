@@ -110,7 +110,7 @@ function VagasContent() {
               placeholder="Buscar por cargo, especialidade ou empresa..."
               value={searchTerm}
               onChange={(e) => handleSearchChange(e.target.value)}
-              className={`manaus-input ${styles.searchInput}`}
+              className={styles.searchInput}
             />
           </div>
 
