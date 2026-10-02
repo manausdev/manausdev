@@ -98,7 +98,7 @@ function DiscoveryContent() {
 
 export default function DiscoveryPage() {
   return (
-    <Suspense fallback={null}>
+    <Suspense fallback={<div className={styles.container} />}>
       <DiscoveryContent />
     </Suspense>
   );

@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/infrastructure/supabase/client';
-import type { NewsCategory } from '@/types/database';
+import type { Database, NewsCategory } from '@/types/database';
 import { MessageSquareIcon, SaveIcon, AlertCircleIcon, CheckCircle2Icon } from '@/components/icons';
 import styles from './novo.module.css';
 
@@ -35,7 +35,7 @@ export default function NovaNoticiaPage() {
         return;
       }
 
-      const payload = {
+      const payload: Database['public']['Tables']['news']['Insert'] = {
         title: form.title,
         excerpt: form.excerpt || null,
         content: form.content || null,

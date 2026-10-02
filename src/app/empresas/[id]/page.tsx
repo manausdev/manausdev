@@ -13,6 +13,7 @@ import { createPublicClient } from '@/infrastructure/supabase/public';
 import { MOCK_COMPANIES, MOCK_JOBS } from '@/lib/data/mock';
 import { fetchById, fetchIdsForStaticParams } from '@/lib/data/source';
 import { useMockData } from '@/lib/env';
+import { safeUrl } from '@/lib/utils';
 import type { Company, Job } from '@/types/database';
 import styles from './detail.module.css';
 
@@ -121,9 +122,9 @@ export default async function CompanyDetailPage({ params }: CompanyDetailPagePro
               </div>
             </div>
 
-            {company.website && (
+            {safeUrl(company.website) && (
               <a
-                href={company.website}
+                href={safeUrl(company.website)!}
                 target="_blank"
                 rel="noreferrer"
                 className={styles.btnPrimary}

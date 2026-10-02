@@ -20,6 +20,7 @@ import {
   ExternalLinkIcon
 } from '@/components/icons';
 import type { Profile, Project, Database, ProjectLinks } from '@/types/database';
+import { safeUrl } from '@/lib/utils';
 import { AdminProfileTypes } from '@/organisms/AdminProfileTypes/AdminProfileTypes';
 import styles from './dashboard.module.css';
 
@@ -549,9 +550,9 @@ export default function DashboardPage() {
                           </span>
                         ))}
                       </div>
-                      {proj.links?.demo || proj.links?.github ? (
+                      {safeUrl(proj.links?.demo || proj.links?.github) && (
                         <a
-                          href={proj.links.demo || proj.links.github}
+                          href={safeUrl(proj.links?.demo || proj.links?.github)!}
                           target="_blank"
                           rel="noreferrer"
                           className={styles.projLink}
@@ -559,7 +560,7 @@ export default function DashboardPage() {
                           <span>Ver</span>
                           <ExternalLinkIcon className={styles.iconSm} />
                         </a>
-                      ) : null}
+                      )}
                     </div>
                   </div>
                 ))}

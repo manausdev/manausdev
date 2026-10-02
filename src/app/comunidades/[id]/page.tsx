@@ -12,6 +12,7 @@ import { MOCK_COMMUNITIES, getMockChannelsByCommunity } from '@/lib/data/mock';
 import { fetchById, fetchIdsForStaticParams } from '@/lib/data/source';
 import { useMockData } from '@/lib/env';
 import { createPublicClient } from '@/infrastructure/supabase/public';
+import { safeUrl } from '@/lib/utils';
 import type { Community, CommunityChannel } from '@/types/database';
 import ChannelList from '../ChannelList';
 import styles from './detail.module.css';
@@ -113,19 +114,22 @@ export default async function CommunityDetailPage({ params }: CommunityDetailPag
             <div>
               <h2 className={styles.sectionTitle}>Canais de Comunicação & Participação</h2>
               <div className={styles.links}>
-                {Object.entries(community.links).map(([key, url]) => (
-                  <a
-                    key={key}
-                    href={url}
-                    target="_blank"
-                    rel="noreferrer"
-                    className={styles.link}
-                  >
-                    <MessageSquareIcon className={styles.linkIcon} />
-                    <span>Entrar no {key}</span>
-                    <ExternalLinkIcon size="xs" className={styles.linkExternal} />
-                  </a>
-                ))}
+                {Object.entries(community.links).map(([key, url]) => {
+                  const safe = safeUrl(url);
+                  return safe ? (
+                    <a
+                      key={key}
+                      href={safe}
+                      target="_blank"
+                      rel="noreferrer"
+                      className={styles.link}
+                    >
+                      <MessageSquareIcon className={styles.linkIcon} />
+                      <span>Entrar no {key}</span>
+                      <ExternalLinkIcon size="xs" className={styles.linkExternal} />
+                    </a>
+                  ) : null;
+                })}
               </div>
             </div>
           )}

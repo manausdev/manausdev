@@ -12,7 +12,7 @@ import {
 } from '@/components/icons';
 import { MOCK_EVENTS } from '@/lib/data/mock';
 import { fetchById, fetchIdsForStaticParams } from '@/lib/data/source';
-import { formatDate } from '@/lib/utils';
+import { formatDate, safeUrl } from '@/lib/utils';
 import type { EventItem } from '@/types/database';
 import styles from './detail.module.css';
 
@@ -80,8 +80,8 @@ export default async function EventDetailPage({ params }: EventDetailPageProps) 
               </div>
             </div>
 
-            {event.link && (
-              <a href={event.link} target="_blank" rel="noreferrer" className={styles.cta}>
+            {safeUrl(event.link) && (
+              <a href={safeUrl(event.link)!} target="_blank" rel="noreferrer" className={styles.cta}>
                 <span>Garantir Inscrição</span>
                 <ExternalLinkIcon />
               </a>
@@ -103,8 +103,8 @@ export default async function EventDetailPage({ params }: EventDetailPageProps) 
               <h3 className={styles.venueTitle}>Localização do Encontro</h3>
               <p className={styles.venueText}>{event.location}</p>
             </div>
-            {event.link && (
-              <a href={event.link} target="_blank" rel="noreferrer" className={styles.secondaryBtn}>
+            {safeUrl(event.link) && (
+              <a href={safeUrl(event.link)!} target="_blank" rel="noreferrer" className={styles.secondaryBtn}>
                 Página Oficial do Evento
               </a>
             )}

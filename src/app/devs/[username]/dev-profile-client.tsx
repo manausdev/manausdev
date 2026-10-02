@@ -17,6 +17,7 @@ import { GithubIcon, LinkedinIcon } from '@/components/icons';
 import { createClient } from '@/infrastructure/supabase/client';
 import { MOCK_PROJECTS, MOCK_EVENTS } from '@/lib/data/mock';
 import { useMockData } from '@/lib/env';
+import { safeUrl } from '@/lib/utils';
 import { seniorityLabel } from '@/domains/developers/model';
 import { createDevelopersService } from '@/domains/developers/service';
 import { createMockDevelopersRepository } from '@/domains/developers/repository';
@@ -178,9 +179,9 @@ export default function DevProfileClient() {
           </div>
 
           <div className={styles.actions}>
-            {dev.github && (
+            {safeUrl(dev.github) && (
               <a
-                href={dev.github}
+                href={safeUrl(dev.github)!}
                 target="_blank"
                 rel="noreferrer"
                 className={`${styles.btn} ${styles.btnSecondary}`}
@@ -189,9 +190,9 @@ export default function DevProfileClient() {
                 <span>GitHub</span>
               </a>
             )}
-            {dev.website && (
+            {safeUrl(dev.website) && (
               <a
-                href={dev.website}
+                href={safeUrl(dev.website)!}
                 target="_blank"
                 rel="noreferrer"
                 className={`${styles.btn} ${styles.btnPrimary}`}
@@ -200,9 +201,9 @@ export default function DevProfileClient() {
                 <span>Website</span>
               </a>
             )}
-            {dev.linkedin && (
+            {safeUrl(dev.linkedin) && (
               <a
-                href={dev.linkedin}
+                href={safeUrl(dev.linkedin)!}
                 target="_blank"
                 rel="noreferrer"
                 aria-label={`LinkedIn de ${displayName}`}
