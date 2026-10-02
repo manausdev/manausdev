@@ -168,6 +168,57 @@ export interface ContactMessage {
   created_at?: string;
 }
 
+export interface Badge {
+  id: string;
+  slug: string;
+  name: string;
+  description?: string | null;
+  criteria_json?: Json | null;
+  icon?: string | null;
+  created_at?: string;
+}
+
+export interface UserBadge {
+  user_id: string;
+  badge_id: string;
+  awarded_at?: string;
+  evidence_json?: Json | null;
+}
+
+export interface ReputationEvent {
+  id: string;
+  user_id: string;
+  type: string;
+  source_table: string;
+  source_id: string;
+  points: number;
+  metadata?: Json | null;
+  created_at?: string;
+}
+
+export interface Report {
+  id: string;
+  reporter_id?: string | null;
+  target_type: string;
+  target_id: string;
+  reason: string;
+  status?: string | null;
+  reviewed_by?: string | null;
+  reviewed_at?: string | null;
+  created_at?: string;
+}
+
+export interface Verification {
+  id: string;
+  user_id: string;
+  type: string;
+  status?: string | null;
+  evidence_url?: string | null;
+  reviewed_by?: string | null;
+  reviewed_at?: string | null;
+  created_at?: string;
+}
+
 export interface Database {
   public: {
     Tables: {
@@ -610,6 +661,171 @@ export interface Database {
           referencedRelation: string;
           referencedColumns: string[];
         }[];
+      };
+      badges: {
+        Row: Badge;
+        Insert: {
+          id?: string;
+          slug: string;
+          name: string;
+          description?: string | null;
+          criteria_json?: Json | null;
+          icon?: string | null;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          slug?: string;
+          name?: string;
+          description?: string | null;
+          criteria_json?: Json | null;
+          icon?: string | null;
+          created_at?: string;
+        };
+        Relationships: [];
+      };
+      user_badges: {
+        Row: UserBadge;
+        Insert: {
+          user_id: string;
+          badge_id: string;
+          awarded_at?: string;
+          evidence_json?: Json | null;
+        };
+        Update: {
+          user_id?: string;
+          badge_id?: string;
+          awarded_at?: string;
+          evidence_json?: Json | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'user_badges_user_id_fkey';
+            columns: ['user_id'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'user_badges_badge_id_fkey';
+            columns: ['badge_id'];
+            isOneToOne: false;
+            referencedRelation: 'badges';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      reputation_events: {
+        Row: ReputationEvent;
+        Insert: {
+          id?: string;
+          user_id: string;
+          type: string;
+          source_table: string;
+          source_id: string;
+          points: number;
+          metadata?: Json | null;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          user_id?: string;
+          type?: string;
+          source_table?: string;
+          source_id?: string;
+          points?: number;
+          metadata?: Json | null;
+          created_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'reputation_events_user_id_fkey';
+            columns: ['user_id'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      reports: {
+        Row: Report;
+        Insert: {
+          id?: string;
+          reporter_id?: string | null;
+          target_type: string;
+          target_id: string;
+          reason: string;
+          status?: string | null;
+          reviewed_by?: string | null;
+          reviewed_at?: string | null;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          reporter_id?: string | null;
+          target_type?: string;
+          target_id?: string;
+          reason?: string;
+          status?: string | null;
+          reviewed_by?: string | null;
+          reviewed_at?: string | null;
+          created_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'reports_reporter_id_fkey';
+            columns: ['reporter_id'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'reports_reviewed_by_fkey';
+            columns: ['reviewed_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      verifications: {
+        Row: Verification;
+        Insert: {
+          id?: string;
+          user_id: string;
+          type: string;
+          status?: string | null;
+          evidence_url?: string | null;
+          reviewed_by?: string | null;
+          reviewed_at?: string | null;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          user_id?: string;
+          type?: string;
+          status?: string | null;
+          evidence_url?: string | null;
+          reviewed_by?: string | null;
+          reviewed_at?: string | null;
+          created_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'verifications_user_id_fkey';
+            columns: ['user_id'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'verifications_reviewed_by_fkey';
+            columns: ['reviewed_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+        ];
       };
     };
     Views: Record<string, never>;
