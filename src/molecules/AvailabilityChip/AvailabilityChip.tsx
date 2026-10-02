@@ -1,4 +1,4 @@
-import { availabilityMeta } from '@/lib/devs-meta';
+import { availabilityMeta } from '@/domains/developers/model';
 import { cn } from '@/lib/utils';
 import styles from './AvailabilityChip.module.css';
 

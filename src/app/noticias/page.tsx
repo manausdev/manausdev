@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { MessageSquareIcon, SearchIcon, ArrowRightIcon, ClockIcon } from '@/components/icons';
 import { MOCK_NEWS } from '@/lib/data/mock';
-import { createClient } from '@/lib/supabase/client';
+import { createClient } from '@/infrastructure/supabase/client';
 import { useMockData } from '@/lib/env';
 import { NEWS_CATEGORIES, categoryLabel, formatDate } from '@/lib/news-meta';
 import type { NewsItem } from '@/types/database';

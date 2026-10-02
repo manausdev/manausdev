@@ -10,8 +10,11 @@ import {
   MapIcon, 
   Flower2Icon 
 } from '@/components/icons';
-import { createClient } from '@/lib/supabase/server';
-import { MOCK_DEVS, MOCK_PROJECTS, MOCK_EVENTS, MOCK_NEWS, MOCK_JOBS, MOCK_COMMUNITIES } from '@/lib/data/mock';
+import { createClient } from '@/infrastructure/supabase/server';
+import { MOCK_PROJECTS, MOCK_EVENTS, MOCK_NEWS, MOCK_JOBS, MOCK_COMMUNITIES } from '@/lib/data/mock';
+import { createDevelopersService } from '@/domains/developers/service';
+import { createMockDevelopersRepository } from '@/domains/developers/repository';
+import { createSupabaseDevelopersRepository } from '@/infrastructure/supabase/repositories/developers';
 import { resolveList } from '@/lib/data/source';
 import { buildAgenda, agendaDay } from '@/lib/agenda';
 import { categoryLabel } from '@/lib/news-meta';
@@ -20,14 +23,15 @@ import styles from './page.module.css';
 
 export default async function HomePage() {
   const useMock = useMockData();
+  const mockDevelopers = createDevelopersService(createMockDevelopersRepository());
 
-  let devs = useMock ? MOCK_DEVS.slice(0, 4) : [];
+  let devs = useMock ? await mockDevelopers.featured(4) : [];
   let projects = useMock ? MOCK_PROJECTS.slice(0, 3) : [];
   let events = useMock ? MOCK_EVENTS : [];
   let news = useMock ? MOCK_NEWS : [];
   let jobs = useMock ? MOCK_JOBS.slice(0, 3) : [];
 
-  let devsCount = useMock ? MOCK_DEVS.length : 0;
+  let devsCount = useMock ? await mockDevelopers.count() : 0;
   let projectsCount = useMock ? MOCK_PROJECTS.length : 0;
   let communitiesCount = useMock ? MOCK_COMMUNITIES.length : 0;
   let jobsCount = useMock ? MOCK_JOBS.length : 0;
@@ -35,18 +39,22 @@ export default async function HomePage() {
   if (!useMock) {
     try {
       const supabase = await createClient();
+      const developersService = createDevelopersService(
+        createSupabaseDevelopersRepository(supabase)
+      );
       const [
-        devsRes,
+        featuredDevs,
+        devsTotal,
         projectsRes,
         eventsRes,
         newsRes,
         jobsRes,
-        devsCountRes,
         projectsCountRes,
         communitiesCountRes,
         jobsCountRes,
       ] = await Promise.all([
-        supabase.from('profiles').select('id, username, full_name, avatar_url, role, skills').limit(4),
+        developersService.featured(4),
+        developersService.count(),
         supabase.from('projects').select('*').limit(3),
         supabase.from('events').select('*').order('date', { ascending: true }).limit(6),
         supabase
@@ -56,19 +64,18 @@ export default async function HomePage() {
           .order('published_at', { ascending: false })
           .limit(6),
         supabase.from('jobs').select('*').limit(3),
-        supabase.from('profiles').select('*', { count: 'exact', head: true }),
         supabase.from('projects').select('*', { count: 'exact', head: true }),
         supabase.from('communities').select('*', { count: 'exact', head: true }),
         supabase.from('jobs').select('*', { count: 'exact', head: true }),
       ]);
 
-      devs = resolveList([], devsRes.data);
+      devs = resolveList([], featuredDevs);
       projects = resolveList([], projectsRes.data);
       events = resolveList([], eventsRes.data);
       news = resolveList([], newsRes.data);
       jobs = resolveList([], jobsRes.data);
 
-      devsCount = devsCountRes.count ?? 0;
+      devsCount = devsTotal;
       projectsCount = projectsCountRes.count ?? 0;
       communitiesCount = communitiesCountRes.count ?? 0;
       jobsCount = jobsCountRes.count ?? 0;

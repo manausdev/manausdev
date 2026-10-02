@@ -6,7 +6,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { SearchIcon, Code2Icon, ExternalLinkIcon, ArrowRightIcon } from '@/components/icons';
 import { GithubIcon } from '@/components/icons';
 import { MOCK_PROJECTS } from '@/lib/data/mock';
-import { createClient } from '@/lib/supabase/client';
+import { createClient } from '@/infrastructure/supabase/client';
 import { useMockData } from '@/lib/env';
 import type { Project } from '@/types/database';
 import styles from './projetos.module.css';

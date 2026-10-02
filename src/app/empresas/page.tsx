@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Building2Icon, MapPinIcon, UsersIcon, SearchIcon, ArrowRightIcon } from '@/components/icons';
 import { MOCK_COMPANIES } from '@/lib/data/mock';
-import { createClient } from '@/lib/supabase/client';
+import { createClient } from '@/infrastructure/supabase/client';
 import { useMockData } from '@/lib/env';
 import type { Company } from '@/types/database';
 import styles from './empresas.module.css';

@@ -16,37 +16,29 @@ import {
   XIcon,
 } from '@/components/icons';
 import { GithubIcon } from '@/components/icons';
-import { createClient } from '@/lib/supabase/client';
 import { cn } from '@/lib/utils';
 import { ListingGrid } from '@/organisms/ListingGrid/ListingGrid';
-import {
-  MOCK_DEVS,
-  getMockDevStats,
-} from '@/lib/data/mock';
 import {
   AVAILABILITY_FILTERS,
   SENIORITY_LABELS,
   SORT_OPTIONS,
-} from '@/lib/devs-meta';
+  type DevWithStats,
+  PAGE_SIZE,
+} from '@/domains/developers/model';
+import { parseDeveloperFilters } from '@/domains/developers/schemas';
+import { createDevelopersService } from '@/domains/developers/service';
+import { createMockDevelopersRepository } from '@/domains/developers/repository';
+import { createSupabaseDevelopersRepository } from '@/infrastructure/supabase/repositories/developers';
+import { createClient } from '@/infrastructure/supabase/client';
 import { useMockData } from '@/lib/env';
 import { AvailabilityChip } from '@/molecules/AvailabilityChip';
-import type { Profile } from '@/types/database';
 import styles from './devs.module.css';
 
-const PAGE_SIZE = 24;
-
-interface DevWithStats extends Profile {
-  projects_count: number;
-  events_count: number;
-}
-
-interface RawProfileWithCounts extends Profile {
-  projects?: { count: number }[];
-  events?: { count: number }[];
-}
-
-function sanitizeSearchTerm(term: string): string {
-  return term.replace(/[,%()\\]/g, ' ').replace(/\s+/g, ' ').trim();
+function buildDevelopersService(useMock: boolean) {
+  const repository = useMock
+    ? createMockDevelopersRepository()
+    : createSupabaseDevelopersRepository(createClient());
+  return createDevelopersService(repository);
 }
 
 function formatMemberSince(iso?: string): string {
@@ -65,18 +57,15 @@ function DevsDirectory() {
   const searchParams = useSearchParams();
   const useMock = useMockData();
 
-  const searchTerm = searchParams.get('q') ?? '';
-  const selectedStacks = useMemo(() => {
-    const stacks = [...searchParams.getAll('stack'), ...searchParams.getAll('skill')];
-    return Array.from(new Set(stacks));
-  }, [searchParams]);
-  const cityFilter = searchParams.get('cidade') ?? '';
-  const availabilityParam =
-    searchParams.get('disponibilidade') ??
-    (searchParams.get('available') === 'true' ? 'aberto' : '');
-  const seniorityFilter = searchParams.get('senioridade') ?? '';
-  const sortOption = searchParams.get('sort') ?? 'recentes';
-  const page = Math.max(1, parseInt(searchParams.get('page') ?? '1', 10) || 1);
+  const {
+    search: searchTerm,
+    stacks: selectedStacks,
+    city: cityFilter,
+    availability: availabilityParam,
+    seniority: seniorityFilter,
+    sort: sortOption,
+    page,
+  } = useMemo(() => parseDeveloperFilters(searchParams), [searchParams]);
 
   const [inputValue, setInputValue] = useState(searchTerm);
   const [devs, setDevs] = useState<DevWithStats[]>([]);
@@ -90,67 +79,16 @@ function DevsDirectory() {
   }, [searchTerm]);
 
   const loadFacets = useCallback(async () => {
-    if (useMock) {
-      const mockSkillCounts = new Map<string, number>();
-      for (const dev of MOCK_DEVS) {
-        for (const skill of dev.skills ?? []) {
-          mockSkillCounts.set(skill, (mockSkillCounts.get(skill) ?? 0) + 1);
-        }
-      }
-      const mockFacets = Array.from(mockSkillCounts.entries())
-        .map(([skill, count]) => ({ skill, count }))
-        .sort((a, b) => b.count - a.count || a.skill.localeCompare(b.skill))
-        .slice(0, 12);
-      setSkillFacets(mockFacets);
-
-      const unique = Array.from(
-        new Set(MOCK_DEVS.map((d) => d.city).filter((c): c is string => Boolean(c)))
-      ).sort((a, b) => a.localeCompare(b));
-      setCities(unique.length > 0 ? unique : ['Manaus']);
-      return;
-    }
-
     try {
-      const supabase = createClient();
-      const [{ data: skillsData }, { data: citiesData }] = await Promise.all([
-        supabase.from('profiles').select('skills').limit(1000),
-        supabase.from('profiles').select('city').limit(1000),
-      ]);
-
-      if (skillsData && skillsData.length > 0) {
-        const counts = new Map<string, number>();
-        for (const row of skillsData as Pick<Profile, 'skills'>[]) {
-          for (const skill of row.skills ?? []) {
-            counts.set(skill, (counts.get(skill) ?? 0) + 1);
-          }
-        }
-        setSkillFacets(
-          Array.from(counts.entries())
-            .map(([skill, count]) => ({ skill, count }))
-            .sort((a, b) => b.count - a.count || a.skill.localeCompare(b.skill))
-            .slice(0, 12)
-        );
-      } else {
-        setSkillFacets([]);
-      }
-
-      if (citiesData && citiesData.length > 0) {
-        const unique = Array.from(
-          new Set(
-            (citiesData as Pick<Profile, 'city'>[])
-              .map((c) => c.city)
-              .filter((c): c is string => Boolean(c))
-          )
-        ).sort((a, b) => a.localeCompare(b));
-        setCities(unique.length > 0 ? unique : ['Manaus']);
-      } else {
-        setCities(['Manaus']);
-      }
+      const service = buildDevelopersService(useMock);
+      const facets = await service.facets();
+      setSkillFacets(facets.skills);
+      setCities(facets.cities);
     } catch {
       setSkillFacets([]);
       setCities(['Manaus']);
     }
-  }, []);
+  }, [useMock]);
 
   useEffect(() => {
     loadFacets();
@@ -158,95 +96,19 @@ function DevsDirectory() {
 
   const loadDevs = useCallback(async () => {
     setLoading(true);
-    const clean = sanitizeSearchTerm(searchTerm);
-    const availabilityDb = AVAILABILITY_FILTERS.find((a) => a.param === availabilityParam)?.db;
-
-    if (useMock) {
-      const filtered = MOCK_DEVS.filter((dev) => {
-        if (clean) {
-          const haystack = `${dev.full_name} ${dev.username} ${dev.role ?? ''} ${dev.bio ?? ''}`.toLowerCase();
-          if (!haystack.includes(clean.toLowerCase())) return false;
-        }
-        if (
-          selectedStacks.length > 0 &&
-          !selectedStacks.every((s) =>
-            (dev.skills ?? []).some((sk) => sk.toLowerCase() === s.toLowerCase())
-          )
-        ) {
-          return false;
-        }
-        if (cityFilter && (dev.city ?? 'Manaus') !== cityFilter) return false;
-        if (availabilityDb && dev.availability !== availabilityDb) return false;
-        if (seniorityFilter && dev.seniority !== seniorityFilter) return false;
-        return true;
-      });
-
-      filtered.sort((a, b) => {
-        if (sortOption === 'nome') return (a.full_name ?? '').localeCompare(b.full_name ?? '');
-        if (sortOption === 'antigos') return (a.created_at ?? '').localeCompare(b.created_at ?? '');
-        return (b.created_at ?? '').localeCompare(a.created_at ?? '');
-      });
-
-      const start = (page - 1) * PAGE_SIZE;
-      const pageRows = filtered.slice(start, start + PAGE_SIZE);
-      setDevs(
-        pageRows.map((dev) => ({
-          ...dev,
-          projects_count: getMockDevStats(dev.id).projects,
-          events_count: getMockDevStats(dev.id).events,
-        }))
-      );
-      setTotal(filtered.length);
-      setLoading(false);
-      return;
-    }
-
     try {
-      const supabase = createClient();
-      let query = supabase
-        .from('profiles')
-        .select(
-          'id, username, full_name, avatar_url, role, bio, city, location, seniority, availability, skills, github, website, created_at, projects(count), events(count)',
-          { count: 'exact' }
-        );
-
-      if (clean) {
-        query = query.or(
-          `full_name.ilike.%${clean}%,username.ilike.%${clean}%,role.ilike.%${clean}%,bio.ilike.%${clean}%`
-        );
-      }
-      if (selectedStacks.length > 0) query = query.contains('skills', selectedStacks);
-      if (cityFilter) query = query.eq('city', cityFilter);
-      if (availabilityDb) query = query.eq('availability', availabilityDb);
-      if (seniorityFilter) query = query.eq('seniority', seniorityFilter);
-
-      if (sortOption === 'nome') {
-        query = query.order('full_name', { ascending: true });
-      } else if (sortOption === 'antigos') {
-        query = query.order('created_at', { ascending: true, nullsFirst: false });
-      } else {
-        query = query.order('created_at', { ascending: false, nullsFirst: false });
-      }
-
-      query = query.range((page - 1) * PAGE_SIZE, page * PAGE_SIZE - 1);
-
-      const { data, count, error } = await query;
-      if (error) throw error;
-
-      if (data && data.length > 0) {
-        const rows = data as unknown as RawProfileWithCounts[];
-        setDevs(
-          rows.map((row) => ({
-            ...row,
-            projects_count: row.projects?.[0]?.count ?? 0,
-            events_count: row.events?.[0]?.count ?? 0,
-          }))
-        );
-        setTotal(count ?? data.length);
-      } else {
-        setDevs([]);
-        setTotal(0);
-      }
+      const service = buildDevelopersService(useMock);
+      const { devs: rows, total: totalCount } = await service.list({
+        search: searchTerm,
+        stacks: selectedStacks,
+        city: cityFilter,
+        availability: availabilityParam,
+        seniority: seniorityFilter,
+        sort: sortOption,
+        page,
+      });
+      setDevs(rows);
+      setTotal(totalCount);
     } catch {
       setDevs([]);
       setTotal(0);

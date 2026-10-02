@@ -1,4 +1,4 @@
-import { createPublicClient } from '@/lib/supabase/public';
+import { createPublicClient } from '@/infrastructure/supabase/public';
 import { useMockData } from '@/lib/env';
 
 /**

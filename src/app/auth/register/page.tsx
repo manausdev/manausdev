@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { createClient } from '@/lib/supabase/client';
+import { createClient } from '@/infrastructure/supabase/client';
 import { MailIcon, LockIcon, UserIcon, AlertCircleIcon, ArrowRightIcon, CheckCircle2Icon } from '@/components/icons';
 import { GithubIcon } from '@/components/icons';
 import styles from './register.module.css';

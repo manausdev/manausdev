@@ -11,7 +11,7 @@ import {
 import { MOCK_COMMUNITIES, getMockChannelsByCommunity } from '@/lib/data/mock';
 import { fetchById, fetchIdsForStaticParams } from '@/lib/data/source';
 import { useMockData } from '@/lib/env';
-import { createPublicClient } from '@/lib/supabase/public';
+import { createPublicClient } from '@/infrastructure/supabase/public';
 import type { Community, CommunityChannel } from '@/types/database';
 import ChannelList from '../ChannelList';
 import styles from './detail.module.css';
