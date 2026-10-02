@@ -164,6 +164,14 @@
   padding-bottom: 0.25rem;
 }
 
+.typeFilters {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding-bottom: 0.25rem;
+}
+
 .sizeFilterLabel {
   font-size: 0.625rem;
   font-weight: 600;
