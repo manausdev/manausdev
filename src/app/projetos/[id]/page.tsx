@@ -11,6 +11,7 @@ import {
 import { GithubIcon } from '@/components/icons';
 import { MOCK_PROJECTS } from '@/lib/data/mock';
 import { fetchById, fetchIdsForStaticParams } from '@/lib/data/source';
+import { serializeJsonLd } from '@/lib/json-ld';
 import type { Project } from '@/types/database';
 import styles from './detail.module.css';
 
@@ -61,7 +62,7 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
     <div className={styles.container}>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(jsonLd) }}
       />
 
       <Link href="/projetos" className={styles.backLink}>

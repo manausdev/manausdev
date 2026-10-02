@@ -5,6 +5,7 @@ import { ArrowLeftIcon, ClockIcon, UserIcon, MessageSquareIcon } from '@/compone
 import { MOCK_NEWS } from '@/lib/data/mock';
 import { fetchById, fetchIdsForStaticParams } from '@/lib/data/source';
 import { categoryLabel, formatDate } from '@/lib/news-meta';
+import { serializeJsonLd } from '@/lib/json-ld';
 import { siteUrl } from '@/lib/site';
 import type { NewsItem } from '@/types/database';
 import styles from './detail.module.css';
@@ -65,7 +66,7 @@ export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
     <div className={styles.container}>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(jsonLd) }}
       />
 
       <Link href="/noticias" className={styles.backLink}>
