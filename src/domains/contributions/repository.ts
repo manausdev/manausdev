@@ -1,3 +1,5 @@
+import type { ReputationEvent } from '@/types/database';
+
 export class ContributionsRepository {
   async listBadges() {
     return [];
@@ -5,7 +7,7 @@ export class ContributionsRepository {
   async listUserBadges(userId: string) {
     return [];
   }
-  async listReputationEvents(userId: string) {
+  async listReputationEvents(userId: string): Promise<ReputationEvent[]> {
     return [];
   }
 }

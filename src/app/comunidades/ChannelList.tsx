@@ -1,5 +1,6 @@
 import { getMockChannelsByCommunity } from '@/lib/data/mock';
 import { platformMeta } from '@/lib/channels-meta';
+import { safeUrl } from '@/lib/utils';
 import type { CommunityChannel } from '@/types/database';
 import styles from './ChannelList.module.css';
 
@@ -22,9 +23,9 @@ export default function ChannelList({ channels }: { channels: CommunityChannel[]
                 {(channel.members_count ?? 0).toLocaleString('pt-BR')}
               </span>
             )}
-            {channel.url && (
+            {safeUrl(channel.url) && (
               <a
-                href={channel.url}
+                href={safeUrl(channel.url)!}
                 target="_blank"
                 rel="noreferrer"
                 className={styles.channelJoin}

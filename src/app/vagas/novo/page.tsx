@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/infrastructure/supabase/client';
+import type { Database } from '@/types/database';
 import { BriefcaseIcon, SaveIcon, AlertCircleIcon, CheckCircle2Icon } from '@/components/icons';
 import styles from './novo.module.css';
 
@@ -37,7 +38,7 @@ export default function NovaVagaPage() {
         return;
       }
 
-      const payload = {
+      const payload: Database['public']['Tables']['jobs']['Insert'] = {
         title: form.title,
         description: form.description || null,
         company_name: form.company_name || null,

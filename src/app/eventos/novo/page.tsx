@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/infrastructure/supabase/client';
+import type { Database } from '@/types/database';
 import { CalendarDaysIcon, SaveIcon, AlertCircleIcon, CheckCircle2Icon } from '@/components/icons';
 import styles from './novo.module.css';
 
@@ -34,7 +35,7 @@ export default function NovoEventoPage() {
         return;
       }
 
-      const payload = {
+      const payload: Database['public']['Tables']['events']['Insert'] = {
         title: form.title,
         description: form.description || null,
         date: new Date(form.date).toISOString(),
