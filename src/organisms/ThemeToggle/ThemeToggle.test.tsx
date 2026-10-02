@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
-import { ThemeToggle } from './ThemeToggle';
+import { ThemeToggle, themeInitScript } from './ThemeToggle';
 import styles from './ThemeToggle.module.css';
 
 describe('ThemeToggle', () => {
@@ -17,5 +17,11 @@ describe('ThemeToggle', () => {
     expect(document.documentElement.classList.contains('dark')).toBe(true);
     fireEvent.click(btn);
     expect(document.documentElement.classList.contains('dark')).toBe(false);
+  });
+
+  it('themeInitScript suporta parâmetro de URL para auditoria', () => {
+    expect(themeInitScript).toContain('URLSearchParams');
+    expect(themeInitScript).toContain('theme');
+    expect(themeInitScript).toContain('dark');
   });
 });

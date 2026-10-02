@@ -66,8 +66,14 @@ node bin/bml.mjs shot http://localhost:3000 screenshot.png --full --width=390
 # Tema escuro via media emulation
 node bin/bml.mjs shot http://localhost:3000 dark.png --color-scheme=dark
 
+# Tema escuro real via parâmetro de URL (app usa classe .dark)
+node bin/bml.mjs shot http://localhost:3000/?theme=dark dark-real.png --width=390
+
 # Auditoria em múltiplas larguras — sai com código 1 se falhar
 node bin/bml.mjs audit http://localhost:3000/devs --widths=390,768,1440 --json=report.json
+
+# Auditoria do modo escuro real
+node bin/bml.mjs audit http://localhost:3000/devs?theme=dark --widths=390,768,1440 --json=report-dark.json
 ```
 
 `bml audit` imprime uma linha por URL × largura e distingue três situações de
@@ -129,4 +135,6 @@ viewport: 390x844
    de `localStorage` precisa de espera explícita; sem ela a auditoria mede o
    estado vazio.
 5. **Conferir light e dark.** Tokens semânticos devem manter contraste nos dois
-   modos; emulação é `--color-scheme=dark`.
+   modos. O app usa classe `.dark` controlada por `localStorage` e URL param.
+   Para auditoria real do modo escuro, use `?theme=dark` em vez de apenas
+   `--color-scheme=dark`.
