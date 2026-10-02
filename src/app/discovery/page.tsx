@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { SearchIcon, MapPinIcon, UsersIcon, BriefcaseIcon, Code2Icon, CalendarDaysIcon } from '@/components/icons';
@@ -9,7 +9,7 @@ import styles from './discovery.module.css';
 import { MOCK_DEVS } from '@/domains/developers/mock-data';
 import { MOCK_COMPANIES } from '@/lib/data/mock';
 
-export default function DiscoveryPage() {
+function DiscoveryContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -93,5 +93,13 @@ export default function DiscoveryPage() {
         </section>
       </div>
     </div>
+  );
+}
+
+export default function DiscoveryPage() {
+  return (
+    <Suspense fallback={<div className={styles.container} />}>
+      <DiscoveryContent />
+    </Suspense>
   );
 }

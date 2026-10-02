@@ -8,7 +8,7 @@ export type Json =
 
 export type ProfileType = 'dev' | 'empresa' | 'admin';
 
-export interface Profile {
+export type Profile = {
   id: string;
   username: string;
   full_name: string;
@@ -29,7 +29,7 @@ export interface Profile {
   updated_at?: string;
 }
 
-export interface Skill {
+export type Skill = {
   id: string;
   slug: string;
   name: string;
@@ -37,7 +37,7 @@ export interface Skill {
   created_at?: string;
 }
 
-export interface PersonSkill {
+export type PersonSkill = {
   person_id: string;
   skill_id: string;
   level?: string | null;
@@ -45,7 +45,7 @@ export interface PersonSkill {
   created_at?: string;
 }
 
-export interface JobSkill {
+export type JobSkill = {
   job_id: string;
   skill_id: string;
 }
@@ -56,7 +56,7 @@ export interface ProjectLinks {
   website?: string;
 }
 
-export interface Project {
+export type Project = {
   id: string;
   title: string;
   description: string;
@@ -71,7 +71,7 @@ export interface Project {
 
 export type OrgType = 'company' | 'university' | 'research' | 'government' | 'nonprofit' | 'collective';
 
-export interface Company {
+export type Company = {
   id: string;
   name: string;
   org_type?: OrgType | null;
@@ -86,7 +86,7 @@ export interface Company {
   created_at?: string;
 }
 
-export interface Community {
+export type Community = {
   id: string;
   name: string;
   description: string;
@@ -98,7 +98,7 @@ export interface Community {
   created_at?: string;
 }
 
-export interface EventItem {
+export type EventItem = {
   id: string;
   title: string;
   description?: string | null;
@@ -111,7 +111,7 @@ export interface EventItem {
   created_at?: string;
 }
 
-export interface Job {
+export type Job = {
   id: string;
   title: string;
   description?: string | null;
@@ -129,7 +129,7 @@ export interface Job {
 
 export type NewsCategory = 'geral' | 'evento' | 'vaga' | 'lancamento' | 'analise';
 
-export interface NewsItem {
+export type NewsItem = {
   id: string;
   title: string;
   excerpt?: string | null;
@@ -145,7 +145,7 @@ export interface NewsItem {
 
 export type ChannelPlatform = 'discord' | 'telegram' | 'whatsapp' | 'matrix';
 
-export interface CommunityChannel {
+export type CommunityChannel = {
   id: string;
   community_id: string;
   name: string;
@@ -168,7 +168,7 @@ export interface ContactMessage {
   created_at?: string;
 }
 
-export interface Badge {
+export type Badge = {
   id: string;
   slug: string;
   name: string;
@@ -178,14 +178,14 @@ export interface Badge {
   created_at?: string;
 }
 
-export interface UserBadge {
+export type UserBadge = {
   user_id: string;
   badge_id: string;
   awarded_at?: string;
   evidence_json?: Json | null;
 }
 
-export interface ReputationEvent {
+export type ReputationEvent = {
   id: string;
   user_id: string;
   type: string;
@@ -196,7 +196,7 @@ export interface ReputationEvent {
   created_at?: string;
 }
 
-export interface Report {
+export type Report = {
   id: string;
   reporter_id?: string | null;
   target_type: string;
@@ -208,7 +208,7 @@ export interface Report {
   created_at?: string;
 }
 
-export interface Verification {
+export type Verification = {
   id: string;
   user_id: string;
   type: string;
@@ -829,7 +829,25 @@ export interface Database {
       };
     };
     Views: Record<string, never>;
-    Functions: Record<string, never>;
+    Functions: {
+      insert_contact_safe: {
+        Args: {
+          p_name: string;
+          p_email: string;
+          p_subject: string;
+          p_message: string;
+        };
+        Returns: undefined;
+      };
+      delete_account: {
+        Args: Record<string, never>;
+        Returns: undefined;
+      };
+      export_user_data: {
+        Args: Record<string, never>;
+        Returns: Json;
+      };
+    };
     Enums: Record<string, never>;
     CompositeTypes: Record<string, never>;
   };

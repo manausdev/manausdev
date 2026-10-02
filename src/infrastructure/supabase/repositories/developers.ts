@@ -157,7 +157,6 @@ export function createSupabaseDevelopersRepository(
     async upsert(profile: ProfileUpsert): Promise<void> {
       const { error } = await supabase
         .from('profiles')
-        // @ts-expect-error Supabase postgrest query builder overload
         .upsert(profile);
       if (error) throw error;
     },
