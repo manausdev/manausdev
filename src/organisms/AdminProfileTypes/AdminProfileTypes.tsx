@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { ShieldIcon, SaveIcon, AlertCircleIcon, CheckCircle2Icon, UsersIcon } from '@/components/icons';
-import { createClient } from '@/lib/supabase/client';
+import { createClient } from '@/infrastructure/supabase/client';
 import { PROFILE_TYPE_OPTIONS, profileType, isAdminProfile } from '@/lib/profile-types';
 import type { Profile, ProfileType } from '@/types/database';
 import styles from './AdminProfileTypes.module.css';

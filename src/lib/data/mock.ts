@@ -1,5 +1,4 @@
 import type {
-  Profile,
   Project,
   EventItem,
   Company,
@@ -163,137 +162,6 @@ export const MOCK_JOBS: Job[] = [
       'Construir experiências mobile modernas e fluidas para os maiores clientes do Norte.',
     link: 'https://rioapps.tech/vagas',
     created_at: new Date().toISOString(),
-  },
-];
-
-export const MOCK_DEVS: Profile[] = [
-  {
-    id: '1',
-    username: 'anasilva',
-    full_name: 'Ana Silva',
-    avatar_url: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=200&auto=format&fit=crop',
-    role: 'Frontend Engineer',
-    skills: ['React', 'TypeScript', 'Tailwind', 'Next.js'],
-    location: 'Manaus-AM',
-    city: 'Manaus',
-    seniority: 'senior',
-    availability: 'open',
-    bio: 'Apaixonada por interfaces acessíveis e performance web no coração da Amazônia.',
-    github: 'https://github.com/anasilva',
-    website: 'https://anasilva.dev',
-    linkedin: 'https://linkedin.com/in/anasilva',
-    profile_type: 'dev',
-    is_admin: false,
-    created_at: '2024-03-15T12:00:00.000Z',
-    updated_at: '2026-09-01T12:00:00.000Z',
-  },
-  {
-    id: '2',
-    username: 'brunocosta',
-    full_name: 'Bruno Costa',
-    avatar_url: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200&auto=format&fit=crop',
-    role: 'Backend Developer',
-    skills: ['Node.js', 'Go', 'Redis', 'PostgreSQL'],
-    location: 'Manaus-AM',
-    city: 'Manaus',
-    seniority: 'pleno',
-    availability: 'offers',
-    bio: 'Arquitetura de microsserviços e sistemas distribuídos de alta vazão.',
-    github: 'https://github.com/brunocosta',
-    profile_type: 'dev',
-    is_admin: false,
-    created_at: '2023-08-20T12:00:00.000Z',
-    updated_at: '2026-08-15T12:00:00.000Z',
-  },
-  {
-    id: '3',
-    username: 'carloslima',
-    full_name: 'Carlos Lima',
-    avatar_url: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=200&auto=format&fit=crop',
-    role: 'Fullstack Developer',
-    skills: ['Python', 'Django', 'AWS', 'React'],
-    location: 'Manaus-AM',
-    city: 'Manaus',
-    seniority: 'pleno',
-    availability: 'busy',
-    bio: 'Desenvolvedor fullstack com foco em soluções cloud e bioeconomia.',
-    github: 'https://github.com/carloslima',
-    profile_type: 'dev',
-    is_admin: false,
-    created_at: '2025-01-10T12:00:00.000Z',
-    updated_at: '2026-07-20T12:00:00.000Z',
-  },
-  {
-    id: '4',
-    username: 'fernandaoliveira',
-    full_name: 'Fernanda Oliveira',
-    avatar_url: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=200&auto=format&fit=crop',
-    role: 'Mobile Developer',
-    skills: ['React Native', 'Flutter', 'Firebase'],
-    location: 'Manaus-AM',
-    city: 'Manaus',
-    seniority: 'senior',
-    availability: 'open',
-    bio: 'Apps mobile performáticos e soluções offline-first para o interior do AM.',
-    github: 'https://github.com/fernandaoliveira',
-    profile_type: 'dev',
-    is_admin: false,
-    created_at: '2024-11-05T12:00:00.000Z',
-    updated_at: '2026-09-10T12:00:00.000Z',
-  },
-  {
-    id: '5',
-    username: 'gabrielsantos',
-    full_name: 'Gabriel Santos',
-    avatar_url: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=200&auto=format&fit=crop',
-    role: 'DevOps Engineer',
-    skills: ['Docker', 'Kubernetes', 'Terraform', 'CI/CD'],
-    location: 'Manaus-AM',
-    city: 'Manaus',
-    seniority: 'senior',
-    availability: 'offers',
-    bio: 'CI/CD, infraestrutura como código e observabilidade.',
-    github: 'https://github.com/gabrielsantos',
-    profile_type: 'dev',
-    is_admin: false,
-    created_at: '2023-05-02T12:00:00.000Z',
-    updated_at: '2026-06-30T12:00:00.000Z',
-  },
-  {
-    id: '6',
-    username: 'julianapereira',
-    full_name: 'Juliana Pereira',
-    avatar_url: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=200&auto=format&fit=crop',
-    role: 'Data Engineer',
-    skills: ['Python', 'Spark', 'SQL', 'GCP'],
-    location: 'Manaus-AM',
-    city: 'Manaus',
-    seniority: 'lead',
-    availability: 'busy',
-    bio: 'Pipelines de dados e analytics para preservação florestal e indústria 4.0.',
-    github: 'https://github.com/julianapereira',
-    profile_type: 'dev',
-    is_admin: false,
-    created_at: '2022-09-18T12:00:00.000Z',
-    updated_at: '2026-05-12T12:00:00.000Z',
-  },
-  {
-    id: '7',
-    username: 'rafaelnascimento',
-    full_name: 'Rafael Nascimento',
-    avatar_url: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=200&auto=format&fit=crop',
-    role: 'Fullstack Developer',
-    skills: ['Next.js', 'Supabase', 'TypeScript', 'Node.js'],
-    location: 'Manaus-AM',
-    city: 'Manaus',
-    seniority: 'pleno',
-    availability: 'open',
-    bio: 'Criando produtos digitais escaláveis e open-source para a comunidade amazonense.',
-    github: 'https://github.com/rafaelnascimento',
-    profile_type: 'admin',
-    is_admin: true,
-    created_at: '2026-01-25T12:00:00.000Z',
-    updated_at: '2026-09-20T12:00:00.000Z',
   },
 ];
 
@@ -536,28 +404,10 @@ export function getMockChannelsByCommunity(communityId: string): CommunityChanne
   return MOCK_CHANNELS.filter((c) => c.community_id === communityId);
 }
 
-export const MOCK_STATS = {
-  devs: MOCK_DEVS.length,
-  projects: MOCK_PROJECTS.length,
-  events: MOCK_EVENTS.length,
-  cities: Array.from(new Set(MOCK_DEVS.map((d) => d.city).filter(Boolean))).length,
-};
-
-export function getMockDevByUsername(username: string): Profile | undefined {
-  return MOCK_DEVS.find((d) => d.username.toLowerCase() === username.toLowerCase());
-}
-
 export function getMockProjectsByAuthor(authorId: string): Project[] {
   return MOCK_PROJECTS.filter((p) => p.author_id === authorId);
 }
 
 export function getMockEventsByOrganizer(organizerId: string): EventItem[] {
   return MOCK_EVENTS.filter((e) => e.organizer_id === organizerId);
-}
-
-export function getMockDevStats(devId: string) {
-  return {
-    projects: MOCK_PROJECTS.filter((p) => p.author_id === devId).length,
-    events: MOCK_EVENTS.filter((e) => e.organizer_id === devId).length,
-  };
 }

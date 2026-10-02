@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { MessageSquareIcon, SendIcon, CheckCircle2Icon, AlertCircleIcon } from '@/components/icons';
-import { createClient } from '@/lib/supabase/client';
+import { createClient } from '@/infrastructure/supabase/client';
 import type { Database } from '@/types/database';
 import styles from './contato.module.css';
 

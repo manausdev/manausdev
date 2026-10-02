@@ -17,7 +17,7 @@ vi.mock('next/navigation', () => ({
   usePathname: () => '/',
 }));
 
-vi.mock('@/lib/supabase/client', () => ({
+vi.mock('@/infrastructure/supabase/client', () => ({
   createClient: () => ({
     auth: {
       getUser: async () => ({ data: { user: null } }),

@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { SparklesIcon, UsersIcon, ArrowRightIcon } from '@/components/icons';
 import { MOCK_COMMUNITIES } from '@/lib/data/mock';
-import { createClient } from '@/lib/supabase/client';
+import { createClient } from '@/infrastructure/supabase/client';
 import { useMockData } from '@/lib/env';
 import type { Community, CommunityChannel } from '@/types/database';
 import ChannelList, { mockChannelsOf } from './ChannelList';

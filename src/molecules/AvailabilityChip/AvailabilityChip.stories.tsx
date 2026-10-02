@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
-import { AVAILABILITY_FILTERS } from '@/lib/devs-meta';
+import { AVAILABILITY_FILTERS } from '@/domains/developers/model';
 import { AvailabilityChip } from './AvailabilityChip';
 
 const meta = {

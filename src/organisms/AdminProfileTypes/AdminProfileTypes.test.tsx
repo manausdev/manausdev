@@ -25,7 +25,7 @@ let nextSelect: ProfileRow[] | null = ROWS;
 let nextError: { message: string } | null = null;
 const updateMock = vi.fn();
 
-vi.mock('@/lib/supabase/client', () => ({
+vi.mock('@/infrastructure/supabase/client', () => ({
   createClient: () => ({
     from: () => {
       const chain: Record<string, unknown> = {};

@@ -14,10 +14,13 @@ import {
   UserXIcon,
 } from '@/components/icons';
 import { GithubIcon, LinkedinIcon } from '@/components/icons';
-import { createClient } from '@/lib/supabase/client';
-import { MOCK_DEVS, MOCK_PROJECTS, MOCK_EVENTS } from '@/lib/data/mock';
+import { createClient } from '@/infrastructure/supabase/client';
+import { MOCK_PROJECTS, MOCK_EVENTS } from '@/lib/data/mock';
 import { useMockData } from '@/lib/env';
-import { seniorityLabel } from '@/lib/devs-meta';
+import { seniorityLabel } from '@/domains/developers/model';
+import { createDevelopersService } from '@/domains/developers/service';
+import { createMockDevelopersRepository } from '@/domains/developers/repository';
+import { createSupabaseDevelopersRepository } from '@/infrastructure/supabase/repositories/developers';
 import { AvailabilityChip } from '@/molecules/AvailabilityChip';
 import type { Profile, Project, EventItem } from '@/types/database';
 import styles from './dev-profile.module.css';
@@ -47,54 +50,41 @@ export default function DevProfileClient() {
     if (!username) return;
     let cancelled = false;
     const useMock = useMockData();
-
-    if (useMock) {
-      const mock = MOCK_DEVS.find((d) => d.username.toLowerCase() === username.toLowerCase());
-      if (mock) {
-        setDev(mock);
-        setDevProjects(MOCK_PROJECTS.filter((p) => p.author_id === mock.id));
-        setDevEvents(MOCK_EVENTS.filter((e) => e.organizer_id === mock.id));
-        setMissing(false);
-      } else {
-        setMissing(true);
-      }
-      setLoading(false);
-      return;
-    }
+    const repository = useMock
+      ? createMockDevelopersRepository()
+      : createSupabaseDevelopersRepository(createClient());
+    const service = createDevelopersService(repository);
 
     (async () => {
       try {
-        const supabase = createClient();
-        const { data: profileData } = await supabase
-          .from('profiles')
-          .select(
-            'id, username, full_name, avatar_url, role, bio, city, location, seniority, availability, skills, github, website, linkedin, is_admin, created_at, updated_at'
-          )
-          .eq('username', username)
-          .single();
-
+        const profile = await service.byUsername(username);
         if (cancelled) return;
 
-        const profile = (profileData as unknown as Profile) || null;
         if (profile) {
           setDev(profile);
           setMissing(false);
 
-          const [{ data: projectsData }, { data: eventsData }] = await Promise.all([
-            supabase
-              .from('projects')
-              .select('id, title, description, stack')
-              .eq('author_id', profile.id),
-            supabase
-              .from('events')
-              .select('id, title, description, date, location')
-              .eq('organizer_id', profile.id)
-              .order('date', { ascending: false }),
-          ]);
+          if (useMock) {
+            setDevProjects(MOCK_PROJECTS.filter((p) => p.author_id === profile.id));
+            setDevEvents(MOCK_EVENTS.filter((e) => e.organizer_id === profile.id));
+          } else {
+            const supabase = createClient();
+            const [{ data: projectsData }, { data: eventsData }] = await Promise.all([
+              supabase
+                .from('projects')
+                .select('id, title, description, stack')
+                .eq('author_id', profile.id),
+              supabase
+                .from('events')
+                .select('id, title, description, date, location')
+                .eq('organizer_id', profile.id)
+                .order('date', { ascending: false }),
+            ]);
 
-          if (cancelled) return;
-          setDevProjects(projectsData ?? []);
-          setDevEvents(eventsData ?? []);
+            if (cancelled) return;
+            setDevProjects(projectsData ?? []);
+            setDevEvents(eventsData ?? []);
+          }
         } else {
           setMissing(true);
         }

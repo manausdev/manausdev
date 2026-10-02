@@ -2,18 +2,19 @@ import type { MetadataRoute } from 'next';
 import {
   MOCK_COMMUNITIES,
   MOCK_COMPANIES,
-  MOCK_DEVS,
   MOCK_EVENTS,
   MOCK_JOBS,
   MOCK_NEWS,
   MOCK_PROJECTS,
 } from '@/lib/data/mock';
-import { createPublicClient } from '@/lib/supabase/public';
+import { createPublicClient } from '@/infrastructure/supabase/public';
+import { createDevelopersService } from '@/domains/developers/service';
+import { createMockDevelopersRepository } from '@/domains/developers/repository';
+import { createSupabaseDevelopersRepository } from '@/infrastructure/supabase/repositories/developers';
 import { useMockData } from '@/lib/env';
 import { siteUrl } from '@/lib/site';
 
 type Table =
-  | 'profiles'
   | 'projects'
   | 'jobs'
   | 'companies'
@@ -35,6 +36,12 @@ async function fetchColumn<T extends string>(table: Table, column: T): Promise<s
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const useMock = useMockData();
   const lastModified = new Date();
+
+  const developersService = createDevelopersService(
+    useMock
+      ? createMockDevelopersRepository()
+      : createSupabaseDevelopersRepository(createPublicClient())
+  );
 
   const staticRoutes: MetadataRoute.Sitemap = [
     '',
@@ -63,9 +70,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     eventIds,
     newsIds,
   ] = await Promise.all([
-    useMock
-      ? Promise.resolve(MOCK_DEVS.map((dev) => dev.username))
-      : fetchColumn('profiles', 'username'),
+    developersService.usernames().catch(() => [] as string[]),
     useMock ? Promise.resolve(MOCK_PROJECTS.map((p) => p.id)) : fetchColumn('projects', 'id'),
     useMock ? Promise.resolve(MOCK_JOBS.map((j) => j.id)) : fetchColumn('jobs', 'id'),
     useMock ? Promise.resolve(MOCK_COMPANIES.map((c) => c.id)) : fetchColumn('companies', 'id'),

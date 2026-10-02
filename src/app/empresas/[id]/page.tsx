@@ -9,7 +9,7 @@ import {
   UsersIcon, 
   BriefcaseIcon 
 } from '@/components/icons';
-import { createPublicClient } from '@/lib/supabase/public';
+import { createPublicClient } from '@/infrastructure/supabase/public';
 import { MOCK_COMPANIES, MOCK_JOBS } from '@/lib/data/mock';
 import { fetchById, fetchIdsForStaticParams } from '@/lib/data/source';
 import { useMockData } from '@/lib/env';

@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { BriefcaseIcon, MapPinIcon, SearchIcon, DollarSignIcon, ExternalLinkIcon, BuildingIcon, ArrowRightIcon } from '@/components/icons';
 import { MOCK_JOBS } from '@/lib/data/mock';
-import { createClient } from '@/lib/supabase/client';
+import { createClient } from '@/infrastructure/supabase/client';
 import { useMockData } from '@/lib/env';
 import type { Job } from '@/types/database';
 import styles from './vagas.module.css';
