@@ -48,7 +48,7 @@
 
 .nodeLabel {
   font-size: 10px;
-  fill: var(--ink);
+  fill: var(--body);
 }
 
 .edge {
