@@ -12,6 +12,7 @@ export const MOCK_COMPANIES: Company[] = [
   {
     id: '1',
     name: 'TechNorte',
+    org_type: 'company',
     industry: 'Software & Cloud',
     location: 'Manaus-AM',
     size: '50-200',
@@ -27,6 +28,7 @@ export const MOCK_COMPANIES: Company[] = [
   {
     id: '2',
     name: 'Amazônia Digital',
+    org_type: 'company',
     industry: 'E-commerce & Logística',
     location: 'Manaus-AM',
     size: '10-50',
@@ -41,6 +43,7 @@ export const MOCK_COMPANIES: Company[] = [
   {
     id: '3',
     name: 'RioApps',
+    org_type: 'company',
     industry: 'Mobile Solutions',
     location: 'Manaus-AM',
     size: '10-50',
@@ -56,6 +59,7 @@ export const MOCK_COMPANIES: Company[] = [
   {
     id: '4',
     name: 'Sidia Instituto de Ciência e Tecnologia',
+    org_type: 'research',
     industry: 'P&D e Inovação',
     location: 'Manaus-AM',
     size: '500+',

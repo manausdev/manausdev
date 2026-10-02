@@ -33,10 +33,11 @@ create table if not exists public.profiles (
   constraint profiles_profile_type_check check (profile_type in ('dev', 'empresa', 'admin'))
 );
 
--- 2. Tabela de Empresas
+-- 2. Tabela de Empresas / Organizações
 create table if not exists public.companies (
   id uuid default gen_random_uuid() primary key,
   name text not null,
+  org_type text default 'company',
   industry text,
   location text default 'Manaus-AM',
   size text,
@@ -44,7 +45,8 @@ create table if not exists public.companies (
   logo_url text,
   description text,
   created_by uuid references public.profiles(id) on delete set null,
-  created_at timestamptz default now() not null
+  created_at timestamptz default now() not null,
+  constraint companies_org_type_check check (org_type in ('company', 'university', 'research', 'government', 'nonprofit', 'collective'))
 );
 
 -- 3. Tabela de Projetos
