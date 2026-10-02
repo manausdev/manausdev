@@ -12,6 +12,7 @@ import {
 import { MOCK_JOBS } from '@/lib/data/mock';
 import { fetchById, fetchIdsForStaticParams } from '@/lib/data/source';
 import { safeUrl } from '@/lib/utils';
+import { serializeJsonLd } from '@/lib/json-ld';
 import type { Job } from '@/types/database';
 import styles from './detail.module.css';
 
@@ -71,7 +72,7 @@ export default async function JobDetailPage({ params }: JobDetailPageProps) {
     <div className={styles.container}>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(jsonLd) }}
       />
 
       <Link href="/vagas" className={styles.backLink}>
