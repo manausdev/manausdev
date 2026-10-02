@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/infrastructure/supabase/client';
+import type { NewsCategory } from '@/types/database';
 import { MessageSquareIcon, SaveIcon, AlertCircleIcon, CheckCircle2Icon } from '@/components/icons';
 import styles from './novo.module.css';
 
@@ -16,7 +17,7 @@ export default function NovaNoticiaPage() {
     title: '',
     excerpt: '',
     content: '',
-    category: 'geral',
+    category: 'geral' as NewsCategory,
     image_url: '',
     published: false,
   });
@@ -92,7 +93,7 @@ export default function NovaNoticiaPage() {
 
         <div className={styles.field}>
           <label>Categoria</label>
-          <select value={form.category} onChange={e => setForm({ ...form, category: e.target.value })}>
+          <select value={form.category} onChange={e => setForm({ ...form, category: e.target.value as NewsCategory })}>
             <option value="geral">Geral</option>
             <option value="evento">Evento</option>
             <option value="vaga">Vaga</option>
