@@ -1,5 +1,5 @@
-import manifest from './manifest';
 import { describe, it, expect } from 'vitest';
+import manifest from './manifest';
 
 describe('manifest', () => {
   it('should include PWA icons with correct sizes', () => {

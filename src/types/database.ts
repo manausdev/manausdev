@@ -27,7 +27,7 @@ export type Profile = {
   is_admin?: boolean | null;
   created_at?: string;
   updated_at?: string;
-}
+};
 
 export type Skill = {
   id: string;
@@ -35,7 +35,7 @@ export type Skill = {
   name: string;
   category?: string | null;
   created_at?: string;
-}
+};
 
 export type PersonSkill = {
   person_id: string;
@@ -43,12 +43,12 @@ export type PersonSkill = {
   level?: string | null;
   years?: number | null;
   created_at?: string;
-}
+};
 
 export type JobSkill = {
   job_id: string;
   skill_id: string;
-}
+};
 
 export interface ProjectLinks {
   github?: string;
@@ -67,7 +67,7 @@ export type Project = {
   author_id?: string | null;
   created_at?: string;
   updated_at?: string;
-}
+};
 
 export type OrgType = 'company' | 'university' | 'research' | 'government' | 'nonprofit' | 'collective';
 
@@ -84,7 +84,7 @@ export type Company = {
   description?: string | null;
   created_by?: string | null;
   created_at?: string;
-}
+};
 
 export type Community = {
   id: string;
@@ -96,7 +96,7 @@ export type Community = {
   logo_url?: string | null;
   image_url?: string | null;
   created_at?: string;
-}
+};
 
 export type EventItem = {
   id: string;
@@ -109,7 +109,7 @@ export type EventItem = {
   image_url?: string | null;
   organizer_id?: string | null;
   created_at?: string;
-}
+};
 
 export type Job = {
   id: string;
@@ -125,7 +125,7 @@ export type Job = {
   skills?: string[] | null;
   posted_by?: string | null;
   created_at?: string;
-}
+};
 
 export type NewsCategory = 'geral' | 'evento' | 'vaga' | 'lancamento' | 'analise';
 
@@ -141,7 +141,7 @@ export type NewsItem = {
   author_id?: string | null;
   created_at?: string;
   updated_at?: string;
-}
+};
 
 export type ChannelPlatform = 'discord' | 'telegram' | 'whatsapp' | 'matrix';
 
@@ -156,7 +156,7 @@ export type CommunityChannel = {
   created_by?: string | null;
   created_at?: string;
   updated_at?: string;
-}
+};
 
 export interface ContactMessage {
   id?: string;
@@ -176,14 +176,14 @@ export type Badge = {
   criteria_json?: Json | null;
   icon?: string | null;
   created_at?: string;
-}
+};
 
 export type UserBadge = {
   user_id: string;
   badge_id: string;
   awarded_at?: string;
   evidence_json?: Json | null;
-}
+};
 
 export type ReputationEvent = {
   id: string;
@@ -194,7 +194,7 @@ export type ReputationEvent = {
   points: number;
   metadata?: Json | null;
   created_at?: string;
-}
+};
 
 export type Report = {
   id: string;
@@ -206,7 +206,7 @@ export type Report = {
   reviewed_by?: string | null;
   reviewed_at?: string | null;
   created_at?: string;
-}
+};
 
 export type Verification = {
   id: string;
@@ -217,7 +217,7 @@ export type Verification = {
   reviewed_by?: string | null;
   reviewed_at?: string | null;
   created_at?: string;
-}
+};
 
 export interface Database {
   public: {
@@ -830,6 +830,14 @@ export interface Database {
     };
     Views: Record<string, never>;
     Functions: {
+      delete_account: {
+        Args: Record<PropertyKey, never>;
+        Returns: undefined;
+      };
+      export_user_data: {
+        Args: Record<PropertyKey, never>;
+        Returns: Json;
+      };
       insert_contact_safe: {
         Args: {
           p_name: string;
@@ -837,15 +845,7 @@ export interface Database {
           p_subject: string;
           p_message: string;
         };
-        Returns: undefined;
-      };
-      delete_account: {
-        Args: Record<string, never>;
-        Returns: undefined;
-      };
-      export_user_data: {
-        Args: Record<string, never>;
-        Returns: Json;
+        Returns: string;
       };
     };
     Enums: Record<string, never>;
