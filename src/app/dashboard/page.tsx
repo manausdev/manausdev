@@ -233,7 +233,6 @@ export default function DashboardPage() {
 
         const { data, error } = await supabase
           .from('projects')
-          // @ts-expect-error Supabase postgrest query builder overload
           .update(updatePayload)
           .eq('id', editingProjectId)
           .select()
@@ -260,7 +259,6 @@ export default function DashboardPage() {
 
         const { data, error } = await supabase
           .from('projects')
-          // @ts-expect-error Supabase postgrest query builder overload
           .insert(insertPayload)
           .select()
           .single();

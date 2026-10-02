@@ -85,7 +85,6 @@ export function AdminProfileTypes({ viewer }: AdminProfileTypesProps) {
       const supabase = createClient();
       const { error } = await supabase
         .from('profiles')
-        // @ts-expect-error Supabase postgrest query builder overload
         .update({ profile_type: next })
         .eq('id', target.id);
       if (error) throw error;

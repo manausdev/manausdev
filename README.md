@@ -4,7 +4,7 @@
 >
 > *Quem constrói tecnologia em Manaus está aqui.*
 
-[![CI](https://github.com/manausdev/manausdev/actions/workflows/ci.yml/badge.svg)](https://github.com/manausdev/manausdev/actions/workflows/ci.yml)
+[![CI](https://github.com/manausdev/manausdev.github.io/actions/workflows/ci.yml/badge.svg)](https://github.com/manausdev/manausdev.github.io/actions/workflows/ci.yml)
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 
 Plataforma fullstack que conecta **pessoas, projetos, empresas, vagas, eventos e comunidades** de tecnologia de Manaus. Não é um "LinkedIn regional": é o Community OS da região — identidade profissional, discovery local e o grafo da comunidade tech do Amazonas em um só lugar ([ADR 0021](docs/adr/0021-community-os-domain-architecture-and-roadmap.md)).
@@ -25,7 +25,7 @@ Plataforma fullstack que conecta **pessoas, projetos, empresas, vagas, eventos e
 - **PostgreSQL com RLS** e matriz de permissões por tipo de perfil (`dev` / `empresa` / `admin`) — [ADR 0016](docs/adr/0016-profile-types-and-permission-matrix.md)
 - **Design system atômico** (atoms → molecules → organisms → templates) em CSS Modules, sem bibliotecas de UI
 - **Modo claro/escuro** com tokens semânticos Blue-Tech
-- **Testes** com Vitest + Testing Library e **CI** com build, testes e auditoria de links
+- **Testes** com Vitest + Testing Library e **CI** com build, typecheck e testes
 
 ---
 
@@ -37,7 +37,7 @@ Plataforma fullstack que conecta **pessoas, projetos, empresas, vagas, eventos e
 - **BaaS & Backend:** [Supabase](https://supabase.com/) (`@supabase/ssr`) — PostgreSQL com Row Level Security (RLS), triggers e migrations versionadas
 - **Autenticação:** Supabase Auth (Email/Senha + OAuth GitHub) com sessão SSR via cookies
 - **Testes & Design system:** Vitest + Testing Library · Storybook
-- **CI/CD:** GitHub Actions (build + testes + auditoria de links) · Deploy na [Vercel](https://manausdev.vercel.app)
+- **CI/CD:** GitHub Actions (build + typecheck + testes) · Deploy na [Vercel](https://manausdev.vercel.app)
 
 ---
 
@@ -76,7 +76,7 @@ manausdev/
 │   └── seed.sql                    # Carga inicial de dados
 ├── scripts/                        # Scripts REST com Service Account — base do futuro appcli (NÃO REMOVER)
 ├── docs/adr/                       # Registro de decisões de arquitetura (ADR Log)
-└── .github/workflows/ci.yml        # CI: build + testes + auditoria de links
+└── .github/workflows/ci.yml        # CI: build + typecheck + testes
 ```
 
 ---

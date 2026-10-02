@@ -27,7 +27,7 @@ async function fetchColumn<T extends string>(table: Table, column: T): Promise<s
   try {
     const supabase = createPublicClient();
     const { data } = await supabase.from(table).select(column);
-    return (data ?? []).map((row) => String(row[column] ?? '')).filter(Boolean);
+    return (data ?? []).map((row) => String((row as Record<string, unknown>)[column] ?? '')).filter(Boolean);
   } catch {
     return [];
   }

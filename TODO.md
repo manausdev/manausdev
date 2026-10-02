@@ -67,7 +67,7 @@ Ao marcar um item, deixe a evidência verificável: arquivo, rota, tabela ou PR.
 - [ ] Configurar labels — só existem as labels padrão do GitHub; faltam as da seção 36
 - [x] Configurar branch protection
 - [x] Configurar Dependabot
-- [x] Configurar GitHub Actions — *parcial:* o CI valida HTML e links da produção; não roda `typecheck`, testes nem `build`
+- [x] Configurar GitHub Actions — o CI roda `typecheck`, testes e `build` em cada PR
 
 ---
 

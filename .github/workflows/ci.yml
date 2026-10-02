@@ -7,8 +7,8 @@ on:
     branches: [ main, master, develop ]
 
 jobs:
-  validate-html:
-    name: Validar HTML
+  ci:
+    name: Build, Typecheck e Testes
     runs-on: ubuntu-latest
 
     steps:
@@ -24,22 +24,11 @@ jobs:
       - name: Instalar dependências
         run: npm ci
 
-      - name: Validar HTML com htmlhint
-        run: npx htmlhint "**/*.html"
+      - name: Typecheck
+        run: npm run typecheck
 
-  check-links:
-    name: Verificar Links Quebrados
-    runs-on: ubuntu-latest
+      - name: Testes
+        run: npm test
 
-    steps:
-      - name: Fazer checkout do código
-        uses: actions/checkout@v4
-
-      - name: Configurar Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'npm'
-
-      - name: Verificar links quebrados
-        run: npx linkinator https://manausdev.vercel.app --recurse --skip "^https?://(?!manausdev\.vercel\.app)"
+      - name: Build
+        run: npm run build

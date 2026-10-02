@@ -8,7 +8,7 @@ export type Json =
 
 export type ProfileType = 'dev' | 'empresa' | 'admin';
 
-export interface Profile {
+export type Profile = {
   id: string;
   username: string;
   full_name: string;
@@ -27,28 +27,28 @@ export interface Profile {
   is_admin?: boolean | null;
   created_at?: string;
   updated_at?: string;
-}
+};
 
-export interface Skill {
+export type Skill = {
   id: string;
   slug: string;
   name: string;
   category?: string | null;
   created_at?: string;
-}
+};
 
-export interface PersonSkill {
+export type PersonSkill = {
   person_id: string;
   skill_id: string;
   level?: string | null;
   years?: number | null;
   created_at?: string;
-}
+};
 
-export interface JobSkill {
+export type JobSkill = {
   job_id: string;
   skill_id: string;
-}
+};
 
 export interface ProjectLinks {
   github?: string;
@@ -56,7 +56,7 @@ export interface ProjectLinks {
   website?: string;
 }
 
-export interface Project {
+export type Project = {
   id: string;
   title: string;
   description: string;
@@ -67,11 +67,11 @@ export interface Project {
   author_id?: string | null;
   created_at?: string;
   updated_at?: string;
-}
+};
 
 export type OrgType = 'company' | 'university' | 'research' | 'government' | 'nonprofit' | 'collective';
 
-export interface Company {
+export type Company = {
   id: string;
   name: string;
   org_type?: OrgType | null;
@@ -84,9 +84,9 @@ export interface Company {
   description?: string | null;
   created_by?: string | null;
   created_at?: string;
-}
+};
 
-export interface Community {
+export type Community = {
   id: string;
   name: string;
   description: string;
@@ -96,9 +96,9 @@ export interface Community {
   logo_url?: string | null;
   image_url?: string | null;
   created_at?: string;
-}
+};
 
-export interface EventItem {
+export type EventItem = {
   id: string;
   title: string;
   description?: string | null;
@@ -109,9 +109,9 @@ export interface EventItem {
   image_url?: string | null;
   organizer_id?: string | null;
   created_at?: string;
-}
+};
 
-export interface Job {
+export type Job = {
   id: string;
   title: string;
   description?: string | null;
@@ -125,11 +125,11 @@ export interface Job {
   skills?: string[] | null;
   posted_by?: string | null;
   created_at?: string;
-}
+};
 
 export type NewsCategory = 'geral' | 'evento' | 'vaga' | 'lancamento' | 'analise';
 
-export interface NewsItem {
+export type NewsItem = {
   id: string;
   title: string;
   excerpt?: string | null;
@@ -141,11 +141,11 @@ export interface NewsItem {
   author_id?: string | null;
   created_at?: string;
   updated_at?: string;
-}
+};
 
 export type ChannelPlatform = 'discord' | 'telegram' | 'whatsapp' | 'matrix';
 
-export interface CommunityChannel {
+export type CommunityChannel = {
   id: string;
   community_id: string;
   name: string;
@@ -156,7 +156,7 @@ export interface CommunityChannel {
   created_by?: string | null;
   created_at?: string;
   updated_at?: string;
-}
+};
 
 export interface ContactMessage {
   id?: string;
@@ -168,7 +168,7 @@ export interface ContactMessage {
   created_at?: string;
 }
 
-export interface Badge {
+export type Badge = {
   id: string;
   slug: string;
   name: string;
@@ -176,16 +176,16 @@ export interface Badge {
   criteria_json?: Json | null;
   icon?: string | null;
   created_at?: string;
-}
+};
 
-export interface UserBadge {
+export type UserBadge = {
   user_id: string;
   badge_id: string;
   awarded_at?: string;
   evidence_json?: Json | null;
-}
+};
 
-export interface ReputationEvent {
+export type ReputationEvent = {
   id: string;
   user_id: string;
   type: string;
@@ -194,9 +194,9 @@ export interface ReputationEvent {
   points: number;
   metadata?: Json | null;
   created_at?: string;
-}
+};
 
-export interface Report {
+export type Report = {
   id: string;
   reporter_id?: string | null;
   target_type: string;
@@ -206,9 +206,9 @@ export interface Report {
   reviewed_by?: string | null;
   reviewed_at?: string | null;
   created_at?: string;
-}
+};
 
-export interface Verification {
+export type Verification = {
   id: string;
   user_id: string;
   type: string;
@@ -217,7 +217,7 @@ export interface Verification {
   reviewed_by?: string | null;
   reviewed_at?: string | null;
   created_at?: string;
-}
+};
 
 export interface Database {
   public: {
@@ -829,7 +829,25 @@ export interface Database {
       };
     };
     Views: Record<string, never>;
-    Functions: Record<string, never>;
+    Functions: {
+      delete_account: {
+        Args: Record<PropertyKey, never>;
+        Returns: undefined;
+      };
+      export_user_data: {
+        Args: Record<PropertyKey, never>;
+        Returns: Json;
+      };
+      insert_contact_safe: {
+        Args: {
+          p_name: string;
+          p_email: string;
+          p_subject: string;
+          p_message: string;
+        };
+        Returns: string;
+      };
+    };
     Enums: Record<string, never>;
     CompositeTypes: Record<string, never>;
   };
