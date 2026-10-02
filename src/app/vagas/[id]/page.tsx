@@ -11,6 +11,7 @@ import {
 } from '@/components/icons';
 import { MOCK_JOBS } from '@/lib/data/mock';
 import { fetchById, fetchIdsForStaticParams } from '@/lib/data/source';
+import { safeUrl } from '@/lib/utils';
 import type { Job } from '@/types/database';
 import styles from './detail.module.css';
 
@@ -114,10 +115,10 @@ export default async function JobDetailPage({ params }: JobDetailPageProps) {
             </div>
           </div>
 
-          {job.link && (
+          {safeUrl(job.link) && (
             <div className={styles.btnWrap}>
               <a
-                href={job.link}
+                href={safeUrl(job.link)!}
                 target="_blank"
                 rel="noreferrer"
                 className={styles.btnPrimary}
@@ -158,9 +159,9 @@ export default async function JobDetailPage({ params }: JobDetailPageProps) {
             <ClockIcon className={styles.footerIcon} />
             Vaga ativa na comunidade ManausDev
           </span>
-          {job.link && (
+          {safeUrl(job.link) && (
             <a
-              href={job.link}
+              href={safeUrl(job.link)!}
               target="_blank"
               rel="noreferrer"
               className={styles.footerLink}

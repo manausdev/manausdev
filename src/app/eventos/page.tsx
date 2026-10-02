@@ -6,7 +6,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { CalendarDaysIcon, MapPinIcon, SearchIcon, ArrowRightIcon } from '@/components/icons';
 import { MOCK_EVENTS } from '@/lib/data/mock';
 import { createClient } from '@/infrastructure/supabase/client';
-import { formatDate } from '@/lib/utils';
+import { formatDate, safeUrl } from '@/lib/utils';
 import { useMockData } from '@/lib/env';
 import type { EventItem } from '@/types/database';
 import styles from './eventos.module.css';
@@ -170,9 +170,9 @@ function EventosContent() {
                     <ArrowRightIcon size="xs" />
                   </Link>
 
-                  {ev.link && (
+                  {safeUrl(ev.link) && (
                     <a
-                      href={ev.link}
+                      href={safeUrl(ev.link)!}
                       target="_blank"
                       rel="noreferrer"
                       className={styles.eventLink}

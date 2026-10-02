@@ -11,6 +11,7 @@ import {
 import { GithubIcon } from '@/components/icons';
 import { MOCK_PROJECTS } from '@/lib/data/mock';
 import { fetchById, fetchIdsForStaticParams } from '@/lib/data/source';
+import { safeUrl } from '@/lib/utils';
 import type { Project } from '@/types/database';
 import styles from './detail.module.css';
 
@@ -90,9 +91,9 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
           </div>
 
           <div className={styles.actions}>
-            {project.links?.github && (
+            {safeUrl(project.links?.github) && (
               <a
-                href={project.links.github}
+                href={safeUrl(project.links?.github)!}
                 target="_blank"
                 rel="noreferrer"
                 className={styles.btnSecondary}
@@ -101,9 +102,9 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
                 <span>Repositório</span>
               </a>
             )}
-            {project.links?.demo && (
+            {safeUrl(project.links?.demo) && (
               <a
-                href={project.links.demo}
+                href={safeUrl(project.links?.demo)!}
                 target="_blank"
                 rel="noreferrer"
                 className={styles.btnPrimary}
@@ -155,9 +156,9 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
             <ClockIcon className={styles.footerIcon} />
             Projeto em destaque na comunidade ManausDev
           </span>
-          {project.links?.github && (
+          {safeUrl(project.links?.github) && (
             <a
-              href={project.links.github}
+              href={safeUrl(project.links?.github)!}
               target="_blank"
               rel="noreferrer"
               className={styles.footerLink}

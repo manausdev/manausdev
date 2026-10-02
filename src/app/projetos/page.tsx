@@ -7,6 +7,7 @@ import { SearchIcon, Code2Icon, ExternalLinkIcon, ArrowRightIcon } from '@/compo
 import { GithubIcon } from '@/components/icons';
 import { MOCK_PROJECTS } from '@/lib/data/mock';
 import { createClient } from '@/infrastructure/supabase/client';
+import { safeUrl } from '@/lib/utils';
 import { useMockData } from '@/lib/env';
 import type { Project } from '@/types/database';
 import styles from './projetos.module.css';
@@ -187,9 +188,9 @@ function ProjetosContent() {
                   </Link>
 
                   <div className={styles.cardFooterIcons}>
-                    {proj.links?.github && (
+                    {safeUrl(proj.links?.github) && (
                       <a
-                        href={proj.links.github}
+                        href={safeUrl(proj.links?.github)!}
                         target="_blank"
                         rel="noreferrer"
                         className={styles.cardFooterIcon}
@@ -198,9 +199,9 @@ function ProjetosContent() {
                         <GithubIcon />
                       </a>
                     )}
-                    {proj.links?.demo && (
+                    {safeUrl(proj.links?.demo) && (
                       <a
-                        href={proj.links.demo}
+                        href={safeUrl(proj.links?.demo)!}
                         target="_blank"
                         rel="noreferrer"
                         className={styles.cardFooterIcon}
