@@ -112,7 +112,7 @@ O Tailwind foi totalmente removido do projeto. Estado final:
   contraste:
 
 ```bash
-node ../browser-mcp-lite/bin/bml.mjs audit http://localhost:3000/<rota> --widths=390,768,1440
+node ./tools/browser-mcp-lite/bin/bml.mjs audit http://localhost:3000/<rota> --widths=390,768,1440
 ```
 
 ---
