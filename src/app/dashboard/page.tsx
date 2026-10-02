@@ -2,8 +2,11 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { createClient } from '@/lib/supabase/client';
-import { AVAILABILITY_FILTERS } from '@/lib/devs-meta';
+import { createClient } from '@/infrastructure/supabase/client';
+import { AVAILABILITY_FILTERS } from '@/domains/developers/model';
+import { buildProfileUpsert } from '@/domains/developers/schemas';
+import { createDevelopersService } from '@/domains/developers/service';
+import { createSupabaseDevelopersRepository } from '@/infrastructure/supabase/repositories/developers';
 import { User } from '@supabase/supabase-js';
 import { 
   UserCircle2Icon, 
@@ -54,12 +57,11 @@ export default function DashboardPage() {
 
         setUser(currentUser);
 
-        // Fetch user profile from public.profiles
-        const { data: profileData } = await supabase
-          .from('profiles')
-          .select('*')
-          .eq('id', currentUser.id)
-          .single();
+        // Fetch user profile from the developers domain
+        const developersService = createDevelopersService(
+          createSupabaseDevelopersRepository(supabase)
+        );
+        const profileData = await developersService.byId(currentUser.id);
 
         if (profileData) {
           setProfile(profileData);
@@ -106,33 +108,10 @@ export default function DashboardPage() {
 
     try {
       const supabase = createClient();
-      const skillsArray = typeof profile.skills === 'string'
-        ? (profile.skills as string).split(',').map(s => s.trim()).filter(Boolean)
-        : profile.skills || [];
-
-      const profilePayload: Database['public']['Tables']['profiles']['Insert'] = {
-        id: user.id,
-        username: profile.username || user.email?.split('@')[0] || 'user',
-        full_name: profile.full_name || '',
-        role: profile.role || null,
-        bio: profile.bio || null,
-        location: profile.location || null,
-        city: profile.city || null,
-        seniority: profile.seniority || null,
-        github: profile.github || null,
-        website: profile.website || null,
-        linkedin: profile.linkedin || null,
-        availability: profile.availability || 'open',
-        skills: skillsArray,
-        updated_at: new Date().toISOString(),
-      };
-
-      const { error } = await supabase
-        .from('profiles')
-        // @ts-expect-error Supabase postgrest query builder overload
-        .upsert(profilePayload);
-
-      if (error) throw error;
+      const developersService = createDevelopersService(
+        createSupabaseDevelopersRepository(supabase)
+      );
+      await developersService.upsertProfile(buildProfileUpsert(user.id, user.email, profile));
 
       setSuccessMsg('Perfil atualizado com sucesso no Supabase!');
       setTimeout(() => setSuccessMsg(null), 4000);
@@ -184,6 +163,45 @@ export default function DashboardPage() {
       setTimeout(() => setSuccessMsg(null), 4000);
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : 'Falha ao excluir projeto.';
+      setErrorMsg(message);
+    }
+  };
+
+  const handleDeleteAccount = async () => {
+    if (!confirm('Tem certeza que deseja excluir sua conta? Esta ação não pode ser desfeita e removerá seus dados pessoais.')) return;
+    setErrorMsg(null);
+    try {
+      const supabase = createClient();
+      const { error } = await supabase.rpc('delete_account');
+      if (error) throw error;
+      setSuccessMsg('Conta excluída com sucesso. Você será desconectado.');
+      setTimeout(() => {
+        supabase.auth.signOut();
+        router.push('/');
+      }, 2000);
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Falha ao excluir conta.';
+      setErrorMsg(message);
+    }
+  };
+
+  const handleExportData = async () => {
+    setErrorMsg(null);
+    try {
+      const supabase = createClient();
+      const { data, error } = await supabase.rpc('export_user_data');
+      if (error) throw error;
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `manausdev-export-${new Date().toISOString().slice(0,10)}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+      setSuccessMsg('Dados exportados com sucesso!');
+      setTimeout(() => setSuccessMsg(null), 4000);
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Falha ao exportar dados.';
       setErrorMsg(message);
     }
   };
@@ -550,6 +568,22 @@ export default function DashboardPage() {
               </div>
             )}
           </div>
+        </div>
+      </div>
+
+      <div className={styles.card}>
+        <div className={styles.cardHeader}>
+          <UserCircle2Icon className={styles.cardHeaderIcon} />
+          <h2 className={styles.cardTitle}>Privacidade LGPD</h2>
+        </div>
+        <p className={styles.subtitle}>Gerencie seus dados pessoais conforme a Lei Geral de Proteção de Dados.</p>
+        <div className={styles.row2}>
+          <button onClick={handleExportData} className={`${styles.btnLeaf} ${styles.publishBtn}`}>
+            Exportar meus dados
+          </button>
+          <button onClick={handleDeleteAccount} className={styles.iconBtnDanger}>
+            Excluir conta
+          </button>
         </div>
       </div>
 

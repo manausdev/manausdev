@@ -44,7 +44,7 @@ export default function NovaEmpresaPage() {
         created_by: user.id,
       };
 
-      const { error: insertError } = await supabase.from('companies').insert(payload);
+      const { error: insertError } = await supabase.from('companies').insert([payload]);
       if (insertError) throw insertError;
 
       setSuccess(true);

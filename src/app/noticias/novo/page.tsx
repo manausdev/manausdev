@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/infrastructure/supabase/client';
-import { NewspaperIcon, SaveIcon, AlertCircleIcon, CheckCircle2Icon } from '@/components/icons';
+import { MessageSquareIcon, SaveIcon, AlertCircleIcon, CheckCircle2Icon } from '@/components/icons';
 import styles from './novo.module.css';
 
 export default function NovaNoticiaPage() {
@@ -45,7 +45,7 @@ export default function NovaNoticiaPage() {
         author_id: user.id,
       };
 
-      const { error: insertError } = await supabase.from('news').insert(payload);
+      const { error: insertError } = await supabase.from('news').insert([payload]);
       if (insertError) throw insertError;
 
       setSuccess(true);
@@ -60,7 +60,7 @@ export default function NovaNoticiaPage() {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <NewspaperIcon className={styles.icon} />
+        <MessageSquareIcon className={styles.icon} />
         <h1>Nova Notícia</h1>
         <p>Publique conteúdo para a comunidade</p>
       </div>

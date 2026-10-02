@@ -40,7 +40,7 @@ export default function NovaComunidadePage() {
         members_count: 0,
       };
 
-      const { error: insertError } = await supabase.from('communities').insert(payload);
+      const { error: insertError } = await supabase.from('communities').insert([payload]);
       if (insertError) throw insertError;
 
       setSuccess(true);

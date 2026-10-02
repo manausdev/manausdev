@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/infrastructure/supabase/client';
-import { CalendarIcon, SaveIcon, AlertCircleIcon, CheckCircle2Icon } from '@/components/icons';
+import { CalendarDaysIcon, SaveIcon, AlertCircleIcon, CheckCircle2Icon } from '@/components/icons';
 import styles from './novo.module.css';
 
 export default function NovoEventoPage() {
@@ -44,7 +44,7 @@ export default function NovoEventoPage() {
         organizer_id: user.id,
       };
 
-      const { error: insertError } = await supabase.from('events').insert(payload);
+      const { error: insertError } = await supabase.from('events').insert([payload]);
       if (insertError) throw insertError;
 
       setSuccess(true);
@@ -59,7 +59,7 @@ export default function NovoEventoPage() {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <CalendarIcon className={styles.icon} />
+        <CalendarDaysIcon className={styles.icon} />
         <h1>Novo Evento</h1>
         <p>Cadastre um evento para a comunidade</p>
       </div>

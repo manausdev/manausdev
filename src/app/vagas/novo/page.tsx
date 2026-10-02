@@ -50,7 +50,7 @@ export default function NovaVagaPage() {
         posted_by: user.id,
       };
 
-      const { error: insertError } = await supabase.from('jobs').insert(payload);
+      const { error: insertError } = await supabase.from('jobs').insert([payload]);
       if (insertError) throw insertError;
 
       setSuccess(true);
