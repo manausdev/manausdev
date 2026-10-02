@@ -1,0 +1,3 @@
+[submodule "tools/browser-mcp-lite"]
+	path = tools/browser-mcp-lite
+	url = https://github.com/manausdev/browser-mcp-lite.git
