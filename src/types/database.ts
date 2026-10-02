@@ -29,6 +29,27 @@ export interface Profile {
   updated_at?: string;
 }
 
+export interface Skill {
+  id: string;
+  slug: string;
+  name: string;
+  category?: string | null;
+  created_at?: string;
+}
+
+export interface PersonSkill {
+  person_id: string;
+  skill_id: string;
+  level?: string | null;
+  years?: number | null;
+  created_at?: string;
+}
+
+export interface JobSkill {
+  job_id: string;
+  skill_id: string;
+}
+
 export interface ProjectLinks {
   github?: string;
   demo?: string;
@@ -472,6 +493,84 @@ export interface Database {
             columns: ['created_by'];
             isOneToOne: false;
             referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      skills: {
+        Row: Skill;
+        Insert: {
+          id?: string;
+          slug: string;
+          name: string;
+          category?: string | null;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          slug?: string;
+          name?: string;
+          category?: string | null;
+          created_at?: string;
+        };
+        Relationships: [];
+      };
+      person_skills: {
+        Row: PersonSkill;
+        Insert: {
+          person_id: string;
+          skill_id: string;
+          level?: string | null;
+          years?: number | null;
+          created_at?: string;
+        };
+        Update: {
+          person_id?: string;
+          skill_id?: string;
+          level?: string | null;
+          years?: number | null;
+          created_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'person_skills_person_id_fkey';
+            columns: ['person_id'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'person_skills_skill_id_fkey';
+            columns: ['skill_id'];
+            isOneToOne: false;
+            referencedRelation: 'skills';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      job_skills: {
+        Row: JobSkill;
+        Insert: {
+          job_id: string;
+          skill_id: string;
+        };
+        Update: {
+          job_id?: string;
+          skill_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'job_skills_job_id_fkey';
+            columns: ['job_id'];
+            isOneToOne: false;
+            referencedRelation: 'jobs';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'job_skills_skill_id_fkey';
+            columns: ['skill_id'];
+            isOneToOne: false;
+            referencedRelation: 'skills';
             referencedColumns: ['id'];
           },
         ];
