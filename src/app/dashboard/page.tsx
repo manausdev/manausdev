@@ -2,11 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { createClient } from '@/infrastructure/supabase/client';
-import { AVAILABILITY_FILTERS } from '@/domains/developers/model';
-import { buildProfileUpsert } from '@/domains/developers/schemas';
-import { createDevelopersService } from '@/domains/developers/service';
-import { createSupabaseDevelopersRepository } from '@/infrastructure/supabase/repositories/developers';
+import { createClient } from '@/lib/supabase/client';
+import { AVAILABILITY_FILTERS } from '@/lib/devs-meta';
 import { User } from '@supabase/supabase-js';
 import { 
   UserCircle2Icon, 
@@ -57,11 +54,12 @@ export default function DashboardPage() {
 
         setUser(currentUser);
 
-        // Fetch user profile from the developers domain
-        const developersService = createDevelopersService(
-          createSupabaseDevelopersRepository(supabase)
-        );
-        const profileData = await developersService.byId(currentUser.id);
+        // Fetch user profile from public.profiles
+        const { data: profileData } = await supabase
+          .from('profiles')
+          .select('*')
+          .eq('id', currentUser.id)
+          .single();
 
         if (profileData) {
           setProfile(profileData);
@@ -108,10 +106,33 @@ export default function DashboardPage() {
 
     try {
       const supabase = createClient();
-      const developersService = createDevelopersService(
-        createSupabaseDevelopersRepository(supabase)
-      );
-      await developersService.upsertProfile(buildProfileUpsert(user.id, user.email, profile));
+      const skillsArray = typeof profile.skills === 'string'
+        ? (profile.skills as string).split(',').map(s => s.trim()).filter(Boolean)
+        : profile.skills || [];
+
+      const profilePayload: Database['public']['Tables']['profiles']['Insert'] = {
+        id: user.id,
+        username: profile.username || user.email?.split('@')[0] || 'user',
+        full_name: profile.full_name || '',
+        role: profile.role || null,
+        bio: profile.bio || null,
+        location: profile.location || null,
+        city: profile.city || null,
+        seniority: profile.seniority || null,
+        github: profile.github || null,
+        website: profile.website || null,
+        linkedin: profile.linkedin || null,
+        availability: profile.availability || 'open',
+        skills: skillsArray,
+        updated_at: new Date().toISOString(),
+      };
+
+      const { error } = await supabase
+        .from('profiles')
+        // @ts-expect-error Supabase postgrest query builder overload
+        .upsert(profilePayload);
+
+      if (error) throw error;
 
       setSuccessMsg('Perfil atualizado com sucesso no Supabase!');
       setTimeout(() => setSuccessMsg(null), 4000);
@@ -287,6 +308,14 @@ export default function DashboardPage() {
           <span>{errorMsg}</span>
         </div>
       )}
+
+      <div className={styles.quickLinks}>
+        <a href="/vagas/novo" className={styles.quickLink}>+ Nova Vaga</a>
+        <a href="/eventos/novo" className={styles.quickLink}>+ Novo Evento</a>
+        <a href="/empresas/novo" className={styles.quickLink}>+ Nova Empresa</a>
+        <a href="/comunidades/novo" className={styles.quickLink}>+ Nova Comunidade</a>
+        <a href="/noticias/novo" className={styles.quickLink}>+ Nova Notícia</a>
+      </div>
 
       <div className={styles.layout}>
         {/* Profile Settings Form */}
