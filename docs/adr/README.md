@@ -32,6 +32,7 @@
 | [ADR 0022](0022-svg-logo-header-light-dark-variants.md) | 2026-09-30 | UI / Identidade Visual | SVG Logo no Header com variante clara (Pantone 2026 C) | **Aceito** |
 | [ADR 0023](0023-generalizar-organizations-org-type.md) | 2026-10-02 | Ecossistema / Organizações | Generalizar Organizations com org_type incremental | **Proposto** |
 | [ADR 0024](0024-person-model-multiplos-papeis.md) | 2026-10-02 | Identidade / Person | Evoluir `profiles` para modelo Person com papéis múltiplos | **Proposto** |
+| [ADR 0026](0026-reputacao-badges-moderacao-fase-5.md) | 2026-10-02 | Reputação / Moderação | Reputação, badges e moderação — Fase 5 do Community OS | **Proposto** |
 
 ---
 
