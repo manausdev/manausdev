@@ -68,18 +68,7 @@ function LoginForm() {
   };
 
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.card}>
-        <div className={styles.header}>
-          <div className={styles.iconBox}>
-            <span>🌿</span>
-          </div>
-          <h1 className={styles.title}>Bem-vindo de volta</h1>
-          <p className={styles.subtitle}>
-            Acesse sua conta ManausDev e gerencie seu perfil profissional
-          </p>
-        </div>
-
+    <>
         {errorMsg && (
           <div className={styles.errorBanner}>
             <AlertCircleIcon className={styles.bannerIconError} />
@@ -149,8 +138,7 @@ function LoginForm() {
             Cadastre-se grátis
           </Link>
         </p>
-      </div>
-    </div>
+    </>
   );
 }
 
