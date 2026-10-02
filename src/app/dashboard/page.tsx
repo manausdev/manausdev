@@ -327,6 +327,14 @@ export default function DashboardPage() {
         </div>
       )}
 
+      <div className={styles.quickLinks}>
+        <a href="/vagas/novo" className={styles.quickLink}>+ Nova Vaga</a>
+        <a href="/eventos/novo" className={styles.quickLink}>+ Novo Evento</a>
+        <a href="/empresas/novo" className={styles.quickLink}>+ Nova Empresa</a>
+        <a href="/comunidades/novo" className={styles.quickLink}>+ Nova Comunidade</a>
+        <a href="/noticias/novo" className={styles.quickLink}>+ Nova Notícia</a>
+      </div>
+
       <div className={styles.layout}>
         {/* Profile Settings Form */}
         <div>
