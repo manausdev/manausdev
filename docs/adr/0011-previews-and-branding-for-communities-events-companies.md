@@ -26,7 +26,7 @@ Dando continuidade à padronização do Design System e elevação da experiênc
 
 4. **Tipagem e Mocks:**
    - Atualizadas interfaces TypeScript (`Community`, `EventItem`, `Company`) em [`src/types/database.ts`](../../src/types/database.ts).
-   - Populadas propriedades `image_url` e `logo_url` nos mocks de [`src/lib/data/mock-data.ts`](../../src/lib/data/mock-data.ts).
+   - Populadas propriedades `image_url` e `logo_url` nos mocks de [`src/lib/data/mock.ts`](../../src/lib/data/mock.ts).
 
 ## Consequências
 
