@@ -11,7 +11,7 @@
 | Componente / Camada | Status Atual | Detalhamento Técnico |
 |---|:---:|---|
 | **Ambiente Supabase** | ✅ Estruturado | Schema DDL (`supabase/schema.sql`) com RLS em todas as tabelas (incluindo `contacts`), Seeds (`supabase/seed.sql`) e fallback gracioso local. |
-| **Camada de Dados Client-side** | ✅ Ativa | Telas públicas consom `createBrowserClient` tipado com `Database` e fallback automático para `MOCK_*` (`src/lib/data/mock-data.ts`). |
+| **Camada de Dados Client-side** | ✅ Ativa | Telas públicas consom `createBrowserClient` tipado com `Database` e fallback automático para `MOCK_*` (`src/lib/data/mock.ts`). |
 | **Camada de Dados Server-side** | ✅ Ativa | `src/app/page.tsx` consome `createServerClient` em Server Component para contagens dinâmicas e pré-carregamento. |
 | **Autenticação (Auth)** | ✅ Funcional | Fluxos de login/cadastro com email/senha e OAuth GitHub via `@supabase/ssr`, sanitização de username, aceite de termos e suporte a `redirectedFrom`. |
 | **Proteção de Rotas** | ✅ Server + Client | `src/middleware.ts` verifica sessão Supabase via `@supabase/ssr` para `/dashboard/:path*` e redireciona para `/auth/login?redirectedFrom=...` quando não autenticado. O redirect client-side em `src/app/dashboard/page.tsx` permanece como fallback. Proteção real de dados continua sendo RLS no Supabase. |

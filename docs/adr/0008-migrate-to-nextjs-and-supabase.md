@@ -20,7 +20,7 @@ A versão inicial da plataforma ManausDev utilizava HTML, CSS e JavaScript vanil
    - Definir schema relacional PostgreSQL em `supabase/schema.sql` com tabelas para perfis (`profiles`), projetos (`projects`), empresas (`companies`), comunidades (`communities`), eventos (`events`) e vagas (`jobs`).
    - Aplicar políticas de Row Level Security (RLS) para proteção de escrita pelos proprietários e leitura pública.
    - Criar triggers PostgreSQL para criação automática de perfil de usuário ao registrar no Supabase Auth.
-   - Fornecer seed inicial em `supabase/seed.sql` e fallback local em `src/lib/data/mock-data.ts`.
+   - Fornecer seed inicial em `supabase/seed.sql` e fallback local em `src/lib/data/mock.ts`.
 
 3. **Compatibilidade de Deploy e Preservação de Scripts:**
    - Habilitar static export no Next.js (`output: 'export'`, `distDir: 'dist'`) para integração contínua com os scripts de deploy REST existentes (`scripts/deploy-hosting-rest.js`), preservando as regras do `AGENTS.md`.

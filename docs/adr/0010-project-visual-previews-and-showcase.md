@@ -39,5 +39,5 @@ A página de projetos ([`src/app/projetos/page.tsx`](../../src/app/projetos/page
 
 - [`src/app/projetos/page.tsx`](../../src/app/projetos/page.tsx)
 - [`src/app/dashboard/page.tsx`](../../src/app/dashboard/page.tsx)
-- [`src/lib/data/mock-data.ts`](../../src/lib/data/mock-data.ts)
+- [`src/lib/data/mock.ts`](../../src/lib/data/mock.ts)
 - [`docs/adr/0009-corporate-modern-green-tech-design-system.md`](./0009-corporate-modern-green-tech-design-system.md)
