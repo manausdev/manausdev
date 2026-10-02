@@ -48,9 +48,12 @@ export interface Project {
   updated_at?: string;
 }
 
+export type OrgType = 'company' | 'university' | 'research' | 'government' | 'nonprofit' | 'collective';
+
 export interface Company {
   id: string;
   name: string;
+  org_type?: OrgType | null;
   industry?: string | null;
   location?: string | null;
   size?: string | null;
@@ -240,6 +243,7 @@ export interface Database {
         Insert: {
           id?: string;
           name: string;
+          org_type?: OrgType | null;
           industry?: string | null;
           location?: string | null;
           size?: string | null;
@@ -253,6 +257,7 @@ export interface Database {
         Update: {
           id?: string;
           name?: string;
+          org_type?: OrgType | null;
           industry?: string | null;
           location?: string | null;
           size?: string | null;

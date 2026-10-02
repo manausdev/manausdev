@@ -17,10 +17,12 @@ function EmpresasContent() {
 
   const initialSearch = searchParams.get('q') || '';
   const initialSize = searchParams.get('size');
+  const initialType = searchParams.get('type');
 
   const [companies, setCompanies] = useState<Company[]>(() => (useMock ? MOCK_COMPANIES : []));
   const [searchTerm, setSearchTerm] = useState(initialSearch);
   const [selectedSize, setSelectedSize] = useState<string | null>(initialSize);
+  const [selectedType, setSelectedType] = useState<string | null>(initialType);
   const [loading, setLoading] = useState(!useMock);
 
   useEffect(() => {
@@ -45,10 +47,11 @@ function EmpresasContent() {
     loadCompanies();
   }, [useMock]);
 
-  const updateFilters = (newSearch: string, newSize: string | null) => {
+  const updateFilters = (newSearch: string, newSize: string | null, newType: string | null) => {
     const params = new URLSearchParams();
     if (newSearch) params.set('q', newSearch);
     if (newSize) params.set('size', newSize);
+    if (newType) params.set('type', newType);
 
     const queryString = params.toString();
     router.replace(`/empresas${queryString ? `?${queryString}` : ''}`, { scroll: false });
@@ -56,13 +59,19 @@ function EmpresasContent() {
 
   const handleSearchChange = (val: string) => {
     setSearchTerm(val);
-    updateFilters(val, selectedSize);
+    updateFilters(val, selectedSize, selectedType);
   };
 
   const handleSizeChange = (size: string | null) => {
     const nextSize = size === selectedSize ? null : size;
     setSelectedSize(nextSize);
-    updateFilters(searchTerm, nextSize);
+    updateFilters(searchTerm, nextSize, selectedType);
+  };
+
+  const handleTypeChange = (type: string | null) => {
+    const nextType = type === selectedType ? null : type;
+    setSelectedType(nextType);
+    updateFilters(searchTerm, selectedSize, nextType);
   };
 
   const filteredCompanies = useMemo(() => {
@@ -72,9 +81,10 @@ function EmpresasContent() {
         (comp.industry && comp.industry.toLowerCase().includes(searchTerm.toLowerCase())) ||
         (comp.description && comp.description.toLowerCase().includes(searchTerm.toLowerCase()));
       const matchSize = selectedSize ? comp.size === selectedSize : true;
-      return matchSearch && matchSize;
+      const matchType = selectedType ? comp.org_type === selectedType : true;
+      return matchSearch && matchSize && matchType;
     });
-  }, [companies, searchTerm, selectedSize]);
+  }, [companies, searchTerm, selectedSize, selectedType]);
 
   return (
     <div className={styles.container}>
@@ -101,6 +111,22 @@ function EmpresasContent() {
             onChange={(e) => handleSearchChange(e.target.value)}
             className={styles.searchInput}
           />
+        </div>
+
+        <div className={styles.typeFilters}>
+          <span className={styles.sizeFilterLabel}>Tipo:</span>
+          {['Todos', 'company', 'university', 'research', 'government', 'nonprofit', 'collective'].map((type) => {
+            const isSelected = type === 'Todos' ? selectedType === null : selectedType === type;
+            return (
+              <button
+                key={type}
+                onClick={() => handleTypeChange(type === 'Todos' ? null : type)}
+                className={`${styles.sizeFilterBtn} ${isSelected ? styles.sizeFilterBtnActive : styles.sizeFilterBtnInactive}`}
+              >
+                {type === 'Todos' ? 'Todos' : type}
+              </button>
+            );
+          })}
         </div>
 
         <div className={styles.sizeFilters}>
