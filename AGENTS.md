@@ -115,6 +115,12 @@ O Tailwind foi totalmente removido do projeto. Estado final:
 node ./tools/browser-mcp-lite/bin/bml.mjs audit http://localhost:3000/<rota> --widths=390,768,1440
 ```
 
+Para auditoria do modo escuro real, use o parâmetro de tema via URL:
+
+```bash
+node ../browser-mcp-lite/bin/bml.mjs audit http://localhost:3000/<rota>?theme=dark --widths=390,768,1440
+```
+
 ---
 
 ## 🛠️ Futuro: Implementação do `appcli`

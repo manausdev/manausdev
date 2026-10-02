@@ -47,4 +47,4 @@ export function ThemeToggle({ className }: { className?: string }) {
   );
 }
 
-export const themeInitScript = `(function(){try{var k='manausdev-theme';var s=localStorage.getItem(k);var d=s?s==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;var r=document.documentElement;r.classList.toggle('dark',d);r.style.colorScheme=d?'dark':'light'}catch(e){}})();`;
+export const themeInitScript = `(function(){try{var k='manausdev-theme';var p=new URLSearchParams(window.location.search).get('theme');var s=localStorage.getItem(k);var d;if(p==='dark'||p==='light'){d=p==='dark'}else if(s){d=s==='dark'}else{d=window.matchMedia('(prefers-color-scheme: dark)').matches}var r=document.documentElement;r.classList.toggle('dark',d);r.style.colorScheme=d?'dark':'light'}catch(e){}})();`;
