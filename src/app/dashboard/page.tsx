@@ -167,6 +167,45 @@ export default function DashboardPage() {
     }
   };
 
+  const handleDeleteAccount = async () => {
+    if (!confirm('Tem certeza que deseja excluir sua conta? Esta ação não pode ser desfeita e removerá seus dados pessoais.')) return;
+    setErrorMsg(null);
+    try {
+      const supabase = createClient();
+      const { error } = await supabase.rpc('delete_account');
+      if (error) throw error;
+      setSuccessMsg('Conta excluída com sucesso. Você será desconectado.');
+      setTimeout(() => {
+        supabase.auth.signOut();
+        router.push('/');
+      }, 2000);
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Falha ao excluir conta.';
+      setErrorMsg(message);
+    }
+  };
+
+  const handleExportData = async () => {
+    setErrorMsg(null);
+    try {
+      const supabase = createClient();
+      const { data, error } = await supabase.rpc('export_user_data');
+      if (error) throw error;
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `manausdev-export-${new Date().toISOString().slice(0,10)}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+      setSuccessMsg('Dados exportados com sucesso!');
+      setTimeout(() => setSuccessMsg(null), 4000);
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Falha ao exportar dados.';
+      setErrorMsg(message);
+    }
+  };
+
   const handleSaveProject = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!user) return;
@@ -521,6 +560,22 @@ export default function DashboardPage() {
               </div>
             )}
           </div>
+        </div>
+      </div>
+
+      <div className={styles.card}>
+        <div className={styles.cardHeader}>
+          <UserCircle2Icon className={styles.cardHeaderIcon} />
+          <h2 className={styles.cardTitle}>Privacidade LGPD</h2>
+        </div>
+        <p className={styles.subtitle}>Gerencie seus dados pessoais conforme a Lei Geral de Proteção de Dados.</p>
+        <div className={styles.row2}>
+          <button onClick={handleExportData} className={`${styles.btnLeaf} ${styles.publishBtn}`}>
+            Exportar meus dados
+          </button>
+          <button onClick={handleDeleteAccount} className={styles.iconBtnDanger}>
+            Excluir conta
+          </button>
         </div>
       </div>
 

@@ -404,3 +404,84 @@ create index if not exists profiles_seniority_idx on public.profiles (seniority)
 create index if not exists profiles_profile_type_idx on public.profiles (profile_type);
 create index if not exists profiles_skills_idx on public.profiles using gin (skills);
 
+-- ==============================================================================
+-- 🛡️ LGPD: Exclusão e Exportação de Dados do Titular
+-- ==============================================================================
+
+create or replace function public.delete_account()
+returns void
+language plpgsql
+security definer set search_path = public
+as $$
+begin
+  -- Remove dados do perfil e dependências em cascata via FK
+  delete from public.profiles where id = auth.uid();
+  -- Nota: auth.users não pode ser removido via SQL; requer Admin API.
+end;
+$$;
+
+create or replace function public.export_user_data()
+returns jsonb
+language plpgsql
+security definer set search_path = public
+as $$
+declare
+  result jsonb;
+begin
+  select jsonb_build_object(
+    'profile', to_jsonb(p),
+    'projects', coalesce((select jsonb_agg(to_jsonb(pr)) from public.projects pr where pr.author_id = auth.uid()), '[]'::jsonb),
+    'companies', coalesce((select jsonb_agg(to_jsonb(c)) from public.companies c where c.created_by = auth.uid()), '[]'::jsonb),
+    'events', coalesce((select jsonb_agg(to_jsonb(e)) from public.events e where e.organizer_id = auth.uid()), '[]'::jsonb),
+    'jobs', coalesce((select jsonb_agg(to_jsonb(j)) from public.jobs j where j.posted_by = auth.uid()), '[]'::jsonb),
+    'news', coalesce((select jsonb_agg(to_jsonb(n)) from public.news n where n.author_id = auth.uid()), '[]'::jsonb)
+  ) into result
+  from public.profiles p
+  where p.id = auth.uid();
+
+  return result;
+end;
+$$;
+
+-- ==============================================================================
+-- 🚦 Rate-limit para formulário de contato (LGPD/anti-spam)
+-- ==============================================================================
+
+-- Adiciona coluna opcional para rastrear IP (pode ser preenchida via RPC)
+alter table public.contacts add column if not exists ip_address text;
+
+create or replace function public.check_contact_rate_limit(p_email text)
+returns void
+language plpgsql
+security definer set search_path = public
+as $$
+declare
+  cnt int;
+begin
+  select count(*) into cnt
+  from public.contacts
+  where email = lower(p_email)
+    and created_at > now() - interval '1 hour';
+
+  if cnt >= 3 then
+    raise exception 'rate_limit_exceeded: máximo de 3 mensagens por hora por e-mail';
+  end if;
+end;
+$$;
+
+create or replace function public.insert_contact_safe(p_name text, p_email text, p_subject text, p_message text)
+returns uuid
+language plpgsql
+security definer set search_path = public
+as $$
+declare
+  new_id uuid;
+begin
+  perform public.check_contact_rate_limit(p_email);
+  insert into public.contacts (name, email, subject, message)
+  values (p_name, lower(p_email), p_subject, p_message)
+  returning id into new_id;
+  return new_id;
+end;
+$$;
+

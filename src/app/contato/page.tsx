@@ -22,22 +22,21 @@ export default function ContatoPage() {
 
     try {
       const supabase = createClient();
-      const payload: Database['public']['Tables']['contacts']['Insert'] = {
-        name,
-        email,
-        subject,
-        message,
-      };
-
-      const { error } = await supabase
-        .from('contacts')
-        // @ts-expect-error Supabase query builder insert overload inference
-        .insert(payload);
+      const { error } = await supabase.rpc('insert_contact_safe', {
+        p_name: name,
+        p_email: email,
+        p_subject: subject,
+        p_message: message,
+      });
 
       if (error) {
-        setErrorMsg(
-          'Não foi possível enviar sua mensagem agora. Tente novamente em instantes.'
-        );
+        if (error.message?.includes('rate_limit_exceeded')) {
+          setErrorMsg('Você atingiu o limite de 3 mensagens por hora. Tente novamente mais tarde.');
+        } else {
+          setErrorMsg(
+            'Não foi possível enviar sua mensagem agora. Tente novamente em instantes.'
+          );
+        }
         return;
       }
 
