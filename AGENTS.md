@@ -4,28 +4,9 @@ Este documento contém diretrizes arquiteturais e regras estritas para qualquer 
 
 ---
 
-## ⚠️ REGRA CRÍTICA: NÃO APAGUE OS SCRIPTS EM `scripts/`
-
-> **IMPORTANTE:** Os scripts localizados na pasta `scripts/` foram criados para comunicação via **REST API** com os serviços do Firebase/Google Cloud utilizando as credenciais de Service Account (`*admin.json` / `*firebase-adminsdk*.json`).
->
-> **Eles serão a base para a criação de uma ferramenta CLI (`appcli`) no futuro.**  
-> **NÃO APAGUE, NÃO REMOVA E NÃO SUBSTITUA ESSES SCRIPTS POR DEPENDÊNCIAS DE LOGIN INTERATIVO.**
-
----
-
-## 📁 Estrutura dos Scripts Salvos (`scripts/`)
-
-| Arquivo | Descrição |
-|---|---|
-| [`scripts/firebase-auth.js`](file:///C:/Users/luann/.copilot/repos/manausdev/scripts/firebase-auth.js) | Gerador de Access Token OAuth2 via JWT assinado com a Service Account (`*admin.json`). Sem dependência de login no browser. |
-| [`scripts/firestore-rest.js`](file:///C:/Users/luann/.copilot/repos/manausdev/scripts/firestore-rest.js) | Cliente REST para operações de banco de dados no **Firestore** com a chave admin. |
-
----
-
 ## 🔒 Segurança de Credenciais
 
 * O arquivo de credenciais da conta de serviço (`*admin.json` ou `*firebase-adminsdk*.json`) contém chaves privadas e **NUNCA** deve ser adicionado ao build público (`dist/`) ou enviado para o repositório Git público.
-* Os scripts em `scripts/` são executados apenas no ambiente Node.js / CLI.
 
 ---
 

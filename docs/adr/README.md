@@ -31,6 +31,7 @@
 | [ADR 0021](0021-community-os-domain-architecture-and-roadmap.md) | 2026-09-30 | Arquitetura / Produto | Community OS — arquitetura orientada a domínios e roadmap | **Aceito** |
 | [ADR 0022](0022-svg-logo-header-light-dark-variants.md) | 2026-09-30 | UI / Identidade Visual | SVG Logo no Header com variante clara (Pantone 2026 C) | **Aceito** |
 | [ADR 0023](0023-generalizar-organizations-org-type.md) | 2026-10-02 | Ecossistema / Organizações | Generalizar Organizations com org_type incremental | **Proposto** |
+| [ADR 0024](0024-person-model-multiplos-papeis.md) | 2026-10-02 | Identidade / Person | Evoluir `profiles` para modelo Person com papéis múltiplos | **Proposto** |
 
 ---
 
