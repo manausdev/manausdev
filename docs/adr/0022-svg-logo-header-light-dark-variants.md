@@ -1,4 +1,4 @@
-# ADR 0020: SVG Logo no Header com variante clara (Pantone 2026 C)
+# ADR 0022: SVG Logo no Header com variante clara (Pantone 2026 C)
 
 **Status:** Aceito  
 **Data:** 2026-09-30  
