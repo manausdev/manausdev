@@ -98,7 +98,7 @@ export default function OpengraphImage() {
             fontWeight: 600,
           }}
         >
-          www.manausdev.com.br
+          manausdev.com.br
         </div>
       </div>
     ),

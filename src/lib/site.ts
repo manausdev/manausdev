@@ -6,7 +6,7 @@
  */
 export const SITE_URL = (
   process.env.NEXT_PUBLIC_SITE_URL ??
-  (process.env.NODE_ENV === 'production' ? 'https://www.manausdev.com.br' : 'http://localhost:3000')
+  (process.env.NODE_ENV === 'production' ? 'https://manausdev.com.br' : 'http://localhost:3000')
 ).replace(/\/$/, '');
 
 export function siteUrl(path = '/'): string {

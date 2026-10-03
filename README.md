@@ -9,7 +9,7 @@
 
 Plataforma fullstack que conecta **pessoas, projetos, empresas, vagas, eventos e comunidades** de tecnologia de Manaus. Não é um "LinkedIn regional": é o Community OS da região — identidade profissional, discovery local e o grafo da comunidade tech do Amazonas em um só lugar ([ADR 0021](docs/adr/0021-community-os-domain-architecture-and-roadmap.md)).
 
-**[Explorar Devs](https://manausdev.vercel.app/devs)** · **[Projetos](https://manausdev.vercel.app/projetos)** · **[Empresas](https://manausdev.vercel.app/empresas)** · **[Vagas](https://manausdev.vercel.app/vagas)** · **[Eventos](https://manausdev.vercel.app/eventos)** · **[Comunidades](https://manausdev.vercel.app/comunidades)**
+**[Explorar Devs](https://manausdev.com.br/devs)** · **[Projetos](https://manausdev.com.br/projetos)** · **[Empresas](https://manausdev.com.br/empresas)** · **[Vagas](https://manausdev.com.br/vagas)** · **[Eventos](https://manausdev.com.br/eventos)** · **[Comunidades](https://manausdev.com.br/comunidades)**
 
 **Made in Manaus • Open Source**
 
@@ -37,7 +37,7 @@ Plataforma fullstack que conecta **pessoas, projetos, empresas, vagas, eventos e
 - **BaaS & Backend:** [Supabase](https://supabase.com/) (`@supabase/ssr`) — PostgreSQL com Row Level Security (RLS), triggers e migrations versionadas
 - **Autenticação:** Supabase Auth (Email/Senha + OAuth GitHub) com sessão SSR via cookies
 - **Testes & Design system:** Vitest + Testing Library · Storybook
-- **CI/CD:** GitHub Actions (build + typecheck + testes) · Deploy na [Vercel](https://manausdev.vercel.app)
+- **CI/CD:** GitHub Actions (build + typecheck + testes) · Deploy na [Vercel](https://manausdev.com.br)
 
 ---
 
